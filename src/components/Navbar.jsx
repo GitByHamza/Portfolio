@@ -10,7 +10,7 @@ const Navbar = () => {
   { name: "About", href: "/#about" },
   { name: "Skills", href: "/#skills" },
   { name: "Projects", href: "/#projects" },
-  { name: "Contact", href: "#contact-footer" }, // Footer is global now, so this is fine if ID is everywhere
+  { name: "Contact", href: "#contact-footer" },
  ]
  const [isScroll, setIsScroll] = useState(false)
  const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -25,13 +25,14 @@ const Navbar = () => {
  }, [])
 
  return (
-  <nav className={cn("fixed w-full z-40 transition-all duration-300", isScroll ? "py-3 bg-background/80 backdrop-blur-md shadow-xs" : "py-5")}>
-   <div className="container flex items-center justify-between">
+  <nav className={cn("fixed w-full z-40 transition-all duration-300 flex justify-center", isScroll ? "py-3 bg-background/80 backdrop-blur-md shadow-xs" : "py-5")}>
+   <div className="container px-4 flex items-center justify-between mx-auto">
     <a href="/#hero" className='text-xl font-bold text-primary flex items-center'>
      <span className='relative z-10 font-body'>
       <span className='font-heading text-glow text-foreground'>TexCodes</span> By Hamza
      </span>
     </a>
+
     {/* Desktop Menu Navbar */}
     <div className='hidden md:flex space-x-8'>
      {navItems.map((item, key) => (
@@ -39,14 +40,19 @@ const Navbar = () => {
      ))}
     </div>
 
-    {/* Mobile Menu Toggle & Onboarding Anchor */}
-    <div className="md:hidden relative z-50">
-     <button onClick={() => setIsMenuOpen((prev) => !prev)}
-      className='p-2 text-foreground'
-      aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}>
-      {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-     </button>
-     <OnboardingTooltip />
+    {/* Right Side Actions */}
+    <div className="flex items-center">
+     <ThemeToggle className="hidden md:flex" />
+
+     {/* Mobile Menu Toggle & Onboarding Anchor */}
+     <div className="md:hidden relative z-50">
+      <button onClick={() => setIsMenuOpen((prev) => !prev)}
+       className='p-2 text-foreground'
+       aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}>
+       {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
+      <OnboardingTooltip />
+     </div>
     </div>
 
     {/* Mobile Menu Backdrop & Content */}

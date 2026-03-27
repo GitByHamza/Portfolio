@@ -30,13 +30,6 @@ const ProjectDetails = () => {
 
 
    <div className="container mx-auto px-4 max-w-6xl relative z-10">
-    <Link
-     to="/"
-     className="absolute top-0 left-4 p-3 rounded-full bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-all duration-300 animate-glow-breathe z-50 mt-8 md:mt-2"
-     aria-label="Back to Projects"
-    >
-     <ArrowLeft size={24} />
-    </Link>
 
     {/* Header */}
     <motion.div
@@ -44,15 +37,15 @@ const ProjectDetails = () => {
      animate={{ opacity: 1, y: 0 }}
      transition={{ duration: 0.5 }}
     >
-     <h1 className="text-4xl md:text-5xl font-bold mb-6 font-heading text-glow">
+     <h1 className="text-4xl md:text-5xl font-bold mb-6 font-heading text-glow text-center">
       {project.title}
      </h1>
-     <p className="text-xl text-muted-foreground mb-8 max-w-3xl font-body leading-relaxed">
+     <p className="text-xl text-muted-foreground mb-8 max-w-3xl font-body leading-relaxed mx-auto text-center">
       {project.overview}
      </p>
 
      {/* Links */}
-     <div className="flex gap-4 mb-12">
+     <div className="flex justify-center gap-4 mb-12">
       {project.demoUrl && (
        <a
         href={project.demoUrl}

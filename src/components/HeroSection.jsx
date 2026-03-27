@@ -25,13 +25,9 @@ const HeroSection = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-      className="text-justify font-body text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto"
+      className="text-justify font-body text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto md:text-center"
      >
-      {/* Describe about yourself */}
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-      Consequuntur, illo numquam? Quo harum cumque beatae. Totam,
-      provident. Hic nihil incidunt sed nemo unde veritatis natus optio id
-      excepturi commodi, impedit totam, dicta cumque odio.
+      I transform complex requirements into seamless digital experiences. Specializing in the MERN stack and modern frontend frameworks, I build scalable, high-performance web applications that make a difference.
      </motion.p>
 
      <motion.div

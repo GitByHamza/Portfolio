@@ -12,7 +12,6 @@ function App() {
  return (
   <>
    <BrowserRouter>
-    <ThemeToggle className="fixed max-sm:hidden top-5 right-5" />
     <StarBackground />
     <Navbar />
     <Routes>

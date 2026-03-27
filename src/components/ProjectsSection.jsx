@@ -24,7 +24,7 @@ const ProjectsSection = () => {
      whileInView={{ opacity: 1, y: 0 }}
      viewport={{ once: true }}
      transition={{ duration: 0.5, delay: 0.2 }}
-     className="font-body text-center text-muted-foreground mb-12 max-w-2xl mx-auto"
+     className="font-body text-justify md:text-center text-muted-foreground mb-12 max-w-2xl mx-auto"
     >
      Here are some of my recent projects. Each project was carefully crafted
      with attention to detail, performance, and user experience.
