@@ -4,33 +4,59 @@ import {
  Linkedin,
  Mail,
  MapPin,
- Phone,
  Send,
  Twitch,
  Twitter,
+ Github,
 } from "lucide-react";
 import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { supabase } from "@/lib/supabase";
+import SuccessModal from "./SuccessModal";
 
 export const Footer = () => {
- const { toast } = useToast();
  const [isSubmitting, setIsSubmitting] = useState(false);
+ const [isModalOpen, setIsModalOpen] = useState(false);
+ const [formData, setFormData] = useState({
+  name: "",
+  country: "",
+  email: "",
+  message: "",
+ });
 
- const handleSubmit = (e) => {
+ const handleChange = (e) => {
+  setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+ };
+
+ const handleSubmit = async (e) => {
   e.preventDefault();
   setIsSubmitting(true);
 
-  // Simulate form submission
-  setTimeout(() => {
-   toast({
-    title: "Message sent!",
-    description: "Thank you for reaching out. I'll get back to you shortly.",
-   });
+  try {
+   const { error } = await supabase.from("messages").insert([
+    {
+     name: formData.name,
+     email: formData.email,
+     country: formData.country,
+     message: formData.message,
+    },
+   ]);
+
+   if (error) {
+    console.error("Error inserting message:", error);
+    alert("Failed to send message. Please try again.");
+   } else {
+    setIsModalOpen(true);
+    setFormData({ name: "", country: "", email: "", message: "" });
+    e.target.reset();
+   }
+  } catch (err) {
+   console.error("Unexpected error:", err);
+   alert("An unexpected error occurred.");
+  } finally {
    setIsSubmitting(false);
-   e.target.reset();
-  }, 1500);
+  }
  };
 
  const scrollToTop = () => {
@@ -39,6 +65,8 @@ export const Footer = () => {
 
  return (
   <footer id="contact-footer" className="relative border-t border-border bg-card pt-16 pb-8 overflow-hidden">
+   <SuccessModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
    {/* Background Glow */}
    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50 blur-[2px]" />
 
@@ -73,14 +101,16 @@ export const Footer = () => {
 
       <div className="flex gap-4">
        {[
-        { icon: Linkedin, href: "#" },
+        { icon: Github,    href: "https://github.com/GitByHamza" },
+        { icon: Linkedin,  href: "#" },
         { icon: Instagram, href: "#" },
-        { icon: Twitch, href: "#" },
-        { icon: Twitter, href: "#" },
+        { icon: Twitter,   href: "#" },
        ].map((social, index) => (
         <a
          key={index}
          href={social.href}
+         target="_blank"
+         rel="noopener noreferrer"
          className="p-3 rounded-full bg-secondary/50 hover:bg-primary/20 text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110"
         >
          <social.icon size={20} />
@@ -101,19 +131,23 @@ export const Footer = () => {
       <form onSubmit={handleSubmit} className="space-y-4">
        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-         <label htmlFor="name" className="text-sm font-medium">Name</label>
+         <label htmlFor="footer-name" className="text-sm font-medium">Name</label>
          <input
-          id="name"
+          id="footer-name"
+          name="name"
           required
+          onChange={handleChange}
           className="w-full px-4 py-2 rounded-lg bg-secondary/30 border border-white/10 focus:border-primary/50 focus:ring-1 focus:ring-primary outline-none transition-all"
           placeholder="John Doe"
          />
         </div>
         <div className="space-y-2">
-         <label htmlFor="country" className="text-sm font-medium">Country</label>
+         <label htmlFor="footer-country" className="text-sm font-medium">Country</label>
          <input
-          id="country"
+          id="footer-country"
+          name="country"
           required
+          onChange={handleChange}
           className="w-full px-4 py-2 rounded-lg bg-secondary/30 border border-white/10 focus:border-primary/50 focus:ring-1 focus:ring-primary outline-none transition-all"
           placeholder="Switzerland"
          />
@@ -121,22 +155,26 @@ export const Footer = () => {
        </div>
 
        <div className="space-y-2">
-        <label htmlFor="email" className="text-sm font-medium">Email</label>
+        <label htmlFor="footer-email" className="text-sm font-medium">Email</label>
         <input
-         id="email"
+         id="footer-email"
+         name="email"
          type="email"
          required
+         onChange={handleChange}
          className="w-full px-4 py-2 rounded-lg bg-secondary/30 border border-white/10 focus:border-primary/50 focus:ring-1 focus:ring-primary outline-none transition-all"
          placeholder="john@example.com"
         />
        </div>
 
        <div className="space-y-2">
-        <label htmlFor="message" className="text-sm font-medium">Message</label>
+        <label htmlFor="footer-message" className="text-sm font-medium">Message</label>
         <textarea
-         id="message"
+         id="footer-message"
+         name="message"
          required
          rows={4}
+         onChange={handleChange}
          className="w-full px-4 py-2 rounded-lg bg-secondary/30 border border-white/10 focus:border-primary/50 focus:ring-1 focus:ring-primary outline-none transition-all resize-none"
          placeholder="Tell me about your project..."
         />
@@ -145,7 +183,10 @@ export const Footer = () => {
        <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full cosmic-button flex items-center justify-center gap-2 group"
+        className={cn(
+         "w-full cosmic-button flex items-center justify-center gap-2 group",
+         isSubmitting && "opacity-70 cursor-not-allowed"
+        )}
        >
         {isSubmitting ? "Sending..." : "Send Message"}
         <Send size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -157,7 +198,7 @@ export const Footer = () => {
     {/* Bottom Bar */}
     <div className="border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
      <p className="text-sm text-muted-foreground">
-      &copy; {new Date().getFullYear()} TexCoder.co. All rights reserved.
+      &copy; {new Date().getFullYear()} TexCodes. All rights reserved.
      </p>
 
      <button

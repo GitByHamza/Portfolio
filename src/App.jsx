@@ -1,28 +1,38 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { BrowserRouter, Route, Routes, Outlet } from "react-router-dom"
 import Home from "./pages/Home"
 import Error404 from "./pages/Error404"
 import ProjectDetails from "./pages/ProjectDetails"
+import AdminDashboard from "./pages/AdminDashboard"
 import { Footer } from "./components/Footer"
 import Navbar from "./components/Navbar"
 import StarBackground from "./components/StarBackground"
-import ThemeToggle from "./components/ThemeToggle"
 
-function App() {
-
- return (
+// Layout wrapper for portfolio pages (non-admin)
+const MainLayout = () => (
   <>
-   <BrowserRouter>
     <StarBackground />
     <Navbar />
-    <Routes>
-     <Route index element={<Home />} />
-     <Route path="/project/:id" element={<ProjectDetails />} />
-     <Route path="*" element={<Error404 />} />
-    </Routes>
+    <Outlet />
     <Footer />
-   </BrowserRouter>
   </>
- )
+)
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Admin: No navbar/footer, standalone page */}
+        <Route path="/admin" element={<AdminDashboard />} />
+
+        {/* Portfolio pages: shared layout */}
+        <Route element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="/project/:id" element={<ProjectDetails />} />
+          <Route path="*" element={<Error404 />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App

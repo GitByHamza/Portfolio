@@ -1,6 +1,4 @@
-import { Sidebar } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
-import { generatePath } from 'react-router-dom';
 
 const StarBackground = () => {
     const [stars,setStars] = useState([]);
@@ -28,7 +26,7 @@ const StarBackground = () => {
                 x : Math.random() * 100,
                 y : Math.random() * 100,
                 opacity : Math.random() * 0.5 + 0.5,
-                animtionDuration: Math.random * 4 + 2,
+                animationDuration: Math.random() * 4 + 2,
             })
           }
           setStars(newStars)
@@ -40,10 +38,10 @@ const StarBackground = () => {
             newMeteor.push({
                 id:i,
                 size : Math.random() * 2 + 1,
-                x : Math.random() * 100,
-                y : Math.random() * 20,
-                delay : Math.random() * 15,
-                animtionDuration: Math.random * 3 + 3,
+                x : Math.random() * 120 - 20, // -20% to 100%
+                y : Math.random() * 50 - 20,  // -20% to 30%
+                delay : Math.random() * 12,    // longer delay to space out slower meteors
+                animationDuration: Math.random() * 6 + 10, // 10 to 16s duration (much slower)
             })
           }
           setMeteors(newMeteor)
