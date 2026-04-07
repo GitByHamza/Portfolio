@@ -197,9 +197,15 @@ export const Footer = () => {
 
     {/* Bottom Bar */}
     <div className="border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-     <p className="text-sm text-muted-foreground">
-      &copy; {new Date().getFullYear()} TexCodes. All rights reserved.
-     </p>
+     <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
+      <p className="text-sm text-muted-foreground">
+       &copy; {new Date().getFullYear()} TexCodes. All rights reserved.
+      </p>
+      <div className="flex items-center gap-4 text-sm font-body text-muted-foreground">
+       <a href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</a>
+       <a href="/terms" className="hover:text-primary transition-colors">Terms of Service</a>
+      </div>
+     </div>
 
      <button
       onClick={scrollToTop}
