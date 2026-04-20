@@ -1,12 +1,48 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, ExternalLink, Github, CheckCircle } from "lucide-react";
-import { motion } from "framer-motion";
+import { ArrowLeft, ExternalLink, Github, CheckCircle, X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { projectsData } from "../data/projects";
 
 const ProjectDetails = () => {
  const { id } = useParams();
  const project = projectsData.find((p) => p.id === parseInt(id));
+
+ const [modalOpen, setModalOpen] = useState(false);
+ const [activeIndex, setActiveIndex] = useState(0);
+
+ const openModal = (index) => {
+  setActiveIndex(index);
+  setModalOpen(true);
+ };
+
+ const closeModal = () => setModalOpen(false);
+
+ const goNext = useCallback(() => {
+  if (!project) return;
+  setActiveIndex((prev) => (prev + 1) % project.images.length);
+ }, [project]);
+
+ const goPrev = useCallback(() => {
+  if (!project) return;
+  setActiveIndex((prev) => (prev - 1 + project.images.length) % project.images.length);
+ }, [project]);
+
+ // Keyboard navigation
+ useEffect(() => {
+  if (!modalOpen) return;
+  const handleKeyDown = (e) => {
+   if (e.key === "Escape") closeModal();
+   if (e.key === "ArrowRight") goNext();
+   if (e.key === "ArrowLeft") goPrev();
+  };
+  document.body.style.overflow = "hidden";
+  window.addEventListener("keydown", handleKeyDown);
+  return () => {
+   document.body.style.overflow = "";
+   window.removeEventListener("keydown", handleKeyDown);
+  };
+ }, [modalOpen, goNext, goPrev]);
 
  useEffect(() => {
   window.scrollTo(0, 0);
@@ -28,6 +64,117 @@ const ProjectDetails = () => {
  return (
   <div className="min-h-screen pt-32 pb-12 relative overflow-hidden">
 
+   {/* Lightbox Modal */}
+   <AnimatePresence>
+    {modalOpen && (
+     <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="fixed inset-0 z-[9999] flex items-center justify-center"
+      onClick={closeModal}
+      style={{ backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", backgroundColor: "rgba(0, 0, 0, 0.85)" }}
+     >
+      {/* Close Button */}
+      <motion.button
+       initial={{ opacity: 0, scale: 0.5 }}
+       animate={{ opacity: 1, scale: 1 }}
+       exit={{ opacity: 0, scale: 0.5 }}
+       transition={{ delay: 0.15 }}
+       onClick={closeModal}
+       className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
+       aria-label="Close modal"
+      >
+       <X size={24} />
+      </motion.button>
+
+      {/* Image Counter */}
+      <motion.div
+       initial={{ opacity: 0, y: -10 }}
+       animate={{ opacity: 1, y: 0 }}
+       exit={{ opacity: 0, y: -10 }}
+       transition={{ delay: 0.2 }}
+       className="absolute top-6 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-white/10 text-white/80 text-sm font-medium tracking-wider font-body"
+      >
+       {activeIndex + 1} / {project.images.length}
+      </motion.div>
+
+      {/* Previous Button */}
+      {project.images.length > 1 && (
+       <motion.button
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -20 }}
+        transition={{ delay: 0.1 }}
+        onClick={(e) => { e.stopPropagation(); goPrev(); }}
+        className="absolute left-4 md:left-8 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all hover:scale-110 z-10"
+        aria-label="Previous image"
+       >
+        <ChevronLeft size={28} />
+       </motion.button>
+      )}
+
+      {/* Image */}
+      <motion.div
+       key={activeIndex}
+       initial={{ opacity: 0, scale: 0.85 }}
+       animate={{ opacity: 1, scale: 1 }}
+       exit={{ opacity: 0, scale: 0.85 }}
+       transition={{ type: "spring", stiffness: 300, damping: 30 }}
+       className="relative max-w-[90vw] max-h-[85vh] flex items-center justify-center"
+       onClick={(e) => e.stopPropagation()}
+      >
+       <img
+        src={project.images[activeIndex]}
+        alt={`${project.title} screenshot ${activeIndex + 1}`}
+        className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl"
+        style={{ boxShadow: "0 0 60px rgba(139, 92, 246, 0.3), 0 25px 50px rgba(0, 0, 0, 0.5)" }}
+       />
+      </motion.div>
+
+      {/* Next Button */}
+      {project.images.length > 1 && (
+       <motion.button
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 20 }}
+        transition={{ delay: 0.1 }}
+        onClick={(e) => { e.stopPropagation(); goNext(); }}
+        className="absolute right-4 md:right-8 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all hover:scale-110 z-10"
+        aria-label="Next image"
+       >
+        <ChevronRight size={28} />
+       </motion.button>
+      )}
+
+      {/* Thumbnail Strip */}
+      {project.images.length > 1 && (
+       <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 20 }}
+        transition={{ delay: 0.25 }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2"
+       >
+        {project.images.map((img, idx) => (
+         <button
+          key={idx}
+          onClick={(e) => { e.stopPropagation(); setActiveIndex(idx); }}
+          className={`w-16 h-10 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
+           idx === activeIndex
+            ? "border-primary scale-110 shadow-[0_0_12px_rgba(139,92,246,0.6)]"
+            : "border-white/20 opacity-50 hover:opacity-80"
+          }`}
+         >
+          <img src={img} alt="" className="w-full h-full object-cover" />
+         </button>
+        ))}
+       </motion.div>
+      )}
+     </motion.div>
+    )}
+   </AnimatePresence>
 
    <div className="container mx-auto px-4 max-w-6xl relative z-10">
 
@@ -82,7 +229,8 @@ const ProjectDetails = () => {
         initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="snap-center shrink-0 w-[85vw] rounded-xl overflow-hidden shadow-lg border border-white/10 aspect-video"
+        className="snap-center shrink-0 w-[85vw] rounded-xl overflow-hidden shadow-lg border border-white/10 aspect-video cursor-pointer"
+        onClick={() => openModal(index)}
        >
         <img
          src={img}
@@ -102,13 +250,18 @@ const ProjectDetails = () => {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: index * 0.1 }}
         whileHover={{ scale: 1.02 }}
-        className="rounded-xl overflow-hidden shadow-lg border border-white/10 aspect-video cursor-pointer"
+        className="group relative rounded-xl overflow-hidden shadow-lg border border-white/10 aspect-video cursor-pointer"
+        onClick={() => openModal(index)}
        >
         <img
          src={img}
          alt={`${project.title} screenshot ${index + 1}`}
-         className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
+        {/* Hover Overlay */}
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
+         <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-lg" size={32} />
+        </div>
        </motion.div>
       ))}
      </div>
