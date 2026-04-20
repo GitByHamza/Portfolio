@@ -27,7 +27,7 @@ const HeroSection = () => {
       transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
       className="text-justify font-body text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto md:text-center"
      >
-      I transform complex requirements into seamless digital experiences. Specializing in the MERN stack and modern frontend frameworks, I build scalable, high-performance web applications that make a difference.
+      I transform complex requirements into seamless digital experiences. Specializing in the  Next.js, Laravel 12, Vue 3 and AI-powered web applications and modern frontend frameworks, I build scalable, high-performance web applications that make a difference.
      </motion.p>
 
      <motion.div

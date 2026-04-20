@@ -2,21 +2,24 @@ export const projectsData = [
  {
   id: 1,
   title: "Myls (SaaS Platform)",
-  overview: "A sophisticated SaaS platform for a Swiss company, enabling businesses to manage their presence across 37+ platforms (Google, Facebook, Apple Maps, etc.) from a single dashboard.",
-  description: "This project involves a massive modernization effort, migrating a legacy Laravel 8 + Vue 2 codebase to a cutting-edge Vue 3 (Nuxt TS) and PHP Laravel 12 architecture. The platform empowers clients to control their digital listings without relying on third-party aggregators like Yext. It implements complex user role management via Spatie and features a high-performance, polished UI.",
+  overview: "A production SaaS platform for a Swiss company with 2,800+ active business locations, enabling businesses to manage their presence across 37+ platforms (Google, Facebook, Apple Maps, etc.) from a single dashboard.",
+  description: "This project involves a massive modernization effort, migrating a legacy Laravel 8 + Vue 2 codebase to a cutting-edge Vue 3 (Nuxt TS) and PHP Laravel 12 architecture. The platform empowers clients to control their digital listings without relying on third-party aggregators like Yext. It implements complex user role management via Spatie and features a high-performance, polished UI. Currently live in Switzerland serving thousands of real businesses.",
   features: [
+   "2,800+ Active Business Locations in Production",
    "Multi-platform Business Listing Management (37+ Platforms)",
    "Role-Based Access Control (RBAC) using Spatie",
    "Modern UI/UX Redesign (Vue 3 + Tailwind)",
    "Direct API Integrations (Replacing Yext)",
    "Real-time Analytics Dashboard",
-   "Multi-language Support (Swiss Market)"
+   "Multi-language Support (Swiss Market)",
+   "Laravel 8 → Laravel 12 Migration",
+   "Vue 2 → Vue 3 (Nuxt 4) Upgrade"
   ],
   techStack: [
    { category: "Frontend", tech: "Vue 3, Nuxt.js (TypeScript), Tailwind CSS" },
    { category: "Backend", tech: "PHP Laravel 12, Spatie Permissions" },
    { category: "Database", tech: "MySQL" },
-   { category: "Architecture", tech: "SaaS, RESTful API" }
+   { category: "Architecture", tech: "SaaS, Multi-tenant, RESTful API" }
   ],
   mainImage: "/myls.jpeg",
   images: [
@@ -26,13 +29,73 @@ export const projectsData = [
   ],
   demoUrl: "https://app.myls.ch",
   githubUrl: "#",
-  tags: ["Vue 3", "Nuxt (TS)", "Laravel 12", "Spatie", "MySQL", "TailwindCSS"]
+  tags: ["Vue 3", "Nuxt (TS)", "Laravel 12", "Spatie", "MySQL", "TailwindCSS", "SaaS"]
  },
 
  {
   id: 2,
+  title: "AI Receptionist Agent",
+  overview: "A full-stack AI-powered business automation platform featuring a WhatsApp Voice Agent that handles customer inquiries 24/7, complete with CRM, pipelines, calendar management, and appointment booking.",
+  description: "This platform replaces a human receptionist with an intelligent AI agent. The WhatsApp Voice Agent responds to customers around the clock using the company's own data — handling FAQs, booking appointments, and qualifying leads automatically. The system includes a full CRM with pipeline management, a calendar integration for scheduling, and a real-time dashboard for monitoring all interactions. Built to save businesses hours of manual work every day.",
+  features: [
+   "WhatsApp AI Voice Agent (24/7 Customer Replies)",
+   "Company Knowledge Base Integration",
+   "Automated Appointment Booking",
+   "Full CRM with Pipeline Management",
+   "Calendar & Scheduling System",
+   "Real-time Interaction Dashboard",
+   "Lead Qualification Automation",
+   "Multi-channel Communication Support"
+  ],
+  techStack: [
+   { category: "Frontend", tech: "Next.js, Tailwind CSS" },
+   { category: "Backend", tech: "Node.js, Laravel" },
+   { category: "AI", tech: "OpenAI API, Whisper, TTS" },
+   { category: "Messaging", tech: "WhatsApp Business API" },
+   { category: "Database", tech: "MySQL, MongoDB" }
+  ],
+  mainImage: "/chatapp.png",
+  images: [
+   "/chatapp.png"
+  ],
+  demoUrl: "",
+  githubUrl: "#",
+  tags: ["Next.js", "Node.js", "OpenAI", "WhatsApp API", "CRM", "AI Agent", "Laravel"]
+ },
+
+ {
+  id: 3,
+  title: "Financial Dashboard",
+  overview: "A personal finance tracking application that provides real-time insights based on user inputs — helping individuals visualize spending, track budgets, and make smarter financial decisions.",
+  description: "This application transforms raw financial data into actionable insights. Users input their income, expenses, and financial goals. The dashboard processes this data and generates visual reports including spending breakdowns, budget tracking, savings progress, and financial forecasts. Designed for individuals who want clarity over their finances without complex spreadsheets.",
+  features: [
+   "Real-time Financial Data Processing",
+   "Income & Expense Tracking",
+   "Budget Management with Visual Alerts",
+   "Spending Category Breakdown (Charts)",
+   "Savings Goal Tracker",
+   "Monthly & Yearly Financial Reports",
+   "Responsive Dashboard UI"
+  ],
+  techStack: [
+   { category: "Frontend", tech: "React.js, Tailwind CSS, Chart.js" },
+   { category: "Backend", tech: "Node.js, Express" },
+   { category: "Database", tech: "MongoDB" },
+   { category: "Languages", tech: "JavaScript" }
+  ],
+  mainImage: "/todoapp.png",
+  images: [
+   "/todoapp.png"
+  ],
+  demoUrl: "",
+  githubUrl: "#",
+  tags: ["React", "Node.js", "MongoDB", "Chart.js", "TailwindCSS", "Finance"]
+ },
+
+ {
+  id: 4,
   title: "Ecommerce Web App",
-  overview: "A comprehensive ecommerce web application designed for a seamless shopping experience. Built with a robust React frontend and a powerful PHP Laravel backend, this platform handles everything from product browsing to secure checkout.",
+  overview: "A comprehensive ecommerce web application designed for a seamless shopping experience. Built with a robust React frontend and a powerful PHP Laravel backend.",
   description: "This project represents a full-stack ecommerce solution. It includes features like user authentication, product search and filtering, a dynamic shopping cart, and an admin dashboard for inventory management. The application is optimized for performance and SEO.",
   features: [
    "User Authentication & Authorization",
@@ -56,14 +119,14 @@ export const projectsData = [
   ],
   demoUrl: "https://houseofardesigns.com/",
   githubUrl: "#",
-  tags: ["React Js", "Php Laravel 8.3", "TailwindCSS", "Bootstrap", "CSS", "MongoDB", "Javascript"]
+  tags: ["React Js", "Php Laravel 8.3", "TailwindCSS", "Bootstrap", "MongoDB", "Javascript"]
  },
 
  {
-  id: 3,
+  id: 5,
   title: "Realtime Chat Application",
-  overview: "A lightning-fast real-time chat application allowing users to communicate instantly. Leveraging the power of Node.js and Socket.io, it ensures low-latency messaging and a smooth user experience.",
-  description: "This application enables users to join chat rooms and send messages in real-time. It features live user status updates, message notifications, and a clean, modern interface. It demonstrates proficiency in handling WebSocket connections and managing ephemeral state.",
+  overview: "A lightning-fast real-time chat application allowing users to communicate instantly. Leveraging the power of Node.js and Socket.io for low-latency messaging.",
+  description: "This application enables users to join chat rooms and send messages in real-time. It features live user status updates, message notifications, and a clean, modern interface. Demonstrates proficiency in handling WebSocket connections and managing ephemeral state.",
   features: [
    "Real-time Messaging using Socket.io",
    "Live User Online/Offline Status",
@@ -88,34 +151,4 @@ export const projectsData = [
   githubUrl: "https://github.com/GitByHamza/MERN-CHAT-APP",
   tags: ["React", "TailwindCSS", "Node.js", "Socket.io", "MongoDB"]
  },
- {
-  id: 4,
-  title: "Todo App with Alarm",
-  overview: "A premium productivity tool that goes beyond standard todo lists. This app features smart notifications and audible alarms to ensure you never miss a deadline.",
-  description: "Designed with focus and productivity in mind, this app allows users to schedule tasks with specific times. When a task is due, the app plays a notification sound and triggers an alert. The state is persisted, ensuring tasks are saved even after closing the browser.",
-  features: [
-   "Task Scheduling with Date & Time",
-   "Audible Alarm/Ringtone Notifications",
-   "Task Priority Levels",
-   "Persistent Storage (Local Storage/DB)",
-   "Clean, Minimalist UI",
-   "Mark as Complete/Delete Functionality"
-  ],
-  techStack: [
-   { category: "Frontend", tech: "React.js, CSS" },
-   { category: "Backend", tech: "Node.js (Optional for sync)" },
-   { category: "Database", tech: "MongoDB" },
-   { category: "Styling", tech: "TailwindCSS" }
-  ],
-  mainImage: "/todoapp.png",
-  images: [
-   "/todoapp.png",
-   "https://images.unsplash.com/photo-1540350394557-8d14678e7f91?q=80&w=2000&auto=format&fit=crop",
-   "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=2000&auto=format&fit=crop"
-  ],
-  demoUrl: "",
-  githubUrl: "https://github.com/GitByHamza/Todo-app",
-  tags: ["React", "TailwindCSS", "CSS", "MongoDB"]
- },
-
 ];
