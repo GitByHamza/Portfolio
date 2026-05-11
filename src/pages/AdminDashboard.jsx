@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { Calendar, Mail, MapPin, Loader2, Lock, Eye, EyeOff } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
-import StarBackground from "@/components/StarBackground";
+import AuroraBackground from "@/components/AuroraBackground";
 
 // Simple hardcoded admin password — move to env var for production
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD;
@@ -28,12 +28,12 @@ const AdminLogin = ({ onLogin }) => {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden text-foreground flex items-center justify-center">
-      <StarBackground />
+      <AuroraBackground />
       <div className={`relative z-10 w-full max-w-md px-6 ${isShaking ? "animate-[shake_0.5s_ease]" : ""}`}>
         {/* Glow ring */}
-        <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-purple-500 via-violet-500 to-indigo-500 opacity-30 blur-xl" />
+        <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-primary via-pop to-primary opacity-30 blur-xl" />
         <div className="relative bg-card border border-border rounded-2xl overflow-hidden shadow-2xl">
-          <div className="h-1 w-full bg-gradient-to-r from-purple-500 via-violet-400 to-indigo-500" />
+          <div className="h-1 w-full bg-gradient-to-r from-primary via-pop to-primary" />
           <div className="p-10 flex flex-col items-center gap-6">
             <div className="p-4 rounded-full bg-primary/10 border border-primary/20">
               <Lock className="w-8 h-8 text-primary" />
@@ -146,7 +146,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden text-foreground">
-      <StarBackground />
+      <AuroraBackground />
 
       {/* Admin Navbar */}
       <nav className="fixed w-full z-40 bg-background/80 backdrop-blur-md shadow-xs py-4 border-b border-border">

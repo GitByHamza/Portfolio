@@ -1,12 +1,72 @@
 import { ArrowRight, ExternalLink, Github } from "lucide-react";
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef } from "react";
+import { motion, useMotionValue, useSpring, useTransform, useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { projectsData } from "../data/projects";
 
+const TiltCard = ({ children, className }) => {
+  const ref = useRef(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const shouldReduceMotion = useReducedMotion();
+
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7deg", "-7deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7deg", "7deg"]);
+
+  const handleMouseMove = (e) => {
+    if (!ref.current || shouldReduceMotion) return;
+    const rect = ref.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        rotateY: shouldReduceMotion ? 0 : rotateY,
+        rotateX: shouldReduceMotion ? 0 : rotateX,
+        transformStyle: "preserve-3d",
+      }}
+      className={className}
+    >
+      {!shouldReduceMotion && (
+        <motion.div
+          className="absolute inset-0 z-20 pointer-events-none"
+          style={{
+            background: useTransform(
+              () =>
+                `radial-gradient(circle at ${(x.get() + 0.5) * 100}% ${(y.get() + 0.5) * 100}%, rgba(255,255,255,0.15) 0%, transparent 50%)`
+            ),
+          }}
+        />
+      )}
+      <div style={{ transform: shouldReduceMotion ? "none" : "translateZ(20px)" }} className="h-full w-full">
+        {children}
+      </div>
+    </motion.div>
+  );
+};
+
 const ProjectsSection = () => {
  return (
-  <section id="projects" className="py-24 px-4 relative">
+  <section id="projects" className="py-24 px-4 relative perspective-[1000px]">
    <div className="container mx-auto max-w-5xl">
     <motion.h2
      initial={{ opacity: 0, y: 20 }}
@@ -41,42 +101,42 @@ const ProjectsSection = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="group bg-card rounded-lg overflow-hidden shadow-xs h-full flex flex-col"
+        className="group bg-card/80 backdrop-blur-md rounded-2xl border border-white/5 overflow-hidden shadow-xl h-full flex flex-col"
        >
         <Link to={`/project/${project.id}`} className="block h-full flex flex-col">
          <div className="h-48 overflow-hidden relative">
-          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent z-10" />
           <img
            src={project.mainImage}
            alt={project.title}
-           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           />
          </div>
          <div className="p-6 flex-1 flex flex-col">
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="flex flex-wrap gap-2 mb-4 relative z-20">
            {project.tags.slice(0, 3).map((tag, i) => (
             <span
              key={i}
-             className="font-body px-2 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary border border-primary/20"
+             className="font-body px-2 py-1 text-xs font-medium rounded-full bg-primary/20 text-primary border border-primary/30"
             >
              {tag}
             </span>
            ))}
            {project.tags.length > 3 && (
-            <span className="font-body px-2 py-1 text-xs font-medium rounded-full bg-secondary text-secondary-foreground">
+            <span className="font-body px-2 py-1 text-xs font-medium rounded-full bg-secondary/50 border border-white/10 text-secondary-foreground">
              +{project.tags.length - 3}
             </span>
            )}
           </div>
-          <h3 className="font-heading text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
+          <h3 className="font-heading text-xl font-bold mb-2 group-hover:text-pop transition-colors">
            {project.title}
           </h3>
           <p className="font-body text-muted-foreground text-sm mb-4 line-clamp-3 flex-1">
            {project.overview}
           </p>
 
-          <div className="mt-auto pt-4 flex justify-between items-center border-t border-border/50">
-           <span className="text-sm font-medium text-primary flex items-center">
+          <div className="mt-auto pt-4 flex justify-between items-center border-t border-white/5">
+           <span className="text-sm font-bold text-pop flex items-center group-hover:translate-x-1 transition-transform">
             View Details <ArrowRight size={16} className="ml-1" />
            </span>
           </div>
@@ -96,55 +156,53 @@ const ProjectsSection = () => {
        whileInView={{ opacity: 1, y: 0 }}
        viewport={{ once: true }}
        transition={{ duration: 0.5, delay: key * 0.1 }}
-       whileHover={{ y: -10 }}
-       className="group bg-card rounded-lg overflow-hidden shadow-xs h-full flex flex-col"
+       className="h-full"
       >
-       <Link to={`/project/${project.id}`} className="block h-full flex flex-col">
-        <div className="h-48 overflow-hidden relative">
-         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
-         <img
-          src={project.mainImage}
-          alt={project.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-         />
-        </div>
-        <div className="p-6 flex-1 flex flex-col">
-         <div className="flex flex-wrap gap-2 mb-4">
-          {project.tags.slice(0, 3).map((tag, i) => (
-           <span
-            key={i}
-            className="font-body px-2 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary border border-primary/20"
-           >
-            {tag}
-           </span>
-          ))}
-          {project.tags.length > 3 && (
-           <span className="font-body px-2 py-1 text-xs font-medium rounded-full bg-secondary text-secondary-foreground">
-            +{project.tags.length - 3}
-           </span>
-          )}
+       <TiltCard className="group relative bg-card/80 backdrop-blur-md rounded-2xl border border-white/5 overflow-hidden shadow-2xl h-full flex flex-col transition-colors hover:border-white/20">
+        <Link to={`/project/${project.id}`} className="block h-full flex flex-col relative z-30">
+         <div className="h-48 overflow-hidden relative">
+          <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent z-10 opacity-80 group-hover:opacity-60 transition-opacity" />
+          <img
+           src={project.mainImage}
+           alt={project.title}
+           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          />
          </div>
-         <h3 className="font-heading text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
-          {project.title}
-         </h3>
-         <p className="font-body text-muted-foreground text-sm mb-4 line-clamp-3 flex-1">
-          {project.overview}
-         </p>
+         <div className="p-6 flex-1 flex flex-col bg-card/50">
+          <div className="flex flex-wrap gap-2 mb-4 relative z-20">
+           {project.tags.slice(0, 3).map((tag, i) => (
+            <span
+             key={i}
+             className="font-body px-2 py-1 text-xs font-medium rounded-full bg-primary/20 text-primary border border-primary/30"
+            >
+             {tag}
+            </span>
+           ))}
+           {project.tags.length > 3 && (
+            <span className="font-body px-2 py-1 text-xs font-medium rounded-full bg-secondary/50 border border-white/10 text-secondary-foreground">
+             +{project.tags.length - 3}
+            </span>
+           )}
+          </div>
+          <h3 className="font-heading text-xl font-bold mb-2 group-hover:text-pop transition-colors drop-shadow-md">
+           {project.title}
+          </h3>
+          <p className="font-body text-muted-foreground text-sm mb-4 line-clamp-3 flex-1 relative z-20">
+           {project.overview}
+          </p>
 
-         <div className="mt-auto pt-4 flex justify-between items-center border-t border-border/50">
-          <span className="text-sm font-medium text-primary flex items-center">
-           View Details <ArrowRight size={16} className="ml-1" />
-          </span>
-          <div className="flex space-x-3">
-           {/* Icons strictly for quick access if needed, but the whole card is clickable */}
+          <div className="mt-auto pt-4 flex justify-between items-center border-t border-white/5">
+           <span className="text-sm font-bold text-pop flex items-center group-hover:translate-x-1 transition-transform relative z-20">
+            View Details <ArrowRight size={16} className="ml-1" />
+           </span>
           </div>
          </div>
-        </div>
-       </Link>
+        </Link>
+       </TiltCard>
       </motion.div>
      ))}
     </div>
-    <div className="text-center mt-12">
+    <div className="text-center mt-12 relative z-50">
      <a
       className="cosmic-button w-fit flex items-center mx-auto gap-2"
       target="_blank"
