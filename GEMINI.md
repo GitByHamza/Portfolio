@@ -4,7 +4,7 @@ Welcome to the definitive architectural guide and project blueprint for **Hamza'
 
 ---
 
-## 🚀 Project Overview
+## 🚀 Project Overview 
 
 A high-performance, visually stunning, and interactive personal portfolio showcasing full-stack expertise, AI integration, and modern web aesthetics. This project is built with a focus on immersive UX, leveraging 3D graphics, smooth animations, and a robust backend.
 
