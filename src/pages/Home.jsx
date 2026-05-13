@@ -3,19 +3,20 @@ import HeroSection from '../components/HeroSection'
 import AboutSection from '../components/AboutSection'
 import SkillsSection from '../components/SkillsSection'
 import ProjectsSection from '../components/ProjectsSection'
+import TestimonialsSection from '../components/TestimonialsSection'
 
 const Home = () => {
- return (
-  <>
-   {/* Main Content */}
-   <main>
-    <HeroSection />
-    <AboutSection />
-    <SkillsSection />
-    <ProjectsSection />
-   </main>
-  </>
- )
+  return (
+    <>
+      <main>
+        <HeroSection />
+        <AboutSection />
+        <ProjectsSection />
+        <SkillsSection />
+        <TestimonialsSection />
+      </main>
+    </>
+  )
 }
 
 export default Home

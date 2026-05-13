@@ -122,16 +122,17 @@ export const Footer = () => {
 
       <motion.div variants={itemVariants} className="flex gap-4 pt-4">
        {[
-        { icon: Github,    href: "https://github.com/GitByHamza" },
-        { icon: Linkedin,  href: "#" },
-        { icon: Instagram, href: "#" },
-        { icon: Twitter,   href: "#" },
+        { icon: Github,    href: "https://github.com/GitByHamza", label: "GitHub" },
+        { icon: Linkedin,  href: "https://linkedin.com/in/hamza-p-v", label: "LinkedIn" },
+        { icon: Instagram, href: "#", label: "Instagram" },
+        { icon: Twitter,   href: "#", label: "Twitter" },
        ].map((social, index) => (
         <a
          key={index}
          href={social.href}
          target="_blank"
          rel="noopener noreferrer"
+         aria-label={social.label}
          className="p-4 rounded-full bg-secondary/30 border border-white/5 hover:bg-primary/20 hover:border-primary/30 text-muted-foreground hover:text-primary transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_20px_rgba(79,142,247,0.2)]"
         >
          <social.icon size={22} />
@@ -156,7 +157,7 @@ export const Footer = () => {
           name="name"
           required
           onChange={handleChange}
-          className="w-full px-5 py-4 rounded-xl bg-black/40 border border-white/10 focus:border-primary focus:ring-4 focus:ring-primary/20 focus:bg-black/60 outline-none transition-all hover:border-white/20 text-foreground"
+          className="w-full px-5 py-4 rounded-xl bg-background border border-border focus:border-primary focus:ring-4 focus:ring-primary/20 outline-none transition-all hover:border-primary/40 text-foreground placeholder:text-muted-foreground/60"
           placeholder="John Doe"
          />
         </div>
@@ -167,7 +168,7 @@ export const Footer = () => {
           name="country"
           required
           onChange={handleChange}
-          className="w-full px-5 py-4 rounded-xl bg-black/40 border border-white/10 focus:border-primary focus:ring-4 focus:ring-primary/20 focus:bg-black/60 outline-none transition-all hover:border-white/20 text-foreground"
+          className="w-full px-5 py-4 rounded-xl bg-background border border-border focus:border-primary focus:ring-4 focus:ring-primary/20 outline-none transition-all hover:border-primary/40 text-foreground placeholder:text-muted-foreground/60"
           placeholder="Switzerland"
          />
         </div>
@@ -181,7 +182,7 @@ export const Footer = () => {
          type="email"
          required
          onChange={handleChange}
-         className="w-full px-5 py-4 rounded-xl bg-black/40 border border-white/10 focus:border-primary focus:ring-4 focus:ring-primary/20 focus:bg-black/60 outline-none transition-all hover:border-white/20 text-foreground"
+         className="w-full px-5 py-4 rounded-xl bg-background border border-border focus:border-primary focus:ring-4 focus:ring-primary/20 outline-none transition-all hover:border-primary/40 text-foreground placeholder:text-muted-foreground/60"
          placeholder="john@example.com"
         />
        </div>
@@ -194,7 +195,7 @@ export const Footer = () => {
          required
          rows={5}
          onChange={handleChange}
-         className="w-full px-5 py-4 rounded-xl bg-black/40 border border-white/10 focus:border-primary focus:ring-4 focus:ring-primary/20 focus:bg-black/60 outline-none transition-all hover:border-white/20 text-foreground resize-none"
+         className="w-full px-5 py-4 rounded-xl bg-background border border-border focus:border-primary focus:ring-4 focus:ring-primary/20 outline-none transition-all hover:border-primary/40 text-foreground placeholder:text-muted-foreground/60 resize-none"
          placeholder="Tell me about your project..."
         />
        </div>

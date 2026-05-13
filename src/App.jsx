@@ -13,6 +13,8 @@ import Navbar from "./components/Navbar"
 import AuroraBackground from "./components/AuroraBackground"
 import PageCurtain from "./components/PageCurtain"
 
+import CustomCursor from "./components/CustomCursor"
+
 function SmoothScroll() {
   const shouldReduceMotion = useReducedMotion();
 

@@ -1,9 +1,5 @@
 @import "tailwindcss";
 
-* {
- @apply border-border;
-}
-
 html {
  @apply scroll-smooth;
 }
@@ -25,12 +21,15 @@ body {
  --color-background: hsl(var(--background));
  --color-foreground: hsl(var(--foreground));
 
-
  --color-primary: hsl(var(--primary));
  --color-primary-foreground: hsl(var(--primary-foreground));
  --color-pop: hsl(var(--pop));
+ --color-accent: hsl(var(--accent));
+ --color-success: hsl(142 71% 45%);
 
  --color-card: hsl(var(--card));
+ --color-muted: hsl(var(--muted));
+ --color-muted-foreground: hsl(var(--muted-foreground));
 
  --animate-float: float 6s ease-in-out infinite;
  --animate-pulse-subtle: pulse-subtle 4s ease-in-out infinite;
@@ -40,6 +39,10 @@ body {
  --animate-fade-in-delay-3: fade-in 0.7s ease-out 0.6s forwards;
  --animate-fade-in-delay-4: fade-in 0.7s ease-out 0.8s forwards;
  --animate-meteor: meteor 5s linear infinite;
+ --animate-spin-slow: spin-slow 20s linear infinite;
+ --animate-shimmer: shimmer 2.5s linear infinite;
+ --animate-border-rotate: border-rotate 4s linear infinite;
+ --animate-gradient-flow: gradient-flow 4s ease infinite;
 
  @keyframes float {
 
@@ -77,11 +80,32 @@ body {
   }
  }
 
- @keyframes meteor {
-  0% {
-   transform: rotate(225deg) translateX(100px);
-   opacity: 0;
+  @keyframes spin-slow {
+   from { transform: rotate(0deg); }
+   to { transform: rotate(360deg); }
   }
+
+  @keyframes shimmer {
+   0% { background-position: -200% center; }
+   100% { background-position: 200% center; }
+  }
+
+  @keyframes border-rotate {
+   0% { background-position: 0% 50%; }
+   50% { background-position: 100% 50%; }
+   100% { background-position: 0% 50%; }
+  }
+
+  @keyframes count-up {
+   from { opacity: 0; transform: translateY(20px); }
+   to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes meteor {
+   0% {
+    transform: rotate(225deg) translateX(100px);
+    opacity: 0;
+   }
 
   10% {
    opacity: 1;
@@ -100,29 +124,36 @@ body {
 
 @layer base {
  :root {
-  --background: 210 40% 98%;
-  --foreground: 222 47% 11%;
+  --background: 210 100% 98%;
+  --foreground: 224 71% 4%;
   --card: 0 0% 100%;
-  --primary: 217 91% 64%;
+  --muted: 210 40% 92%;
+  --muted-foreground: 215 25% 30%;
+  --primary: 226 70% 55%; /* Rich Indigo */
   --primary-foreground: 210 40% 98%;
-  --pop: 190 100% 50%;
-  --border: 214 32% 91%;
+  --pop: 189 95% 45%; /* Electric Cyan */
+  --accent: 262 80% 55%; /* Vibrant Purple */
+  --border: 214.3 31.8% 85%;
 
   --font-heading: "Anybody", sans-serif;
   --font-body: "Sora", sans-serif;
  }
 
  .dark {
-  --background: 225 43% 5%;
-  --foreground: 213 31% 91%;
+  --background: 230 50% 3%;
+  --foreground: 210 40% 98%;
+  --card: 230 50% 6%;
+  --muted: 230 50% 10%;
+  --muted-foreground: 215 20% 75%;
+  --primary: 230 85% 65%; /* Bright Indigo */
+  --primary-foreground: 230 50% 5%;
+  --pop: 190 100% 50%; /* Pure Cyan */
+  --accent: 270 90% 70%; /* Neon Purple */
+  --border: 230 50% 15%;
+ }
 
-  --card: 225 43% 8%;
-
-  --primary: 217 91% 64%;
-  --primary-foreground: 213 31% 91%;
-  --pop: 190 100% 50%;
-
-  --border: 217 33% 20%;
+ *:focus-visible {
+  @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
  }
 }
 
@@ -225,14 +256,46 @@ body {
  will-change: box-shadow, border-color;
 }
 
+@utility animate-spin-slow {
+ animation: spin-slow 20s linear infinite;
+}
+
+@utility animate-shimmer {
+ background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+ background-size: 200% 100%;
+ animation: shimmer 2.5s linear infinite;
+}
+
+@utility glassmorphism {
+ @apply bg-card/40 backdrop-blur-xl border border-white/10;
+}
+
+@utility section-glow {
+ @apply absolute inset-0 pointer-events-none;
+ background: radial-gradient(ellipse 80% 50% at 50% -20%, hsl(var(--primary)/0.15), transparent);
+}
+
 @keyframes glow-breathe {
  0% {
   box-shadow: 0 0 5px rgba(139, 92, 246, 0.3);
   border-color: rgba(139, 92, 246, 0.3);
  }
-
  100% {
   box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
   border-color: rgba(139, 92, 246, 0.8);
  }
+}
+
+/* Scrollbar hide utility */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Timeline connector line */
+.timeline-line {
+ position: absolute;
+ left: 1.25rem;
+ top: 2.5rem;
+ bottom: -1.5rem;
+ width: 1px;
+ background: linear-gradient(to bottom, hsl(var(--primary)/0.5), transparent);
 }

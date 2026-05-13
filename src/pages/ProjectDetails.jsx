@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, ExternalLink, Github, CheckCircle, X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, Github, CheckCircle, X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useReducedMotion } from "framer-motion";
 import { projectsData } from "../data/projects";
 import { cn } from "../lib/utils";
+import { ProjectImage } from "../components/Skeleton";
 
 const InteractiveGalleryCard = ({ children, onClick }) => {
   const ref = useRef(null);
@@ -131,6 +132,9 @@ const InteractiveDataCard = ({ children, className }) => {
 const ProjectDetails = () => {
  const { id } = useParams();
  const project = projectsData.find((p) => p.id === parseInt(id));
+ const currentIndex = projectsData.findIndex((p) => p.id === parseInt(id));
+ const nextProject = currentIndex !== -1 ? projectsData[(currentIndex + 1) % projectsData.length] : null;
+ const prevProject = currentIndex !== -1 ? projectsData[(currentIndex - 1 + projectsData.length) % projectsData.length] : null;
  const shouldReduceMotion = useReducedMotion();
 
  const [modalOpen, setModalOpen] = useState(false);
@@ -314,9 +318,25 @@ const ProjectDetails = () => {
     </Link>
 
     <motion.div variants={containerVariants} initial="hidden" animate="visible">
-     <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl font-bold mb-6 font-heading text-center tracking-tight">
+     <motion.h1 
+      layoutId={`project-title-${project.id}`}
+      variants={itemVariants} 
+      className="text-5xl md:text-7xl font-bold mb-6 font-heading text-center tracking-tight"
+     >
       {project.title}
      </motion.h1>
+
+     <motion.div 
+      layoutId={`project-card-${project.id}`}
+      variants={itemVariants}
+      className="w-full max-w-4xl mx-auto aspect-video rounded-3xl overflow-hidden mb-16 shadow-2xl border border-white/10"
+     >
+       <ProjectImage 
+         src={project.mainImage} 
+         alt={project.title}
+         className="w-full h-full"
+       />
+     </motion.div>
      <motion.p variants={itemVariants} className="text-xl text-muted-foreground mb-10 max-w-3xl font-body leading-relaxed mx-auto text-center">
       {project.overview}
      </motion.p>
@@ -470,6 +490,70 @@ const ProjectDetails = () => {
         </div>
        </InteractiveDataCard>
       </motion.div>
+     </div>
+    </motion.div>
+
+    {/* ─── Next / Prev Project Navigation ─── */}
+    <motion.div
+     initial={{ opacity: 0, y: 20 }}
+     whileInView={{ opacity: 1, y: 0 }}
+     viewport={{ once: true }}
+     transition={{ duration: 0.5 }}
+     className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-16 pt-12 border-t border-white/5"
+    >
+     {prevProject && (
+      <Link
+       to={`/project/${prevProject.id}`}
+       className="group flex items-center gap-4 p-5 rounded-2xl bg-card/40 backdrop-blur-sm border border-white/5 hover:border-primary/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(79,142,247,0.1)]"
+      >
+       <div className="p-2 rounded-full bg-secondary/50 group-hover:bg-primary/20 transition-colors border border-white/5">
+        <ChevronLeft size={18} className="text-primary group-hover:-translate-x-0.5 transition-transform" />
+       </div>
+       <div className="text-left">
+        <div className="text-xs text-muted-foreground font-body mb-0.5">Previous Project</div>
+        <div className="font-heading font-semibold text-foreground group-hover:text-primary transition-colors text-sm line-clamp-1">{prevProject.title}</div>
+       </div>
+      </Link>
+     )}
+     {nextProject && (
+      <Link
+       to={`/project/${nextProject.id}`}
+       className="group flex items-center gap-4 p-5 rounded-2xl bg-card/40 backdrop-blur-sm border border-white/5 hover:border-primary/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(79,142,247,0.1)] md:flex-row-reverse md:text-right"
+      >
+       <div className="p-2 rounded-full bg-secondary/50 group-hover:bg-primary/20 transition-colors border border-white/5 flex-shrink-0">
+        <ChevronRight size={18} className="text-primary group-hover:translate-x-0.5 transition-transform" />
+       </div>
+       <div className="text-left md:text-right">
+        <div className="text-xs text-muted-foreground font-body mb-0.5">Next Project</div>
+        <div className="font-heading font-semibold text-foreground group-hover:text-primary transition-colors text-sm line-clamp-1">{nextProject.title}</div>
+       </div>
+      </Link>
+     )}
+    </motion.div>
+
+    {/* ─── Conversion CTA ─── */}
+    <motion.div
+     initial={{ opacity: 0, y: 30 }}
+     whileInView={{ opacity: 1, y: 0 }}
+     viewport={{ once: true }}
+     transition={{ duration: 0.6 }}
+     className="mt-12 p-10 md:p-14 rounded-3xl border border-white/10 bg-primary/5 backdrop-blur-xl text-center relative overflow-hidden"
+    >
+     <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-pop/5 pointer-events-none" />
+     <div className="relative z-10">
+      <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium font-body mb-5">
+       Let's Work Together
+      </span>
+      <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4 text-foreground">
+       Interested in a{' '}
+       <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-pop">similar project?</span>
+      </h2>
+      <p className="font-body text-muted-foreground text-lg mb-8 max-w-lg mx-auto leading-relaxed">
+       Let's turn your vision into a high-performance digital reality. Reach out and let's build something exceptional together.
+      </p>
+      <a href="/#contact-footer" className="cosmic-button inline-flex items-center gap-2 text-base">
+       Start a Conversation <ArrowRight size={18} />
+      </a>
      </div>
     </motion.div>
    </div>
