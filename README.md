@@ -8,7 +8,11 @@ Welcome to the definitive architectural guide and project blueprint for **Hamza'
 
 A high-performance, visually stunning, and interactive personal portfolio showcasing full-stack expertise, AI integration, and modern web aesthetics. This project is built with a focus on immersive UX, leveraging 3D graphics, smooth animations, and a robust backend.
 
+<<<<<<< HEAD
 - **URL:** [Live Demo](https://texcodes.com) (Placeholder)
+=======
+- **URL:** [Live Demo](https://your-portfolio-url.com) (Placeholder)
+>>>>>>> NewLook
 - **Primary Focus:** UI/UX Excellence, 3D Interactivity, Full-stack Capabilities.
 
 ---

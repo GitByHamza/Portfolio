@@ -57,11 +57,11 @@ export const projectsData = [
             { category: "Architecture", tech: "SaaS, Multi-tenant, RESTful API" }
         ],
         impact: "2,800+ Businesses",
-        mainImage: "/myls.jpeg",
+        mainImage: "/myls.png",
         images: [
-            "/myls1.jpeg",
-            "/myls2.jpeg",
-            "/myls3.jpeg"
+            "/myls1.png",
+            "/myls2.png",
+            "/myls3.png"
         ],
         demoUrl: "https://app.myls.ch",
         githubUrl: "#",
