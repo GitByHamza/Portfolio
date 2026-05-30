@@ -1,5 +1,40 @@
 export const projectsData = [
     {
+        id: 6,
+        title: "Toolkito — Micro SaaS Toolkit",
+        overview: "A live production Micro SaaS platform offering 10+ professional-grade AI-powered tools for images, PDFs, and videos — completely free, no signup required, no watermarks.",
+        description: "Toolkito is a fully self-built Micro SaaS product live at toolkito.app. It provides professional-grade browser-based tools including an AI Background Remover, AI Image Upscaler (2x/4x/8x), Image to Text OCR, Image Compressor, Video to MP3 Converter, and an all-in-one PDF Toolkit (merge, split, compress, convert). The platform features a freemium usage model with daily limits, a blog for SEO content, a pricing page, and a clean modern UI. Built from scratch as a solo product — from design and development to deployment and SEO strategy.",
+        features: [
+            "AI Background Remover (PNG/JPG/WebP, 5/day free)",
+            "AI Image Upscaler — 2x, 4x, 8x quality enhancement",
+            "Image to Text OCR (screenshots, photos, scanned docs)",
+            "Image Compressor — up to 80% size reduction, no quality loss",
+            "Video to MP3 Converter (MP4, AVI, MOV support)",
+            "PDF Tools — Merge, Split, Compress, PDF to PNG/Word",
+            "Freemium model with daily usage limits",
+            "SEO Blog with tool-specific content",
+            "No signup, no watermarks — completely free tier",
+            "Responsive, modern UI with dark mode support",
+        ],
+        techStack: [
+            { category: "Frontend", tech: "Next.js, Tailwind CSS, React" },
+            { category: "Backend", tech: "Next.js API Routes, Node.js" },
+            { category: "AI / Processing", tech: "Sharp, FFmpeg, Tesseract.js, Remove.bg API" },
+            { category: "Database", tech: "Supabase (PostgreSQL)" },
+            { category: "Deployment", tech: "Vercel, Custom Domain" },
+        ],
+        impact: "Live Production SaaS",
+        mainImage: "/toolkito.png",
+        images: [
+            "/toolkito.png",
+        ],
+        demoUrl: "https://toolkito.app",
+        githubUrl: "#",
+        tags: ["Next.js", "Micro SaaS", "AI Tools", "Tailwind CSS", "Supabase", "Vercel", "Node.js"],
+    },
+
+
+    {
         id: 1,
         title: "Myls (SaaS Platform)",
         overview: "A production SaaS platform for a Swiss company with 2,800+ active business locations, enabling businesses to manage their presence across 37+ platforms (Google, Facebook, Apple Maps, etc.) from a single dashboard.",
@@ -21,6 +56,7 @@ export const projectsData = [
             { category: "Database", tech: "MySQL" },
             { category: "Architecture", tech: "SaaS, Multi-tenant, RESTful API" }
         ],
+        impact: "2,800+ Businesses",
         mainImage: "/myls.jpeg",
         images: [
             "/myls1.jpeg",
@@ -54,6 +90,7 @@ export const projectsData = [
             { category: "Messaging", tech: "WhatsApp Business API" },
             { category: "Database", tech: "MySQL, MongoDB" }
         ],
+        impact: "24/7 AI Automation",
         mainImage: "/ai/main.png",
         images: [
             "/ai/pipelines.png",
@@ -113,6 +150,7 @@ export const projectsData = [
             { category: "Database", tech: "MongoDB, MySQL" },
             { category: "Languages", tech: "JavaScript, PHP" }
         ],
+        impact: "Full E-commerce Suite",
         mainImage: "/hard.png",
         images: [
             "/hard.png",
@@ -145,6 +183,7 @@ export const projectsData = [
             { category: "Real-time", tech: "Socket.io" },
             { category: "Database", tech: "MongoDB" }
         ],
+        impact: "Real-time Messaging",
         mainImage: "/chatapp.png",
         images: [
             "/chatapp.png",
