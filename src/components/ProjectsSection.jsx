@@ -25,6 +25,9 @@ const tagIconMap = {
   'Supabase':     'logos:supabase-icon',
   'Vercel':       'logos:vercel-icon',
   'Micro SaaS':   'fluent:rocket-16-filled',
+  'Prisma':       'logos:prisma',
+  'PostgreSQL':   'logos:postgresql',
+  'TypeScript':   'logos:typescript-icon',
 }
 
 const TiltCard = ({ children, className }) => {

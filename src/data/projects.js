@@ -1,5 +1,44 @@
 export const projectsData = [
     {
+        id: 7,
+        title: "TXS — Enterprise Tech Store & PC Builder OS",
+        overview: "A custom high-end e-commerce and retail management ecosystem built specifically for computer, gaming hardware, and electronics retailers — featuring an automated PC Builder compatibility engine, multi-branch inventory, and serial number warranty tracking.",
+        description: "TXS is a production-grade retail OS tailored for technology and hardware retailers. It unifies physical branch inventories (e.g. Hafeez Centre, Techno City) and online storefront sales into a single screen. Features a custom PC Builder engine that automatically validates hardware compatibility (CPU sockets AM5/LGA1700, DDR4/DDR5 RAM, wattage headroom, and GPU chassis clearance) in real-time. Includes hardware serial number lifecycle tracking (IN_STOCK, SOLD, RMA) to eliminate counterfeit returns and streamline warranty claims.",
+        features: [
+            "Real-Time PC Builder Compatibility Engine (Sockets, Form Factor, Wattage)",
+            "Multi-Branch Stock Synchronization (Physical Outlets + Online Store)",
+            "Hardware Serial Number & RMA Warranty Tracking",
+            "Granular Role-Based Access Control (Super Admin, Branch Manager, Staff)",
+            "Dynamic CMS & Site Control Panel (Themes, Menus, Branding)",
+            "Automated WhatsApp Order & Custom PC Build Sharing",
+            "High-Performance Dark Cyberpunk Luxury Aesthetics",
+            "Full Discount Code & Promotional Campaign Engine",
+            "Automated PDF Receipt & Template Generation",
+            "Zero-Friction 1-Click Administrative Demo Mode"
+        ],
+        techStack: [
+            { category: "Frontend", tech: "Next.js 16 (App Router), React 19, Tailwind CSS 4" },
+            { category: "Backend", tech: "Next.js Server Actions, Node.js" },
+            { category: "Database & ORM", tech: "PostgreSQL, Prisma ORM v7" },
+            { category: "Auth & Security", tech: "NextAuth.js, Granular RBAC (Spatie-style)" },
+            { category: "Deployment", tech: "Vercel, Hosted PostgreSQL" },
+        ],
+        impact: "Enterprise Tech Retail OS",
+        mainImage: "/hard.png",
+        images: [
+            "/hard.png",
+            "/product.png",
+            "/checkout.png",
+            "/details.png",
+            "/modal.png"
+        ],
+        demoUrl: "https://store-demo-eight.vercel.app/",
+        offerUrl: "https://offer-bay.vercel.app/",
+        githubUrl: "https://github.com/GitByHamza/Enterprise-Tech-Ecom",
+        tags: ["Next.js", "React", "Prisma", "PostgreSQL", "Tailwind CSS", "TypeScript"],
+    },
+
+    {
         id: 6,
         title: "Toolkito — Micro SaaS Toolkit",
         overview: "A live production Micro SaaS platform offering 10+ professional-grade AI-powered tools for images, PDFs, and videos — completely free, no signup required, no watermarks.",

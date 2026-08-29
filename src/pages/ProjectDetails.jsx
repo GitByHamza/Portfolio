@@ -352,6 +352,16 @@ const ProjectDetails = () => {
         <ExternalLink size={18} /> Live Demo
        </a>
       )}
+      {project.offerUrl && (
+       <a
+        href={project.offerUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="px-8 py-3 rounded-full border border-amber-500/60 text-amber-300 font-medium hover:bg-amber-500/10 transition-colors flex items-center gap-2 bg-secondary/30 backdrop-blur-sm hover:border-amber-400"
+       >
+        <span>⚡</span> View Offer & Packages
+       </a>
+      )}
       {project.githubUrl && project.githubUrl !== "#" && (
        <a
         href={project.githubUrl}
