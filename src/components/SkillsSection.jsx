@@ -6,6 +6,7 @@ import { motion, useAnimationFrame, useMotionValue, useSpring, useTransform, use
 const skills = [
   { name: 'HTML / CSS',   icon: 'logos:html-5',              level: 85, category: 'frontend' },
   { name: 'JavaScript',   icon: 'logos:javascript',          level: 65, category: 'frontend' },
+  { name: 'TypeScript',   icon: 'logos:typescript-icon',     level: 80, category: 'frontend' },
   { name: 'React',        icon: 'logos:react',               level: 80, category: 'frontend' },
   { name: 'Vue 3',        icon: 'logos:vue',                 level: 80, category: 'frontend' },
   { name: 'Nuxt.js (TS)', icon: 'logos:nuxt-icon',           level: 75, category: 'frontend' },
@@ -15,16 +16,16 @@ const skills = [
   { name: 'Node.js',      icon: 'logos:nodejs-icon',         level: 80, category: 'backend' },
   { name: 'Express',      icon: 'skill-icons:expressjs-light', level: 75, category: 'backend' },
   { name: 'Laravel 12',   icon: 'logos:laravel',             level: 85, category: 'backend' },
-  { name: 'MongoDB',      icon: 'logos:mongodb-icon',        level: 70, category: 'database' },
+  { name: 'PostgreSQL',   icon: 'logos:postgresql',          level: 85, category: 'database' },
   { name: 'MySQL',        icon: 'logos:mysql-icon',          level: 65, category: 'database' },
+  { name: 'MongoDB',      icon: 'logos:mongodb-icon',        level: 70, category: 'database' },
+  { name: 'Prisma ORM',   icon: 'logos:prisma',              level: 80, category: 'database' },
   { name: 'Git / GitHub', icon: 'logos:git-icon',            level: 90, category: 'tools' },
   { name: 'Docker',       icon: 'logos:docker-icon',         level: 70, category: 'tools' },
   { name: 'VS Code',      icon: 'logos:visual-studio-code',  level: 95, category: 'tools' },
   // ── DevOps / Deployment ──
   { name: 'Vercel',       icon: 'logos:vercel-icon',         level: 90, category: 'devops' },
   { name: 'Supabase',     icon: 'logos:supabase-icon',       level: 80, category: 'devops' },
-  { name: 'Docker',       icon: 'logos:docker-icon',         level: 70, category: 'devops' },
-  { name: 'Git / GitHub', icon: 'logos:git-icon',            level: 90, category: 'devops' },
   { name: 'Linux / VPS',  icon: 'logos:linux-tux',           level: 65, category: 'devops' },
   { name: 'CI / CD',      icon: 'devicon:githubactions',     level: 60, category: 'devops' },
 ]

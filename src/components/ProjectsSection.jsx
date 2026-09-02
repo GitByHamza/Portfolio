@@ -28,6 +28,8 @@ const tagIconMap = {
   'Prisma':       'logos:prisma',
   'PostgreSQL':   'logos:postgresql',
   'TypeScript':   'logos:typescript-icon',
+  'Recharts':     'simple-icons:recharts',
+  'shadcn/ui':    'simple-icons:shadcnui',
 }
 
 const TiltCard = ({ children, className }) => {

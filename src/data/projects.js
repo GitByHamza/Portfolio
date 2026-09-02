@@ -1,5 +1,48 @@
 export const projectsData = [
     {
+        id: 8,
+        title: "MediCore — Enterprise Hospital Management System (HMS)",
+        overview: "A production-grade, multi-portal healthcare management ecosystem featuring a 4-level authentication panel (Super Admin, Doctor, Staff, Patient), config-driven clinical interfaces, interactive 32-tooth dental charting, and real-time hospital operations.",
+        description: "MediCore HMS is an enterprise healthcare ERP engineered for multi-specialty hospitals, surgical clinics, and healthcare networks. Built on a headless architecture pairing a high-throughput Laravel 12 REST API with a Next.js 14/16 App Router frontend, it features a comprehensive 4-level login panel and multi-guard access control system tailored for four distinct user tiers: Super Admin (hospital governance, financial P&L, bed occupancy, doctor rosters), Doctor (specialty-tailored clinical dashboards, EMR SOAP notes, diagnostic orders), Staff (nursing triage, pharmacy dispensing, billing desks), and Patient (appointment scheduling, medical records, digital bill payments). It includes 1-click zero-friction demo sandbox authentication for all 4 roles, a dynamic config-driven physician portal where clinical modules (ICU, OT, Dental) toggle based on JSON schema, an interactive SVG 32-tooth dental chart with FDI notation, live ward bed occupancy tracking, and Recharts analytics for hospital census and department workloads.",
+        features: [
+            "4-Level Role-Based Login Panel & Multi-Guard Auth (Super Admin, Doctor, Staff, Patient)",
+            "Instant 1-Click Demo Sandbox Switching Across All 4 Portal User Tiers",
+            "Super Admin Portal: Hospital governance, ward bed mapping, and department revenue analytics",
+            "Doctor Portal: Config-driven specialty views (OT, Dental, ICU) rendered dynamically via JSON configs",
+            "Interactive Clinical Dental Chart (32 teeth mapped with FDI notation & condition color coding)",
+            "Live Ward & Bed Occupancy Grid with Real-Time Available/Occupied/Cleaning Tracking",
+            "Patient Portal: Online appointment booking, lab results history, and digital invoice payment",
+            "Staff Portal: Front-desk triage, nursing workflows, and pharmacy medication dispensing",
+            "Super Admin Analytics Suite (Census, Department Revenue, Demographic KPIs via Recharts)",
+            "Robust Database Architecture (25 PostgreSQL tables, 20 Eloquent models, 27 API controllers)"
+        ],
+        techStack: [
+            { category: "Frontend", tech: "Next.js 14/16 (App Router), React 19, TypeScript, Tailwind CSS 4" },
+            { category: "Backend", tech: "PHP Laravel 12 (REST API), Laravel Sanctum (Multi-Guard Auth)" },
+            { category: "Access Control", tech: "4-Level RBAC Portals (Super Admin, Doctor, Staff, Patient)" },
+            { category: "Database & ORM", tech: "PostgreSQL, Eloquent ORM, Database Seeders & Factories" },
+            { category: "UI & Visuals", tech: "shadcn/ui, Recharts, Lucide Icons, Custom SVG Dental Engine" },
+            { category: "State & Data", tech: "TanStack React Query, Zustand, Axios, Zod Validation" },
+        ],
+        impact: "Enterprise Healthcare ERP",
+        mainImage: "/hms/landing.png",
+        images: [
+            "/hms/admin-dashboard.png",
+            "/hms/admin-analytics.png",
+            "/hms/admin-revenue.png",
+            "/hms/login.png",
+            "/hms/doctor-dental.png",
+            "/hms/doctor-dashboard.png",
+            "/hms/bed-management.png",
+            "/hms/patient-dashboard.png",
+            "/hms/staff-dashboard.png",
+        ],
+        demoUrl: "",
+        githubUrl: "https://github.com/GitByHamza/Hospital-Management-System",
+        tags: ["Laravel 12", "Next.js", "PostgreSQL", "Tailwind CSS", "Recharts", "TypeScript"],
+    },
+
+    {
         id: 7,
         title: "TXS — Enterprise Tech Store & PC Builder OS",
         overview: "A custom high-end e-commerce and retail management ecosystem built specifically for computer, gaming hardware, and electronics retailers — featuring an automated PC Builder compatibility engine, multi-branch inventory, and serial number warranty tracking.",

@@ -13,6 +13,13 @@ const Highlight = ({ children }) => (
 
 const experience = [
   {
+    year: '2026',
+    role: 'Full Stack Architect',
+    company: 'MediCore HMS & TXS Retail OS',
+    tech: 'Laravel 12, Next.js 16, PostgreSQL, Prisma, Recharts',
+    color: 'bg-pop',
+  },
+  {
     year: '2025 – Present',
     role: 'Full Stack Developer',
     company: 'MYLS — Switzerland',
@@ -24,7 +31,7 @@ const experience = [
     role: 'Full Stack Developer',
     company: 'Freelance / AI Projects',
     tech: 'WhatsApp AI Receptionist, CRM, Appointment Booking',
-    color: 'bg-pop',
+    color: 'bg-primary',
   },
 ]
 
@@ -94,11 +101,11 @@ const AboutSection = () => {
             </h3>
             <p className="font-body text-muted-foreground text-justify md:text-left leading-relaxed text-lg">
               I am a dedicated developer specializing in high-performance web solutions. 
-              With specialized experience at <Highlight>MYLS Platform</Highlight> and a focused freelance background, 
-              I transform complex requirements into scalable digital realities, specifically in the realms of <Highlight>E-commerce platforms</Highlight> and <Highlight>AI Automation Agents</Highlight>.
+              With specialized experience at <Highlight>MYLS Platform</Highlight> and building enterprise architectures, 
+              I transform complex requirements into scalable digital realities, specifically in the realms of <Highlight>Healthcare ERP Systems</Highlight>, <Highlight>Technology Retail OS</Highlight>, and <Highlight>AI Automation Agents</Highlight>.
             </p>
             <p className="font-body text-muted-foreground text-justify md:text-left leading-relaxed text-lg">
-              My expertise spans modern architectures like <Highlight>Vue 3</Highlight>, <Highlight>Nuxt TS</Highlight>, and <Highlight>Laravel 12</Highlight>. 
+              My expertise spans modern architectures like <Highlight>Next.js 16</Highlight>, <Highlight>Laravel 12</Highlight>, <Highlight>Vue 3</Highlight>, and <Highlight>PostgreSQL</Highlight>. 
               I love tackling technical challenges that push boundaries and deliver real-world business impact.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
