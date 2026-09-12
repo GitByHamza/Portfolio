@@ -51,7 +51,7 @@ function SmoothScroll() {
 
 // Layout wrapper for all editorial pages
 const MainLayout = () => (
-  <div className="w-full bg-[#F6F5F0] text-[#0F0F0F] min-h-screen flex flex-col justify-between">
+  <div className="w-full bg-[#F6F5F0] dark:bg-[#0F0F11] text-[#0F0F0F] dark:text-[#EDECE6] min-h-screen flex flex-col justify-between transition-colors duration-200">
     <Navbar />
     <div className="flex-1 w-full">
       <Outlet />
@@ -61,6 +61,16 @@ const MainLayout = () => (
 )
 
 function App() {
+  useEffect(() => {
+    // Initial theme sync
+    const savedTheme = localStorage.getItem('Theme')
+    if (savedTheme === 'Dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [])
+
   return (
     <>
       <PageCurtain />

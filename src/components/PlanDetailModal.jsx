@@ -14,9 +14,63 @@ import {
   ChevronRight,
 } from 'lucide-react'
 
-export default function PlanDetailModal({ plan, onClose, onOpenWhatsApp }) {
+const MODAL_I18N = {
+  en: {
+    badge_default: 'VERIFIED SCOPE SPECIFICATION',
+    plan_code: '// PLAN CODE:',
+    spec_suffix: 'FULL ARCHITECTURAL SPECIFICATION',
+    ideal_fit: 'IDEAL CLIENT PROFILE & BUSINESS FIT:',
+    artifacts_title: 'SYSTEM INTERFACE ARTIFACTS INCLUDED IN THIS TIER:',
+    artifacts_hint: 'CLICK ANY IMAGE TO EXPAND',
+    modules_title: 'COMPREHENSIVE DELIVERABLE MODULES & ARCHITECTURAL SCOPE:',
+    exclusions_title: 'STRICT SCOPE BOUNDARIES // WHAT IS NOT INCLUDED IN THIS TIER:',
+    milestones_title: 'ETHICAL MILESTONE PAYMENT & 100% OWNERSHIP PLEDGE',
+    deposit_label: '40% Deposit',
+    deposit_desc: 'Project initiation & repository setup',
+    demo_label: '40% Demo Milestone',
+    demo_desc: 'Approved staging build walkthrough',
+    handover_label: '20% Launch Handover',
+    handover_desc: 'Full GitHub repo & PostgreSQL transfer',
+    storefront_demo: 'TEST STOREFRONT DEMO',
+    admin_demo: 'TEST ADMIN DEMO',
+    claim_whatsapp: 'CLAIM PLAN ON WHATSAPP',
+    close: 'CLOSE',
+    expand: 'EXPAND',
+    lightbox_return: 'Click outside or press ESC to return to plan specification',
+    preview_tag: 'SYSTEM PREVIEW',
+    preview_counter: 'PREVIEW',
+  },
+  'ur-en': {
+    badge_default: 'TASDEEQ SHUDA SCOPE SPECIFICATION',
+    plan_code: '// PLAN CODE:',
+    spec_suffix: 'MUKAMMAL ARCHITECTURAL SPECIFICATION',
+    ideal_fit: 'DUKAN KA PROFILE AUR BUSINESS FIT:',
+    artifacts_title: 'IS PLAN MEIN SHAMIL SYSTEM INTERFACES:',
+    artifacts_hint: 'TASVEER BARI DEKHNE KE LIYE CLICK KAREIN',
+    modules_title: 'MUKAMMAL DELIVERABLE MODULES AUR ARCHITECTURAL SCOPE:',
+    exclusions_title: 'STRICT SCOPE BOUNDARIES // YEH CHEEZAIN IS PLAN MEIN SHAMIL NAHI:',
+    milestones_title: 'ETHICAL MILESTONE PAYMENT AUR 100% MALIKANA HUQOOQ:',
+    deposit_label: '40% Peshgi Raqam',
+    deposit_desc: 'Project initiation aur repository setup',
+    demo_label: '40% Demo Milestone',
+    demo_desc: 'Approved staging demo walkthrough',
+    handover_label: '20% Launch Handover',
+    handover_desc: 'Mukammal GitHub repo aur PostgreSQL database transfer',
+    storefront_demo: 'STOREFRONT DEMO DEKHEIN',
+    admin_demo: 'ADMIN DEMO DEKHEIN',
+    claim_whatsapp: 'YEH PLAN WHATSAPP PAR BOOK KAREIN',
+    close: 'BAND KAREIN',
+    expand: 'BARA KAREIN',
+    lightbox_return: 'Wapas aane ke liye bahar click karein ya ESC dabayein',
+    preview_tag: 'SYSTEM PREVIEW',
+    preview_counter: 'PREVIEW',
+  },
+}
+
+export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhatsApp }) {
   const bodyRef = useRef(null)
   const [expandedImageIndex, setExpandedImageIndex] = useState(null)
+  const t = MODAL_I18N[lang] || MODAL_I18N.en
 
   // Reset expanded image when plan changes
   useEffect(() => {
@@ -101,14 +155,14 @@ export default function PlanDetailModal({ plan, onClose, onOpenWhatsApp }) {
             <div className="space-y-1.5">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="tag-blue text-[10px]">
-                  {plan.badge || 'VERIFIED SCOPE SPECIFICATION'}
+                  {plan.badge || t.badge_default}
                 </span>
                 <span className="text-[11px] text-[#8E8D88] uppercase">
-                  // PLAN CODE: {plan.code}
+                  {t.plan_code} {plan.code}
                 </span>
               </div>
               <h2 className="text-2xl sm:text-4xl font-display uppercase tracking-tight text-[#0F0F0F] leading-tight">
-                {plan.name} — FULL ARCHITECTURAL SPECIFICATION
+                {plan.name} — {t.spec_suffix}
               </h2>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[#575652] text-[11px]">
                 <span className="text-[#1A4BFF] font-bold text-base">{plan.pricePkr}</span>
@@ -139,7 +193,7 @@ export default function PlanDetailModal({ plan, onClose, onOpenWhatsApp }) {
             {/* Ideal Client Profile */}
             <div className="p-4 bg-white border border-[rgba(15,15,15,0.12)] space-y-1 font-mono text-xs">
               <span className="text-[10px] text-[#8E8D88] uppercase tracking-widest block font-bold">
-                IDEAL CLIENT PROFILE & BUSINESS FIT:
+                {t.ideal_fit}
               </span>
               <p className="font-serif text-sm text-[#0F0F0F] leading-relaxed">
                 {plan.idealFor}
@@ -150,8 +204,8 @@ export default function PlanDetailModal({ plan, onClose, onOpenWhatsApp }) {
             {plan.artifacts && plan.artifacts.length > 0 && (
               <div className="space-y-3 font-mono text-xs">
                 <div className="text-[11px] font-bold uppercase tracking-wider text-[#0F0F0F] flex items-center justify-between">
-                  <span>SYSTEM INTERFACE ARTIFACTS INCLUDED IN THIS TIER:</span>
-                  <span className="text-[10px] text-[#8E8D88]">CLICK ANY IMAGE TO EXPAND</span>
+                  <span>{t.artifacts_title}</span>
+                  <span className="text-[10px] text-[#8E8D88]">{t.artifacts_hint}</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {plan.artifacts.map((art, idx) => (
@@ -174,7 +228,7 @@ export default function PlanDetailModal({ plan, onClose, onOpenWhatsApp }) {
                         {/* Hover Overlay with Zoom Icon */}
                         <div className="absolute inset-0 bg-[#0F0F0F]/0 group-hover:bg-[#0F0F0F]/30 flex items-center justify-center transition-colors">
                           <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/95 text-[#0F0F0F] px-2 py-1 font-mono text-[10px] font-bold flex items-center gap-1 shadow-md border border-[rgba(15,15,15,0.15)]">
-                            <ZoomIn size={12} className="text-[#1A4BFF]" /> EXPAND
+                            <ZoomIn size={12} className="text-[#1A4BFF]" /> {t.expand}
                           </span>
                         </div>
                       </div>
@@ -191,7 +245,7 @@ export default function PlanDetailModal({ plan, onClose, onOpenWhatsApp }) {
             {/* Included Modules Detail */}
             <div className="space-y-4">
               <div className="font-mono text-xs font-bold uppercase tracking-wider text-[#0F0F0F] border-b border-[rgba(15,15,15,0.1)] pb-2">
-                COMPREHENSIVE DELIVERABLE MODULES & ARCHITECTURAL SCOPE:
+                {t.modules_title}
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -226,7 +280,7 @@ export default function PlanDetailModal({ plan, onClose, onOpenWhatsApp }) {
             <div className="p-4 sm:p-5 bg-white border border-[rgba(15,15,15,0.14)] space-y-3 font-mono text-xs">
               <div className="font-bold text-[#0F0F0F] uppercase tracking-wider flex items-center gap-2">
                 <XCircle size={15} className="text-[#8E8D88]" />
-                <span>STRICT SCOPE BOUNDARIES // WHAT IS NOT INCLUDED IN THIS TIER:</span>
+                <span>{t.exclusions_title}</span>
               </div>
               <ul className="space-y-1.5 text-[#575652] text-[11px]">
                 {plan.exclusions.map((exc, idx) => (
@@ -242,20 +296,20 @@ export default function PlanDetailModal({ plan, onClose, onOpenWhatsApp }) {
             <div className="p-4 bg-[#EFF3FF] border border-[#1A4BFF]/25 font-mono text-xs space-y-2">
               <div className="font-bold text-[#1A4BFF] uppercase tracking-wider flex items-center gap-2">
                 <ShieldCheck size={15} />
-                <span>ETHICAL MILESTONE PAYMENT & 100% OWNERSHIP PLEDGE</span>
+                <span>{t.milestones_title}</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-[11px] text-[#0F0F0F]">
                 <div className="p-2 bg-white/70 border border-[#1A4BFF]/20">
-                  <span className="font-bold block text-[#1A4BFF]">40% Deposit</span>
-                  <span className="text-[#575652] text-[10px]">Project initiation & repository setup</span>
+                  <span className="font-bold block text-[#1A4BFF]">{t.deposit_label}</span>
+                  <span className="text-[#575652] text-[10px]">{t.deposit_desc}</span>
                 </div>
                 <div className="p-2 bg-white/70 border border-[#1A4BFF]/20">
-                  <span className="font-bold block text-[#1A4BFF]">40% Demo Milestone</span>
-                  <span className="text-[#575652] text-[10px]">Approved staging build walkthrough</span>
+                  <span className="font-bold block text-[#1A4BFF]">{t.demo_label}</span>
+                  <span className="text-[#575652] text-[10px]">{t.demo_desc}</span>
                 </div>
                 <div className="p-2 bg-white/70 border border-[#1A4BFF]/20">
-                  <span className="font-bold block text-[#1A4BFF]">20% Launch Handover</span>
-                  <span className="text-[#575652] text-[10px]">Full GitHub repo & PostgreSQL transfer</span>
+                  <span className="font-bold block text-[#1A4BFF]">{t.handover_label}</span>
+                  <span className="text-[#575652] text-[10px]">{t.handover_desc}</span>
                 </div>
               </div>
             </div>
@@ -270,7 +324,7 @@ export default function PlanDetailModal({ plan, onClose, onOpenWhatsApp }) {
                 rel="noopener noreferrer"
                 className="text-[#1A4BFF] hover:underline font-semibold flex items-center gap-1"
               >
-                TEST STOREFRONT DEMO <ArrowUpRight size={13} />
+                {t.storefront_demo} <ArrowUpRight size={13} />
               </a>
               <span className="text-[rgba(15,15,15,0.2)]">|</span>
               <a
@@ -279,7 +333,7 @@ export default function PlanDetailModal({ plan, onClose, onOpenWhatsApp }) {
                 rel="noopener noreferrer"
                 className="text-[#1A4BFF] hover:underline font-semibold flex items-center gap-1"
               >
-                TEST ADMIN DEMO <ArrowUpRight size={13} />
+                {t.admin_demo} <ArrowUpRight size={13} />
               </a>
             </div>
 
@@ -288,13 +342,13 @@ export default function PlanDetailModal({ plan, onClose, onOpenWhatsApp }) {
                 onClick={() => onOpenWhatsApp(plan.name, plan.pricePkr)}
                 className="btn-blue text-xs flex-1 sm:flex-none justify-center cursor-pointer"
               >
-                <MessageSquare size={14} /> CLAIM PLAN ON WHATSAPP
+                <MessageSquare size={14} /> {t.claim_whatsapp}
               </button>
               <button
                 onClick={onClose}
                 className="btn-outline text-xs cursor-pointer"
               >
-                CLOSE
+                {t.close}
               </button>
             </div>
           </div>
@@ -316,13 +370,13 @@ export default function PlanDetailModal({ plan, onClose, onOpenWhatsApp }) {
             <div className="flex items-center justify-between border-b border-[rgba(15,15,15,0.14)] pb-2 px-1">
               <div className="flex items-center gap-2">
                 <span className="tag-blue text-[10px]">
-                  {plan.artifacts[expandedImageIndex].tag || 'SYSTEM PREVIEW'}
+                  {plan.artifacts[expandedImageIndex].tag || t.preview_tag}
                 </span>
                 <span className="text-base sm:text-lg font-display uppercase tracking-tight text-[#0F0F0F]">
                   {plan.artifacts[expandedImageIndex].title}
                 </span>
                 <span className="text-[11px] text-[#8E8D88] hidden sm:inline">
-                  // PREVIEW {expandedImageIndex + 1} OF {plan.artifacts.length}
+                  // {t.preview_counter} {expandedImageIndex + 1} / {plan.artifacts.length}
                 </span>
               </div>
 
@@ -376,11 +430,9 @@ export default function PlanDetailModal({ plan, onClose, onOpenWhatsApp }) {
             {/* Lightbox Footer Caption */}
             <div className="flex items-center justify-between text-[11px] text-[#575652] pt-1 px-1">
               <span>
-                Click outside or press{' '}
-                <kbd className="px-1.5 py-0.5 bg-white border border-[rgba(15,15,15,0.2)] text-[10px]">
+                {t.lightbox_return} (<kbd className="px-1.5 py-0.5 bg-white border border-[rgba(15,15,15,0.2)] text-[10px]">
                   ESC
-                </kbd>{' '}
-                to return to plan specification
+                </kbd>)
               </span>
               <span className="font-semibold text-[#0F0F0F] hidden sm:inline">
                 {plan.name} // {plan.code}
