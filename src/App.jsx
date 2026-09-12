@@ -32,13 +32,18 @@ function SmoothScroll() {
       smoothWheel: true,
     })
 
+    window.__lenis = lenis
+
     function raf(time) {
       lenis.raf(time)
       requestAnimationFrame(raf)
     }
     requestAnimationFrame(raf)
 
-    return () => lenis.destroy()
+    return () => {
+      delete window.__lenis
+      lenis.destroy()
+    }
   }, [shouldReduceMotion])
 
   return null

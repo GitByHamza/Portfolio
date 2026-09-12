@@ -1,0 +1,396 @@
+import React, { useState, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
+import {
+  X,
+  CheckCircle2,
+  XCircle,
+  MessageSquare,
+  Clock,
+  ShieldCheck,
+  ArrowUpRight,
+  Maximize2,
+  ZoomIn,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react'
+
+export default function PlanDetailModal({ plan, onClose, onOpenWhatsApp }) {
+  const bodyRef = useRef(null)
+  const [expandedImageIndex, setExpandedImageIndex] = useState(null)
+
+  // Reset expanded image when plan changes
+  useEffect(() => {
+    setExpandedImageIndex(null)
+  }, [plan])
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // If lightbox is open, handle its navigation and dismiss
+      if (expandedImageIndex !== null && plan?.artifacts?.length) {
+        if (e.key === 'Escape') {
+          e.stopPropagation()
+          setExpandedImageIndex(null)
+          return
+        }
+        if (e.key === 'ArrowLeft') {
+          e.stopPropagation()
+          setExpandedImageIndex((prev) =>
+            prev > 0 ? prev - 1 : plan.artifacts.length - 1
+          )
+          return
+        }
+        if (e.key === 'ArrowRight') {
+          e.stopPropagation()
+          setExpandedImageIndex((prev) =>
+            prev < plan.artifacts.length - 1 ? prev + 1 : 0
+          )
+          return
+        }
+      } else if (e.key === 'Escape') {
+        onClose()
+      }
+    }
+
+    if (plan) {
+      // 1. Pause Lenis smooth scroll so it does not intercept wheel events
+      window.__lenis?.stop()
+
+      // 2. Lock root HTML and body overflow to prevent background scrolling
+      const originalHtmlOverflow = document.documentElement.style.overflow
+      const originalBodyOverflow = document.body.style.overflow
+
+      document.documentElement.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden'
+
+      window.addEventListener('keydown', handleKeyDown)
+
+      // 3. Reset scroll position to top
+      if (bodyRef.current && expandedImageIndex === null) {
+        bodyRef.current.scrollTop = 0
+      }
+
+      return () => {
+        document.documentElement.style.overflow = originalHtmlOverflow || ''
+        document.body.style.overflow = originalBodyOverflow || ''
+        window.removeEventListener('keydown', handleKeyDown)
+
+        // Resume Lenis smooth scroll
+        window.__lenis?.start()
+      }
+    }
+  }, [plan, onClose, expandedImageIndex])
+
+  if (!plan) return null
+
+  const modalContent = (
+    <>
+      <div
+        className="fixed inset-0 z-[9999] bg-[#0F0F0F]/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 font-mono text-xs overflow-hidden overscroll-contain"
+        onClick={onClose}
+        data-lenis-prevent="true"
+        onWheel={(e) => e.stopPropagation()}
+      >
+        <div
+          className="relative max-w-4xl w-full bg-[#F6F5F0] border border-[rgba(15,15,15,0.25)] shadow-2xl h-[90vh] max-h-[90vh] flex flex-col overflow-hidden text-[#0F0F0F] overscroll-contain"
+          onClick={(e) => e.stopPropagation()}
+          data-lenis-prevent="true"
+          onWheel={(e) => e.stopPropagation()}
+        >
+          {/* ─── Modal Top Masthead Header (Fixed / Non-scrolling) ─── */}
+          <div className="p-4 sm:p-6 border-b border-[rgba(15,15,15,0.14)] bg-[#FAF9F5] flex items-start justify-between gap-4 shrink-0">
+            <div className="space-y-1.5">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="tag-blue text-[10px]">
+                  {plan.badge || 'VERIFIED SCOPE SPECIFICATION'}
+                </span>
+                <span className="text-[11px] text-[#8E8D88] uppercase">
+                  // PLAN CODE: {plan.code}
+                </span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-display uppercase tracking-tight text-[#0F0F0F] leading-tight">
+                {plan.name} — FULL ARCHITECTURAL SPECIFICATION
+              </h2>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[#575652] text-[11px]">
+                <span className="text-[#1A4BFF] font-bold text-base">{plan.pricePkr}</span>
+                <span>({plan.priceUsd})</span>
+                <span className="text-[rgba(15,15,15,0.2)]">|</span>
+                <span className="flex items-center gap-1 font-semibold text-[#0F0F0F]">
+                  <Clock size={12} className="text-[#1A4BFF]" /> {plan.delivery}
+                </span>
+              </div>
+            </div>
+
+            <button
+              onClick={onClose}
+              className="p-1.5 text-[#0F0F0F] hover:text-[#1A4BFF] border border-[rgba(15,15,15,0.14)] bg-white hover:bg-[#FAF9F5] transition-colors cursor-pointer shrink-0"
+              aria-label="Close modal"
+            >
+              <X size={18} />
+            </button>
+          </div>
+
+          {/* ─── Scrollable Modal Body (Takes remaining height, scrolls internally) ─── */}
+          <div
+            ref={bodyRef}
+            data-lenis-prevent="true"
+            className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-4 sm:p-8 space-y-8 font-sans text-sm focus:outline-none"
+            tabIndex={0}
+          >
+            {/* Ideal Client Profile */}
+            <div className="p-4 bg-white border border-[rgba(15,15,15,0.12)] space-y-1 font-mono text-xs">
+              <span className="text-[10px] text-[#8E8D88] uppercase tracking-widest block font-bold">
+                IDEAL CLIENT PROFILE & BUSINESS FIT:
+              </span>
+              <p className="font-serif text-sm text-[#0F0F0F] leading-relaxed">
+                {plan.idealFor}
+              </p>
+            </div>
+
+            {/* Feature Visual Artifacts Gallery */}
+            {plan.artifacts && plan.artifacts.length > 0 && (
+              <div className="space-y-3 font-mono text-xs">
+                <div className="text-[11px] font-bold uppercase tracking-wider text-[#0F0F0F] flex items-center justify-between">
+                  <span>SYSTEM INTERFACE ARTIFACTS INCLUDED IN THIS TIER:</span>
+                  <span className="text-[10px] text-[#8E8D88]">CLICK ANY IMAGE TO EXPAND</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {plan.artifacts.map((art, idx) => (
+                    <div
+                      key={idx}
+                      onClick={() => setExpandedImageIndex(idx)}
+                      className="group border border-[rgba(15,15,15,0.14)] hover:border-[#1A4BFF] bg-white p-1.5 shadow-xs space-y-1.5 cursor-zoom-in transition-all"
+                      title="Click to expand full image"
+                    >
+                      <div className="relative aspect-video overflow-hidden bg-[#ECEAE3]">
+                        <img
+                          src={encodeURI(art.image)}
+                          alt={art.title}
+                          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                          loading="lazy"
+                        />
+                        <div className="absolute bottom-1 left-1 bg-[#0F0F0F] text-white font-mono text-[8px] uppercase px-1.5 py-0.5">
+                          {art.tag}
+                        </div>
+                        {/* Hover Overlay with Zoom Icon */}
+                        <div className="absolute inset-0 bg-[#0F0F0F]/0 group-hover:bg-[#0F0F0F]/30 flex items-center justify-center transition-colors">
+                          <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/95 text-[#0F0F0F] px-2 py-1 font-mono text-[10px] font-bold flex items-center gap-1 shadow-md border border-[rgba(15,15,15,0.15)]">
+                            <ZoomIn size={12} className="text-[#1A4BFF]" /> EXPAND
+                          </span>
+                        </div>
+                      </div>
+                      <div className="px-1 font-mono text-[10px] font-semibold text-[#0F0F0F] group-hover:text-[#1A4BFF] transition-colors truncate flex items-center justify-between">
+                        <span className="truncate">{art.title}</span>
+                        <Maximize2 size={10} className="text-[#8E8D88] group-hover:text-[#1A4BFF] shrink-0 ml-1" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Included Modules Detail */}
+            <div className="space-y-4">
+              <div className="font-mono text-xs font-bold uppercase tracking-wider text-[#0F0F0F] border-b border-[rgba(15,15,15,0.1)] pb-2">
+                COMPREHENSIVE DELIVERABLE MODULES & ARCHITECTURAL SCOPE:
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {plan.modules.map((mod, i) => (
+                  <div
+                    key={i}
+                    className="p-4 bg-white border border-[rgba(15,15,15,0.12)] space-y-2"
+                  >
+                    <div className="font-mono text-xs font-bold text-[#0F0F0F] flex items-center gap-2">
+                      <CheckCircle2 size={15} className="text-[#1A4BFF] shrink-0" />
+                      <span>{mod.title}</span>
+                    </div>
+                    <p className="text-xs text-[#575652] leading-relaxed">
+                      {mod.desc}
+                    </p>
+                    {mod.items && (
+                      <ul className="font-mono text-[11px] text-[#0F0F0F] space-y-1 pt-1 border-t border-[rgba(15,15,15,0.06)]">
+                        {mod.items.map((item, j) => (
+                          <li key={j} className="flex items-start gap-1.5 text-[#575652]">
+                            <span className="text-[#1A4BFF]">•</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Scope Boundaries / Exclusions */}
+            <div className="p-4 sm:p-5 bg-white border border-[rgba(15,15,15,0.14)] space-y-3 font-mono text-xs">
+              <div className="font-bold text-[#0F0F0F] uppercase tracking-wider flex items-center gap-2">
+                <XCircle size={15} className="text-[#8E8D88]" />
+                <span>STRICT SCOPE BOUNDARIES // WHAT IS NOT INCLUDED IN THIS TIER:</span>
+              </div>
+              <ul className="space-y-1.5 text-[#575652] text-[11px]">
+                {plan.exclusions.map((exc, idx) => (
+                  <li key={idx} className="flex items-start gap-2">
+                    <span className="text-red-500 font-bold shrink-0">✕</span>
+                    <span>{exc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Payment Milestones & Ownership Policy */}
+            <div className="p-4 bg-[#EFF3FF] border border-[#1A4BFF]/25 font-mono text-xs space-y-2">
+              <div className="font-bold text-[#1A4BFF] uppercase tracking-wider flex items-center gap-2">
+                <ShieldCheck size={15} />
+                <span>ETHICAL MILESTONE PAYMENT & 100% OWNERSHIP PLEDGE</span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-[11px] text-[#0F0F0F]">
+                <div className="p-2 bg-white/70 border border-[#1A4BFF]/20">
+                  <span className="font-bold block text-[#1A4BFF]">40% Deposit</span>
+                  <span className="text-[#575652] text-[10px]">Project initiation & repository setup</span>
+                </div>
+                <div className="p-2 bg-white/70 border border-[#1A4BFF]/20">
+                  <span className="font-bold block text-[#1A4BFF]">40% Demo Milestone</span>
+                  <span className="text-[#575652] text-[10px]">Approved staging build walkthrough</span>
+                </div>
+                <div className="p-2 bg-white/70 border border-[#1A4BFF]/20">
+                  <span className="font-bold block text-[#1A4BFF]">20% Launch Handover</span>
+                  <span className="text-[#575652] text-[10px]">Full GitHub repo & PostgreSQL transfer</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ─── Modal Footer Actions (Fixed / Non-scrolling) ─── */}
+          <div className="p-4 sm:p-6 border-t border-[rgba(15,15,15,0.14)] bg-[#FAF9F5] flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs shrink-0">
+            <div className="flex items-center gap-3">
+              <a
+                href="https://store-demo-eight.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#1A4BFF] hover:underline font-semibold flex items-center gap-1"
+              >
+                TEST STOREFRONT DEMO <ArrowUpRight size={13} />
+              </a>
+              <span className="text-[rgba(15,15,15,0.2)]">|</span>
+              <a
+                href="https://store-demo-eight.vercel.app/admin"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#1A4BFF] hover:underline font-semibold flex items-center gap-1"
+              >
+                TEST ADMIN DEMO <ArrowUpRight size={13} />
+              </a>
+            </div>
+
+            <div className="flex items-center gap-3 w-full sm:w-auto">
+              <button
+                onClick={() => onOpenWhatsApp(plan.name, plan.pricePkr)}
+                className="btn-blue text-xs flex-1 sm:flex-none justify-center cursor-pointer"
+              >
+                <MessageSquare size={14} /> CLAIM PLAN ON WHATSAPP
+              </button>
+              <button
+                onClick={onClose}
+                className="btn-outline text-xs cursor-pointer"
+              >
+                CLOSE
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ─── Fullscreen Image Modal Lightbox (Expands on Click) ─── */}
+      {expandedImageIndex !== null && plan.artifacts && plan.artifacts[expandedImageIndex] && (
+        <div
+          className="fixed inset-0 z-[10000] bg-[#0F0F0F]/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 font-mono text-xs"
+          onClick={() => setExpandedImageIndex(null)}
+          onWheel={(e) => e.stopPropagation()}
+        >
+          <div
+            className="relative max-w-5xl w-full bg-[#F6F5F0] border border-[rgba(15,15,15,0.25)] p-3 sm:p-5 shadow-2xl space-y-3"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Lightbox Masthead */}
+            <div className="flex items-center justify-between border-b border-[rgba(15,15,15,0.14)] pb-2 px-1">
+              <div className="flex items-center gap-2">
+                <span className="tag-blue text-[10px]">
+                  {plan.artifacts[expandedImageIndex].tag || 'SYSTEM PREVIEW'}
+                </span>
+                <span className="text-base sm:text-lg font-display uppercase tracking-tight text-[#0F0F0F]">
+                  {plan.artifacts[expandedImageIndex].title}
+                </span>
+                <span className="text-[11px] text-[#8E8D88] hidden sm:inline">
+                  // PREVIEW {expandedImageIndex + 1} OF {plan.artifacts.length}
+                </span>
+              </div>
+
+              <button
+                onClick={() => setExpandedImageIndex(null)}
+                className="p-1.5 text-[#0F0F0F] hover:text-[#1A4BFF] border border-[rgba(15,15,15,0.14)] bg-white hover:bg-[#FAF9F5] transition-colors cursor-pointer"
+                aria-label="Close expanded preview"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Expanded Image Frame */}
+            <div className="relative flex items-center justify-center max-h-[76vh] overflow-hidden bg-[#ECEAE3] border border-[rgba(15,15,15,0.1)] p-1">
+              <img
+                src={encodeURI(plan.artifacts[expandedImageIndex].image)}
+                alt={plan.artifacts[expandedImageIndex].title}
+                className="max-h-[73vh] w-auto max-w-full object-contain mx-auto shadow"
+              />
+
+              {plan.artifacts.length > 1 && (
+                <>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setExpandedImageIndex((prev) =>
+                        prev > 0 ? prev - 1 : plan.artifacts.length - 1
+                      )
+                    }}
+                    className="absolute left-3 p-2.5 bg-[#F6F5F0] text-[#0F0F0F] hover:bg-[#1A4BFF] hover:text-white border border-[rgba(15,15,15,0.2)] shadow-md cursor-pointer transition-colors"
+                    aria-label="Previous image"
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setExpandedImageIndex((prev) =>
+                        prev < plan.artifacts.length - 1 ? prev + 1 : 0
+                      )
+                    }}
+                    className="absolute right-3 p-2.5 bg-[#F6F5F0] text-[#0F0F0F] hover:bg-[#1A4BFF] hover:text-white border border-[rgba(15,15,15,0.2)] shadow-md cursor-pointer transition-colors"
+                    aria-label="Next image"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                </>
+              )}
+            </div>
+
+            {/* Lightbox Footer Caption */}
+            <div className="flex items-center justify-between text-[11px] text-[#575652] pt-1 px-1">
+              <span>
+                Click outside or press{' '}
+                <kbd className="px-1.5 py-0.5 bg-white border border-[rgba(15,15,15,0.2)] text-[10px]">
+                  ESC
+                </kbd>{' '}
+                to return to plan specification
+              </span>
+              <span className="font-semibold text-[#0F0F0F] hidden sm:inline">
+                {plan.name} // {plan.code}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  )
+
+  return typeof document !== 'undefined' ? createPortal(modalContent, document.body) : null
+}

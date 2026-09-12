@@ -20,7 +20,10 @@ import {
   Globe,
   ArrowUpRight,
   CheckCircle2,
+  Maximize2,
+  Info,
 } from 'lucide-react'
+import PlanDetailModal from '../../components/PlanDetailModal'
 
 const I18N_DATA = {
   en: {
@@ -111,23 +114,252 @@ const I18N_DATA = {
   },
 }
 
+const PLANS_DETAIL = {
+  starter: {
+    name: 'Starter Store',
+    code: 'TXS-STARTER',
+    badge: 'ENTRY LEVEL // SINGLE OUTLET',
+    pricePkr: 'PKR 280,000 – 350,000',
+    priceUsd: '~$1,000 – $1,250 USD',
+    delivery: '10–14 Days Delivery',
+    idealFor:
+      'Single-location computer shops, CCTV vendors, and electronics retail counters beginning online sales with direct WhatsApp dispatch without ongoing platform taxes.',
+    artifacts: [
+      {
+        title: 'Next.js Public Storefront',
+        image: '/txs/home.png',
+        tag: 'Storefront',
+      },
+      {
+        title: 'Product Stock & Order Manager',
+        image: '/txs/dashboard products.png',
+        tag: 'Admin Panel',
+      },
+    ],
+    modules: [
+      {
+        title: 'Custom Next.js Web Storefront',
+        desc: 'Fast, responsive storefront tailored for computer & electronics products.',
+        items: [
+          'Up to 50 SKUs initial setup and categorization',
+          'Rich technical specifications display (CPU, GPU, RAM, Storage)',
+          'Category & price filtering for desktop and mobile',
+          'Fast search and shopping cart functionality',
+        ],
+      },
+      {
+        title: 'WhatsApp Order Dispatch Integration',
+        desc: 'Instant direct checkout routing to your sales desk.',
+        items: [
+          'Pre-formatted WhatsApp message with items, specs, and total PKR price',
+          'Customer contact details and delivery address auto-captured',
+          'Zero platform transaction fee taken from your gross revenue',
+        ],
+      },
+      {
+        title: 'Essential Admin Control Panel',
+        desc: 'Straightforward management interface designed for shop floor staff.',
+        items: [
+          'Product Add / Edit / Delete interface',
+          'Real-time stock count updates (In Stock / Out of Stock status)',
+          'Order status tracker (Pending → Dispatched → Completed)',
+          'Customer details archive (Name, phone, delivery history)',
+        ],
+      },
+      {
+        title: 'SEO & Search Engine Indexing',
+        desc: 'Foundational search configuration to rank for local keywords.',
+        items: [
+          'Google Search Console setup and verification',
+          'Automated XML sitemap generation',
+          'Google Analytics 4 (GA4) visitor & event tracking setup',
+        ],
+      },
+    ],
+    exclusions: [
+      'Interactive PC Builder compatibility engine (Available in Growth & Enterprise).',
+      'Multi-branch stock synchronization (Single outlet stock only).',
+      'Hardware serial number and RMA warranty lifecycle tracking.',
+      'Self-managed promotional banner CMS (layout branding is managed).',
+    ],
+  },
+  growth: {
+    name: 'Growth Retailer',
+    code: 'TXS-GROWTH',
+    badge: '★ MOST POPULAR // BEST VALUE',
+    pricePkr: 'PKR 550,000 – 780,000',
+    priceUsd: '~$2,000 – $2,800 USD',
+    delivery: '3–4 Weeks Delivery',
+    idealFor:
+      'Established computer hardware and gaming PC retailers selling high-ticket rigs, components, and managing stock across shop counters and online simultaneously.',
+    artifacts: [
+      {
+        title: 'Interactive PC Builder Configurator',
+        image: '/txs/RIG BUILDER.png',
+        tag: 'Compatibility Engine',
+      },
+      {
+        title: 'Hardware Serial & RMA Warranty',
+        image: '/txs/admin warranty.png',
+        tag: 'Serial Tracking',
+      },
+      {
+        title: 'Storefront Hardware Catalog',
+        image: '/txs/products.png',
+        tag: 'Hardware Catalog',
+      },
+      {
+        title: 'Central Revenue & Order Dashboard',
+        image: '/txs/dashboard.png',
+        tag: 'Admin Dashboard',
+      },
+    ],
+    modules: [
+      {
+        title: 'Interactive PC Builder Compatibility Engine',
+        desc: 'Real-time hardware validation preventing mismatched customer orders.',
+        items: [
+          'CPU Socket Matching (AM4/AM5 vs LGA1700/LGA1851)',
+          'RAM Generation Validation (DDR4 vs DDR5)',
+          'Power supply wattage overhead & GPU clearance calculation',
+          'One-click WhatsApp build sharing with pre-formatted specs and PKR total',
+        ],
+      },
+      {
+        title: 'Multi-Branch Inventory Synchronization (Up to 3 Nodes)',
+        desc: 'Unified stock management across multiple physical counters.',
+        items: [
+          'Connect up to 3 physical branches (e.g. Hafeez Centre, Techno City) + central warehouse',
+          'Branch-level stock counts visible in the admin matrix',
+          'Real-time deduction upon store sales and online orders',
+        ],
+      },
+      {
+        title: 'Hardware Serial Number & RMA Lifecycle',
+        desc: 'Track individual GPUs, motherboards, and power supplies from intake to warranty.',
+        items: [
+          'Serial status: IN_STOCK → SOLD (linked to invoice) → RMA_PENDING → REPLACED',
+          'Eliminates customer return fraud and distributor disputes',
+          'Search warranty status by serial number in seconds',
+        ],
+      },
+      {
+        title: 'Marketing, Discounts & Automated PDF Invoices',
+        desc: 'Promotions engine to drive repeat commercial purchases.',
+        items: [
+          'Self-managed promotional hero sliders and flash sale banners',
+          'Coupon code engine (percentage discounts, flat PKR, minimum order rules)',
+          'Automated professional PDF receipts and invoice generation',
+        ],
+      },
+    ],
+    exclusions: [
+      'Limited to 3 branch nodes (Unlimited branches supported in Enterprise).',
+      'Does not include custom external accounting ERP/FBR direct API integrations.',
+      'Super Admin vs Cashier granular permission matrices (Single admin level).',
+    ],
+  },
+  enterprise: {
+    name: 'Enterprise Custom',
+    code: 'TXS-ENTERPRISE',
+    badge: '★ COMPLETE RETAIL OS',
+    pricePkr: 'PKR 950,000 – 1,450,000',
+    priceUsd: '~$3,400 – $5,200 USD',
+    delivery: '~6 Weeks Staging & Delivery',
+    idealFor:
+      'High-volume computer retail chains, nationwide hardware distributors, and tech importers with multi-branch networks requiring a custom enterprise ERP.',
+    artifacts: [
+      {
+        title: 'Site CMS & Banner Control Matrix',
+        image: '/txs/admin site control.png',
+        tag: 'CMS Panel',
+      },
+      {
+        title: 'Multi-Branch Inventory Management',
+        image: '/txs/dashboard products.png',
+        tag: 'Branch Matrix',
+      },
+      {
+        title: 'PC Builder Rig Configurator',
+        image: '/txs/RIG BUILDER.png',
+        tag: 'Rig Builder',
+      },
+      {
+        title: 'Serial Number Warranty & RMA',
+        image: '/txs/admin warranty.png',
+        tag: 'RMA Center',
+      },
+    ],
+    modules: [
+      {
+        title: 'Unlimited Multi-Branch & Warehouse Network',
+        desc: 'Enterprise inventory distribution across all outlets.',
+        items: [
+          'Unlimited physical retail shops, distribution hubs, and warehouses',
+          'Inter-branch stock transfer requests with dispatch and receipt sign-off',
+          'Unified warehouse dispatch and counter pickup routing',
+        ],
+      },
+      {
+        title: 'Granular Multi-Guard Role-Based Access Control (RBAC)',
+        desc: 'Spatie-style permissions restricting staff access according to job title.',
+        items: [
+          'Super Admin: Financial P&L, gross margins, branch revenue rankings, master settings',
+          'Branch Manager: Local counter sales, staff rosters, local stock adjustments',
+          'Counter Cashier: Fast point-of-sale checkout and receipt printing',
+          'Warehouse Barcode Manager: Inbound shipment intake and bulk serial scanning',
+        ],
+      },
+      {
+        title: 'Dynamic Theme & Content Management CMS',
+        desc: 'Complete control over your storefront without writing code.',
+        items: [
+          'Navigation menu editor, custom landing page builder, announcement bars',
+          'Dynamic branding colors and hero promotional sliders',
+          'Customizable receipt and email template editor',
+        ],
+      },
+      {
+        title: 'Bespoke Third-Party API Integrations',
+        desc: 'Seamless connections to physical retail hardware and logistics.',
+        items: [
+          'Thermal receipt printer and barcode scanner compatibility',
+          'Courier tracking API integration (TCS, Trax, Leopards, CallCourier)',
+          'FBR digital invoice compliance (optional integration)',
+        ],
+      },
+    ],
+    exclusions: [
+      'Bespoke custom hardware firmware modifications (quoted separately on request).',
+    ],
+  },
+}
+
 export default function TechRetailSolution() {
   const [lang, setLang] = useState('en')
+  const [activeModalPlan, setActiveModalPlan] = useState(null)
   const t = I18N_DATA[lang]
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
 
-  const openWhatsApp = (planName) => {
+  const openWhatsApp = (planName, price) => {
     const text = encodeURIComponent(
-      `Hello TeXCodes team, I am interested in the [${planName}] for my Computer / CCTV retail business. I would like to schedule a demonstration and discuss deployment.`
+      `Hello TeXCodes team, I am interested in the [${planName} - ${price}] for my Computer / CCTV retail business. I would like to schedule a demonstration and discuss deployment.`
     )
     window.open(`https://wa.me/923288197775?text=${text}`, '_blank')
   }
 
   return (
     <div className="w-full bg-[#F6F5F0] min-h-screen">
+      {/* ─── Plan Detail Modal ─── */}
+      <PlanDetailModal
+        plan={activeModalPlan}
+        onClose={() => setActiveModalPlan(null)}
+        onOpenWhatsApp={(name, price) => openWhatsApp(name, price)}
+      />
+
       {/* ─── Top Language Toggle Bar ─── */}
       <div className="border-b border-[rgba(15,15,15,0.14)] bg-[#FAF9F5] px-4 sm:px-8 py-2.5">
         <div className="max-w-7xl mx-auto flex items-center justify-between font-mono text-xs">
@@ -362,15 +594,18 @@ export default function TechRetailSolution() {
               {t.plans_title}
             </h2>
             <p className="font-serif text-sm sm:text-base text-[#575652]">
-              {t.plans_sub}
+              {t.plans_sub} Click any plan below to inspect the complete deliverable breakdown, architecture specs, and visual previews.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start font-mono text-xs">
             {/* 1. Starter Store */}
-            <div className="p-8 bg-white border border-[rgba(15,15,15,0.14)] space-y-6 flex flex-col justify-between">
+            <div className="p-8 bg-white border border-[rgba(15,15,15,0.14)] space-y-6 flex flex-col justify-between hover:border-[#1A4BFF] transition-colors">
               <div className="space-y-4">
-                <div className="font-bold text-[#0F0F0F] text-base">{t.starter_name}</div>
+                <div className="flex items-center justify-between">
+                  <div className="font-bold text-[#0F0F0F] text-base">{t.starter_name}</div>
+                  <span className="text-[10px] text-[#8E8D88] uppercase">SINGLE OUTLET</span>
+                </div>
                 <p className="font-sans text-xs text-[#575652] leading-relaxed">
                   {t.starter_desc}
                 </p>
@@ -381,34 +616,47 @@ export default function TechRetailSolution() {
                   <div className="text-[11px] text-[#1A4BFF] font-semibold mt-1">{t.starter_delivery}</div>
                 </div>
 
-                <div className="pt-4 space-y-2.5 text-[11px] text-[#0F0F0F]">
-                  <div className="font-bold uppercase text-[#8E8D88] tracking-wider text-[10px]">INCLUDED:</div>
+                {/* Clear Plan Differentiation Callout */}
+                <div className="p-3 bg-[#FAF9F5] border border-[rgba(15,15,15,0.1)] text-[11px] text-[#0F0F0F] space-y-1">
+                  <div className="font-bold text-[#1A4BFF] text-[10px] uppercase">CORE CAPABILITY:</div>
+                  <p className="font-sans text-[11px] text-[#575652]">
+                    Essential single-store online storefront with direct WhatsApp checkout and basic stock management.
+                  </p>
+                </div>
+
+                <div className="pt-2 space-y-2 text-[11px] text-[#0F0F0F]">
                   <div className="flex items-start gap-2">
                     <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
-                    <span>Custom Next.js Web Storefront (Up to 50 SKUs)</span>
+                    <span>Next.js Storefront (Up to 50 SKUs)</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
-                    <span>WhatsApp Order Dispatch Integration</span>
+                    <span>WhatsApp Order Dispatch</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
-                    <span>Basic Admin Stock & Inventory Panel</span>
+                    <span>Basic Stock Updates & Orders</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
-                    <span>Google Analytics 4 & XML Sitemap Setup</span>
+                    <span>100% Client Code & DB Ownership</span>
                   </div>
-                  <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
-                    <span>100% Client Code & Data Ownership</span>
-                  </div>
+                </div>
+
+                {/* Prominent Modal Trigger Button */}
+                <div className="pt-3">
+                  <button
+                    onClick={() => setActiveModalPlan(PLANS_DETAIL.starter)}
+                    className="w-full py-2.5 px-3 bg-[#EFF3FF] text-[#1A4BFF] border border-[#1A4BFF]/30 font-mono text-[11px] font-bold uppercase tracking-wider hover:bg-[#1A4BFF] hover:text-white transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <Info size={13} /> CLICK ME FOR FULL DETAIL & PREVIEWS →
+                  </button>
                 </div>
               </div>
 
               <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] space-y-3">
                 <button
-                  onClick={() => openWhatsApp('Starter Store (PKR 280,000 – 350,000)')}
+                  onClick={() => openWhatsApp('Starter Store', 'PKR 280,000 – 350,000')}
                   className="btn-outline w-full justify-center text-xs"
                 >
                   <MessageSquare size={13} /> {t.whatsapp_cta}
@@ -418,7 +666,7 @@ export default function TechRetailSolution() {
             </div>
 
             {/* 2. Growth Retailer (Most Popular) */}
-            <div className="p-8 bg-white border-2 border-[#1A4BFF] space-y-6 flex flex-col justify-between shadow-md relative">
+            <div className="p-8 bg-white border-2 border-[#1A4BFF] space-y-6 flex flex-col justify-between shadow-md relative hover:shadow-lg transition-shadow">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#1A4BFF] text-white font-mono text-[9px] font-bold px-3 py-0.5 uppercase tracking-wider">
                 {t.growth_badge}
               </div>
@@ -435,34 +683,47 @@ export default function TechRetailSolution() {
                   <div className="text-[11px] text-[#1A4BFF] font-semibold mt-1">{t.growth_delivery}</div>
                 </div>
 
-                <div className="pt-4 space-y-2.5 text-[11px] text-[#0F0F0F]">
-                  <div className="font-bold uppercase text-[#1A4BFF] tracking-wider text-[10px]">EVERYTHING IN STARTER PLUS:</div>
+                {/* Clear Plan Differentiation Callout */}
+                <div className="p-3 bg-[#EFF3FF] border border-[#1A4BFF]/25 text-[11px] text-[#0F0F0F] space-y-1">
+                  <div className="font-bold text-[#1A4BFF] text-[10px] uppercase">MAJOR UPGRADE OVER STARTER:</div>
+                  <p className="font-sans text-[11px] text-[#575652]">
+                    Adds the real-time PC Builder compatibility engine, 3-branch stock sync, and serial number warranty RMA tracking.
+                  </p>
+                </div>
+
+                <div className="pt-2 space-y-2 text-[11px] text-[#0F0F0F]">
                   <div className="flex items-start gap-2">
                     <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
-                    <span className="font-semibold">Interactive PC Builder Compatibility Engine</span>
+                    <span className="font-bold">Interactive PC Builder Compatibility Matrix</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
-                    <span>Multi-Branch Stock Synchronization (Up to 3 Branches)</span>
+                    <span>3-Branch Inventory Synchronization</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
-                    <span>Hardware Serial Number Tracking (IN_STOCK, SOLD, RMA)</span>
+                    <span>Hardware Serial Number & RMA Warranty Tracking</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
-                    <span>Self-Managed Promo Banners & Flash Sales Engine</span>
+                    <span>Promotional Sliders, Flash Sales & Coupons</span>
                   </div>
-                  <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
-                    <span>Automated PDF Receipt & Invoice Generation</span>
-                  </div>
+                </div>
+
+                {/* Prominent Modal Trigger Button */}
+                <div className="pt-3">
+                  <button
+                    onClick={() => setActiveModalPlan(PLANS_DETAIL.growth)}
+                    className="w-full py-2.5 px-3 bg-[#1A4BFF] text-white font-mono text-[11px] font-bold uppercase tracking-wider hover:bg-[#0D38D8] transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+                  >
+                    <Info size={13} /> CLICK ME FOR FULL DETAIL & PREVIEWS →
+                  </button>
                 </div>
               </div>
 
               <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] space-y-3">
                 <button
-                  onClick={() => openWhatsApp('Growth Retailer (PKR 550,000 – 780,000)')}
+                  onClick={() => openWhatsApp('Growth Retailer', 'PKR 550,000 – 780,000')}
                   className="btn-blue w-full justify-center text-xs"
                 >
                   <MessageSquare size={13} /> {t.whatsapp_cta}
@@ -472,7 +733,7 @@ export default function TechRetailSolution() {
             </div>
 
             {/* 3. Enterprise Custom */}
-            <div className="p-8 bg-white border border-[rgba(15,15,15,0.14)] space-y-6 flex flex-col justify-between">
+            <div className="p-8 bg-white border border-[rgba(15,15,15,0.14)] space-y-6 flex flex-col justify-between hover:border-[#1A4BFF] transition-colors">
               <div className="space-y-4">
                 <div className="font-bold text-[#0F0F0F] text-base">{t.enterprise_name}</div>
                 <p className="font-sans text-xs text-[#575652] leading-relaxed">
@@ -485,34 +746,47 @@ export default function TechRetailSolution() {
                   <div className="text-[11px] text-[#1A4BFF] font-semibold mt-1">{t.enterprise_delivery}</div>
                 </div>
 
-                <div className="pt-4 space-y-2.5 text-[11px] text-[#0F0F0F]">
-                  <div className="font-bold uppercase text-[#8E8D88] tracking-wider text-[10px]">ALL IN GROWTH PLUS:</div>
+                {/* Clear Plan Differentiation Callout */}
+                <div className="p-3 bg-[#FAF9F5] border border-[rgba(15,15,15,0.1)] text-[11px] text-[#0F0F0F] space-y-1">
+                  <div className="font-bold text-[#1A4BFF] text-[10px] uppercase">MAJOR UPGRADE OVER GROWTH:</div>
+                  <p className="font-sans text-[11px] text-[#575652]">
+                    Adds unlimited branches, full theme content CMS, multi-guard staff RBAC, and bespoke POS/Courier API sync.
+                  </p>
+                </div>
+
+                <div className="pt-2 space-y-2 text-[11px] text-[#0F0F0F]">
                   <div className="flex items-start gap-2">
                     <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
-                    <span className="font-semibold">Unlimited Multi-Branch & Warehouse Sync</span>
+                    <span className="font-bold">Unlimited Branches & Warehouse Sync</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
-                    <span>Granular Spatie-Style RBAC (Super Admin, Branch Manager, Staff)</span>
+                    <span>Granular Staff RBAC (Super Admin, Manager, Cashier)</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
-                    <span>Custom POS & Accounting API Sync (FBR / POS)</span>
+                    <span>Complete Theme & Navigation Content CMS</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
-                    <span>Full Theme Accent & Content Management CMS</span>
+                    <span>Custom POS Hardware & Courier API Sync</span>
                   </div>
-                  <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
-                    <span>30-Day Priority Engineering SLA Warranty</span>
-                  </div>
+                </div>
+
+                {/* Prominent Modal Trigger Button */}
+                <div className="pt-3">
+                  <button
+                    onClick={() => setActiveModalPlan(PLANS_DETAIL.enterprise)}
+                    className="w-full py-2.5 px-3 bg-[#EFF3FF] text-[#1A4BFF] border border-[#1A4BFF]/30 font-mono text-[11px] font-bold uppercase tracking-wider hover:bg-[#1A4BFF] hover:text-white transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <Info size={13} /> CLICK ME FOR FULL DETAIL & PREVIEWS →
+                  </button>
                 </div>
               </div>
 
               <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] space-y-3">
                 <button
-                  onClick={() => openWhatsApp('Enterprise Custom (PKR 950,000 – 1,450,000)')}
+                  onClick={() => openWhatsApp('Enterprise Custom', 'PKR 950,000 – 1,450,000')}
                   className="btn-outline w-full justify-center text-xs"
                 >
                   <MessageSquare size={13} /> {t.whatsapp_cta}
