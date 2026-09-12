@@ -1,241 +1,158 @@
-import {
- ArrowUp,
- Instagram,
- Linkedin,
- Mail,
- MapPin,
- Send,
- Twitch,
- Twitter,
- Github,
-} from "lucide-react";
-import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { motion, useReducedMotion } from "framer-motion";
-import { supabase } from "@/lib/supabase";
-import SuccessModal from "./SuccessModal";
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { ArrowUp, ArrowUpRight, Mail, MessageSquare } from 'lucide-react'
 
 export const Footer = () => {
- const [isSubmitting, setIsSubmitting] = useState(false);
- const [isModalOpen, setIsModalOpen] = useState(false);
- const shouldReduceMotion = useReducedMotion();
- const [formData, setFormData] = useState({
-  name: "",
-  country: "",
-  email: "",
-  message: "",
- });
-
- const handleChange = (e) => {
-  setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
- };
-
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  setIsSubmitting(true);
-
-  try {
-   const { error } = await supabase.from("messages").insert([
-    {
-     name: formData.name,
-     email: formData.email,
-     country: formData.country,
-     message: formData.message,
-    },
-   ]);
-
-   if (error) {
-    console.error("Error inserting message:", error);
-    alert("Failed to send message. Please try again.");
-   } else {
-    setIsModalOpen(true);
-    setFormData({ name: "", country: "", email: "", message: "" });
-    e.target.reset();
-   }
-  } catch (err) {
-   console.error("Unexpected error:", err);
-   alert("An unexpected error occurred.");
-  } finally {
-   setIsSubmitting(false);
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
- };
 
- const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
- };
-
- const containerVariants = {
-   hidden: { opacity: 0 },
-   visible: {
-     opacity: 1,
-     transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-   },
- };
-
- const itemVariants = {
-   hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 30 },
-   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
- };
-
- return (
-  <footer id="contact-footer" className="relative border-t border-white/5 bg-background pt-32 pb-8 overflow-hidden z-20">
-   <SuccessModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-
-   {/* Grand Finale Glow Effects */}
-   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[500px] bg-primary/5 rounded-[100%] blur-[120px] pointer-events-none" />
-   <div className="absolute bottom-0 left-0 w-full h-[300px] bg-gradient-to-t from-primary/10 to-transparent pointer-events-none" />
-
-   <div className="container mx-auto px-4 relative z-10">
-    <motion.div 
-     variants={containerVariants}
-     initial="hidden"
-     whileInView="visible"
-     viewport={{ once: true, margin: "-100px" }}
-     className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24"
-    >
-     {/* Left Column: Branding & Info */}
-     <div className="space-y-12">
-      <motion.div variants={itemVariants}>
-       <h2 className="text-5xl md:text-7xl font-bold font-heading mb-6 tracking-tight">
-        Let's build<br/>
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-pop">the future.</span>
-       </h2>
-       <p className="text-muted-foreground font-body max-w-md text-xl leading-relaxed">
-        Got a project in mind? Let's turn your vision into a digital reality. Reach out and let's craft something exceptional together.
-       </p>
-      </motion.div>
-
-      <motion.div variants={itemVariants} className="space-y-6">
-       <a href="mailto:professorhamza000@gmail.com" className="flex items-center gap-4 text-muted-foreground hover:text-primary transition-colors cursor-pointer group w-fit">
-        <div className="p-4 rounded-full bg-secondary/50 group-hover:bg-primary/20 transition-colors border border-white/5">
-         <Mail size={24} className="text-foreground group-hover:text-primary transition-colors" />
+  return (
+    <footer className="w-full bg-[#F6F5F0] border-t border-[rgba(15,15,15,0.14)] font-mono text-xs text-[#575652] mt-24">
+      {/* ─── Main Footer Grid ─── */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-16 grid grid-cols-1 md:grid-cols-12 gap-12">
+        {/* Brand & Ethos */}
+        <div className="md:col-span-4 space-y-4">
+          <Link to="/" className="inline-block">
+            <span className="font-display text-4xl text-[#0F0F0F] tracking-tight uppercase">
+              TEXCODES
+            </span>
+          </Link>
+          <p className="font-serif text-[#575652] text-sm leading-relaxed max-w-sm">
+            Independent software engineering studio and product builder. 
+            Focused on production SaaS, custom digital systems, and business platforms built with technical discipline.
+          </p>
+          <div className="pt-2 text-[11px] text-[#8E8D88] space-y-1">
+            <div>LEAD ENGINEER: HAMZA</div>
+            <div>LOCATION: GUJRANWALA, PAKISTAN (PKT / UTC+5)</div>
+          </div>
         </div>
-        <span className="font-heading text-lg">professorhamza000@gmail.com</span>
-       </a>
-       <div className="flex items-center gap-4 text-muted-foreground cursor-pointer group w-fit">
-        <div className="p-4 rounded-full bg-secondary/50 border border-white/5">
-         <MapPin size={24} className="text-foreground" />
+
+        {/* Index Navigation */}
+        <div className="md:col-span-3 space-y-3">
+          <div className="text-[11px] uppercase tracking-widest text-[#0F0F0F] font-semibold border-b border-[rgba(15,15,15,0.1)] pb-1.5">
+            NAVIGATION
+          </div>
+          <ul className="space-y-2 text-xs">
+            <li>
+              <Link to="/work" className="hover:text-[#1A4BFF] transition-colors flex items-center gap-1">
+                Selected Work <span className="text-[10px] text-[#8E8D88]">(Archive)</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" className="hover:text-[#1A4BFF] transition-colors">
+                About & Engineering Story
+              </Link>
+            </li>
+            <li>
+              <Link to="/solutions" className="hover:text-[#1A4BFF] transition-colors">
+                Commercial Solutions
+              </Link>
+            </li>
+            <li>
+              <Link to="/solutions/tech-retail" className="text-[#1A4BFF] hover:underline font-semibold flex items-center gap-1">
+                Tech Retail OS Offer <ArrowUpRight size={12} />
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="hover:text-[#1A4BFF] transition-colors">
+                Direct Contact & Status
+              </Link>
+            </li>
+          </ul>
         </div>
-        <span className="font-heading text-lg">Gujranwala, Punjab, Pakistan</span>
-       </div>
-      </motion.div>
 
-      <motion.div variants={itemVariants} className="flex gap-4 pt-4">
-       {[
-        { icon: Github,    href: "https://github.com/GitByHamza", label: "GitHub" },
-        { icon: Linkedin,  href: "https://linkedin.com/in/hamza-p-v", label: "LinkedIn" },
-        { icon: Instagram, href: "#", label: "Instagram" },
-        { icon: Twitter,   href: "#", label: "Twitter" },
-       ].map((social, index) => (
-        <a
-         key={index}
-         href={social.href}
-         target="_blank"
-         rel="noopener noreferrer"
-         aria-label={social.label}
-         className="p-4 rounded-full bg-secondary/30 border border-white/5 hover:bg-primary/20 hover:border-primary/30 text-muted-foreground hover:text-primary transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_20px_rgba(79,142,247,0.2)]"
-        >
-         <social.icon size={22} />
-        </a>
-       ))}
-      </motion.div>
-     </div>
-
-     {/* Right Column: Contact Form */}
-     <motion.div
-      variants={itemVariants}
-      className="bg-card/40 p-8 md:p-10 rounded-3xl border border-white/10 shadow-2xl backdrop-blur-xl relative overflow-hidden"
-     >
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none" />
-      <h3 className="text-3xl font-bold font-heading mb-8 relative z-10 text-foreground drop-shadow-md">Send a Message</h3>
-      <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="space-y-2 group">
-         <label htmlFor="footer-name" className="text-sm font-medium text-muted-foreground group-focus-within:text-primary transition-colors">Name</label>
-         <input
-          id="footer-name"
-          name="name"
-          required
-          onChange={handleChange}
-          className="w-full px-5 py-4 rounded-xl bg-background border border-border focus:border-primary focus:ring-4 focus:ring-primary/20 outline-none transition-all hover:border-primary/40 text-foreground placeholder:text-muted-foreground/60"
-          placeholder="John Doe"
-         />
+        {/* Channels */}
+        <div className="md:col-span-3 space-y-3">
+          <div className="text-[11px] uppercase tracking-widest text-[#0F0F0F] font-semibold border-b border-[rgba(15,15,15,0.1)] pb-1.5">
+            CHANNELS
+          </div>
+          <ul className="space-y-2 text-xs">
+            <li>
+              <a
+                href="mailto:professorhamza000@gmail.com"
+                className="hover:text-[#1A4BFF] transition-colors flex items-center gap-1.5"
+              >
+                <Mail size={13} /> professorhamza000@gmail.com
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://wa.me/923288197775"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#1A4BFF] transition-colors flex items-center gap-1.5"
+              >
+                <MessageSquare size={13} /> WhatsApp: +92 328 8197775
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/GitByHamza"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#1A4BFF] transition-colors flex items-center gap-1"
+              >
+                GitHub Profile <ArrowUpRight size={12} />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://linkedin.com/in/hamza-p-v"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#1A4BFF] transition-colors flex items-center gap-1"
+              >
+                LinkedIn Profile <ArrowUpRight size={12} />
+              </a>
+            </li>
+          </ul>
         </div>
-        <div className="space-y-2 group">
-         <label htmlFor="footer-country" className="text-sm font-medium text-muted-foreground group-focus-within:text-primary transition-colors">Country</label>
-         <input
-          id="footer-country"
-          name="country"
-          required
-          onChange={handleChange}
-          className="w-full px-5 py-4 rounded-xl bg-background border border-border focus:border-primary focus:ring-4 focus:ring-primary/20 outline-none transition-all hover:border-primary/40 text-foreground placeholder:text-muted-foreground/60"
-          placeholder="Switzerland"
-         />
+
+        {/* Status / Notice */}
+        <div className="md:col-span-2 space-y-3">
+          <div className="text-[11px] uppercase tracking-widest text-[#0F0F0F] font-semibold border-b border-[rgba(15,15,15,0.1)] pb-1.5">
+            STATUS
+          </div>
+          <div className="p-3 bg-white/70 border border-[rgba(15,15,15,0.12)] space-y-2">
+            <div className="flex items-center gap-2 text-[#1A4BFF] font-semibold text-[10px] uppercase tracking-wider">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#1A4BFF]" />
+              ACTIVE / OPEN
+            </div>
+            <p className="text-[11px] text-[#575652] leading-tight">
+              Accepting selected production projects & technical contracts.
+            </p>
+          </div>
         </div>
-       </div>
-
-       <div className="space-y-2 group">
-        <label htmlFor="footer-email" className="text-sm font-medium text-muted-foreground group-focus-within:text-primary transition-colors">Email</label>
-        <input
-         id="footer-email"
-         name="email"
-         type="email"
-         required
-         onChange={handleChange}
-         className="w-full px-5 py-4 rounded-xl bg-background border border-border focus:border-primary focus:ring-4 focus:ring-primary/20 outline-none transition-all hover:border-primary/40 text-foreground placeholder:text-muted-foreground/60"
-         placeholder="john@example.com"
-        />
-       </div>
-
-       <div className="space-y-2 group">
-        <label htmlFor="footer-message" className="text-sm font-medium text-muted-foreground group-focus-within:text-primary transition-colors">Message</label>
-        <textarea
-         id="footer-message"
-         name="message"
-         required
-         rows={5}
-         onChange={handleChange}
-         className="w-full px-5 py-4 rounded-xl bg-background border border-border focus:border-primary focus:ring-4 focus:ring-primary/20 outline-none transition-all hover:border-primary/40 text-foreground placeholder:text-muted-foreground/60 resize-none"
-         placeholder="Tell me about your project..."
-        />
-       </div>
-
-       <button
-        type="submit"
-        disabled={isSubmitting}
-        className={cn(
-         "w-full cosmic-button flex items-center justify-center gap-3 group mt-4 text-lg",
-         isSubmitting && "opacity-70 cursor-not-allowed"
-        )}
-       >
-        {isSubmitting ? "Sending..." : "Send Message"}
-        <Send size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-       </button>
-      </form>
-     </motion.div>
-    </motion.div>
-
-    {/* Bottom Bar */}
-    <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
-     <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
-      <p className="text-sm text-muted-foreground font-body">
-       &copy; {new Date().getFullYear()} TexCodes. All rights reserved.
-      </p>
-      <div className="flex items-center gap-6 text-sm font-body text-muted-foreground">
-       <a href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</a>
-       <a href="/terms" className="hover:text-primary transition-colors">Terms of Service</a>
       </div>
-     </div>
 
-     <button
-      onClick={scrollToTop}
-      className="p-4 rounded-full bg-primary/10 hover:bg-primary border border-primary/20 hover:border-primary text-primary hover:text-primary-foreground transition-all duration-300 hover:-translate-y-2 group"
-      aria-label="Scroll to top"
-     >
-      <ArrowUp size={24} className="group-hover:animate-bounce" />
-     </button>
-    </div>
-   </div>
-  </footer>
- );
-};
+      {/* ─── Bottom Sub-Footer ─── */}
+      <div className="border-t border-[rgba(15,15,15,0.1)] px-4 sm:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-[#8E8D88]">
+        <div>
+          © {new Date().getFullYear()} TEXCODES · ALL RIGHTS RESERVED.
+        </div>
+
+        <div className="flex items-center gap-6">
+          <Link to="/solutions/tech-retail/terms" className="hover:text-[#0F0F0F] transition-colors">
+            Retail SLA & Terms
+          </Link>
+          <Link to="/privacy" className="hover:text-[#0F0F0F] transition-colors">
+            Privacy Policy
+          </Link>
+          <Link to="/terms" className="hover:text-[#0F0F0F] transition-colors">
+            Terms of Service
+          </Link>
+          <button
+            onClick={scrollToTop}
+            className="hover:text-[#1A4BFF] transition-colors flex items-center gap-1 cursor-pointer"
+            aria-label="Scroll back to top"
+          >
+            TOP <ArrowUp size={12} />
+          </button>
+        </div>
+      </div>
+    </footer>
+  )
+}
+
+export default Footer

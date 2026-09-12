@@ -81,7 +81,7 @@ export const projectsData = [
             "/txs/dashboard email system.png"
         ],
         demoUrl: "https://store-demo-eight.vercel.app/",
-        offerUrl: "https://offer-bay.vercel.app/",
+        offerUrl: "/solutions/tech-retail",
         githubUrl: "https://github.com/GitByHamza/Enterprise-Tech-Ecom",
         tags: ["Next.js", "React", "Prisma", "PostgreSQL", "Tailwind CSS", "TypeScript"],
     },

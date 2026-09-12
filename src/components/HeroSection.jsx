@@ -1,203 +1,226 @@
-import React, { Suspense, useEffect, useState } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
-import { TypeAnimation } from 'react-type-animation'
-import Particles, { initParticlesEngine } from '@tsparticles/react'
-import { loadSlim } from '@tsparticles/slim'
-import { useDarkMode } from '../hooks/useDarkMode'
-import Magnetic from './Magnetic'
-
-const HeroScene3D = React.lazy(() => import('./HeroScene3D'))
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { ArrowDown, ArrowRight, CheckCircle2, Terminal, Layers, Database, Cpu } from 'lucide-react'
 
 const HeroSection = () => {
-  const shouldReduceMotion = useReducedMotion()
-  const [particlesReady, setParticlesReady] = useState(false)
-  const isDark = useDarkMode()
+  const tools = [
+    'Next.js',
+    'TypeScript',
+    'Laravel 12',
+    'Vue 3',
+    'PostgreSQL',
+    'Prisma ORM',
+    'Tailwind CSS',
+    'REST APIs',
+    'Docker',
+  ]
 
-  // Particle colors — dark navy in light mode, bright blue/cyan in dark mode
-  const particleColors = isDark ? ['#4F8EF7', '#00D4FF'] : ['#1e3a8a', '#1d4ed8']
-  const linkColor      = isDark ? '#4F8EF7' : '#1e3a8a'
-
-  useEffect(() => {
-    if (shouldReduceMotion) return
-    initParticlesEngine(async (engine) => {
-      await loadSlim(engine)
-    }).then(() => setParticlesReady(true))
-  }, [shouldReduceMotion])
-
-  const particlesOptions = {
-    background: { color: { value: 'transparent' } },
-    fpsLimit: 60,
-    interactivity: {
-      events: { onHover: { enable: true, mode: 'grab' } },
-      modes: { grab: { distance: 140, links: { opacity: 0.3 } } },
-    },
-    particles: {
-      color: { value: particleColors },
-      links: { color: linkColor, distance: 140, enable: true, opacity: isDark ? 0.08 : 0.18, width: 1 },
-      move: { enable: true, speed: 0.6, random: true, straight: false },
-      number: { density: { enable: true, area: 1000 }, value: 55 },
-      opacity: { value: isDark ? 0.35 : 0.55 },
-      size: { value: { min: 1, max: 2.5 } },
-    },
-    detectRetina: true,
-  }
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.14, delayChildren: 0.3 },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] } },
-  }
+  const indexItems = [
+    { num: '01', title: 'TOOLKITO', category: 'PRODUCT / SAAS' },
+    { num: '02', title: 'MYLS', category: 'SYSTEMS MODERNIZATION' },
+    { num: '03', title: 'TXS RETAIL OS', category: 'CUSTOM E-COMMERCE' },
+    { num: '04', title: 'MEDICORE HMS', category: 'HEALTHCARE ERP' },
+    { num: '05', title: 'AI RECEPTIONIST', category: 'AUTOMATION' },
+  ]
 
   return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex items-center px-4 overflow-hidden"
-    >
-      {/* Particles */}
-      {particlesReady && !shouldReduceMotion && (
-        <Particles
-          id="hero-particles"
-          options={particlesOptions}
-          className="absolute inset-0 z-0"
-        />
-      )}
+    <section id="hero" className="w-full bg-[#F6F5F0] border-b border-[rgba(15,15,15,0.14)]">
+      {/* ─── Massive Conceptual Statement ─── */}
+      <div className="px-4 sm:px-8 pt-10 sm:pt-16 pb-8 border-b border-[rgba(15,15,15,0.14)]">
+        <h2 className="text-5xl sm:text-7xl md:text-8xl lg:text-[7.2rem] font-display uppercase tracking-tight text-[#0F0F0F] leading-[0.88] max-w-7xl">
+          BUILDING{' '}
+          <span className="text-[#1A4BFF] relative inline-block">
+            DIGITAL SYSTEMS
+          </span>
+          <br className="hidden sm:inline" /> THAT MOVE BUSINESSES.
+        </h2>
+      </div>
 
-      <div className="container max-w-6xl mx-auto z-10 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-screen py-32">
-
-          {/* ─── Left: Text Content ─── */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="flex flex-col items-start text-left space-y-7"
-          >
-            {/* Available badge */}
-            <motion.div
-              variants={itemVariants}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/30 border border-white/5 backdrop-blur-md shadow-lg"
-            >
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-pop" />
-              </span>
-              <span className="text-sm font-body text-foreground/90 font-medium">Available for new opportunities</span>
-            </motion.div>
-
-            {/* Headline */}
-            <motion.h1
-              variants={itemVariants}
-              className="text-5xl md:text-6xl lg:text-[4.2rem] font-bold tracking-tight font-heading leading-[1.08]"
-            >
-              <span className="block text-foreground drop-shadow-sm">Hi, I'm</span>
-              <Magnetic>
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-pop to-primary bg-[length:200%_auto] animate-gradient-flow pb-1 cursor-default">
-                  Hamza
-                </span>
-              </Magnetic>
-              <span className="block text-foreground/80 text-3xl md:text-4xl font-medium mt-1">
-                I build{' '}
-                <TypeAnimation
-                  sequence={[
-                    'SaaS Platforms', 2400,
-                    'AI Automations', 2400,
-                    'Admin Dashboards', 2400,
-
-                    'Full Stack Apps', 2400,
-                    'Problem Solutions', 2400,
-                  ]}
-                  wrapper="span"
-                  speed={55}
-                  deletionSpeed={75}
-                  repeat={Infinity}
-                  className="text-pop"
-                />
-              </span>
-            </motion.h1>
-
-            {/* Bio */}
-            <motion.p
-              variants={itemVariants}
-              className="font-body text-lg text-muted-foreground max-w-lg leading-relaxed"
-            >
-              With specialized experience at <strong className="text-foreground">MYLS Platform</strong> and a proven track record in freelance development, I build high-performance <strong className="text-foreground">E-commerce applications and AI Automation Agents</strong> using modern tech stacks.
-            </motion.p>
+      {/* ─── 3-Column Editorial Grid ─── */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 border-b border-[rgba(15,15,15,0.14)]">
+        {/* ── Left Column: Profile & Tools (4 cols) ── */}
+        <div className="lg:col-span-4 p-6 sm:p-8 lg:border-r border-[rgba(15,15,15,0.14)] flex flex-col justify-between space-y-8">
+          <div className="space-y-4">
+            <div className="text-[11px] font-mono uppercase tracking-widest text-[#1A4BFF] font-semibold flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-[#1A4BFF] inline-block" />
+              PROFILE // THE THESIS
+            </div>
+            <h3 className="font-display text-2xl sm:text-3xl uppercase tracking-tight text-[#0F0F0F]">
+              FROM CODE TO SYSTEMS
+            </h3>
+            <p className="font-serif text-[#575652] text-base leading-relaxed">
+              TeXCodes is an independent software engineering studio and product builder. 
+              We engineer production SaaS platforms, custom business systems, and scalable web architectures 
+              built around how real operations function.
+            </p>
 
             {/* CTAs */}
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-4 pt-1">
-              <Magnetic>
-                <a href="#projects" className="cosmic-button flex items-center gap-2">
-                  Explore My Work
-                </a>
-              </Magnetic>
-              <Magnetic>
-                <a
-                  href="#contact-footer"
-                  className="px-8 py-3 rounded-full font-medium transition-all duration-300 hover:bg-secondary/50 border border-white/10 backdrop-blur-sm text-foreground flex items-center gap-2 hover:border-white/30 hover:shadow-lg"
-                >
-                  Let's Talk
-                </a>
-              </Magnetic>
-            </motion.div>
-          </motion.div>
-
-          {/* ─── Right: 3D Scene ─── */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.4, delay: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
-            className="hidden lg:flex items-center justify-center relative h-[750px] w-full"
-          >
-            {/* Glow behind sphere */}
-            <div className="absolute w-[800px] h-[800px] rounded-full bg-primary/10 blur-[150px] pointer-events-none" />
-
-            {/* R3F Canvas — expanded to prevent clipping */}
-            <div className="w-[800px] h-[800px] relative bg-transparent overflow-visible border-none outline-none shadow-none">
-              {!shouldReduceMotion && (
-                <Suspense
-                  fallback={
-                    <div className="w-full h-full flex items-center justify-center">
-                      <div className="w-10 h-10 rounded-full border-2 border-primary/20 animate-spin border-t-primary" />
-                    </div>
-                  }
-                >
-                  <HeroScene3D />
-                </Suspense>
-              )}
+            <div className="pt-3 flex flex-wrap items-center gap-3">
+              <a href="#work-section" className="btn-blue text-xs">
+                SELECTED WORK <ArrowDown size={14} />
+              </a>
+              <Link to="/solutions" className="btn-outline text-xs">
+                EXPLORE SOLUTIONS <ArrowRight size={14} />
+              </Link>
             </div>
-          </motion.div>
+          </div>
+
+          {/* Tools & Craft Box */}
+          <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] space-y-2.5">
+            <div className="text-[10px] font-mono uppercase tracking-widest text-[#8E8D88] font-semibold">
+              TOOLS & CRAFT
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {tools.map((t) => (
+                <span key={t} className="tag-pill text-[10px]">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ── Center Column: Editorial Architectural Visual & Hand Annotations (5 cols) ── */}
+        <div className="lg:col-span-5 p-6 sm:p-8 lg:border-r border-[rgba(15,15,15,0.14)] bg-[#FAF9F5] flex flex-col justify-center relative overflow-hidden">
+          {/* Subtle grid background */}
+          <div
+            className="absolute inset-0 opacity-[0.04] pointer-events-none"
+            style={{
+              backgroundImage: 'linear-gradient(#0F0F0F 1px, transparent 1px), linear-gradient(to right, #0F0F0F 1px, transparent 1px)',
+              backgroundSize: '24px 24px',
+            }}
+          />
+
+          {/* Handwritten Annotation 1: Speech Bubble Top */}
+          <div className="relative z-10 mb-4 self-start">
+            <div className="inline-block relative">
+              <span className="font-handwriting text-[#1A4BFF] text-xl font-bold bg-[#EFF3FF] border border-[#1A4BFF]/30 px-3 py-1 rounded-sm shadow-sm inline-flex items-center gap-1.5 rotate-[-2deg]">
+                "Production systems, engineered cleanly."
+              </span>
+              <div className="w-2.5 h-2.5 bg-[#EFF3FF] border-r border-b border-[#1A4BFF]/30 absolute -bottom-1 left-4 rotate-45" />
+            </div>
+          </div>
+
+          {/* Terminal / Architecture Card */}
+          <div className="relative z-10 bg-white border border-[rgba(15,15,15,0.18)] shadow-sm p-5 space-y-4">
+            <div className="flex items-center justify-between border-b border-[rgba(15,15,15,0.1)] pb-2.5">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#0F0F0F]/20" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#0F0F0F]/20" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#0F0F0F]/20" />
+                <span className="font-mono text-[11px] text-[#575652] ml-2">sys_architecture.manifest</span>
+              </div>
+              <span className="font-mono text-[10px] text-[#1A4BFF] font-semibold bg-[#EFF3FF] px-2 py-0.5">
+                VERIFIED STACK
+              </span>
+            </div>
+
+            {/* Architecture Node Diagram */}
+            <div className="grid grid-cols-3 gap-2 font-mono text-center text-[10px]">
+              <div className="p-2.5 border border-[rgba(15,15,15,0.12)] bg-[#FBFBF9]">
+                <Cpu size={14} className="mx-auto mb-1 text-[#1A4BFF]" />
+                <div className="font-semibold text-[#0F0F0F]">NEXT.JS / VUE 3</div>
+                <div className="text-[9px] text-[#8E8D88]">FRONTEND INTERFACES</div>
+              </div>
+              <div className="p-2.5 border border-[rgba(15,15,15,0.12)] bg-[#FBFBF9]">
+                <Layers size={14} className="mx-auto mb-1 text-[#1A4BFF]" />
+                <div className="font-semibold text-[#0F0F0F]">LARAVEL / NODE</div>
+                <div className="text-[9px] text-[#8E8D88]">DOMAIN APIs & RBAC</div>
+              </div>
+              <div className="p-2.5 border border-[rgba(15,15,15,0.12)] bg-[#FBFBF9]">
+                <Database size={14} className="mx-auto mb-1 text-[#1A4BFF]" />
+                <div className="font-semibold text-[#0F0F0F]">POSTGRESQL</div>
+                <div className="text-[9px] text-[#8E8D88]">RELATIONAL DATA</div>
+              </div>
+            </div>
+
+            <div className="text-[11px] font-mono text-[#575652] bg-[#F6F5F0] p-3 border-l-2 border-[#1A4BFF] space-y-1">
+              <div className="text-[#0F0F0F] font-semibold flex items-center gap-1.5">
+                <Terminal size={12} className="text-[#1A4BFF]" /> 100% CODE & DATA REPO OWNERSHIP
+              </div>
+              <p className="text-[10px] text-[#575652]">
+                Zero vendor lock-in. Full GitHub transfer with clean relational database schema.
+              </p>
+            </div>
+          </div>
+
+          {/* Handwritten Annotation 2: Bottom Note */}
+          <div className="relative z-10 mt-4 self-end">
+            <span className="font-handwriting text-[#1A4BFF] text-lg font-bold inline-block rotate-[1deg]">
+              ↳ Built for real operations, not static mockups.
+            </span>
+          </div>
+        </div>
+
+        {/* ── Right Column: Structured Swiss Metadata (3 cols) ── */}
+        <div className="lg:col-span-3 p-6 sm:p-8 flex flex-col justify-between space-y-6 font-mono text-xs">
+          <div className="space-y-5">
+            <div className="border-b border-[rgba(15,15,15,0.1)] pb-3">
+              <div className="text-[10px] text-[#8E8D88] uppercase tracking-widest mb-1">
+                LOCATION / TIMEZONE
+              </div>
+              <div className="font-semibold text-[#0F0F0F]">PAKISTAN</div>
+              <div className="text-[11px] text-[#575652]">PKT (UTC+5) · REMOTE READY</div>
+            </div>
+
+            <div className="border-b border-[rgba(15,15,15,0.1)] pb-3">
+              <div className="text-[10px] text-[#8E8D88] uppercase tracking-widest mb-1">
+                PRIMARY FOCUS
+              </div>
+              <div className="font-semibold text-[#0F0F0F]">SOFTWARE · SYSTEMS · PRODUCTS</div>
+              <div className="text-[11px] text-[#575652]">Full-Stack Engineering & SaaS Architecture</div>
+            </div>
+
+            <div className="border-b border-[rgba(15,15,15,0.1)] pb-3">
+              <div className="text-[10px] text-[#8E8D88] uppercase tracking-widest mb-1">
+                PRODUCTION WORK
+              </div>
+              <div className="font-semibold text-[#0F0F0F]">SAAS · COMMERCE · HEALTHCARE</div>
+              <div className="text-[11px] text-[#575652]">Toolkito SaaS · MYLS Swiss Platform · Retail OS</div>
+            </div>
+
+            <div>
+              <div className="text-[10px] text-[#8E8D88] uppercase tracking-widest mb-1">
+                AVAILABILITY STATUS
+              </div>
+              <div className="text-[#1A4BFF] font-semibold flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-[#1A4BFF] animate-pulse" />
+                OPEN FOR SELECTED BUILDS
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-4 border-t border-[rgba(15,15,15,0.1)]">
+            <Link
+              to="/about"
+              className="text-[11px] font-semibold text-[#0F0F0F] hover:text-[#1A4BFF] transition-colors flex items-center justify-between"
+            >
+              <span>ENGINEERING BIOGRAPHY</span>
+              <span>→</span>
+            </Link>
+          </div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.2, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center cursor-pointer"
-      >
-        <span className="text-[10px] tracking-widest uppercase text-muted-foreground mb-3 font-body">
-          Scroll to explore
+      {/* ─── Bottom Ticker / Index Row ─── */}
+      <div className="px-4 sm:px-8 py-3.5 flex flex-wrap items-center justify-between gap-y-2 text-[11px] font-mono text-[#575652] overflow-x-auto">
+        <span className="font-semibold text-[#0F0F0F] shrink-0 mr-4">
+          FEATURED INDEX:
         </span>
-        <motion.div
-          animate={shouldReduceMotion ? {} : { y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-          className="w-6 h-10 rounded-full border-2 border-white/20 flex justify-center p-1 bg-background/50 backdrop-blur-sm"
-        >
-          <motion.div
-            animate={shouldReduceMotion ? {} : { y: [0, 12, 0], opacity: [1, 0, 1] }}
-            transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-            className="w-1.5 h-1.5 rounded-full bg-pop"
-          />
-        </motion.div>
-      </motion.div>
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-1">
+          {indexItems.map((item) => (
+            <a
+              key={item.num}
+              href="#work-section"
+              className="hover:text-[#1A4BFF] transition-colors flex items-center gap-1.5 shrink-0"
+            >
+              <span className="font-bold text-[#1A4BFF]">{item.num}</span>
+              <span className="font-semibold text-[#0F0F0F]">{item.title}</span>
+              <span className="text-[10px] text-[#8E8D88]">({item.category})</span>
+            </a>
+          ))}
+        </div>
+      </div>
     </section>
   )
 }

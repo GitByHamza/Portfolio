@@ -1,189 +1,164 @@
-import ThemeToggle from './ThemeToggle'
-import OnboardingTooltip from './OnboardingTooltip'
-import Magnetic from './Magnetic'
-import { useState, useEffect } from 'react'
-import { X, Menu } from 'lucide-react'
-import { cn } from '../lib/utils'
-import { motion, AnimatePresence, useReducedMotion, useScroll, useSpring } from 'framer-motion'
+import React, { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { Menu, X, ArrowUpRight } from 'lucide-react'
 
 const Navbar = () => {
-  const navItems = [
-    { name: 'Home',     href: '/#hero',           sectionId: 'hero' },
-    { name: 'About',    href: '/#about',          sectionId: 'about' },
-    { name: 'Skills',   href: '/#skills',         sectionId: 'skills' },
-    { name: 'Projects', href: '/#projects',       sectionId: 'projects' },
-    { name: 'Contact',  href: '#contact-footer',  sectionId: 'contact-footer' },
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [currentDate, setCurrentDate] = useState('')
+  const location = useLocation()
+
+  useEffect(() => {
+    const now = new Date()
+    const options = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }
+    setCurrentDate(now.toLocaleDateString('en-US', options).toUpperCase())
+  }, [])
+
+  const navLinks = [
+    { name: 'WORK', path: '/work' },
+    { name: 'ABOUT', path: '/about' },
+    { name: 'SOLUTIONS', path: '/solutions' },
+    { name: 'CONTACT', path: '/contact' },
   ]
 
-  const [isScroll, setIsScroll] = useState(false)
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('hero')
-  const shouldReduceMotion = useReducedMotion()
-
-  // Scroll progress bar
-  const { scrollYProgress } = useScroll()
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 })
-
-  // Navbar background on scroll
-  useEffect(() => {
-    const handleScroll = () => setIsScroll(window.scrollY > 10)
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  // Active section tracker via IntersectionObserver
-  useEffect(() => {
-    const sectionIds = navItems.map((i) => i.sectionId)
-    const sections = sectionIds.map((id) => document.getElementById(id)).filter(Boolean)
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveSection(entry.target.id)
-        })
-      },
-      { threshold: 0.25, rootMargin: '-10% 0px -65% 0px' }
-    )
-    sections.forEach((s) => observer.observe(s))
-    return () => observer.disconnect()
-  }, [])
+  const isActive = (path) => {
+    if (path === '/' && location.pathname === '/') return true
+    if (path !== '/' && location.pathname.startsWith(path)) return true
+    return false
+  }
 
   return (
-    <>
-      {/* ─── Scroll Progress Bar ─── */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-primary via-pop to-primary z-[100] origin-left"
-        style={{ scaleX }}
-      />
+    <header className="w-full bg-[#F6F5F0] z-50 sticky top-0 border-b border-[rgba(15,15,15,0.14)]">
+      {/* ─── Top Newspaper Metadata Ticker ─── */}
+      <div className="hidden sm:flex items-center justify-between px-4 sm:px-8 py-2 text-[11px] font-mono text-[#575652] uppercase tracking-wider border-b border-[rgba(15,15,15,0.1)]">
+        <div className="flex items-center gap-4">
+          <span className="font-semibold text-[#0F0F0F]">TEXCODES — VOL. 01</span>
+          <span className="text-[rgba(15,15,15,0.3)]">/</span>
+          <span>ENGINEERING JOURNAL & PORTFOLIO</span>
+        </div>
+        <div>
+          <span>{currentDate || '2026 EDITION'}</span>
+        </div>
+      </div>
 
-      <nav className="fixed top-0 w-full z-40 flex justify-center pointer-events-none px-4 mt-2 md:mt-4 transition-all">
-        <div
-          className={cn(
-            'pointer-events-auto flex items-center justify-between transition-all duration-500',
-            'w-full md:w-auto md:px-8 md:py-3 md:rounded-full',
-            isScroll
-              ? 'bg-background/80 backdrop-blur-xl shadow-2xl border border-white/5 py-3 px-4 rounded-2xl md:bg-background/70 md:border-white/10'
-              : 'py-4 md:bg-transparent md:shadow-none md:border-transparent md:backdrop-blur-none'
-          )}
-        >
-          {/* Logo */}
-          <Magnetic>
-            <a href="/#hero" className="text-xl font-bold text-primary flex items-center mr-8">
-              <span className="relative z-10 font-body">
-                <span className="font-heading text-glow text-foreground">TexCodes</span> By Hamza
-              </span>
-            </a>
-          </Magnetic>
-
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-1">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className={cn(
-                  'relative font-body text-sm px-3 py-1.5 rounded-full transition-colors duration-300',
-                  activeSection === item.sectionId
-                    ? 'text-primary'
-                    : 'text-foreground/70 hover:text-foreground'
-                )}
-              >
-                {item.name}
-                {activeSection === item.sectionId && (
-                  <motion.span
-                    layoutId="nav-active-pill"
-                    className="absolute inset-0 rounded-full bg-primary/10 border border-primary/20"
-                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                  />
-                )}
-              </a>
-            ))}
-
-            <div className="pl-4 border-l border-border/50 flex items-center gap-3">
-              <ThemeToggle />
-              {/* Hire Me CTA */}
-              <Magnetic>
-                <a
-                  href="#contact-footer"
-                  className="cosmic-button py-1.5 px-5 text-sm font-body"
-                >
-                  Hire Me 🚀
-                </a>
-              </Magnetic>
-            </div>
-          </div>
-
-          {/* Mobile Toggle */}
-          <div className="flex md:hidden items-center">
-            <div className="relative z-50">
-              <button
-                onClick={() => setIsMenuOpen((prev) => !prev)}
-                className="p-2 text-foreground focus:outline-none"
-                aria-label={isMenuOpen ? 'Close Menu' : 'Open Menu'}
-              >
-                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-              <OnboardingTooltip />
-            </div>
+      {/* ─── Main Masthead ─── */}
+      <div className="px-4 sm:px-8 py-4 sm:py-6 flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[rgba(15,15,15,0.1)]">
+        <div>
+          <Link to="/" className="inline-block group">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-display uppercase tracking-tight text-[#0F0F0F] leading-[0.85] group-hover:text-[#1A4BFF] transition-colors">
+              TEXCODES
+            </h1>
+          </Link>
+          <div className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-[#575652] mt-1.5 flex items-center gap-2">
+            <span>INDEPENDENT SOFTWARE STUDIO</span>
+            <span className="text-[#1A4BFF] font-bold">·</span>
+            <span>PRODUCT BUILDER</span>
           </div>
         </div>
 
-        {/* Mobile Drawer */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: '-100%' }}
-              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: '-100%' }}
-              transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
-              className="fixed inset-0 bg-background/95 backdrop-blur-xl z-30 flex flex-col pt-32 px-6 pointer-events-auto md:hidden"
+        {/* Right side masthead status */}
+        <div className="hidden md:flex flex-col items-end text-right font-mono text-xs text-[#575652]">
+          <div className="inline-flex items-center gap-2 text-[#1A4BFF] font-semibold text-[11px] uppercase tracking-wider bg-[#EFF3FF] px-2.5 py-1 border border-[#1A4BFF]/25">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#1A4BFF] animate-pulse" />
+            <span>AVAILABLE FOR SELECTED BUILDS</span>
+          </div>
+          <span className="text-[10px] text-[#8E8D88] mt-1">BASE: PAKISTAN · REMOTE WORLDWIDE</span>
+        </div>
+
+        {/* Mobile menu trigger */}
+        <div className="flex md:hidden items-center justify-between border-t border-[rgba(15,15,15,0.08)] pt-3">
+          <span className="text-[10px] font-mono text-[#1A4BFF] font-semibold tracking-wider flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#1A4BFF]" />
+            OPEN FOR BUILDS
+          </span>
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="p-1.5 text-[#0F0F0F] hover:text-[#1A4BFF] focus:outline-none"
+            aria-label="Toggle navigation menu"
+          >
+            {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
+      </div>
+
+      {/* ─── Bottom Editorial Navigation Bar ─── */}
+      <nav className="hidden md:flex items-center justify-between px-4 sm:px-8 py-2.5 font-mono text-xs font-semibold tracking-widest uppercase">
+        <div className="flex items-center gap-8">
+          <Link
+            to="/"
+            className={`transition-colors hover:text-[#1A4BFF] ${
+              location.pathname === '/' ? 'text-[#1A4BFF] font-bold underline underline-offset-4' : 'text-[#0F0F0F]'
+            }`}
+          >
+            HOME
+          </Link>
+          {navLinks.map((item) => (
+            <Link
+              key={item.name}
+              to={item.path}
+              className={`transition-colors hover:text-[#1A4BFF] ${
+                isActive(item.path) ? 'text-[#1A4BFF] font-bold underline underline-offset-4' : 'text-[#0F0F0F]'
+              }`}
             >
-              <div className="flex flex-col space-y-6 text-2xl font-body items-start">
-                {navItems.map((item, key) => (
-                  <motion.a
-                    key={item.name}
-                    initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.08 + key * 0.08 }}
-                    href={item.href}
-                    className={cn(
-                      'font-heading font-bold transition-colors duration-300 w-full pb-4 border-b border-border/30',
-                      activeSection === item.sectionId
-                        ? 'text-primary'
-                        : 'text-foreground hover:text-primary'
-                    )}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.name}
-                  </motion.a>
-                ))}
+              {item.name}
+            </Link>
+          ))}
+        </div>
 
-                {/* Hire Me — mobile */}
-                <motion.a
-                  href="#contact-footer"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                  className="cosmic-button w-full text-center mt-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Hire Me 🚀
-                </motion.a>
-
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.6 }}
-                  className="pt-6 w-full flex justify-between items-center"
-                >
-                  <span className="text-sm text-muted-foreground">Switch Theme</span>
-                  <ThemeToggle className="static p-3 bg-secondary/30" />
-                </motion.div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div className="flex items-center gap-4 text-[11px] font-normal text-[#575652]">
+          <Link
+            to="/solutions/tech-retail"
+            className="text-[#1A4BFF] hover:underline font-semibold flex items-center gap-1"
+          >
+            RETAIL OS OFFER <ArrowUpRight size={13} />
+          </Link>
+          <span className="text-[rgba(15,15,15,0.2)]">|</span>
+          <a
+            href="https://wa.me/923288197775"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[#0F0F0F]"
+          >
+            WHATSAPP DIRECT
+          </a>
+        </div>
       </nav>
-    </>
+
+      {/* ─── Mobile Drawer ─── */}
+      {isMenuOpen && (
+        <div className="md:hidden border-t border-[rgba(15,15,15,0.14)] bg-[#F6F5F0] px-4 py-6 space-y-4 font-mono text-sm uppercase tracking-wider">
+          <Link
+            to="/"
+            onClick={() => setIsMenuOpen(false)}
+            className={`block py-2 border-b border-[rgba(15,15,15,0.08)] ${
+              location.pathname === '/' ? 'text-[#1A4BFF] font-bold' : 'text-[#0F0F0F]'
+            }`}
+          >
+            01 / HOME
+          </Link>
+          {navLinks.map((item, idx) => (
+            <Link
+              key={item.name}
+              to={item.path}
+              onClick={() => setIsMenuOpen(false)}
+              className={`block py-2 border-b border-[rgba(15,15,15,0.08)] ${
+                isActive(item.path) ? 'text-[#1A4BFF] font-bold' : 'text-[#0F0F0F]'
+              }`}
+            >
+              {`0${idx + 2}`} / {item.name}
+            </Link>
+          ))}
+          <div className="pt-2">
+            <Link
+              to="/solutions/tech-retail"
+              onClick={() => setIsMenuOpen(false)}
+              className="btn-blue w-full text-center text-xs justify-center"
+            >
+              RETAIL OS SOLUTION OFFER →
+            </Link>
+          </div>
+        </div>
+      )}
+    </header>
   )
 }
 

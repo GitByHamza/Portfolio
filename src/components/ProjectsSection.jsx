@@ -1,253 +1,209 @@
-import { ArrowRight, ExternalLink, Github } from 'lucide-react'
-import React, { useRef } from 'react'
-import { motion, useMotionValue, useSpring, useTransform, useReducedMotion } from 'framer-motion'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { Icon } from '@iconify/react'
-import { projectsData } from '../data/projects'
-import { ProjectImage } from './Skeleton'
-
-// Map common tag names to Iconify icon IDs
-const tagIconMap = {
-  'Vue 3':        'logos:vue',
-  'React':        'logos:react',
-  'React Js':     'logos:react',
-  'Next.js':      'logos:nextjs-icon',
-  'Nuxt (TS)':    'logos:nuxt-icon',
-  'Laravel 12':   'logos:laravel',
-  'Php Laravel 8.3': 'logos:laravel',
-  'Node.js':      'logos:nodejs-icon',
-  'TailwindCSS':  'logos:tailwindcss-icon',
-  'Tailwind CSS': 'logos:tailwindcss-icon',
-  'MongoDB':      'logos:mongodb-icon',
-  'MySQL':        'logos:mysql-icon',
-  'Docker':       'logos:docker-icon',
-  'OpenAI':       'simple-icons:openai',
-  'Supabase':     'logos:supabase-icon',
-  'Vercel':       'logos:vercel-icon',
-  'Micro SaaS':   'fluent:rocket-16-filled',
-  'Prisma':       'logos:prisma',
-  'PostgreSQL':   'logos:postgresql',
-  'TypeScript':   'logos:typescript-icon',
-  'Recharts':     'simple-icons:recharts',
-  'shadcn/ui':    'simple-icons:shadcnui',
-}
-
-const TiltCard = ({ children, className }) => {
-  const ref = useRef(null)
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  const shouldReduceMotion = useReducedMotion()
-
-  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 })
-  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 })
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['7deg', '-7deg'])
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-7deg', '7deg'])
-
-  const handleMouseMove = (e) => {
-    if (!ref.current || shouldReduceMotion) return
-    const rect = ref.current.getBoundingClientRect()
-    x.set((e.clientX - rect.left) / rect.width - 0.5)
-    y.set((e.clientY - rect.top) / rect.height - 0.5)
-  }
-
-  return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => { x.set(0); y.set(0) }}
-      style={{
-        rotateY: shouldReduceMotion ? 0 : rotateY,
-        rotateX: shouldReduceMotion ? 0 : rotateX,
-        transformStyle: 'preserve-3d',
-      }}
-      className={className}
-    >
-      {!shouldReduceMotion && (
-        <motion.div
-          className="absolute inset-0 z-20 pointer-events-none"
-          style={{
-            background: useTransform(
-              () =>
-                `radial-gradient(circle at ${(x.get() + 0.5) * 100}% ${(y.get() + 0.5) * 100}%, rgba(255,255,255,0.12) 0%, transparent 50%)`
-            ),
-          }}
-        />
-      )}
-      <div style={{ transform: shouldReduceMotion ? 'none' : 'translateZ(20px)' }} className="h-full w-full">
-        {children}
-      </div>
-    </motion.div>
-  )
-}
+import { ArrowRight, ExternalLink, Github, Layers, ArrowUpRight } from 'lucide-react'
 
 const ProjectsSection = () => {
+  const editorialProjects = [
+    {
+      id: 6,
+      num: '01',
+      badge: 'PRODUCT I BUILT · LIVE MICRO-SAAS',
+      badgeClass: 'tag-blue',
+      title: 'TOOLKITO — MICRO SAAS TOOLKIT',
+      role: 'Solo Product Builder (Concept, Engineering, Growth)',
+      overview:
+        'A live production Micro SaaS platform offering 10+ professional browser-based utilities for image upscaling, background removal, PDF conversions, OCR extraction, and video processing. Engineered from scratch with serverless processing pipelines, daily usage limits, and SEO strategy.',
+      techStack: ['Next.js', 'Tailwind CSS', 'Sharp', 'FFmpeg', 'Tesseract OCR', 'Supabase PostgreSQL', 'Vercel'],
+      image: '/toolkito.png',
+      demoUrl: 'https://toolkito.app',
+      caseStudyUrl: '/project/6',
+      impactNote: 'Live Solo SaaS Product at toolkito.app',
+    },
+    {
+      id: 1,
+      num: '02',
+      badge: 'PROFESSIONAL ENGINEERING · SWISS PLATFORM',
+      badgeClass: 'tag-pill',
+      title: 'MYLS — MULTI-TENANT SAAS MODERNIZATION',
+      role: 'Full-Stack Systems Modernization',
+      overview:
+        'Production SaaS platform serving 2,800+ active business locations in Switzerland. Successfully executed a full modernization from legacy Laravel 8 to Laravel 12, migrated the frontend to Vue 3 (Composition API), redesigned the database architecture from MySQL to PostgreSQL, and implemented granular Spatie role-based access control (RBAC).',
+      techStack: ['Laravel 12', 'Vue 3 / Composition API', 'PostgreSQL', 'Spatie RBAC', 'REST APIs'],
+      image: '/myls.png',
+      demoUrl: 'https://app.myls.ch',
+      caseStudyUrl: '/project/1',
+      impactNote: '2,800+ Active Swiss Business Locations',
+    },
+    {
+      id: 7,
+      num: '03',
+      badge: 'CUSTOM E-COMMERCE · RETAIL SYSTEM',
+      badgeClass: 'tag-blue',
+      title: 'TXS — ENTERPRISE TECH STORE & PC BUILDER OS',
+      role: 'Full-Stack Architecture & Development',
+      overview:
+        'High-performance retail commerce engine tailored for technology, computer hardware, and CCTV retailers. Features a real-time hardware compatibility engine (CPU sockets AM5/LGA1700, DDR4/DDR5, wattage calculation), multi-branch inventory synchronization, serial number warranty lifecycle, and automated WhatsApp order dispatch.',
+      techStack: ['Next.js 16', 'React 19', 'Prisma ORM', 'PostgreSQL', 'Tailwind CSS'],
+      image: '/txs/home.png',
+      demoUrl: 'https://store-demo-eight.vercel.app/',
+      caseStudyUrl: '/project/7',
+      impactNote: 'Real-Time Hardware Compatibility Engine',
+    },
+    {
+      id: 8,
+      num: '04',
+      badge: 'ENTERPRISE HEALTHCARE · 4-PORTAL ERP',
+      badgeClass: 'tag-pill',
+      title: 'MEDICORE — MODERN HOSPITAL MANAGEMENT SYSTEM',
+      role: 'Full-Stack ERP Architecture',
+      overview:
+        'A comprehensive hospital management ecosystem featuring multi-guard authentication across 4 user portals: Super Admin, Doctor, Staff, and Patient. Includes a dynamic JSON-configured clinical dashboard, an interactive SVG 32-tooth dental chart with FDI notation, and live ward bed occupancy tracking.',
+      techStack: ['PHP Laravel 12 (REST API)', 'Next.js (App Router)', 'PostgreSQL', 'Recharts', 'TypeScript'],
+      image: '/hms/landing.png',
+      githubUrl: 'https://github.com/GitByHamza/Hospital-Management-System',
+      caseStudyUrl: '/project/8',
+      impactNote: '4 Role-Based Portals & Clinical SVG Dental Engine',
+    },
+    {
+      id: 2,
+      num: '05',
+      badge: 'AI BUSINESS AUTOMATION · 24/7 AGENT',
+      badgeClass: 'tag-pill',
+      title: 'AI RECEPTIONIST & CRM PIPELINE AGENT',
+      role: 'AI Integration & Full-Stack Development',
+      overview:
+        'A full-stack business automation platform featuring a WhatsApp voice & text agent that handles customer inquiries 24/7 using company knowledge base data, automates calendar appointment booking, and updates CRM lead qualification pipelines in real-time.',
+      techStack: ['Next.js', 'Node.js / Laravel', 'OpenAI API', 'WhatsApp API', 'CRM System'],
+      image: '/ai/main.png',
+      caseStudyUrl: '/project/2',
+      impactNote: 'Automated 24/7 Lead Qualification & Booking',
+    },
+  ]
+
   return (
-    <section id="projects" className="py-24 px-4 relative perspective-[1000px]">
-      <div className="container mx-auto max-w-5xl">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-3xl md:text-4xl font-bold mb-4 text-center font-heading"
-        >
-          Featured{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-pop">
-            Projects
-          </span>
-        </motion.h2>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          className="font-body text-center text-muted-foreground mb-12 max-w-2xl mx-auto"
-        >
-          Carefully crafted with attention to detail, performance, and real-world business impact.
-        </motion.p>
-
-        {/* Mobile Swipe Slider */}
-        <div className="md:hidden flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 -mx-4 px-4 scrollbar-hide">
-          {projectsData.map((project, key) => (
-            <div key={key} className="snap-center shrink-0 w-[85vw] sm:w-[60vw]">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="group bg-card/80 backdrop-blur-md rounded-2xl border border-white/5 overflow-hidden shadow-xl h-full flex flex-col"
-              >
-                <Link to={`/project/${project.id}`} className="block h-full flex flex-col">
-                  <div className="h-48 overflow-hidden relative">
-                    {/* Impact badge */}
-                    {project.impact && (
-                      <div className="absolute top-3 left-3 z-20 px-2.5 py-1 rounded-full bg-pop/20 border border-pop/40 text-pop text-[11px] font-bold backdrop-blur-sm">
-                        🏆 {project.impact}
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent z-10" />
-                    <ProjectImage
-                      layoutId={`project-image-${project.id}`}
-                      src={project.mainImage}
-                      alt={project.title}
-                      className="w-full h-full"
-                    />
-                  </div>
-                  <div className="p-5 flex-1 flex flex-col">
-                    <div className="flex flex-wrap gap-1.5 mb-3">
-                      {project.tags.slice(0, 3).map((tag, i) => (
-                        <span key={i} className="font-body px-2 py-0.5 text-xs font-medium rounded-full bg-primary/20 text-primary border border-primary/30">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <motion.h3 
-                      layoutId={`project-title-${project.id}`}
-                      className="font-heading text-xl font-bold mb-2 group-hover:text-pop transition-colors"
-                    >
-                      {project.title}
-                    </motion.h3>
-                    <p className="font-body text-muted-foreground text-sm mb-4 line-clamp-2 flex-1">
-                      {project.overview}
-                    </p>
-                    <div className="mt-auto pt-3 flex justify-between items-center border-t border-white/5">
-                      <span className="text-sm font-bold text-pop flex items-center group-hover:translate-x-1 transition-transform">
-                        View Details <ArrowRight size={15} className="ml-1" />
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            </div>
-          ))}
+    <section id="work-section" className="w-full bg-[#F6F5F0] border-b border-[rgba(15,15,15,0.14)]">
+      {/* ─── Section Header ─── */}
+      <div className="px-4 sm:px-8 py-12 sm:py-16 border-b border-[rgba(15,15,15,0.14)] flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <div className="text-[11px] font-mono uppercase tracking-widest text-[#1A4BFF] font-semibold mb-2">
+            SELECTED WORK // PRODUCTION SYSTEMS (2023 — 2026)
+          </div>
+          <h2 className="text-4xl sm:text-6xl md:text-7xl font-display uppercase tracking-tight text-[#0F0F0F] leading-[0.9]">
+            ENGINEERED SYSTEMS
+          </h2>
         </div>
+        <p className="font-serif text-sm sm:text-base text-[#575652] max-w-lg leading-relaxed">
+          Production SaaS platforms, custom commerce engines, and software architectures built with clean domain boundaries, 
+          resilient data models, and verified production performance.
+        </p>
+      </div>
 
-        {/* Desktop Grid */}
-        <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-          {projectsData.map((project, key) => (
-            <motion.div
-              key={key}
-              layoutId={`project-card-${project.id}`}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: key * 0.1 }}
-              className="h-full"
-            >
-              <TiltCard className="group relative bg-card/80 backdrop-blur-md rounded-2xl border border-white/5 overflow-hidden shadow-2xl h-full flex flex-col transition-colors hover:border-white/20">
-                <Link to={`/project/${project.id}`} className="block h-full flex flex-col relative z-30">
-                  <div className="h-48 overflow-hidden relative">
-                    {/* Impact badge */}
-                    {project.impact && (
-                      <div className="absolute top-3 left-3 z-20 px-2.5 py-1 rounded-full bg-pop/20 border border-pop/40 text-pop text-[11px] font-bold backdrop-blur-sm shadow-lg">
-                        🏆 {project.impact}
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent z-10 opacity-80 group-hover:opacity-50 transition-opacity" />
-                    <ProjectImage
-                      layoutId={`project-image-${project.id}`}
-                      src={project.mainImage}
-                      alt={project.title}
-                      className="w-full h-full"
-                    />
-                  </div>
-
-                  <div className="p-5 flex-1 flex flex-col bg-card/50">
-                    <div className="flex flex-wrap gap-1.5 mb-3">
-                      {project.tags.slice(0, 3).map((tag, i) => (
-                        <span key={i} className="font-body px-2 py-0.5 text-xs font-medium rounded-full bg-primary/20 text-primary border border-primary/30">
-                          {tag}
-                        </span>
-                      ))}
-                      {project.tags.length > 3 && (
-                        <span className="font-body px-2 py-0.5 text-xs font-medium rounded-full bg-secondary/50 border border-white/10 text-muted-foreground">
-                          +{project.tags.length - 3}
-                        </span>
-                      )}
-                    </div>
-
-                    <motion.h3 
-                      layoutId={`project-title-${project.id}`}
-                      className="font-heading text-xl font-bold mb-2 group-hover:text-pop transition-colors drop-shadow-sm"
-                    >
-                      {project.title}
-                    </motion.h3>
-                    <p className="font-body text-muted-foreground text-sm mb-3 line-clamp-2 flex-1">
-                      {project.overview}
-                    </p>
-
-                    {/* Tech icon row */}
-                    <div className="flex gap-2 mb-3">
-                      {project.tags.slice(0, 4).map((tag, i) => tagIconMap[tag] ? (
-                        <div key={i} title={tag} className="w-6 h-6 flex-shrink-0">
-                          <Icon icon={tagIconMap[tag]} width={20} height={20} />
-                        </div>
-                      ) : null)}
-                    </div>
-
-                    <div className="mt-auto pt-3 flex justify-between items-center border-t border-white/5">
-                      <span className="text-sm font-bold text-pop flex items-center group-hover:translate-x-1 transition-transform">
-                        View Details <ArrowRight size={15} className="ml-1" />
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              </TiltCard>
-            </motion.div>
-          ))}
-        </div>
-
-        <div className="text-center mt-12">
-          <a
-            className="cosmic-button w-fit flex items-center mx-auto gap-2"
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://github.com/GitByHamza"
+      {/* ─── Editorial Project Entries List ─── */}
+      <div className="divide-y divide-[rgba(15,15,15,0.14)]">
+        {editorialProjects.map((project) => (
+          <article
+            key={project.id}
+            className="p-6 sm:p-10 lg:p-12 hover:bg-[#FAF9F5] transition-colors"
           >
-            Check My Github <ArrowRight size={16} />
-          </a>
-        </div>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              {/* Left Column: Number, Title, Overview, Tech Stack (7 cols) */}
+              <div className="lg:col-span-7 space-y-5">
+                {/* Meta Header */}
+                <div className="flex flex-wrap items-center gap-3 font-mono text-xs">
+                  <span className="font-display text-4xl sm:text-5xl text-[#1A4BFF] leading-none">
+                    {project.num}
+                  </span>
+                  <span className={project.badgeClass}>
+                    {project.badge}
+                  </span>
+                  <span className="text-[11px] text-[#8E8D88] hidden sm:inline">
+                    // {project.role}
+                  </span>
+                </div>
+
+                {/* Title */}
+                <Link to={project.caseStudyUrl} className="block group">
+                  <h3 className="font-display text-2xl sm:text-4xl uppercase tracking-tight text-[#0F0F0F] group-hover:text-[#1A4BFF] transition-colors leading-[1.05]">
+                    {project.title}
+                  </h3>
+                </Link>
+
+                {/* Narrative Overview */}
+                <p className="font-serif text-[#575652] text-base sm:text-lg leading-relaxed">
+                  {project.overview}
+                </p>
+
+                {/* Tech Badges */}
+                <div className="space-y-1.5 pt-2">
+                  <div className="text-[10px] font-mono text-[#8E8D88] uppercase tracking-widest">
+                    TECH STACK & ARCHITECTURE:
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.techStack.map((tech) => (
+                      <span key={tech} className="tag-pill text-[10px]">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Action CTAs */}
+                <div className="pt-4 flex flex-wrap items-center gap-4">
+                  <Link to={project.caseStudyUrl} className="btn-outline text-xs">
+                    READ CASE STUDY <ArrowRight size={13} />
+                  </Link>
+
+                  {project.demoUrl && (
+                    <a
+                      href={project.demoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs font-mono font-semibold text-[#1A4BFF] hover:underline flex items-center gap-1"
+                    >
+                      LIVE DEPLOYMENT <ArrowUpRight size={14} />
+                    </a>
+                  )}
+
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs font-mono text-[#575652] hover:text-[#0F0F0F] flex items-center gap-1"
+                    >
+                      <Github size={13} /> GITHUB REPO
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              {/* Right Column: Visual Frame with subtle print border (5 cols) */}
+              <div className="lg:col-span-5">
+                <Link to={project.caseStudyUrl} className="block group">
+                  <div className="border border-[rgba(15,15,15,0.18)] bg-white p-2 shadow-sm transition-all duration-300 group-hover:border-[#1A4BFF]">
+                    <div className="relative aspect-video overflow-hidden bg-[#ECEAE3]">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-102"
+                      />
+                      <div className="absolute bottom-2 left-2 bg-[#0F0F0F] text-white font-mono text-[9px] uppercase px-2 py-0.5 tracking-wider">
+                        {project.impactNote}
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      {/* ─── Footer CTA to Full Work Archive ─── */}
+      <div className="p-8 sm:p-12 text-center bg-[#FAF9F5] border-t border-[rgba(15,15,15,0.14)]">
+        <Link to="/work" className="btn-blue text-xs sm:text-sm px-8 py-4">
+          EXPLORE COMPLETE WORK ARCHIVE (8+ SYSTEMS) <ArrowRight size={16} />
+        </Link>
       </div>
     </section>
   )
