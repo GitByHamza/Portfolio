@@ -84,10 +84,10 @@ export const ContactSection = () => {
                 <div>
                   <h4 className="text-left font-medium font-body"> Email</h4>
                   <a
-                    href="mailto:professorhamza000@gmail.com"
+                    href="mailto:admin@texcodes.com"
                     className="font-body text-muted-foreground hover:text-primary transition-colors"
                   >
-                    professorhamza000@gmail.com
+                    admin@texcodes.com
                   </a>
                 </div>
               </div>
@@ -182,7 +182,7 @@ export const ContactSection = () => {
                   onChange={handleChange}
                   required
                   className="font-body w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden focus:ring-2 focus:ring-primary"
-                  placeholder="professorhamza000@gmail.com"
+                  placeholder="admin@texcodes.com"
                 />
               </div>
 

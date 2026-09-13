@@ -1,58 +1,63 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, CheckCircle2, ShieldCheck, Database, Layers, Terminal } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
+import { useLanguage } from '../context/LanguageContext'
 
 const AboutSection = () => {
+  const { t, isUrdu } = useLanguage()
+
   const tenets = [
     {
-      title: '100% CLIENT IP & CODE OWNERSHIP',
-      desc: 'Complete GitHub repository transfer and direct database control. Zero vendor lock-in and zero platform sales tax.',
+      title: t('aboutSection', 'tenet1_title'),
+      desc: t('aboutSection', 'tenet1_desc'),
     },
     {
-      title: 'DOMAIN-DRIVEN BACKEND ARCHITECTURE',
-      desc: 'Clean REST APIs, service-layer patterns, and Spatie-style role-based access control (RBAC) built to scale without technical debt.',
+      title: t('aboutSection', 'tenet2_title'),
+      desc: t('aboutSection', 'tenet2_desc'),
     },
     {
-      title: 'RESILIENT RELATIONAL DATA MODELS',
-      desc: 'PostgreSQL with relational schema integrity, typed ORM migrations, and audit trails rather than brittle flat files.',
+      title: t('aboutSection', 'tenet3_title'),
+      desc: t('aboutSection', 'tenet3_desc'),
     },
     {
-      title: 'ZERO BLOAT & MINIMAL DEPENDENCIES',
-      desc: 'Purpose-built user interfaces in Next.js and Vue 3, eliminating sluggish plugins and unpredictable auto-updates.',
+      title: t('aboutSection', 'tenet4_title'),
+      desc: t('aboutSection', 'tenet4_desc'),
     },
   ]
 
   return (
-    <section id="about" className="w-full bg-[#F6F5F0] border-b border-[rgba(15,15,15,0.14)] py-16 sm:py-24 px-4 sm:px-8">
+    <section id="about" className="w-full bg-[#F6F5F0] dark:bg-[#0F0F11] border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] py-16 sm:py-24 px-4 sm:px-8 transition-colors duration-200">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* ── Left Column: Editorial Story (6 cols) ── */}
           <div className="lg:col-span-6 space-y-6">
-            <div className="text-[11px] font-mono uppercase tracking-widest text-[#1A4BFF] font-semibold flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-[#1A4BFF] inline-block" />
-              PHILOSOPHY // FROM CODE TO SYSTEMS
+            <div className="text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-[#059669] dark:bg-[#10B981] inline-block" />
+              {t('aboutSection', 'badge')}
             </div>
 
-            <h2 className="text-4xl sm:text-6xl font-display uppercase tracking-tight text-[#0F0F0F] leading-[0.92]">
-              WE ENGINEER SYSTEMS, NOT DISPOSABLE PAGES.
+            <h2 className="text-4xl sm:text-6xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.92]">
+              {t('aboutSection', 'title')}
             </h2>
 
-            <div className="font-serif text-[#575652] text-base sm:text-lg leading-relaxed space-y-4">
+            <div className="font-serif text-[#575652] dark:text-[#9B9A95] text-base sm:text-lg leading-relaxed space-y-4">
+              <p>{t('aboutSection', 'p1')}</p>
               <p>
-                My background spans both independent product building and large-scale systems engineering. 
-                Rather than treating web development as visual decoration, I approach software from an operational perspective: 
-                how data flows through the business, how multiple user roles interact, and how the system behaves under real customer load.
-              </p>
-              <p>
-                From architecting <strong className="text-[#0F0F0F] font-semibold">Toolkito</strong> (a live production Micro SaaS with 10+ media utilities) 
-                to executing major backend and frontend modernizations for <strong className="text-[#0F0F0F] font-semibold">MYLS in Switzerland</strong> (serving 2,800+ business locations across Europe), 
-                I focus on building software that businesses can depend upon for years.
+                {isUrdu ? (
+                  <>
+                    <strong className="text-[#0F0F0F] dark:text-[#EDECE6] font-semibold">Toolkito</strong> (10+ media utilities par mushtamil live Micro SaaS) ko architect karne se le kar Switzerland mein <strong className="text-[#0F0F0F] dark:text-[#EDECE6] font-semibold">MYLS</strong> ke bare modernization project tak (jo Europe mein 2,800+ locations ko serve karta hai), mera focus hamesha karobar ko mustahkam banana hota hai.
+                  </>
+                ) : (
+                  <>
+                    From architecting <strong className="text-[#0F0F0F] dark:text-[#EDECE6] font-semibold">Toolkito</strong> (a live production Micro SaaS with 10+ media utilities) to executing major backend and frontend modernizations for <strong className="text-[#0F0F0F] dark:text-[#EDECE6] font-semibold">MYLS in Switzerland</strong> (serving 2,800+ business locations across Europe), I focus on building software that businesses can depend upon for years.
+                  </>
+                )}
               </p>
             </div>
 
             <div className="pt-2">
               <Link to="/about" className="btn-outline text-xs">
-                READ THE FULL STORY <ArrowRight size={14} />
+                {t('aboutSection', 'cta')} <ArrowRight size={14} />
               </Link>
             </div>
           </div>
@@ -60,32 +65,32 @@ const AboutSection = () => {
           {/* ── Right Column: Handwritten Note & Engineering Tenets (6 cols) ── */}
           <div className="lg:col-span-6 space-y-8 lg:pl-6">
             {/* Handwritten Note Callout */}
-            <div className="p-6 bg-white border border-[rgba(15,15,15,0.14)] relative">
-              <span className="font-mono text-[10px] uppercase text-[#8E8D88] tracking-widest block mb-1">
-                ARCHITECTURAL ETHOS
+            <div className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] relative">
+              <span className="font-mono text-[10px] uppercase text-[#8E8D88] dark:text-[#6A6965] tracking-widest block mb-1">
+                {t('aboutSection', 'note_badge')}
               </span>
-              <p className="font-handwriting text-[#1A4BFF] text-2xl sm:text-3xl font-bold leading-snug">
-                "Every serious system begins with an uncompromising architecture and clean data models."
+              <p className="font-handwriting text-[#059669] dark:text-[#10B981] text-2xl sm:text-3xl font-bold leading-snug">
+                {t('aboutSection', 'note_quote')}
               </p>
             </div>
 
             {/* 4 Tenets Grid */}
             <div className="space-y-4">
-              <div className="text-[11px] font-mono uppercase tracking-widest text-[#0F0F0F] font-semibold">
-                CORE ENGINEERING PRINCIPLES
+              <div className="text-[11px] font-mono uppercase tracking-widest text-[#0F0F0F] dark:text-[#EDECE6] font-semibold">
+                {isUrdu ? 'BUNYADI ENGINEERING ASOOL' : 'CORE ENGINEERING PRINCIPLES'}
               </div>
 
               <div className="space-y-3 font-mono text-xs">
                 {tenets.map((item, idx) => (
                   <div
                     key={idx}
-                    className="p-4 bg-white/60 border border-[rgba(15,15,15,0.12)] space-y-1"
+                    className="p-4 bg-white/60 dark:bg-[#161619]/60 border border-[rgba(15,15,15,0.12)] dark:border-[rgba(255,255,255,0.1)] space-y-1"
                   >
-                    <div className="font-bold text-[#0F0F0F] flex items-center gap-2">
-                      <span className="text-[#1A4BFF]">0{idx + 1}.</span>
+                    <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] flex items-center gap-2">
+                      <span className="text-[#059669] dark:text-[#10B981]">0{idx + 1}.</span>
                       <span>{item.title}</span>
                     </div>
-                    <p className="font-sans text-[13px] text-[#575652] leading-relaxed">
+                    <p className="font-sans text-[13px] text-[#575652] dark:text-[#9B9A95] leading-relaxed">
                       {item.desc}
                     </p>
                   </div>

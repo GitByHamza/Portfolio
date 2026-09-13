@@ -1,53 +1,55 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Mail, Github, Linkedin, MessageSquare } from 'lucide-react'
+import { useLanguage } from '../context/LanguageContext'
 
 const ClosingSection = () => {
+  const { t, isUrdu } = useLanguage()
+
   return (
-    <section className="w-full bg-[#FAF9F5] border-b border-[rgba(15,15,15,0.14)] py-20 sm:py-28 px-4 sm:px-8">
+    <section className="w-full bg-[#FAF9F5] dark:bg-[#161619] border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] py-20 sm:py-28 px-4 sm:px-8 transition-colors duration-200">
       <div className="max-w-7xl mx-auto space-y-8">
-        <div className="text-[11px] font-mono uppercase tracking-widest text-[#1A4BFF] font-semibold flex items-center gap-2">
-          <span className="w-1.5 h-1.5 bg-[#1A4BFF] inline-block" />
-          COMMISSION & INQUIRIES
+        <div className="text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold flex items-center gap-2">
+          <span className="w-1.5 h-1.5 bg-[#059669] dark:bg-[#10B981] inline-block" />
+          {t('closing', 'badge')}
         </div>
 
         {/* Big Editorial Headline */}
-        <h2 className="text-5xl sm:text-7xl md:text-8xl lg:text-[7.5rem] font-display uppercase tracking-tight text-[#0F0F0F] leading-[0.88] max-w-5xl">
-          LET'S BUILD SOMETHING{' '}
-          <span className="text-[#1A4BFF] block sm:inline">
-            WORTH RUNNING A BUSINESS ON.
+        <h2 className="text-5xl sm:text-7xl md:text-8xl lg:text-[7.5rem] font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.88] max-w-5xl">
+          {t('closing', 'title_prefix')}{' '}
+          <span className="text-[#059669] dark:text-[#10B981] block sm:inline">
+            {t('closing', 'title_accent')}
           </span>
         </h2>
 
-        <p className="font-serif text-[#575652] text-base sm:text-xl max-w-2xl leading-relaxed">
-          Open to select high-impact software projects, full-stack systems engineering, and commercial retail platforms. 
-          Based in Pakistan (PKT / UTC+5), delivering production software worldwide.
+        <p className="font-serif text-[#575652] dark:text-[#9B9A95] text-base sm:text-xl max-w-2xl leading-relaxed">
+          {t('closing', 'desc')}
         </p>
 
         {/* Buttons Row */}
         <div className="pt-4 flex flex-wrap items-center gap-3">
           <Link to="/contact" className="btn-blue text-xs">
-            START A PROJECT <ArrowRight size={14} />
+            {t('closing', 'cta_start')} <ArrowRight size={14} />
           </Link>
 
           <Link to="/solutions" className="btn-outline text-xs">
-            EXPLORE SOLUTIONS
+            {t('closing', 'cta_solutions')}
           </Link>
 
           <a
-            href="mailto:professorhamza000@gmail.com"
+            href="mailto:admin@texcodes.com"
             className="btn-outline text-xs"
           >
-            <Mail size={13} /> EMAIL DIRECT
+            <Mail size={13} /> {t('closing', 'cta_email')}
           </a>
 
           <a
-            href="https://wa.me/923288197775"
+            href="https://wa.me/923091824000"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-outline text-xs text-[#1A4BFF] border-[#1A4BFF]/40 hover:bg-[#1A4BFF] hover:text-white"
+            className="btn-outline text-xs text-[#059669] dark:text-[#10B981] border-[#059669]/40 dark:border-[#10B981]/40 hover:bg-[#059669] hover:text-white dark:hover:bg-[#10B981] dark:hover:text-[#0F0F11]"
           >
-            <MessageSquare size={13} /> WHATSAPP
+            <MessageSquare size={13} /> {t('closing', 'cta_whatsapp')}
           </a>
 
           <a
@@ -56,7 +58,7 @@ const ClosingSection = () => {
             rel="noopener noreferrer"
             className="btn-outline text-xs"
           >
-            <Github size={13} /> GITHUB
+            <Github size={13} /> {t('closing', 'cta_github')}
           </a>
 
           <a
@@ -65,7 +67,7 @@ const ClosingSection = () => {
             rel="noopener noreferrer"
             className="btn-outline text-xs"
           >
-            <Linkedin size={13} /> LINKEDIN
+            <Linkedin size={13} /> {t('closing', 'cta_linkedin')}
           </a>
         </div>
       </div>

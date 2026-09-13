@@ -19,6 +19,7 @@ import Error404 from './pages/Error404'
 import Navbar from './components/Navbar'
 import { Footer } from './components/Footer'
 import PageCurtain from './components/PageCurtain'
+import { LanguageProvider } from './context/LanguageContext'
 
 function SmoothScroll() {
   const shouldReduceMotion = useReducedMotion()
@@ -72,7 +73,7 @@ function App() {
   }, [])
 
   return (
-    <>
+    <LanguageProvider>
       <PageCurtain />
       <SmoothScroll />
       <BrowserRouter>
@@ -103,7 +104,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </>
+    </LanguageProvider>
   )
 }
 

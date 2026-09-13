@@ -23,9 +23,9 @@
   --ink: #0F0F0F;
   --ink-muted: #575652;
   --ink-faint: #8E8D88;
-  --blue: #1A4BFF;
-  --blue-hover: #0D38D8;
-  --blue-soft: #EFF3FF;
+  --blue: #059669;
+  --blue-hover: #047857;
+  --blue-soft: #ECFDF5;
   --rule: rgba(15, 15, 15, 0.14);
   --rule-strong: rgba(15, 15, 15, 0.35);
 
@@ -44,9 +44,9 @@
   --ink: #EDECE6;
   --ink-muted: #9B9A95;
   --ink-faint: #6A6965;
-  --blue: #3D6BFF;
-  --blue-hover: #2955EB;
-  --blue-soft: rgba(61, 107, 255, 0.15);
+  --blue: #10B981;
+  --blue-hover: #34D399;
+  --blue-soft: rgba(16, 185, 129, 0.15);
   --rule: rgba(255, 255, 255, 0.12);
   --rule-strong: rgba(255, 255, 255, 0.28);
 }
@@ -64,6 +64,17 @@ body {
   overflow-x: hidden;
   line-height: 1.5;
   transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+::selection {
+  background-color: #059669;
+  color: #ffffff;
+}
+
+.dark ::selection,
+.dark *::selection {
+  background-color: #10B981;
+  color: #0F0F11;
 }
 
 /* Subtle editorial paper grain texture */
@@ -201,11 +212,12 @@ body::before {
   color: var(--ink);
 }
 
-.tag-blue {
+.tag-blue,
+.tag-green {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  border: 1px solid rgba(26, 75, 255, 0.25);
+  border: 1px solid rgba(5, 150, 105, 0.25);
   background-color: var(--blue-soft);
   padding: 0.25rem 0.6rem;
   font-family: var(--font-mono);
@@ -217,10 +229,23 @@ body::before {
   border-radius: 0;
 }
 
-.dark .tag-blue {
-  border-color: rgba(61, 107, 255, 0.35);
-  background-color: rgba(61, 107, 255, 0.18);
+.dark .tag-blue,
+.dark .tag-green {
+  border-color: rgba(16, 185, 129, 0.35);
+  background-color: rgba(16, 185, 129, 0.18);
   color: var(--blue);
+}
+
+.text-gradient-emerald {
+  background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dark .text-gradient-emerald {
+  background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* ─── Editorial Night Edition (Dark Theme Automated Mapping) ─── */
@@ -257,15 +282,18 @@ body::before {
   border-color: var(--rule) !important;
 }
 
-.dark [class*="bg-[#EFF3FF]"] {
+.dark [class*="bg-[#EFF3FF]"],
+.dark [class*="bg-[#ECFDF5]"] {
   background-color: var(--blue-soft) !important;
 }
 
-.dark [class*="border-[#1A4BFF]"] {
-  border-color: rgba(61, 107, 255, 0.4) !important;
+.dark [class*="border-[#1A4BFF]"],
+.dark [class*="border-[#059669]"] {
+  border-color: rgba(16, 185, 129, 0.4) !important;
 }
 
-.dark [class*="text-[#1A4BFF]"] {
+.dark [class*="text-[#1A4BFF]"],
+.dark [class*="text-[#059669]"] {
   color: var(--blue) !important;
 }
 
@@ -273,7 +301,8 @@ body::before {
   background-color: var(--paper-dark) !important;
 }
 
-.dark [class*="hover:border-[#1A4BFF]"]:hover {
+.dark [class*="hover:border-[#1A4BFF]"]:hover,
+.dark [class*="hover:border-[#059669]"]:hover {
   border-color: var(--blue) !important;
 }
 
@@ -293,3 +322,127 @@ body::before {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* ==========================================================================
+   Attention-Catching Call-to-Action Animations (Click Me & WhatsApp Buttons)
+   ========================================================================== */
+
+@keyframes pulse-attention-soft {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.45), 0 2px 6px rgba(0, 0, 0, 0.06);
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(5, 150, 105, 0), 0 4px 18px rgba(16, 185, 129, 0.35);
+    transform: translateY(-2px) scale(1.02);
+  }
+}
+
+@keyframes pulse-attention-solid {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(5, 150, 105, 0.4), 0 2px 6px rgba(0, 0, 0, 0.12);
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    box-shadow: 0 0 24px rgba(16, 185, 129, 0.75), 0 0 12px rgba(52, 211, 153, 0.5);
+    transform: translateY(-2px) scale(1.025);
+  }
+}
+
+@keyframes pulse-attention-outline {
+  0%, 100% {
+    border-color: rgba(15, 15, 15, 0.35);
+    box-shadow: 0 0 0 0 rgba(5, 150, 105, 0);
+    transform: translateY(0);
+  }
+  50% {
+    border-color: #059669;
+    box-shadow: 0 0 14px rgba(5, 150, 105, 0.3);
+    transform: translateY(-1.5px);
+  }
+}
+
+@keyframes shimmer-sweep {
+  0% {
+    transform: translateX(-160%) skewX(-20deg);
+  }
+  35%, 100% {
+    transform: translateX(260%) skewX(-20deg);
+  }
+}
+
+@keyframes icon-attention-wiggle {
+  0%, 72%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  78% {
+    transform: rotate(-14deg) scale(1.2);
+  }
+  84% {
+    transform: rotate(14deg) scale(1.2);
+  }
+  90% {
+    transform: rotate(-8deg) scale(1.15);
+  }
+  94% {
+    transform: rotate(8deg) scale(1.15);
+  }
+}
+
+.animate-click-me {
+  animation: pulse-attention-soft 2.6s ease-in-out infinite;
+}
+
+.animate-click-me:hover {
+  animation: none;
+  transform: translateY(-2px) scale(1.025);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.45);
+}
+
+.animate-click-me-solid {
+  animation: pulse-attention-solid 2.2s ease-in-out infinite;
+}
+
+.animate-click-me-solid:hover {
+  animation: none;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 0 26px rgba(16, 185, 129, 0.85);
+}
+
+.animate-claim-solid {
+  animation: pulse-attention-solid 2.2s ease-in-out infinite;
+}
+
+.animate-claim-solid:hover {
+  animation: none;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 0 26px rgba(16, 185, 129, 0.85);
+}
+
+.animate-claim-outline {
+  animation: pulse-attention-outline 2.8s ease-in-out infinite;
+}
+
+.animate-claim-outline:hover {
+  animation: none;
+  transform: translateY(-2px) scale(1.02);
+  border-color: #059669 !important;
+  color: #059669 !important;
+  box-shadow: 0 0 16px rgba(5, 150, 105, 0.35);
+}
+
+.dark .animate-claim-outline:hover {
+  border-color: #10B981 !important;
+  color: #10B981 !important;
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.45);
+}
+
+.animate-shimmer-sweep {
+  animation: shimmer-sweep 2.8s ease-in-out infinite;
+}
+
+.animate-icon-wiggle {
+  display: inline-block;
+  animation: icon-attention-wiggle 3s ease-in-out infinite;
+}
+

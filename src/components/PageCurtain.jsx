@@ -1,9 +1,11 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function PageCurtain() {
   const shouldReduceMotion = useReducedMotion()
   const [isVisible, setIsVisible] = useState(true)
+  const { t } = useLanguage()
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(false), 1400)
@@ -28,8 +30,8 @@ export default function PageCurtain() {
         <h1 className="text-4xl sm:text-6xl font-display uppercase tracking-tight text-[#0F0F0F]">
           TEXCODES
         </h1>
-        <div className="text-[10px] text-[#1A4BFF] uppercase tracking-widest mt-1">
-          INDEPENDENT SOFTWARE STUDIO
+        <div className="text-[10px] text-[#059669] uppercase tracking-widest mt-1">
+          {t('curtain', 'subtitle')}
         </div>
       </motion.div>
     </motion.div>

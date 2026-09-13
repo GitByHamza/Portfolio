@@ -73,13 +73,13 @@ export default function ThemeToggle({ className, variant = 'full' }) {
       <button
         onClick={() => setMode(!isDarkMode)}
         className={cn(
-          'p-1.5 border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.15)] bg-white dark:bg-[#161619] text-[#0F0F0F] dark:text-[#EDECE6] hover:text-[#1A4BFF] dark:hover:text-[#3D6BFF] transition-colors cursor-pointer',
+          'p-1.5 border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.15)] bg-white dark:bg-[#161619] text-[#0F0F0F] dark:text-[#EDECE6] hover:text-[#059669] dark:hover:text-[#10B981] transition-colors cursor-pointer',
           className
         )}
         aria-label={isDarkMode ? 'Switch to Paper Edition' : 'Switch to Night Edition'}
         title={isDarkMode ? 'Switch to Paper Edition (Light)' : 'Switch to Night Edition (Dark)'}
       >
-        {isDarkMode ? <Sun size={14} className="text-[#3D6BFF]" /> : <Moon size={14} />}
+        {isDarkMode ? <Sun size={14} className="text-[#10B981]" /> : <Moon size={14} />}
       </button>
     )
   }
@@ -112,7 +112,7 @@ export default function ThemeToggle({ className, variant = 'full' }) {
         onClick={() => setMode(true)}
         className={`px-2 py-0.5 flex items-center gap-1 transition-colors cursor-pointer ${
           isDarkMode
-            ? 'bg-[#3D6BFF] text-white font-bold'
+            ? 'bg-[#10B981] text-white font-bold'
             : 'text-[#8E8D88] hover:text-[#0F0F0F] dark:hover:text-[#EDECE6]'
         }`}
         aria-label="Switch to Night Edition"

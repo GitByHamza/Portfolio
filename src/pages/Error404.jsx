@@ -1,66 +1,41 @@
 import React from 'react'
-import { motion } from 'framer-motion'
-import { Rocket, MoveLeft } from 'lucide-react'
+import { ArrowLeft, Terminal } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useLanguage } from '../context/LanguageContext'
 
 const Error404 = () => {
+  const { t, isUrdu } = useLanguage()
+
   return (
-    <div className="min-h-[80vh] flex flex-col items-center justify-center px-4 text-center">
-      <motion.div
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="relative mb-8"
-      >
-        <div className="text-9xl font-heading font-black text-primary/20 select-none">404</div>
-        <motion.div 
-          className="absolute inset-0 flex items-center justify-center"
-          animate={{ 
-            y: [0, -20, 0],
-          }}
-          transition={{ 
-            duration: 4, 
-            repeat: Infinity, 
-            ease: "easeInOut" 
-          }}
-        >
-          <Rocket className="w-24 h-24 text-primary" strokeWidth={1.5} />
-        </motion.div>
-      </motion.div>
+    <div className="min-h-[75vh] w-full bg-[#F6F5F0] dark:bg-[#0A0A0A] flex flex-col items-center justify-center px-4 py-16 text-center font-mono transition-colors duration-200">
+      <div className="max-w-md mx-auto space-y-6">
+        <div className="inline-flex items-center gap-2 text-[11px] font-semibold text-[#059669] dark:text-[#10B981] uppercase tracking-widest bg-[#ECFDF5] dark:bg-[#064E3B]/30 px-3 py-1 border border-[#059669]/30">
+          <Terminal size={13} /> {t('error404', 'badge')}
+        </div>
 
-      <motion.h1 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="text-4xl md:text-5xl font-heading font-bold mb-4 text-glow"
-      >
-        Lost in Outer Space?
-      </motion.h1>
+        <div className="text-7xl sm:text-9xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-white select-none">
+          404
+        </div>
 
-      <motion.p 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="text-muted-foreground font-body max-w-md mb-10"
-      >
-        The page you're looking for has drifted into a black hole or never existed in this galaxy.
-      </motion.p>
+        <h1 className="text-2xl sm:text-3xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-white">
+          {t('error404', 'title')}
+        </h1>
 
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-      >
-        <Link 
-          to="/" 
-          className="cosmic-button inline-flex items-center gap-2 group"
-        >
-          <MoveLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-          Back to Earth
-        </Link>
-      </motion.div>
+        <p className="font-serif text-sm sm:text-base text-[#575652] dark:text-[#A3A29E] max-w-sm mx-auto leading-relaxed">
+          {t('error404', 'desc')}
+        </p>
+
+        <div className="pt-4">
+          <Link
+            to="/"
+            className="btn-outline text-xs inline-flex items-center gap-2"
+          >
+            <ArrowLeft size={14} /> {t('error404', 'return_btn')}
+          </Link>
+        </div>
+      </div>
     </div>
   )
 }
 
-export default Error404
+export default Error404

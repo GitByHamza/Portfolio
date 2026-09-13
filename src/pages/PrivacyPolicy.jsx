@@ -1,37 +1,75 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { ArrowLeft, ShieldCheck } from 'lucide-react'
+import { useLanguage } from '../context/LanguageContext'
 
 const PrivacyPolicy = () => {
+  const { t, isUrdu } = useLanguage()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
-    <main className="container mx-auto px-6 pt-32 pb-16 relative z-10 min-h-screen">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-4xl mx-auto bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-8 md:p-12 shadow-xl"
-      >
-        <h1 className="text-4xl font-heading font-bold mb-8 text-glow text-primary">Privacy Policy</h1>
-        <div className="space-y-6 text-muted-foreground font-body leading-relaxed">
-          <p>Last updated: {new Date().toLocaleDateString()}</p>
-
-          <h2 className="text-2xl font-heading font-semibold text-foreground mt-8 mb-4">1. Information We Collect</h2>
-          <p>We only collect information that you voluntarily provide to us when you fill out contact forms on the website. This may include your name, email address, country, and message content. This data is securely stored and used exclusively to facilitate communication with you.</p>
-
-          <h2 className="text-2xl font-heading font-semibold text-foreground mt-8 mb-4">2. How We Use Your Information</h2>
-          <p>The information we collect is used solely for the purpose of communicating with you, responding to your inquiries, and providing the services you requested. We absolutely do not sell, rent, or share your personal information with third parties for marketing purposes.</p>
-
-          <h2 className="text-2xl font-heading font-semibold text-foreground mt-8 mb-4">3. Data Security</h2>
-          <p>We implement appropriate technical and organizational security measures (including secure database solutions provided by Supabase) designed to protect the security of any personal information we process. However, please also remember that we cannot guarantee that the internet itself is 100% secure.</p>
-
-          <h2 className="text-2xl font-heading font-semibold text-foreground mt-8 mb-4">4. Third-Party Services</h2>
-          <p>This website may contain links to other websites or utilize third-party services. We are not responsible for the privacy practices or the content of such external sites.</p>
-
-          <h2 className="text-2xl font-heading font-semibold text-foreground mt-8 mb-4">5. Contact Us</h2>
-          <p>If you have questions or comments about this Privacy Policy, your data, or any concerns, please contact us anytime at professorhamza000@gmail.com.</p>
+    <main className="w-full bg-[#F6F5F0] dark:bg-[#0A0A0A] min-h-screen py-16 px-4 sm:px-8 font-mono text-xs text-[#0F0F0F] dark:text-[#EDECE6] transition-colors duration-200">
+      <div className="max-w-4xl mx-auto space-y-10">
+        <div>
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-xs font-bold text-[#059669] dark:text-[#10B981] hover:underline uppercase tracking-wider"
+          >
+            <ArrowLeft size={14} />
+            <span>{isUrdu ? 'MAIN INDEX PAR WAPIS JAYEIN' : 'RETURN TO HOME'}</span>
+          </Link>
         </div>
-      </motion.div>
-    </main>
-  );
-};
 
-export default PrivacyPolicy;
+        <div className="space-y-4 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.1)] pb-8">
+          <div className="text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold flex items-center gap-2">
+            <ShieldCheck size={14} />
+            {t('legal', 'last_updated')}
+          </div>
+
+          <h1 className="text-4xl sm:text-6xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-white leading-[0.9]">
+            {t('legal', 'privacy_title')}
+          </h1>
+        </div>
+
+        <div className="space-y-8 font-serif text-sm sm:text-base text-[#575652] dark:text-[#C5C4BE] leading-relaxed">
+          <section className="space-y-2 font-sans">
+            <h2 className="text-xl font-display uppercase text-[#0F0F0F] dark:text-white tracking-wide">
+              1. {isUrdu ? 'Maloomat Jo Hum Jama Karte Hain' : 'Information We Collect'}
+            </h2>
+            <p className="font-serif">
+              {isUrdu
+                ? 'Hum sirf woh maloomat jama karte hain jo aap contact ya inquiry forms bharte waqt faraham karte hain (jaise aapka naam, email, shehr aur inquiry overview). Yeh data mehfooz tareeqay se store kiya jata hai.'
+                : 'We only collect information that you voluntarily provide when filling out project inquiry forms (such as your name, email, location, and project overview). This data is stored securely and used exclusively to communicate regarding your build.'}
+            </p>
+          </section>
+
+          <section className="space-y-2 font-sans">
+            <h2 className="text-xl font-display uppercase text-[#0F0F0F] dark:text-white tracking-wide">
+              2. {isUrdu ? 'Maloomat Ka Istemal' : 'How We Use Your Information'}
+            </h2>
+            <p className="font-serif">
+              {isUrdu
+                ? 'Aapki maloomat sirf aapke project inquiry ka jawab dene aur technical consultation ke liye istemal hoti hai. Hum kisi teesray fard ko aapka data farokht nahi karte.'
+                : 'The information collected is used solely to respond to your technical and commercial inquiries. We do not sell, rent, or share personal information with third parties for marketing purposes.'}
+            </p>
+          </section>
+
+          <section className="space-y-2 font-sans">
+            <h2 className="text-xl font-display uppercase text-[#0F0F0F] dark:text-white tracking-wide">
+              3. {isUrdu ? 'Rabta aur Sawalat' : 'Contact Us'}
+            </h2>
+            <p className="font-serif">
+              {t('legal', 'contact_email')}
+            </p>
+          </section>
+        </div>
+      </div>
+    </main>
+  )
+}
+
+export default PrivacyPolicy
+

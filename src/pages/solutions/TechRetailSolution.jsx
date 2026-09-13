@@ -25,6 +25,7 @@ import {
 } from 'lucide-react'
 import PlanDetailModal from '../../components/PlanDetailModal'
 import ThemeToggle from '../../components/ThemeToggle'
+import { useLanguage } from '../../context/LanguageContext'
 
 /**
  * Geo / Country / Timezone auto-selection helper:
@@ -212,11 +213,11 @@ const I18N_DATA = {
   },
   'ur-en': {
     hero_badge: 'COMMERCIAL SYSTEM // COMPUTER & CCTV RETAIL OS',
-    hero_title_1: 'Computer, CCTV aur Tech Hardware Bechain',
+    hero_title_1: 'Computer, CCTV aur Tech Hardware Sell Karein',
     hero_title_accent: 'Online aur Multi-Branch',
     hero_title_2: 'Baghair Kisi Mahana Platform Commission Ke',
     hero_sub:
-      'Aahista templates aur mehangay monthly software charges par waqt zaya karna band karein. Hum aapke computer aur electronics store ke liye custom Next.js web store deploy karte hain — jisme live PC Builder compatibility, multi-branch stock sync aur WhatsApp automated dispatch shamil hai.',
+      'Slow websites aur mehangay monthly platform charges par waqt aur paisa zaya karna band karein. Hum aapke computer aur electronics store ke liye custom Next.js web store deploy karte hain — jisme live PC Builder compatibility, multi-branch stock sync aur WhatsApp automated dispatch shamil hai.',
     cta_primary: 'Apna Retail Plan Muntakhib Karein',
     cta_secondary: 'Live Demo Check Karein',
     metrics_code: '100% Code aur Data Ka Mukammal Ikhtiyar',
@@ -766,7 +767,7 @@ const PLANS_DETAIL = {
 }
 
 export default function TechRetailSolution() {
-  const [lang, setLang] = useState(detectInitialLanguage)
+  const { lang, setLang, isUrdu } = useLanguage()
   const [activeModalKey, setActiveModalKey] = useState(null)
   const t = I18N_DATA[lang] || I18N_DATA.en
   const activePlan = activeModalKey
@@ -777,51 +778,11 @@ export default function TechRetailSolution() {
     window.scrollTo(0, 0)
   }, [])
 
-  // Non-blocking geo IP verification (confirms region if no manual choice in localStorage)
-  useEffect(() => {
-    try {
-      if (localStorage.getItem('texcodes_retail_lang')) return
-    } catch (e) {}
-
-    const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), 2500)
-
-    fetch('https://api.country.is', { signal: controller.signal })
-      .then((res) => res.json())
-      .then((data) => {
-        clearTimeout(timeoutId)
-        if (!data?.country) return
-        const c = data.country.toUpperCase()
-        if (localStorage.getItem('texcodes_retail_lang')) return
-
-        if (c === 'PK' || c === 'IN') {
-          setLang('ur-en')
-        } else if (
-          [
-            'US', 'GB', 'CA', 'AU', 'NZ', 'DE', 'FR', 'IT', 'ES', 'NL',
-            'SE', 'CH', 'BE', 'AT', 'DK', 'NO', 'FI', 'IE', 'PT', 'PL', 'CZ', 'GR',
-          ].includes(c)
-        ) {
-          setLang('en')
-        }
-      })
-      .catch(() => {})
-
-    return () => {
-      clearTimeout(timeoutId)
-      controller.abort()
-    }
-  }, [])
-
   const handleLanguageChange = (newLang) => {
     setLang(newLang)
-    try {
-      localStorage.setItem('texcodes_retail_lang', newLang)
-    } catch (e) {}
   }
 
   const openWhatsApp = (planName, price) => {
-    const isUrdu = lang === 'ur-en'
     const text = isUrdu
       ? encodeURIComponent(
           `Assalam o Alaikum TeXCodes team, main apne Computer / CCTV retail business ke liye [${planName} - ${price}] plan mein interested hoon. Barah-e-karam demo schedule karein aur agle marahil discuss karein.`
@@ -829,11 +790,11 @@ export default function TechRetailSolution() {
       : encodeURIComponent(
           `Hello TeXCodes team, I am interested in the [${planName} - ${price}] for my Computer / CCTV retail business. I would like to schedule a demonstration and discuss deployment.`
         )
-    window.open(`https://wa.me/923288197775?text=${text}`, '_blank')
+    window.open(`https://wa.me/923091824000?text=${text}`, '_blank')
   }
 
   return (
-    <div className="w-full bg-[#F6F5F0] min-h-screen">
+    <div className="w-full bg-[#F6F5F0] dark:bg-[#0F0F11] min-h-screen text-[#0F0F0F] dark:text-[#EDECE6] transition-colors duration-200">
       {/* ─── Plan Detail Modal (Bilingual: English & Roman Urdu) ─── */}
       <PlanDetailModal
         plan={activePlan}
@@ -843,14 +804,14 @@ export default function TechRetailSolution() {
       />
 
       {/* ─── Top Language Toggle Bar ─── */}
-      <div className="border-b border-[rgba(15,15,15,0.14)] bg-[#FAF9F5] px-4 sm:px-8 py-2.5">
+      <div className="border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#161619] px-4 sm:px-8 py-2.5">
         <div className="max-w-7xl mx-auto flex items-center justify-between font-mono text-xs">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#1A4BFF]" />
-            <span className="text-[#0F0F0F] font-bold uppercase tracking-wider hidden sm:inline">
+            <span className="w-2 h-2 rounded-full bg-[#059669] dark:bg-[#10B981] animate-pulse shadow-[0_0_8px_#10B981]" />
+            <span className="text-[#0F0F0F] dark:text-[#EDECE6] font-bold uppercase tracking-wider hidden sm:inline">
               TEXCODES RETAIL OS // COMMERCIAL SOLUTION
             </span>
-            <span className="text-[#0F0F0F] font-bold uppercase tracking-wider sm:hidden">
+            <span className="text-[#0F0F0F] dark:text-[#EDECE6] font-bold uppercase tracking-wider sm:hidden">
               RETAIL OS
             </span>
           </div>
@@ -862,7 +823,7 @@ export default function TechRetailSolution() {
                 onClick={() => handleLanguageChange('en')}
                 className={`px-2.5 py-1 text-[11px] font-bold transition-colors cursor-pointer border ${
                   lang === 'en'
-                    ? 'bg-[#0F0F0F] text-white border-[#0F0F0F] dark:bg-[#3D6BFF] dark:border-[#3D6BFF]'
+                    ? 'bg-[#059669] text-white border-[#059669] dark:bg-[#10B981] dark:border-[#10B981]'
                     : 'bg-white text-[#575652] border-[rgba(15,15,15,0.14)] hover:text-[#0F0F0F] dark:bg-[#161619] dark:text-[#9B9A95] dark:border-[rgba(255,255,255,0.12)]'
                 }`}
               >
@@ -872,7 +833,7 @@ export default function TechRetailSolution() {
                 onClick={() => handleLanguageChange('ur-en')}
                 className={`px-2.5 py-1 text-[11px] font-bold transition-colors cursor-pointer border ${
                   lang === 'ur-en'
-                    ? 'bg-[#0F0F0F] text-white border-[#0F0F0F] dark:bg-[#3D6BFF] dark:border-[#3D6BFF]'
+                    ? 'bg-[#059669] text-white border-[#059669] dark:bg-[#10B981] dark:border-[#10B981]'
                     : 'bg-white text-[#575652] border-[rgba(15,15,15,0.14)] hover:text-[#0F0F0F] dark:bg-[#161619] dark:text-[#9B9A95] dark:border-[rgba(255,255,255,0.12)]'
                 }`}
               >
@@ -887,49 +848,52 @@ export default function TechRetailSolution() {
       </div>
 
       {/* ─── Hero Section ─── */}
-      <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)]">
-        <div className="max-w-7xl mx-auto space-y-6">
-          <div className="text-[11px] font-mono uppercase tracking-widest text-[#1A4BFF] font-semibold flex items-center gap-2">
-            <span className="w-1.5 h-1.5 bg-[#1A4BFF] inline-block" />
+      <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] relative overflow-hidden">
+        {/* Subtle decorative emerald blur */}
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#10B981]/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto space-y-6 relative z-10">
+          <div className="inline-flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold bg-[#ECFDF5] dark:bg-[rgba(16,185,129,0.15)] px-3 py-1 border border-[#059669]/25 dark:border-[#10B981]/30">
+            <span className="w-2 h-2 rounded-full bg-[#059669] dark:bg-[#10B981] animate-pulse shadow-[0_0_8px_#10B981]" />
             {t.hero_badge}
           </div>
 
-          <h1 className="text-4xl sm:text-6xl md:text-8xl font-display uppercase tracking-tight text-[#0F0F0F] leading-[0.9]">
+          <h1 className="text-4xl sm:text-6xl md:text-8xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.9]">
             {t.hero_title_1}{' '}
-            <span className="text-[#1A4BFF] block sm:inline">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#059669] via-[#10B981] to-[#34D399] block sm:inline drop-shadow-xs">
               {t.hero_title_accent}
             </span>
             <br />
             {t.hero_title_2}
           </h1>
 
-          <p className="font-serif text-lg sm:text-xl text-[#575652] max-w-3xl leading-relaxed">
+          <p className="font-serif text-lg sm:text-xl text-[#575652] dark:text-[#9B9A95] max-w-3xl leading-relaxed">
             {t.hero_sub}
           </p>
 
           {/* Key Metrics Row */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-4 font-mono text-xs">
-            <div className="p-4 bg-white border border-[rgba(15,15,15,0.14)] space-y-1">
-              <div className="text-[#1A4BFF] font-bold text-sm">100% OWNERSHIP</div>
-              <div className="text-[11px] text-[#575652]">{t.metrics_code}</div>
+            <div className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+              <div className="text-[#059669] dark:text-[#10B981] font-bold text-sm">100% OWNERSHIP</div>
+              <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">{t.metrics_code}</div>
             </div>
-            <div className="p-4 bg-white border border-[rgba(15,15,15,0.14)] space-y-1">
-              <div className="text-[#1A4BFF] font-bold text-sm">0% COMMISSION</div>
-              <div className="text-[11px] text-[#575652]">{t.metrics_tax}</div>
+            <div className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+              <div className="text-[#059669] dark:text-[#10B981] font-bold text-sm">0% COMMISSION</div>
+              <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">{t.metrics_tax}</div>
             </div>
-            <div className="p-4 bg-white border border-[rgba(15,15,15,0.14)] space-y-1">
-              <div className="text-[#1A4BFF] font-bold text-sm">NEXT.JS SPEED</div>
-              <div className="text-[11px] text-[#575652]">{t.metrics_speed}</div>
+            <div className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+              <div className="text-[#059669] dark:text-[#10B981] font-bold text-sm">NEXT.JS SPEED</div>
+              <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">{t.metrics_speed}</div>
             </div>
-            <div className="p-4 bg-white border border-[rgba(15,15,15,0.14)] space-y-1">
-              <div className="text-[#1A4BFF] font-bold text-sm">SERIAL RMA</div>
-              <div className="text-[11px] text-[#575652]">{t.metrics_rma}</div>
+            <div className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+              <div className="text-[#059669] dark:text-[#10B981] font-bold text-sm">SERIAL RMA</div>
+              <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">{t.metrics_rma}</div>
             </div>
           </div>
 
           {/* Actions */}
           <div className="pt-4 flex flex-wrap items-center gap-4 font-mono text-xs">
-            <a href="#plans" className="btn-blue text-xs">
+            <a href="#plans" className="btn-blue text-xs shadow-sm">
               {t.cta_primary} <ArrowRight size={14} />
             </a>
             <a
@@ -945,59 +909,59 @@ export default function TechRetailSolution() {
       </section>
 
       {/* ─── Core System Concept: One System For The Business ─── */}
-      <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] bg-[#FAF9F5]">
+      <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#121215]">
         <div className="max-w-7xl mx-auto space-y-12">
           <div>
-            <div className="text-[11px] font-mono uppercase tracking-widest text-[#1A4BFF] font-semibold mb-2">
+            <div className="text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold mb-2">
               {t.arch_badge}
             </div>
-            <h2 className="text-4xl sm:text-6xl font-display uppercase tracking-tight text-[#0F0F0F] leading-[0.9]">
+            <h2 className="text-4xl sm:text-6xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.9]">
               {t.arch_title}
             </h2>
-            <p className="font-serif text-base sm:text-lg text-[#575652] max-w-2xl mt-3 leading-relaxed">
+            <p className="font-serif text-base sm:text-lg text-[#575652] dark:text-[#9B9A95] max-w-2xl mt-3 leading-relaxed">
               {t.arch_sub}
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 font-mono text-xs">
-            <div className="p-6 bg-white border border-[rgba(15,15,15,0.14)] space-y-3">
-              <div className="font-bold text-[#0F0F0F] text-sm">{t.arch_01_title}</div>
-              <p className="font-sans text-xs text-[#575652] leading-relaxed">
+            <div className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm">{t.arch_01_title}</div>
+              <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
                 {t.arch_01_desc}
               </p>
             </div>
 
-            <div className="p-6 bg-white border border-[rgba(15,15,15,0.14)] space-y-3">
-              <div className="font-bold text-[#0F0F0F] text-sm">{t.arch_02_title}</div>
-              <p className="font-sans text-xs text-[#575652] leading-relaxed">
+            <div className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm">{t.arch_02_title}</div>
+              <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
                 {t.arch_02_desc}
               </p>
             </div>
 
-            <div className="p-6 bg-white border border-[rgba(15,15,15,0.14)] space-y-3">
-              <div className="font-bold text-[#0F0F0F] text-sm">{t.arch_03_title}</div>
-              <p className="font-sans text-xs text-[#575652] leading-relaxed">
+            <div className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm">{t.arch_03_title}</div>
+              <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
                 {t.arch_03_desc}
               </p>
             </div>
 
-            <div className="p-6 bg-white border border-[rgba(15,15,15,0.14)] space-y-3">
-              <div className="font-bold text-[#0F0F0F] text-sm">{t.arch_04_title}</div>
-              <p className="font-sans text-xs text-[#575652] leading-relaxed">
+            <div className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm">{t.arch_04_title}</div>
+              <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
                 {t.arch_04_desc}
               </p>
             </div>
 
-            <div className="p-6 bg-white border border-[rgba(15,15,15,0.14)] space-y-3">
-              <div className="font-bold text-[#0F0F0F] text-sm">{t.arch_05_title}</div>
-              <p className="font-sans text-xs text-[#575652] leading-relaxed">
+            <div className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm">{t.arch_05_title}</div>
+              <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
                 {t.arch_05_desc}
               </p>
             </div>
 
-            <div className="p-6 bg-white border border-[rgba(15,15,15,0.14)] space-y-3">
-              <div className="font-bold text-[#0F0F0F] text-sm">{t.arch_06_title}</div>
-              <p className="font-sans text-xs text-[#575652] leading-relaxed">
+            <div className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm">{t.arch_06_title}</div>
+              <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
                 {t.arch_06_desc}
               </p>
             </div>
@@ -1006,16 +970,16 @@ export default function TechRetailSolution() {
       </section>
 
       {/* ─── Live Demo Experience Grid ─── */}
-      <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)]">
+      <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)]">
         <div className="max-w-7xl mx-auto space-y-8">
           <div>
-            <div className="text-[11px] font-mono uppercase tracking-widest text-[#1A4BFF] font-semibold mb-2">
+            <div className="text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold mb-2">
               {t.demo_badge}
             </div>
-            <h2 className="text-4xl sm:text-6xl font-display uppercase tracking-tight text-[#0F0F0F] leading-[0.9]">
+            <h2 className="text-4xl sm:text-6xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.9]">
               {t.demo_title}
             </h2>
-            <p className="font-serif text-sm sm:text-base text-[#575652] max-w-2xl mt-2">
+            <p className="font-serif text-sm sm:text-base text-[#575652] dark:text-[#9B9A95] max-w-2xl mt-2">
               {t.demo_sub}
             </p>
           </div>
@@ -1025,13 +989,13 @@ export default function TechRetailSolution() {
               href="https://store-demo-eight.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-6 bg-white border border-[rgba(15,15,15,0.14)] hover:border-[#1A4BFF] transition-colors group block space-y-3"
+              className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] hover:border-[#059669] dark:hover:border-[#10B981] transition-colors group block space-y-3 shadow-xs"
             >
-              <div className="font-bold text-[#0F0F0F] text-sm flex items-center justify-between">
+              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm flex items-center justify-between">
                 <span>{t.demo_store_title}</span>
-                <ArrowUpRight size={14} className="text-[#1A4BFF] group-hover:translate-x-0.5 transition-transform" />
+                <ArrowUpRight size={14} className="text-[#059669] dark:text-[#10B981] group-hover:translate-x-0.5 transition-transform" />
               </div>
-              <p className="font-sans text-xs text-[#575652]">
+              <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95]">
                 {t.demo_store_desc}
               </p>
             </a>
@@ -1040,13 +1004,13 @@ export default function TechRetailSolution() {
               href="https://store-demo-eight.vercel.app/pc-builder"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-6 bg-white border border-[rgba(15,15,15,0.14)] hover:border-[#1A4BFF] transition-colors group block space-y-3"
+              className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] hover:border-[#059669] dark:hover:border-[#10B981] transition-colors group block space-y-3 shadow-xs"
             >
-              <div className="font-bold text-[#0F0F0F] text-sm flex items-center justify-between">
+              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm flex items-center justify-between">
                 <span>{t.demo_pc_title}</span>
-                <ArrowUpRight size={14} className="text-[#1A4BFF] group-hover:translate-x-0.5 transition-transform" />
+                <ArrowUpRight size={14} className="text-[#059669] dark:text-[#10B981] group-hover:translate-x-0.5 transition-transform" />
               </div>
-              <p className="font-sans text-xs text-[#575652]">
+              <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95]">
                 {t.demo_pc_desc}
               </p>
             </a>
@@ -1055,13 +1019,13 @@ export default function TechRetailSolution() {
               href="https://store-demo-eight.vercel.app/admin"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-6 bg-white border border-[rgba(15,15,15,0.14)] hover:border-[#1A4BFF] transition-colors group block space-y-3"
+              className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] hover:border-[#059669] dark:hover:border-[#10B981] transition-colors group block space-y-3 shadow-xs"
             >
-              <div className="font-bold text-[#0F0F0F] text-sm flex items-center justify-between">
+              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm flex items-center justify-between">
                 <span>{t.demo_admin_title}</span>
-                <ArrowUpRight size={14} className="text-[#1A4BFF] group-hover:translate-x-0.5 transition-transform" />
+                <ArrowUpRight size={14} className="text-[#059669] dark:text-[#10B981] group-hover:translate-x-0.5 transition-transform" />
               </div>
-              <p className="font-sans text-xs text-[#575652]">
+              <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95]">
                 {t.demo_admin_desc}
               </p>
             </a>
@@ -1070,63 +1034,64 @@ export default function TechRetailSolution() {
       </section>
 
       {/* ─── Pricing & Packages Tiers ─── */}
-      <section id="plans" className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] bg-[#FAF9F5]">
+      <section id="plans" className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#121215]">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <div className="text-[11px] font-mono uppercase tracking-widest text-[#1A4BFF] font-semibold">
+            <div className="inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold bg-[#ECFDF5] dark:bg-[rgba(16,185,129,0.15)] px-3 py-0.5 border border-[#059669]/25 dark:border-[#10B981]/30">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#059669] dark:bg-[#10B981]" />
               {t.plans_badge}
             </div>
-            <h2 className="text-4xl sm:text-6xl font-display uppercase tracking-tight text-[#0F0F0F] leading-[0.9]">
+            <h2 className="text-4xl sm:text-6xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.9]">
               {t.plans_title}
             </h2>
-            <p className="font-serif text-sm sm:text-base text-[#575652]">
+            <p className="font-serif text-sm sm:text-base text-[#575652] dark:text-[#9B9A95]">
               {t.plans_sub} {t.plans_sub_suffix}
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start font-mono text-xs">
             {/* 1. Starter Store */}
-            <div className="p-8 bg-white border border-[rgba(15,15,15,0.14)] space-y-6 flex flex-col justify-between hover:border-[#1A4BFF] transition-colors">
+            <div className="p-8 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-6 flex flex-col justify-between hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <div className="font-bold text-[#0F0F0F] text-base">{t.starter_name}</div>
-                  <span className="text-[10px] text-[#8E8D88] uppercase">{t.starter_badge}</span>
+                  <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-base">{t.starter_name}</div>
+                  <span className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] uppercase">{t.starter_badge}</span>
                 </div>
-                <p className="font-sans text-xs text-[#575652] leading-relaxed">
+                <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
                   {t.starter_desc}
                 </p>
 
-                <div className="pt-2 border-t border-[rgba(15,15,15,0.1)]">
-                  <div className="text-2xl font-display text-[#0F0F0F]">{t.starter_price_pkr}</div>
-                  <div className="text-[11px] text-[#8E8D88]">{t.starter_price_usd}</div>
-                  <div className="text-[11px] text-[#1A4BFF] font-semibold mt-1">{t.starter_delivery}</div>
+                <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
+                  <div className="text-2xl font-display text-[#0F0F0F] dark:text-[#EDECE6]">{t.starter_price_pkr}</div>
+                  <div className="text-[11px] text-[#8E8D88] dark:text-[#6A6965]">{t.starter_price_usd}</div>
+                  <div className="text-[11px] text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.starter_delivery}</div>
                 </div>
 
                 {/* Clear Plan Differentiation Callout */}
-                <div className="p-3 bg-[#FAF9F5] border border-[rgba(15,15,15,0.1)] text-[11px] text-[#0F0F0F] space-y-1">
-                  <div className="font-bold text-[#1A4BFF] text-[10px] uppercase">
+                <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] text-[11px] text-[#0F0F0F] dark:text-[#EDECE6] space-y-1">
+                  <div className="font-bold text-[#059669] dark:text-[#10B981] text-[10px] uppercase">
                     {t.starter_callout_label}
                   </div>
-                  <p className="font-sans text-[11px] text-[#575652]">
+                  <p className="font-sans text-[11px] text-[#575652] dark:text-[#9B9A95]">
                     {t.starter_callout_text}
                   </p>
                 </div>
 
-                <div className="pt-2 space-y-2 text-[11px] text-[#0F0F0F]">
+                <div className="pt-2 space-y-2 text-[11px] text-[#0F0F0F] dark:text-[#EDECE6]">
                   <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
+                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                     <span>{t.starter_f1}</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
+                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                     <span>{t.starter_f2}</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
+                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                     <span>{t.starter_f3}</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
+                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                     <span>{t.starter_f4}</span>
                   </div>
                 </div>
@@ -1135,67 +1100,75 @@ export default function TechRetailSolution() {
                 <div className="pt-3">
                   <button
                     onClick={() => setActiveModalKey('starter')}
-                    className="w-full py-2.5 px-3 bg-[#EFF3FF] text-[#1A4BFF] border border-[#1A4BFF]/30 font-mono text-[11px] font-bold uppercase tracking-wider hover:bg-[#1A4BFF] hover:text-white transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                    className="relative overflow-hidden w-full py-3 px-3 bg-[#ECFDF5] dark:bg-[#10B981]/15 text-[#059669] dark:text-[#10B981] border-2 border-[#059669]/50 dark:border-[#10B981]/60 font-mono text-[11px] font-extrabold uppercase tracking-wider hover:bg-[#059669] dark:hover:bg-[#10B981] hover:text-white transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-sm animate-click-me group"
                   >
-                    <Info size={13} /> {t.detail_btn}
+                    <span className="relative flex h-2 w-2 shrink-0">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#059669] dark:bg-[#10B981] opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-[#059669] dark:bg-[#10B981]"></span>
+                    </span>
+                    <Info size={14} className="shrink-0 group-hover:rotate-12 transition-transform" />
+                    <span>{t.detail_btn}</span>
+                    <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 dark:via-white/20 to-transparent pointer-events-none animate-shimmer-sweep" />
                   </button>
                 </div>
               </div>
 
-              <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] space-y-3">
+              <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] space-y-3">
                 <button
                   onClick={() => openWhatsApp(t.starter_name, t.starter_price_pkr)}
-                  className="btn-outline w-full justify-center text-xs"
+                  className="btn-outline w-full justify-center text-xs animate-claim-outline group relative overflow-hidden transition-all duration-300 py-3 font-bold"
                 >
-                  <MessageSquare size={13} /> {t.whatsapp_cta}
+                  <MessageSquare size={14} className="animate-icon-wiggle group-hover:scale-125 transition-transform text-[#059669] dark:text-[#10B981]" />
+                  <span>{t.whatsapp_cta}</span>
+                  <div className="absolute inset-0 w-1/3 h-full bg-gradient-to-r from-transparent via-[#059669]/10 to-transparent pointer-events-none animate-shimmer-sweep" />
                 </button>
-                <div className="text-[10px] text-[#8E8D88] text-center">{t.starter_support}</div>
+                <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] text-center">{t.starter_support}</div>
               </div>
             </div>
 
             {/* 2. Growth Retailer (Most Popular) */}
-            <div className="p-8 bg-white border-2 border-[#1A4BFF] space-y-6 flex flex-col justify-between shadow-md relative hover:shadow-lg transition-shadow">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#1A4BFF] text-white font-mono text-[9px] font-bold px-3 py-0.5 uppercase tracking-wider">
+            <div className="p-8 bg-white dark:bg-[#161619] border-2 border-[#059669] dark:border-[#10B981] space-y-6 flex flex-col justify-between shadow-lg relative hover:shadow-xl transition-shadow">
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#059669] dark:bg-[#10B981] text-white font-mono text-[9px] font-bold px-3 py-1 uppercase tracking-wider shadow-sm">
                 {t.growth_badge}
               </div>
 
               <div className="space-y-4">
-                <div className="font-bold text-[#0F0F0F] text-base">{t.growth_name}</div>
-                <p className="font-sans text-xs text-[#575652] leading-relaxed">
+                <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-base">{t.growth_name}</div>
+                <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
                   {t.growth_desc}
                 </p>
 
-                <div className="pt-2 border-t border-[rgba(15,15,15,0.1)]">
-                  <div className="text-2xl font-display text-[#1A4BFF]">{t.growth_price_pkr}</div>
-                  <div className="text-[11px] text-[#8E8D88]">{t.growth_price_usd}</div>
-                  <div className="text-[11px] text-[#1A4BFF] font-semibold mt-1">{t.growth_delivery}</div>
+                <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
+                  <div className="text-2xl font-display text-[#059669] dark:text-[#10B981]">{t.growth_price_pkr}</div>
+                  <div className="text-[11px] text-[#8E8D88] dark:text-[#6A6965]">{t.growth_price_usd}</div>
+                  <div className="text-[11px] text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.growth_delivery}</div>
                 </div>
 
                 {/* Clear Plan Differentiation Callout */}
-                <div className="p-3 bg-[#EFF3FF] border border-[#1A4BFF]/25 text-[11px] text-[#0F0F0F] space-y-1">
-                  <div className="font-bold text-[#1A4BFF] text-[10px] uppercase">
+                <div className="p-3 bg-[#ECFDF5] dark:bg-[#10B981]/15 border border-[#059669]/25 dark:border-[#10B981]/30 text-[11px] text-[#0F0F0F] dark:text-[#EDECE6] space-y-1">
+                  <div className="font-bold text-[#059669] dark:text-[#10B981] text-[10px] uppercase">
                     {t.growth_callout_label}
                   </div>
-                  <p className="font-sans text-[11px] text-[#575652]">
+                  <p className="font-sans text-[11px] text-[#575652] dark:text-[#9B9A95]">
                     {t.growth_callout_text}
                   </p>
                 </div>
 
-                <div className="pt-2 space-y-2 text-[11px] text-[#0F0F0F]">
+                <div className="pt-2 space-y-2 text-[11px] text-[#0F0F0F] dark:text-[#EDECE6]">
                   <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
+                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                     <span className="font-bold">{t.growth_f1}</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
+                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                     <span>{t.growth_f2}</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
+                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                     <span>{t.growth_f3}</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
+                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                     <span>{t.growth_f4}</span>
                   </div>
                 </div>
@@ -1204,63 +1177,71 @@ export default function TechRetailSolution() {
                 <div className="pt-3">
                   <button
                     onClick={() => setActiveModalKey('growth')}
-                    className="w-full py-2.5 px-3 bg-[#1A4BFF] text-white font-mono text-[11px] font-bold uppercase tracking-wider hover:bg-[#0D38D8] transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+                    className="relative overflow-hidden w-full py-3 px-3 bg-[#059669] dark:bg-[#10B981] text-white font-mono text-[11px] font-extrabold uppercase tracking-wider hover:bg-[#047857] dark:hover:bg-[#059669] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-md animate-click-me-solid group"
                   >
-                    <Info size={13} /> {t.detail_btn}
+                    <span className="relative flex h-2 w-2 shrink-0">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-90"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                    </span>
+                    <Info size={14} className="shrink-0 group-hover:rotate-12 transition-transform" />
+                    <span>{t.detail_btn}</span>
+                    <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/35 to-transparent pointer-events-none animate-shimmer-sweep" />
                   </button>
                 </div>
               </div>
 
-              <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] space-y-3">
+              <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] space-y-3">
                 <button
                   onClick={() => openWhatsApp(t.growth_name, t.growth_price_pkr)}
-                  className="btn-blue w-full justify-center text-xs"
+                  className="btn-blue w-full justify-center text-xs shadow-md animate-claim-solid group relative overflow-hidden transition-all duration-300 py-3.5 font-extrabold"
                 >
-                  <MessageSquare size={13} /> {t.whatsapp_cta}
+                  <MessageSquare size={15} className="animate-icon-wiggle group-hover:scale-125 transition-transform" />
+                  <span className="tracking-wider">{t.whatsapp_cta}</span>
+                  <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none animate-shimmer-sweep" />
                 </button>
-                <div className="text-[10px] text-[#8E8D88] text-center">{t.growth_support}</div>
+                <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] text-center">{t.growth_support}</div>
               </div>
             </div>
 
             {/* 3. Enterprise Custom */}
-            <div className="p-8 bg-white border border-[rgba(15,15,15,0.14)] space-y-6 flex flex-col justify-between hover:border-[#1A4BFF] transition-colors">
+            <div className="p-8 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-6 flex flex-col justify-between hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
               <div className="space-y-4">
-                <div className="font-bold text-[#0F0F0F] text-base">{t.enterprise_name}</div>
-                <p className="font-sans text-xs text-[#575652] leading-relaxed">
+                <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-base">{t.enterprise_name}</div>
+                <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
                   {t.enterprise_desc}
                 </p>
 
-                <div className="pt-2 border-t border-[rgba(15,15,15,0.1)]">
-                  <div className="text-2xl font-display text-[#0F0F0F]">{t.enterprise_price_pkr}</div>
-                  <div className="text-[11px] text-[#8E8D88]">{t.enterprise_price_usd}</div>
-                  <div className="text-[11px] text-[#1A4BFF] font-semibold mt-1">{t.enterprise_delivery}</div>
+                <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
+                  <div className="text-2xl font-display text-[#0F0F0F] dark:text-[#EDECE6]">{t.enterprise_price_pkr}</div>
+                  <div className="text-[11px] text-[#8E8D88] dark:text-[#6A6965]">{t.enterprise_price_usd}</div>
+                  <div className="text-[11px] text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.enterprise_delivery}</div>
                 </div>
 
                 {/* Clear Plan Differentiation Callout */}
-                <div className="p-3 bg-[#FAF9F5] border border-[rgba(15,15,15,0.1)] text-[11px] text-[#0F0F0F] space-y-1">
-                  <div className="font-bold text-[#1A4BFF] text-[10px] uppercase">
+                <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] text-[11px] text-[#0F0F0F] dark:text-[#EDECE6] space-y-1">
+                  <div className="font-bold text-[#059669] dark:text-[#10B981] text-[10px] uppercase">
                     {t.enterprise_callout_label}
                   </div>
-                  <p className="font-sans text-[11px] text-[#575652]">
+                  <p className="font-sans text-[11px] text-[#575652] dark:text-[#9B9A95]">
                     {t.enterprise_callout_text}
                   </p>
                 </div>
 
-                <div className="pt-2 space-y-2 text-[11px] text-[#0F0F0F]">
+                <div className="pt-2 space-y-2 text-[11px] text-[#0F0F0F] dark:text-[#EDECE6]">
                   <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
+                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                     <span className="font-bold">{t.enterprise_f1}</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
+                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                     <span>{t.enterprise_f2}</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
+                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                     <span>{t.enterprise_f3}</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#1A4BFF] shrink-0 mt-0.5" />
+                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                     <span>{t.enterprise_f4}</span>
                   </div>
                 </div>
@@ -1269,21 +1250,29 @@ export default function TechRetailSolution() {
                 <div className="pt-3">
                   <button
                     onClick={() => setActiveModalKey('enterprise')}
-                    className="w-full py-2.5 px-3 bg-[#EFF3FF] text-[#1A4BFF] border border-[#1A4BFF]/30 font-mono text-[11px] font-bold uppercase tracking-wider hover:bg-[#1A4BFF] hover:text-white transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                    className="relative overflow-hidden w-full py-3 px-3 bg-[#ECFDF5] dark:bg-[#10B981]/15 text-[#059669] dark:text-[#10B981] border-2 border-[#059669]/50 dark:border-[#10B981]/60 font-mono text-[11px] font-extrabold uppercase tracking-wider hover:bg-[#059669] dark:hover:bg-[#10B981] hover:text-white transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-sm animate-click-me group"
                   >
-                    <Info size={13} /> {t.detail_btn}
+                    <span className="relative flex h-2 w-2 shrink-0">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#059669] dark:bg-[#10B981] opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-[#059669] dark:bg-[#10B981]"></span>
+                    </span>
+                    <Info size={14} className="shrink-0 group-hover:rotate-12 transition-transform" />
+                    <span>{t.detail_btn}</span>
+                    <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 dark:via-white/20 to-transparent pointer-events-none animate-shimmer-sweep" />
                   </button>
                 </div>
               </div>
 
-              <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] space-y-3">
+              <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] space-y-3">
                 <button
                   onClick={() => openWhatsApp(t.enterprise_name, t.enterprise_price_pkr)}
-                  className="btn-outline w-full justify-center text-xs"
+                  className="btn-outline w-full justify-center text-xs animate-claim-outline group relative overflow-hidden transition-all duration-300 py-3 font-bold"
                 >
-                  <MessageSquare size={13} /> {t.whatsapp_cta}
+                  <MessageSquare size={14} className="animate-icon-wiggle group-hover:scale-125 transition-transform text-[#059669] dark:text-[#10B981]" />
+                  <span>{t.whatsapp_cta}</span>
+                  <div className="absolute inset-0 w-1/3 h-full bg-gradient-to-r from-transparent via-[#059669]/10 to-transparent pointer-events-none animate-shimmer-sweep" />
                 </button>
-                <div className="text-[10px] text-[#8E8D88] text-center">{t.enterprise_support}</div>
+                <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] text-center">{t.enterprise_support}</div>
               </div>
             </div>
           </div>
@@ -1291,7 +1280,7 @@ export default function TechRetailSolution() {
           <div className="text-center pt-4">
             <Link
               to="/solutions/tech-retail/terms"
-              className="text-xs font-mono font-semibold text-[#1A4BFF] hover:underline"
+              className="text-xs font-mono font-semibold text-[#059669] dark:text-[#10B981] hover:underline"
             >
               {t.view_terms}
             </Link>

@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { Send, Mail, MessageSquare, MapPin, CheckCircle2, ArrowUpRight } from 'lucide-react'
+import { Send, Mail, MessageSquare, MapPin, CheckCircle2, ArrowUpRight, AlertCircle } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function Contact() {
+  const { t, isUrdu } = useLanguage()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [submissionWarning, setSubmissionWarning] = useState(false)
+  const [lastSubmittedPayload, setLastSubmittedPayload] = useState(null)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     country: '',
-    projectType: 'Custom Commerce / Retail OS',
+    projectType: 'Tech-Retail Flagship Solution',
     message: '',
   })
 
@@ -24,91 +28,123 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setSubmissionWarning(false)
+
+    const payload = { ...formData }
+    setLastSubmittedPayload(payload)
 
     try {
       const { error } = await supabase.from('messages').insert([
         {
-          name: formData.name,
-          email: formData.email,
-          country: `${formData.country} [${formData.projectType}]`,
-          message: formData.message,
+          name: payload.name,
+          email: payload.email,
+          country: `${payload.country} [${payload.projectType}]`,
+          message: payload.message,
         },
       ])
 
       if (error) {
         console.warn('Supabase insert warning:', error)
+        setSubmissionWarning(true)
       }
       setSubmitted(true)
-      setFormData({ name: '', email: '', country: '', projectType: 'Custom Commerce / Retail OS', message: '' })
+      setFormData({ name: '', email: '', country: '', projectType: 'Tech-Retail Flagship Solution', message: '' })
     } catch (err) {
       console.error('Contact submission error:', err)
-      setSubmitted(true) // Still show success for user experience
+      setSubmissionWarning(true)
+      setSubmitted(true)
     } finally {
       setIsSubmitting(false)
     }
   }
 
+  const getWhatsAppHref = (data) => {
+    const d = data || formData
+    const text = encodeURIComponent(
+      `Hi Hamza, my name is ${d.name || 'Client'} (${d.email || ''}). I am inquiring about [${d.projectType || 'Commercial System'}] from ${d.country || 'Pakistan'}.\n\nRequirements:\n${d.message || ''}`
+    )
+    return `https://wa.me/923091824000?text=${text}`
+  }
+
   return (
-    <div className="w-full bg-[#F6F5F0] min-h-screen">
+    <div className="w-full bg-[#F6F5F0] dark:bg-[#0F0F11] min-h-screen text-[#0F0F0F] dark:text-[#EDECE6] transition-colors duration-200">
       {/* ─── Page Header ─── */}
-      <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] bg-[#FAF9F5]">
+      <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#161619]">
         <div className="max-w-7xl mx-auto space-y-4">
-          <div className="text-[11px] font-mono uppercase tracking-widest text-[#1A4BFF] font-semibold flex items-center gap-2">
-            <span className="w-1.5 h-1.5 bg-[#1A4BFF] inline-block" />
-            COMMISSION & INQUIRIES
+          <div className="text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold flex items-center gap-2">
+            <span className="w-1.5 h-1.5 bg-[#059669] dark:bg-[#10B981] inline-block" />
+            {t('contact', 'badge')}
           </div>
 
-          <h1 className="text-5xl sm:text-7xl md:text-8xl font-display uppercase tracking-tight text-[#0F0F0F] leading-[0.88] max-w-5xl">
-            LET'S DISCUSS YOUR SYSTEM.
+          <h1 className="text-5xl sm:text-7xl md:text-8xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.88] max-w-5xl">
+            {t('contact', 'title')}
           </h1>
 
-          <p className="font-serif text-lg sm:text-xl text-[#575652] max-w-2xl leading-relaxed">
-            Direct communication with lead engineer Hamza. We engineer production SaaS platforms, 
-            custom retail commerce engines, and dedicated business architectures.
+          <p className="font-serif text-lg sm:text-xl text-[#575652] dark:text-[#9B9A95] max-w-2xl leading-relaxed">
+            {t('contact', 'desc')}
           </p>
         </div>
       </section>
 
       {/* ─── Main Form & Sidebar Grid ─── */}
-      <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)]">
+      <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)]">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Form Column (7 cols) */}
-          <div className="lg:col-span-7 bg-white border border-[rgba(15,15,15,0.14)] p-6 sm:p-10 shadow-sm">
+          <div className="lg:col-span-7 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] p-6 sm:p-10 shadow-sm">
             {submitted ? (
-              <div className="py-12 text-center space-y-4">
-                <div className="w-12 h-12 rounded-full bg-[#EFF3FF] text-[#1A4BFF] flex items-center justify-center mx-auto border border-[#1A4BFF]/30">
+              <div className="py-12 text-center space-y-5">
+                <div className="w-12 h-12 rounded-full bg-[#ECFDF5] dark:bg-[#10B981]/20 text-[#059669] dark:text-[#10B981] flex items-center justify-center mx-auto border border-[#059669]/30">
                   <CheckCircle2 size={24} />
                 </div>
-                <h3 className="font-display text-3xl uppercase tracking-tight text-[#0F0F0F]">
-                  MESSAGE TRANSMITTED
+                <h3 className="font-display text-3xl uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6]">
+                  {t('contact', 'modal_title')}
                 </h3>
-                <p className="font-serif text-[#575652] max-w-md mx-auto text-sm">
-                  Thank you for reaching out. We review all technical and commercial inquiries and respond within 24 hours.
+                <p className="font-serif text-[#575652] dark:text-[#9B9A95] max-w-md mx-auto text-sm leading-relaxed">
+                  {t('contact', 'modal_desc')}
                 </p>
-                <div className="pt-4">
+
+                {lastSubmittedPayload && (
+                  <div className="pt-2">
+                    <a
+                      href={getWhatsAppHref(lastSubmittedPayload)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-blue text-xs inline-flex"
+                    >
+                      <MessageSquare size={14} /> {t('contact', 'backup_whatsapp')}
+                    </a>
+                  </div>
+                )}
+
+                <div className="pt-3">
                   <button
-                    onClick={() => setSubmitted(false)}
+                    onClick={() => {
+                      setSubmitted(false)
+                      setSubmissionWarning(false)
+                    }}
                     className="btn-outline text-xs"
                   >
-                    SEND ANOTHER MESSAGE
+                    {isUrdu ? 'DOOSRI INQUIRY BHEJEIN' : 'SEND ANOTHER INQUIRY'}
                   </button>
                 </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <div className="font-mono text-xs font-semibold uppercase tracking-wider text-[#0F0F0F] mb-1">
-                    PROJECT INQUIRY FORM
+                  <div className="font-mono text-xs font-semibold uppercase tracking-wider text-[#0F0F0F] dark:text-[#EDECE6] mb-1">
+                    {isUrdu ? 'SYSTEM INQUIRY FORM' : 'PROJECT INQUIRY FORM'}
                   </div>
-                  <p className="font-serif text-xs text-[#575652]">
-                    Please outline your operational requirements, scope, or questions.
+                  <p className="font-serif text-xs text-[#575652] dark:text-[#9B9A95]">
+                    {isUrdu
+                      ? 'Apne project ke requirements, timeline aur zaroori sawalat darj karein.'
+                      : 'Please outline your operational requirements, scope, or questions.'}
                   </p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 font-mono text-xs">
                   <div className="space-y-2">
-                    <label htmlFor="name" className="text-[#0F0F0F] font-semibold block uppercase">
-                      YOUR NAME *
+                    <label htmlFor="name" className="text-[#0F0F0F] dark:text-[#EDECE6] font-semibold block uppercase">
+                      {t('contact', 'name_label')}
                     </label>
                     <input
                       id="name"
@@ -116,14 +152,14 @@ export default function Contact() {
                       required
                       value={formData.name}
                       onChange={handleChange}
-                      placeholder="e.g. Tariq Mehmood"
-                      className="w-full px-4 py-3 bg-[#FAF9F5] border border-[rgba(15,15,15,0.18)] text-[#0F0F0F] focus:border-[#1A4BFF] focus:outline-none transition-colors"
+                      placeholder={t('contact', 'name_placeholder')}
+                      className="w-full px-4 py-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.18)] dark:border-[rgba(255,255,255,0.12)] text-[#0F0F0F] dark:text-[#EDECE6] focus:border-[#059669] dark:focus:border-[#10B981] focus:outline-none transition-colors"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="email" className="text-[#0F0F0F] font-semibold block uppercase">
-                      DIRECT EMAIL *
+                    <label htmlFor="email" className="text-[#0F0F0F] dark:text-[#EDECE6] font-semibold block uppercase">
+                      {t('contact', 'email_label')}
                     </label>
                     <input
                       id="email"
@@ -132,16 +168,16 @@ export default function Contact() {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="tariq@retailbrand.com"
-                      className="w-full px-4 py-3 bg-[#FAF9F5] border border-[rgba(15,15,15,0.18)] text-[#0F0F0F] focus:border-[#1A4BFF] focus:outline-none transition-colors"
+                      placeholder={t('contact', 'email_placeholder')}
+                      className="w-full px-4 py-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.18)] dark:border-[rgba(255,255,255,0.12)] text-[#0F0F0F] dark:text-[#EDECE6] focus:border-[#059669] dark:focus:border-[#10B981] focus:outline-none transition-colors"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 font-mono text-xs">
                   <div className="space-y-2">
-                    <label htmlFor="country" className="text-[#0F0F0F] font-semibold block uppercase">
-                      COMPANY / CITY *
+                    <label htmlFor="country" className="text-[#0F0F0F] dark:text-[#EDECE6] font-semibold block uppercase">
+                      {t('contact', 'country_label')}
                     </label>
                     <input
                       id="country"
@@ -149,34 +185,33 @@ export default function Contact() {
                       required
                       value={formData.country}
                       onChange={handleChange}
-                      placeholder="e.g. Lahore / Hafeez Centre"
-                      className="w-full px-4 py-3 bg-[#FAF9F5] border border-[rgba(15,15,15,0.18)] text-[#0F0F0F] focus:border-[#1A4BFF] focus:outline-none transition-colors"
+                      placeholder={t('contact', 'country_placeholder')}
+                      className="w-full px-4 py-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.18)] dark:border-[rgba(255,255,255,0.12)] text-[#0F0F0F] dark:text-[#EDECE6] focus:border-[#059669] dark:focus:border-[#10B981] focus:outline-none transition-colors"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="projectType" className="text-[#0F0F0F] font-semibold block uppercase">
-                      PROJECT CATEGORY
+                    <label htmlFor="projectType" className="text-[#0F0F0F] dark:text-[#EDECE6] font-semibold block uppercase">
+                      {t('contact', 'category_label')}
                     </label>
                     <select
                       id="projectType"
                       name="projectType"
                       value={formData.projectType}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 bg-[#FAF9F5] border border-[rgba(15,15,15,0.18)] text-[#0F0F0F] focus:border-[#1A4BFF] focus:outline-none transition-colors"
+                      className="w-full px-4 py-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.18)] dark:border-[rgba(255,255,255,0.12)] text-[#0F0F0F] dark:text-[#EDECE6] focus:border-[#059669] dark:focus:border-[#10B981] focus:outline-none transition-colors"
                     >
-                      <option value="Computer & CCTV Retail OS">Computer & CCTV Retail OS</option>
-                      <option value="Custom E-Commerce Storefront">Custom E-Commerce Storefront</option>
-                      <option value="SaaS Platform Engineering">SaaS Platform Engineering</option>
-                      <option value="Legacy Systems Modernization">Legacy Systems Modernization</option>
-                      <option value="AI Business Automations">AI Business Automations</option>
+                      <option value="Tech-Retail Flagship Solution">{t('contact', 'cat_retail')}</option>
+                      <option value="Custom Enterprise Software / Web App">{t('contact', 'cat_custom')}</option>
+                      <option value="SaaS Architecture & Backend Modernization">{t('contact', 'cat_saas')}</option>
+                      <option value="Technical Consultation / Feasibility Check">{t('contact', 'cat_consultation')}</option>
                     </select>
                   </div>
                 </div>
 
                 <div className="space-y-2 font-mono text-xs">
-                  <label htmlFor="message" className="text-[#0F0F0F] font-semibold block uppercase">
-                    SYSTEM OVERVIEW & REQUIREMENTS *
+                  <label htmlFor="message" className="text-[#0F0F0F] dark:text-[#EDECE6] font-semibold block uppercase">
+                    {t('contact', 'requirements_label')}
                   </label>
                   <textarea
                     id="message"
@@ -185,17 +220,17 @@ export default function Contact() {
                     rows={5}
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Describe your current setup, catalog scale, branches, or technical needs..."
-                    className="w-full px-4 py-3 bg-[#FAF9F5] border border-[rgba(15,15,15,0.18)] text-[#0F0F0F] focus:border-[#1A4BFF] focus:outline-none transition-colors resize-none font-sans text-sm"
+                    placeholder={t('contact', 'requirements_placeholder')}
+                    className="w-full px-4 py-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.18)] dark:border-[rgba(255,255,255,0.12)] text-[#0F0F0F] dark:text-[#EDECE6] focus:border-[#059669] dark:focus:border-[#10B981] focus:outline-none transition-colors resize-none font-sans text-sm"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="btn-blue w-full justify-center py-4 text-xs font-mono"
+                  className="btn-blue w-full justify-center py-4 text-xs font-mono cursor-pointer shadow-sm"
                 >
-                  {isSubmitting ? 'TRANSMITTING INQUIRY...' : 'SUBMIT DIRECT INQUIRY'} <Send size={14} />
+                  {isSubmitting ? t('contact', 'submitting') : t('contact', 'submit')} <Send size={14} />
                 </button>
               </form>
             )}
@@ -204,66 +239,66 @@ export default function Contact() {
           {/* Sidebar Channels & SLA (5 cols) */}
           <div className="lg:col-span-5 space-y-6 font-mono text-xs">
             {/* Quick WhatsApp Card */}
-            <div className="p-6 bg-white border border-[rgba(15,15,15,0.14)] space-y-4">
-              <div className="text-[10px] text-[#8E8D88] uppercase tracking-widest">
-                EXPEDITED CONTACT
+            <div className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-4">
+              <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] uppercase tracking-widest">
+                {t('contact', 'expedited')}
               </div>
-              <div className="font-display text-2xl uppercase text-[#0F0F0F] tracking-tight">
-                DIRECT WHATSAPP CONVERSATION
+              <div className="font-display text-2xl uppercase text-[#0F0F0F] dark:text-[#EDECE6] tracking-tight">
+                {t('contact', 'whatsapp_heading')}
               </div>
-              <p className="font-serif text-[#575652] text-sm leading-relaxed">
-                For business owners seeking fast feasibility checks or direct technical consultation:
+              <p className="font-serif text-[#575652] dark:text-[#9B9A95] text-sm leading-relaxed">
+                {t('contact', 'whatsapp_desc')}
               </p>
               <div>
                 <a
-                  href="https://wa.me/923288197775?text=Hi%20Hamza%2C%20I'd%20like%20to%20discuss%20a%20software%20or%20retail%20system%20project."
+                  href="https://wa.me/923091824000?text=Hi%20Hamza%2C%20I'd%20like%20to%20discuss%20a%20software%20or%20retail%20system%20project."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-blue text-xs w-full justify-center"
+                  className="btn-blue text-xs w-full justify-center shadow-sm"
                 >
-                  <MessageSquare size={14} /> WHATSAPP: +92 328 8197775
+                  <MessageSquare size={14} /> {t('contact', 'whatsapp_btn')}
                 </a>
               </div>
             </div>
 
             {/* Structured Specifications */}
-            <div className="p-6 bg-[#FAF9F5] border border-[rgba(15,15,15,0.14)] space-y-4">
-              <div className="border-b border-[rgba(15,15,15,0.1)] pb-3">
-                <div className="text-[10px] text-[#8E8D88] uppercase tracking-widest mb-1">
-                  DIRECT EMAIL
+            <div className="p-6 bg-[#FAF9F5] dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-4">
+              <div className="border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] pb-3">
+                <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] uppercase tracking-widest mb-1">
+                  {t('contact', 'email_heading')}
                 </div>
                 <a
-                  href="mailto:professorhamza000@gmail.com"
-                  className="font-semibold text-[#0F0F0F] hover:text-[#1A4BFF] transition-colors flex items-center gap-1"
+                  href="mailto:admin@texcodes.com"
+                  className="font-semibold text-[#0F0F0F] dark:text-[#EDECE6] hover:text-[#059669] dark:hover:text-[#10B981] transition-colors flex items-center gap-1"
                 >
-                  <Mail size={13} /> professorhamza000@gmail.com
+                  <Mail size={13} /> admin@texcodes.com
                 </a>
               </div>
 
-              <div className="border-b border-[rgba(15,15,15,0.1)] pb-3">
-                <div className="text-[10px] text-[#8E8D88] uppercase tracking-widest mb-1">
-                  RESPONSE TIME SLA
+              <div className="border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] pb-3">
+                <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] uppercase tracking-widest mb-1">
+                  {t('contact', 'sla_heading')}
                 </div>
-                <div className="font-semibold text-[#0F0F0F]">UNDER 24 HOURS</div>
-                <div className="text-[11px] text-[#575652]">All project inquiries reviewed by lead engineer</div>
+                <div className="font-semibold text-[#0F0F0F] dark:text-[#EDECE6]">{t('contact', 'sla_val')}</div>
+                <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">{t('contact', 'sla_desc')}</div>
               </div>
 
-              <div className="border-b border-[rgba(15,15,15,0.1)] pb-3">
-                <div className="text-[10px] text-[#8E8D88] uppercase tracking-widest mb-1">
-                  BASE LOCATION
+              <div className="border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] pb-3">
+                <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] uppercase tracking-widest mb-1">
+                  {t('contact', 'timezone_heading')}
                 </div>
-                <div className="font-semibold text-[#0F0F0F] flex items-center gap-1">
-                  <MapPin size={13} className="text-[#1A4BFF]" /> GUJRANWALA, PAKISTAN
+                <div className="font-semibold text-[#0F0F0F] dark:text-[#EDECE6] flex items-center gap-1">
+                  <MapPin size={13} className="text-[#059669] dark:text-[#10B981]" /> GUJRANWALA, PAKISTAN
                 </div>
-                <div className="text-[11px] text-[#575652]">Timezone: Pakistan Standard Time (PKT / UTC+5)</div>
+                <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">{t('contact', 'timezone_desc')}</div>
               </div>
 
               <div>
-                <div className="text-[10px] text-[#8E8D88] uppercase tracking-widest mb-1">
-                  CODE OWNERSHIP GUARANTEE
+                <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] uppercase tracking-widest mb-1">
+                  {isUrdu ? 'MALKIANA HUQOOQ GUARANTEE' : 'CODE OWNERSHIP GUARANTEE'}
                 </div>
-                <div className="text-[#1A4BFF] font-semibold text-[11px]">
-                  100% CLIENT GITHUB & DATABASE TRANSFER
+                <div className="text-[#059669] dark:text-[#10B981] font-semibold text-[11px]">
+                  {isUrdu ? '100% CLIENT GITHUB AUR DATABASE TRANSFER' : '100% CLIENT GITHUB & DATABASE TRANSFER'}
                 </div>
               </div>
             </div>
@@ -273,3 +308,5 @@ export default function Contact() {
     </div>
   )
 }
+
+
