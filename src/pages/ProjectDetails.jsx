@@ -21,7 +21,12 @@ const ProjectDetails = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
 
   useEffect(() => {
-    window.scrollTo(0, 0)
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true })
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
   }, [id])
 
   const openModal = (index) => {
@@ -142,7 +147,7 @@ const ProjectDetails = () => {
           <div className="lg:col-span-8 space-y-12">
             {/* Primary Visual Showcase */}
             {project.mainImage && (
-              <div className="border border-[rgba(15,15,15,0.18)] dark:border-[rgba(255,255,255,0.15)] bg-white dark:bg-[#141414] p-2 shadow-sm">
+              <div className="border border-[#08966a] bg-white dark:bg-[#141414] p-2 shadow-sm">
                 <img
                   src={project.mainImage}
                   alt={project.title}
@@ -171,7 +176,7 @@ const ProjectDetails = () => {
                   {project.features.map((feature, i) => (
                     <div
                       key={i}
-                      className="p-3.5 bg-white dark:bg-[#141414] border border-[rgba(15,15,15,0.12)] dark:border-[rgba(255,255,255,0.1)] flex items-start gap-2.5"
+                      className="p-3.5 bg-white dark:bg-[#141414] border border-[#08966a] flex items-start gap-2.5"
                     >
                       <CheckCircle2 size={15} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                       <span className="text-[#0F0F0F] dark:text-[#EDEDED] font-sans text-xs leading-normal">{feature}</span>
@@ -198,7 +203,7 @@ const ProjectDetails = () => {
                     <div
                       key={idx}
                       onClick={() => openModal(idx)}
-                      className="group border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.15)] bg-white dark:bg-[#141414] p-1.5 cursor-pointer hover:border-[#059669] dark:hover:border-[#10B981] transition-colors relative"
+                      className="group border border-[#08966a] bg-white dark:bg-[#141414] p-1.5 cursor-pointer hover:border-[#059669] dark:hover:border-[#10B981] transition-colors relative"
                     >
                       <div className="relative aspect-video overflow-hidden bg-[#ECEAE3] dark:bg-[#1E1E1E]">
                         <img
@@ -220,8 +225,8 @@ const ProjectDetails = () => {
           {/* Sidebar Column (4 cols) */}
           <div className="lg:col-span-4 space-y-6 font-mono text-xs">
             {/* Tech Stack Breakdown */}
-            <div className="p-6 bg-white dark:bg-[#141414] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.15)] space-y-5">
-              <div className="text-[11px] font-bold text-[#0F0F0F] dark:text-white uppercase tracking-wider border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] pb-2">
+            <div className="p-6 bg-white dark:bg-[#141414] border border-[#08966a] space-y-5">
+              <div className="text-[11px] font-bold text-[#0F0F0F] dark:text-white uppercase tracking-wider border-b border-[#08966a]/20 dark:border-[#08966a]/30 pb-2">
                 {t('projectDetails', 'stack_title')}
               </div>
 
@@ -256,7 +261,7 @@ const ProjectDetails = () => {
             </div>
 
             {/* Direct Consultation Box */}
-            <div className="p-6 bg-[#FAF9F5] dark:bg-[#161616] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.15)] space-y-3">
+            <div className="p-6 bg-[#FAF9F5] dark:bg-[#161616] border border-[#08966a] space-y-3">
               <div className="text-[10px] text-[#8E8D88] dark:text-[#737373] uppercase tracking-widest">
                 {t('projectDetails', 'inquire_button')}
               </div>
@@ -267,7 +272,7 @@ const ProjectDetails = () => {
                 {isUrdu ? 'Hum 100% source code ownership ke sath custom software systems banate hain.' : 'We design and engineer bespoke software systems with 100% code ownership.'}
               </p>
               <div className="pt-2">
-                <Link to="/contact" className="btn-outline w-full justify-center text-xs">
+                <Link to="/contact" className="btn-outline w-full justify-center text-xs hover:border-[#08966a] hover:text-[#08966a]">
                   {isUrdu ? 'INQUIRY SUBMIT KAREIN →' : 'START AN INQUIRY →'}
                 </Link>
               </div>

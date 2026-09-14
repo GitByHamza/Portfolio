@@ -804,7 +804,7 @@ export default function TechRetailSolution() {
       />
 
       {/* ─── Top Language Toggle Bar ─── */}
-      <div className="border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#161619] px-4 sm:px-8 py-2.5">
+      {/* <div className="border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#161619] px-4 sm:px-8 py-2.5">
         <div className="max-w-7xl mx-auto flex items-center justify-between font-mono text-xs">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#059669] dark:bg-[#10B981] animate-pulse shadow-[0_0_8px_#10B981]" />
@@ -845,7 +845,7 @@ export default function TechRetailSolution() {
             <ThemeToggle variant="icon" className="sm:hidden" />
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* ─── Hero Section ─── */}
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] relative overflow-hidden">
@@ -853,10 +853,10 @@ export default function TechRetailSolution() {
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#10B981]/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto space-y-6 relative z-10">
-          <div className="inline-flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold bg-[#ECFDF5] dark:bg-[rgba(16,185,129,0.15)] px-3 py-1 border border-[#059669]/25 dark:border-[#10B981]/30">
+          {/* <div className="inline-flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold bg-[#ECFDF5] dark:bg-[rgba(16,185,129,0.15)] px-3 py-1 border border-[#059669]/25 dark:border-[#10B981]/30">
             <span className="w-2 h-2 rounded-full bg-[#059669] dark:bg-[#10B981] animate-pulse shadow-[0_0_8px_#10B981]" />
             {t.hero_badge}
-          </div>
+          </div> */}
 
           <h1 className="text-4xl sm:text-6xl md:text-8xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.9]">
             {t.hero_title_1}{' '}

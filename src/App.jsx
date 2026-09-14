@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, Outlet, Navigate } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, Outlet, Navigate, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import Lenis from 'lenis'
@@ -20,6 +20,23 @@ import Navbar from './components/Navbar'
 import { Footer } from './components/Footer'
 import PageCurtain from './components/PageCurtain'
 import { LanguageProvider } from './context/LanguageContext'
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    // 1. Immediately reset Lenis smooth scroll engine position to 0
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true })
+    }
+    // 2. Immediately reset native browser scroll position
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+  }, [pathname])
+
+  return null
+}
 
 function SmoothScroll() {
   const shouldReduceMotion = useReducedMotion()
@@ -63,6 +80,11 @@ const MainLayout = () => (
 
 function App() {
   useEffect(() => {
+    // Prevent browser from restoring old scroll offset on client navigation
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
+
     // Initial theme sync
     const savedTheme = localStorage.getItem('Theme')
     if (savedTheme === 'Dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -77,6 +99,7 @@ function App() {
       <PageCurtain />
       <SmoothScroll />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           {/* Admin Dashboard: Standalone */}
           <Route path="/admin" element={<AdminDashboard />} />
