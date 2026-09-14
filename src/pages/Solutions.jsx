@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, ArrowUpRight, Cpu, ShoppingBag, Layers, CheckCircle2, XCircle, ShieldCheck, Terminal } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
+import { FadeIn, StaggerContainer, StaggerItem } from '../components/motion/MotionReveal'
 
 export default function Solutions() {
   const { t, isUrdu } = useLanguage()
@@ -60,7 +61,7 @@ export default function Solutions() {
         {/* Subtle decorative radial emerald glow */}
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#10B981]/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto space-y-5 relative z-10">
+        <FadeIn className="max-w-7xl mx-auto space-y-5 relative z-10">
           <div className="inline-flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold bg-[#ECFDF5] dark:bg-[rgba(16,185,129,0.15)] px-3 py-1 border border-[#059669]/25 dark:border-[#10B981]/30">
             <span className="w-2 h-2 rounded-full bg-[#059669] dark:bg-[#10B981] animate-pulse shadow-[0_0_8px_#10B981]" />
             {t('solutionsPage', 'badge')}
@@ -76,16 +77,16 @@ export default function Solutions() {
           <p className="font-serif text-lg sm:text-xl text-[#575652] dark:text-[#9B9A95] max-w-3xl leading-relaxed">
             {t('solutionsPage', 'sub')}
           </p>
-        </div>
+        </FadeIn>
       </section>
 
       {/* ─── Featured Flagship Solution: Computer & CCTV Retail OS ─── */}
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)]">
-        <div className="max-w-7xl mx-auto">
-          <div className="border-t-4 border-t-[#059669] dark:border-t-[#10B981] border-x border-b border-[rgba(15,15,15,0.18)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#161619] p-6 sm:p-12 shadow-md hover:shadow-lg transition-shadow space-y-8">
+        <FadeIn className="max-w-7xl mx-auto">
+          <div className="card-hover-guided border-t-4 border-t-[#059669] dark:border-t-[#10B981] border-x border-b border-[#08966a] bg-white dark:bg-[#161619] p-6 sm:p-12 shadow-md space-y-8">
             <div className="flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
               <span className="tag-green">{t('solutionsPage', 'flagship_badge')}</span>
-              <span className="text-[#059669] dark:text-[#10B981] font-semibold bg-[#ECFDF5] dark:bg-[#10B981]/15 px-2.5 py-0.5 border border-[#059669]/20 dark:border-[#10B981]/25">
+              <span className="text-[#059669] dark:text-[#10B981] font-semibold bg-[#ECFDF5] dark:bg-[#10B981]/15 px-2.5 py-0.5 border border-[#08966a]/30">
                 OFFER CODE: TXS-RETAIL-OS
               </span>
             </div>
@@ -100,25 +101,25 @@ export default function Solutions() {
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs text-[#0F0F0F] dark:text-[#EDECE6]">
-                  <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] flex items-center gap-2.5">
+                  <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[#08966a]/30 flex items-center gap-2.5">
                     <span className="p-1 rounded-full bg-[#ECFDF5] dark:bg-[#10B981]/20 text-[#059669] dark:text-[#10B981]">
                       <CheckCircle2 size={15} className="shrink-0" />
                     </span>
                     <span className="font-medium">{t('solutionsPage', 'flagship_f1')}</span>
                   </div>
-                  <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] flex items-center gap-2.5">
+                  <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[#08966a]/30 flex items-center gap-2.5">
                     <span className="p-1 rounded-full bg-[#ECFDF5] dark:bg-[#10B981]/20 text-[#059669] dark:text-[#10B981]">
                       <CheckCircle2 size={15} className="shrink-0" />
                     </span>
                     <span className="font-medium">{t('solutionsPage', 'flagship_f2')}</span>
                   </div>
-                  <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] flex items-center gap-2.5">
+                  <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[#08966a]/30 flex items-center gap-2.5">
                     <span className="p-1 rounded-full bg-[#ECFDF5] dark:bg-[#10B981]/20 text-[#059669] dark:text-[#10B981]">
                       <CheckCircle2 size={15} className="shrink-0" />
                     </span>
                     <span className="font-medium">{t('solutionsPage', 'flagship_f3')}</span>
                   </div>
-                  <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] flex items-center gap-2.5">
+                  <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[#08966a]/30 flex items-center gap-2.5">
                     <span className="p-1 rounded-full bg-[#ECFDF5] dark:bg-[#10B981]/20 text-[#059669] dark:text-[#10B981]">
                       <CheckCircle2 size={15} className="shrink-0" />
                     </span>
@@ -127,35 +128,37 @@ export default function Solutions() {
                 </div>
 
                 <div className="pt-3 flex flex-wrap items-center gap-4">
-                  <Link to="/solutions/tech-retail" className="btn-blue text-xs shadow-sm">
-                    {t('solutionsPage', 'flagship_cta')} <ArrowRight size={14} />
+                  <Link to="/solutions/tech-retail" className="btn-blue text-xs shadow-sm group">
+                    <span>{t('solutionsPage', 'flagship_cta')}</span>
+                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                   </Link>
                   <a
                     href="https://store-demo-eight.vercel.app/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-mono text-xs font-semibold text-[#059669] dark:text-[#10B981] hover:underline flex items-center gap-1"
+                    className="font-mono text-xs font-semibold text-[#059669] dark:text-[#10B981] hover:underline flex items-center gap-1 group"
                   >
-                    {t('solutionsPage', 'flagship_demo')} <ArrowUpRight size={14} />
+                    <span>{t('solutionsPage', 'flagship_demo')}</span>
+                    <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </a>
                 </div>
               </div>
 
               {/* Right Tier Summary Box */}
-              <div className="lg:col-span-5 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.12)] dark:border-[rgba(255,255,255,0.1)] p-6 space-y-4 font-mono text-xs">
+              <div className="lg:col-span-5 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[#08966a]/30 p-6 space-y-4 font-mono text-xs">
                 <div className="text-[10px] text-[#059669] dark:text-[#10B981] uppercase tracking-widest border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] pb-2 font-bold flex items-center justify-between">
                   <span>{t('solutionsPage', 'tiers_title')}</span>
                   <span className="text-[9px] text-[#8E8D88] dark:text-[#6A6965]">FIXED INVESTMENT</span>
                 </div>
 
                 <div className="space-y-3">
-                  <div className="p-3 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
+                  <div className="card-hover-guided p-3 bg-white dark:bg-[#161619] border border-[#08966a]">
                     <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'tier1_title')}</div>
                     <div className="text-[#059669] dark:text-[#10B981] font-semibold text-sm">{t('solutionsPage', 'tier1_price')}</div>
                     <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'tier1_sub')}</div>
                   </div>
 
-                  <div className="p-3 bg-[#ECFDF5]/60 dark:bg-[#10B981]/10 border-2 border-[#059669] dark:border-[#10B981] shadow-xs">
+                  <div className="card-hover-guided p-3 bg-[#ECFDF5]/60 dark:bg-[#10B981]/10 border-2 border-[#08966a] dark:border-[#10B981] shadow-xs">
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'tier2_title')}</span>
                       <span className="text-[9px] font-bold text-white bg-[#059669] dark:bg-[#10B981] px-2 py-0.5 uppercase tracking-wider">{t('solutionsPage', 'tier2_popular')}</span>
@@ -164,7 +167,7 @@ export default function Solutions() {
                     <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'tier2_sub')}</div>
                   </div>
 
-                  <div className="p-3 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
+                  <div className="card-hover-guided p-3 bg-white dark:bg-[#161619] border border-[#08966a]">
                     <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'tier3_title')}</div>
                     <div className="text-[#059669] dark:text-[#10B981] font-semibold text-sm">{t('solutionsPage', 'tier3_price')}</div>
                     <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'tier3_sub')}</div>
@@ -179,80 +182,86 @@ export default function Solutions() {
               </div>
             </div>
           </div>
-        </div>
+        </FadeIn>
       </section>
 
       {/* ─── Other Commercial Pillars ─── */}
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#121215]">
         <div className="max-w-7xl mx-auto space-y-12">
-          <div>
+          <FadeIn>
             <div className="text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold mb-2">
               {isUrdu ? 'MAZEED COMMERCIAL SALAHIYAT' : 'ADDITIONAL COMMERCIAL CAPABILITIES'}
             </div>
             <h2 className="text-4xl sm:text-6xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.9]">
               {isUrdu ? 'ENGINEERED DIGITAL SYSTEMS' : 'ENGINEERED DIGITAL SYSTEMS'}
             </h2>
-          </div>
+          </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Custom Commerce */}
-            <div className="p-8 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-5 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
-              <div className="w-10 h-10 rounded-sm bg-[#ECFDF5] dark:bg-[#10B981]/15 flex items-center justify-center text-[#059669] dark:text-[#10B981]">
-                <ShoppingBag size={22} />
+            <StaggerItem>
+              <div className="card-hover-guided h-full p-8 bg-white dark:bg-[#161619] border border-[#08966a] space-y-5">
+                <div className="w-10 h-10 rounded-sm bg-[#ECFDF5] dark:bg-[#10B981]/15 flex items-center justify-center text-[#059669] dark:text-[#10B981]">
+                  <ShoppingBag size={22} />
+                </div>
+                <h3 className="font-display text-2xl sm:text-3xl uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6]">
+                  {isUrdu ? 'CUSTOM HEADLESS E-COMMERCE' : 'CUSTOM HEADLESS E-COMMERCE'}
+                </h3>
+                <p className="font-serif text-[#575652] dark:text-[#9B9A95] text-sm sm:text-base leading-relaxed">
+                  {isUrdu
+                    ? 'Aise brands ke liye jo slow Shopify themes ya WooCommerce plugin bloat se aagay nikalna chahte hain. Hum fast Next.js stores banate hain bina kisi commission tax ke.'
+                    : 'For brands outgrowing cookie-cutter Shopify themes or suffering from slow WooCommerce plugin bloat. We engineer custom storefronts with instantaneous page navigation, tailored checkout flows, and zero recurring percentage fees taken from your gross revenue.'}
+                </p>
+                <ul className="font-mono text-xs text-[#575652] dark:text-[#9B9A95] space-y-2 list-disc list-inside">
+                  <li>{isUrdu ? 'Custom Next.js App Router storefronts' : 'Custom Next.js App Router storefronts'}</li>
+                  <li>{isUrdu ? 'Orders par 0% sales commission' : 'Zero platform sales tax on transactions'}</li>
+                  <li>{isUrdu ? 'WhatsApp direct dispatch aur order confirmation' : 'Direct WhatsApp order confirmation & dispatch'}</li>
+                  <li>{isUrdu ? 'Tailored product filteration aur specifications' : 'Tailored product filtering & specification matrices'}</li>
+                </ul>
+                <div className="pt-2">
+                  <Link to="/contact" className="btn-outline text-xs group hover:border-[#08966a]">
+                    <span>{isUrdu ? 'CUSTOM COMMERCE KI INQUIRY KAREIN' : 'INQUIRE ABOUT CUSTOM COMMERCE'}</span>
+                    <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform inline-block ml-1" />
+                  </Link>
+                </div>
               </div>
-              <h3 className="font-display text-2xl sm:text-3xl uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6]">
-                {isUrdu ? 'CUSTOM HEADLESS E-COMMERCE' : 'CUSTOM HEADLESS E-COMMERCE'}
-              </h3>
-              <p className="font-serif text-[#575652] dark:text-[#9B9A95] text-sm sm:text-base leading-relaxed">
-                {isUrdu
-                  ? 'Aise brands ke liye jo slow Shopify themes ya WooCommerce plugin bloat se aagay nikalna chahte hain. Hum fast Next.js stores banate hain bina kisi commission tax ke.'
-                  : 'For brands outgrowing cookie-cutter Shopify themes or suffering from slow WooCommerce plugin bloat. We engineer custom storefronts with instantaneous page navigation, tailored checkout flows, and zero recurring percentage fees taken from your gross revenue.'}
-              </p>
-              <ul className="font-mono text-xs text-[#575652] dark:text-[#9B9A95] space-y-2 list-disc list-inside">
-                <li>{isUrdu ? 'Custom Next.js App Router storefronts' : 'Custom Next.js App Router storefronts'}</li>
-                <li>{isUrdu ? 'Orders par 0% sales commission' : 'Zero platform sales tax on transactions'}</li>
-                <li>{isUrdu ? 'WhatsApp direct dispatch aur order confirmation' : 'Direct WhatsApp order confirmation & dispatch'}</li>
-                <li>{isUrdu ? 'Tailored product filteration aur specifications' : 'Tailored product filtering & specification matrices'}</li>
-              </ul>
-              <div className="pt-2">
-                <Link to="/contact" className="btn-outline text-xs">
-                  {isUrdu ? 'CUSTOM COMMERCE KI INQUIRY KAREIN' : 'INQUIRE ABOUT CUSTOM COMMERCE'} <ArrowRight size={13} />
-                </Link>
-              </div>
-            </div>
+            </StaggerItem>
 
             {/* AI Automations & Internal Business OS */}
-            <div className="p-8 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-5 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
-              <div className="w-10 h-10 rounded-sm bg-[#ECFDF5] dark:bg-[#10B981]/15 flex items-center justify-center text-[#059669] dark:text-[#10B981]">
-                <Layers size={22} />
+            <StaggerItem>
+              <div className="card-hover-guided h-full p-8 bg-white dark:bg-[#161619] border border-[#08966a] space-y-5">
+                <div className="w-10 h-10 rounded-sm bg-[#ECFDF5] dark:bg-[#10B981]/15 flex items-center justify-center text-[#059669] dark:text-[#10B981]">
+                  <Layers size={22} />
+                </div>
+                <h3 className="font-display text-2xl sm:text-3xl uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6]">
+                  {isUrdu ? 'AI AUTOMATIONS AUR BUSINESS OS' : 'AI AUTOMATIONS & INTERNAL BUSINESS OS'}
+                </h3>
+                <p className="font-serif text-[#575652] dark:text-[#9B9A95] text-sm sm:text-base leading-relaxed">
+                  {isUrdu
+                    ? 'Khas tor par aapke office aur dukan ke liye software jo manual paperwork aur messy spreadsheets ko khatam karta hai. 24/7 AI agents aur multi-branch inventory ERPs.'
+                    : 'Purpose-built operational software replacing manual paperwork, messy spreadsheets, and disconnected tools. From 24/7 WhatsApp AI voice and chat agents to comprehensive hospital and inventory management ERPs.'}
+                </p>
+                <ul className="font-mono text-xs text-[#575652] dark:text-[#9B9A95] space-y-2 list-disc list-inside">
+                  <li>{isUrdu ? 'Multi-guard Role-Based Access Control (RBAC)' : 'Multi-guard Role-Based Access Control (RBAC)'}</li>
+                  <li>{isUrdu ? 'WhatsApp Voice & Text conversational agents' : 'WhatsApp Voice & Text conversational agents'}</li>
+                  <li>{isUrdu ? 'Custom administrative analytics aur reporting' : 'Custom administrative analytics & reporting'}</li>
+                  <li>{isUrdu ? 'PostgreSQL strict relational schema integrity' : 'PostgreSQL data modeling with strict relational integrity'}</li>
+                </ul>
+                <div className="pt-2">
+                  <Link to="/contact" className="btn-outline text-xs group hover:border-[#08966a]">
+                    <span>{isUrdu ? 'INTERNAL SYSTEMS KI INQUIRY KAREIN' : 'INQUIRE ABOUT INTERNAL SYSTEMS'}</span>
+                    <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform inline-block ml-1" />
+                  </Link>
+                </div>
               </div>
-              <h3 className="font-display text-2xl sm:text-3xl uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6]">
-                {isUrdu ? 'AI AUTOMATIONS AUR BUSINESS OS' : 'AI AUTOMATIONS & INTERNAL BUSINESS OS'}
-              </h3>
-              <p className="font-serif text-[#575652] dark:text-[#9B9A95] text-sm sm:text-base leading-relaxed">
-                {isUrdu
-                  ? 'Khas tor par aapke office aur dukan ke liye software jo manual paperwork aur messy spreadsheets ko khatam karta hai. 24/7 AI agents aur multi-branch inventory ERPs.'
-                  : 'Purpose-built operational software replacing manual paperwork, messy spreadsheets, and disconnected tools. From 24/7 WhatsApp AI voice and chat agents to comprehensive hospital and inventory management ERPs.'}
-              </p>
-              <ul className="font-mono text-xs text-[#575652] dark:text-[#9B9A95] space-y-2 list-disc list-inside">
-                <li>{isUrdu ? 'Multi-guard Role-Based Access Control (RBAC)' : 'Multi-guard Role-Based Access Control (RBAC)'}</li>
-                <li>{isUrdu ? 'WhatsApp Voice & Text conversational agents' : 'WhatsApp Voice & Text conversational agents'}</li>
-                <li>{isUrdu ? 'Custom administrative analytics aur reporting' : 'Custom administrative analytics & reporting'}</li>
-                <li>{isUrdu ? 'PostgreSQL strict relational schema integrity' : 'PostgreSQL data modeling with strict relational integrity'}</li>
-              </ul>
-              <div className="pt-2">
-                <Link to="/contact" className="btn-outline text-xs">
-                  {isUrdu ? 'INTERNAL SYSTEMS KI INQUIRY KAREIN' : 'INQUIRE ABOUT INTERNAL SYSTEMS'} <ArrowRight size={13} />
-                </Link>
-              </div>
-            </div>
-          </div>
+            </StaggerItem>
+          </StaggerContainer>
         </div>
       </section>
 
       {/* ─── Engineering Benchmark Table ─── */}
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)]">
-        <div className="max-w-7xl mx-auto space-y-12">
+        <FadeIn className="max-w-7xl mx-auto space-y-12">
           <div>
             <div className="text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold mb-2">
               THE ARCHITECTURAL BENCHMARK
@@ -262,10 +271,10 @@ export default function Solutions() {
             </h2>
           </div>
 
-          <div className="border border-[rgba(15,15,15,0.18)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#161619] overflow-hidden shadow-sm">
+          <div className="border border-[#08966a] bg-white dark:bg-[#161619] overflow-hidden shadow-sm card-hover-guided">
             <div className="grid grid-cols-1 md:grid-cols-12 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#1F1F24] font-mono text-xs font-bold uppercase tracking-wider text-[#575652] dark:text-[#9B9A95]">
               <div className="p-4 md:col-span-4 hidden md:block">{t('solutionsPage', 'matrix_feature')}</div>
-              <div className="p-4 md:col-span-4 text-[#059669] dark:text-[#10B981] bg-[#ECFDF5] dark:bg-[#10B981]/15 border-l md:border-r border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] font-extrabold flex items-center gap-1.5">
+              <div className="p-4 md:col-span-4 text-[#059669] dark:text-[#10B981] bg-[#ECFDF5] dark:bg-[#10B981]/15 border-l md:border-r border-[#08966a]/20 dark:border-[#08966a]/30 font-extrabold flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#059669] dark:bg-[#10B981]" />
                 {t('solutionsPage', 'matrix_txs')}
               </div>
@@ -282,7 +291,7 @@ export default function Solutions() {
                     <span className="tag-green text-[9px] mt-1 inline-block">{item.badge}</span>
                   </div>
 
-                  <div className="md:col-span-4 md:px-4 text-[#0F0F0F] dark:text-[#EDECE6] flex items-start gap-2 bg-[#ECFDF5]/50 dark:bg-[#10B981]/10 py-2 border-l border-r border-[#059669]/20 dark:border-[#10B981]/20 font-medium">
+                  <div className="md:col-span-4 md:px-4 text-[#0F0F0F] dark:text-[#EDECE6] flex items-start gap-2 bg-[#ECFDF5]/50 dark:bg-[#10B981]/10 py-2 border-l border-r border-[#08966a]/20 dark:border-[#10B981]/20 font-medium">
                     <CheckCircle2 size={16} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                     <span>{item.texcodes}</span>
                   </div>
@@ -295,13 +304,13 @@ export default function Solutions() {
               ))}
             </div>
           </div>
-        </div>
+        </FadeIn>
       </section>
 
       {/* ─── Bottom CTA ─── */}
       <section className="px-4 sm:px-8 py-16 sm:py-20 text-center relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-500/10 via-transparent to-transparent pointer-events-none" />
-        <div className="max-w-4xl mx-auto space-y-6 relative z-10">
+        <FadeIn className="max-w-4xl mx-auto space-y-6 relative z-10">
           <h3 className="font-display text-4xl sm:text-6xl uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6]">
             {t('solutionsPage', 'cta_box_title')}
           </h3>
@@ -313,17 +322,18 @@ export default function Solutions() {
               href="https://wa.me/923091824000?text=Hello%20Hamza%2C%20I%20reviewed%20your%20commercial%20solutions%20and%20want%20to%20discuss%20a%20build."
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-blue text-xs shadow-sm"
+              className="btn-blue text-xs shadow-sm group"
             >
-              {t('solutionsPage', 'cta_box_btn')} <ArrowRight size={14} />
+              <span>{t('solutionsPage', 'cta_box_btn')}</span>
+              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </a>
-            <Link to="/contact" className="btn-outline text-xs">
-              {t('solutionsPage', 'cta_box_contact')} →
+            <Link to="/contact" className="btn-outline text-xs group hover:border-[#08966a]">
+              <span>{t('solutionsPage', 'cta_box_contact')}</span>
+              <span className="group-hover:translate-x-1 transition-transform inline-block ml-1">→</span>
             </Link>
           </div>
-        </div>
+        </FadeIn>
       </section>
     </div>
   )
 }
-

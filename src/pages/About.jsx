@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, ArrowUpRight, CheckCircle2 } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
+import { FadeIn, StaggerContainer, StaggerItem } from '../components/motion/MotionReveal'
 
 export default function About() {
   const { t, isUrdu } = useLanguage()
@@ -33,7 +34,7 @@ export default function About() {
     <div className="w-full bg-[#F6F5F0] dark:bg-[#0A0A0A] min-h-screen transition-colors duration-200">
       {/* ─── Page Header ─── */}
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.1)] bg-[#FAF9F5] dark:bg-[#111111]">
-        <div className="max-w-7xl mx-auto space-y-4">
+        <FadeIn className="max-w-7xl mx-auto space-y-4">
           <div className="text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold flex items-center gap-2">
             <span className="w-1.5 h-1.5 bg-[#059669] dark:bg-[#10B981] inline-block" />
             {t('aboutPage', 'badge')}
@@ -46,16 +47,16 @@ export default function About() {
           <p className="font-serif text-lg sm:text-xl text-[#575652] dark:text-[#A3A29E] max-w-3xl leading-relaxed">
             {t('aboutPage', 'desc')}
           </p>
-        </div>
+        </FadeIn>
       </section>
 
       {/* ─── Main Editorial Narrative ─── */}
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.1)]">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left Metadata / Quick Bio Sidebar (4 cols) */}
-          <div className="lg:col-span-4 space-y-8 lg:border-r border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.1)] lg:pr-8">
-            <div className="p-6 bg-white dark:bg-[#141414] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.15)] space-y-4 font-mono text-xs">
-              <div className="text-[10px] text-[#8E8D88] dark:text-[#737373] uppercase tracking-widest">
+          <FadeIn direction="left" className="lg:col-span-4 space-y-8 lg:border-r border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.1)] lg:pr-8">
+            <div className="card-hover-guided p-6 bg-white dark:bg-[#141414] border border-[#08966a] space-y-4 font-mono text-xs">
+              <div className="text-[10px] text-[#08966a] dark:text-[#10B981] uppercase tracking-widest font-semibold">
                 {isUrdu ? 'ENGINEER SHANAKHT' : 'ENGINEER IDENTITY'}
               </div>
               <div className="text-xl font-display uppercase text-[#0F0F0F] dark:text-white tracking-tight">
@@ -70,7 +71,7 @@ export default function About() {
             </div>
 
             {/* Handwritten Quote */}
-            <div className="p-6 bg-[#ECFDF5] dark:bg-[#064E3B]/25 border border-[#059669]/25 dark:border-[#10B981]/30">
+            <div className="card-hover-guided p-6 bg-[#ECFDF5] dark:bg-[#064E3B]/25 border border-[#08966a]">
               <span className="font-mono text-[10px] uppercase text-[#059669] dark:text-[#10B981] tracking-widest block mb-1 font-semibold">
                 {t('aboutPage', 'quote_badge')}
               </span>
@@ -89,9 +90,10 @@ export default function About() {
                   href="https://github.com/GitByHamza"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#059669] dark:text-[#10B981] hover:underline flex items-center gap-1"
+                  className="text-[#059669] dark:text-[#10B981] hover:underline flex items-center gap-1 group"
                 >
-                  GitHub Profile (GitByHamza) <ArrowUpRight size={13} />
+                  <span>GitHub Profile (GitByHamza)</span>
+                  <ArrowUpRight size={13} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </a>
               </div>
               <div>
@@ -99,18 +101,19 @@ export default function About() {
                   href="https://toolkito.app"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#059669] dark:text-[#10B981] hover:underline flex items-center gap-1"
+                  className="text-[#059669] dark:text-[#10B981] hover:underline flex items-center gap-1 group"
                 >
-                  Live Micro SaaS (toolkito.app) <ArrowUpRight size={13} />
+                  <span>Live Micro SaaS (toolkito.app)</span>
+                  <ArrowUpRight size={13} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </a>
               </div>
             </div>
-          </div>
+          </FadeIn>
 
           {/* Right Detailed Longform Chapters (8 cols) */}
           <div className="lg:col-span-8 space-y-16 lg:pl-4 font-serif text-[#575652] dark:text-[#C5C4BE] text-base sm:text-lg leading-relaxed">
             {/* Chapter 1 */}
-            <div className="space-y-4">
+            <FadeIn className="space-y-4">
               <div className="font-mono text-xs font-semibold text-[#059669] dark:text-[#10B981] uppercase tracking-widest">
                 {t('aboutPage', 'ch1_title')}
               </div>
@@ -119,10 +122,10 @@ export default function About() {
               </h2>
               <p>{t('aboutPage', 'ch1_p1')}</p>
               <p>{t('aboutPage', 'ch1_p2')}</p>
-            </div>
+            </FadeIn>
 
             {/* Chapter 2 */}
-            <div className="space-y-4 pt-8 border-t border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.1)]">
+            <FadeIn className="space-y-4 pt-8 border-t border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.1)]">
               <div className="font-mono text-xs font-semibold text-[#059669] dark:text-[#10B981] uppercase tracking-widest">
                 {t('aboutPage', 'ch2_title')}
               </div>
@@ -130,9 +133,10 @@ export default function About() {
                 {isUrdu ? 'ENTERPRISE SCALE: MYLS SWITZERLAND PLATFORM' : 'SCALING & REFACTORING: THE MYLS SWITZERLAND PLATFORM'}
               </h2>
               <p>{t('aboutPage', 'ch2_p1')}</p>
-              <div className="p-5 bg-white dark:bg-[#141414] border border-[rgba(15,15,15,0.12)] dark:border-[rgba(255,255,255,0.1)] space-y-3 font-mono text-xs text-[#0F0F0F] dark:text-white">
-                <div className="font-bold text-[#059669] dark:text-[#10B981] uppercase tracking-wider">
-                  {isUrdu ? 'LIVE PRODUCTION RESPONSIBILITIES:' : 'KEY FACTUAL ENGINEERING RESPONSIBILITIES:'}
+              <div className="card-hover-guided p-5 bg-white dark:bg-[#141414] border border-[#08966a] space-y-3 font-mono text-xs text-[#0F0F0F] dark:text-white">
+                <div className="font-bold text-[#059669] dark:text-[#10B981] uppercase tracking-wider flex items-center justify-between">
+                  <span>{isUrdu ? 'LIVE PRODUCTION RESPONSIBILITIES:' : 'KEY FACTUAL ENGINEERING RESPONSIBILITIES:'}</span>
+                  <span className="text-[9px] text-[#08966a] dark:text-[#10B981]">SYSTEM AUDITED</span>
                 </div>
                 <ul className="space-y-2 list-disc list-inside text-[#575652] dark:text-[#A3A29E] font-sans text-sm">
                   <li>
@@ -158,10 +162,10 @@ export default function About() {
                 </ul>
               </div>
               <p>{t('aboutPage', 'ch2_p2')}</p>
-            </div>
+            </FadeIn>
 
             {/* Chapter 3 */}
-            <div className="space-y-4 pt-8 border-t border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.1)]">
+            <FadeIn className="space-y-4 pt-8 border-t border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.1)]">
               <div className="font-mono text-xs font-semibold text-[#059669] dark:text-[#10B981] uppercase tracking-widest">
                 {t('aboutPage', 'ch3_title')}
               </div>
@@ -170,7 +174,7 @@ export default function About() {
               </h2>
               <p>{t('aboutPage', 'ch3_p1')}</p>
               <p>{t('aboutPage', 'ch3_p2')}</p>
-            </div>
+            </FadeIn>
           </div>
         </div>
       </section>
@@ -178,7 +182,7 @@ export default function About() {
       {/* ─── Technical Craft Grid ─── */}
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.1)] bg-[#FAF9F5] dark:bg-[#111111]">
         <div className="max-w-7xl mx-auto space-y-12">
-          <div>
+          <FadeIn>
             <div className="text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold mb-2 flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-[#059669] dark:bg-[#10B981] inline-block" />
               {t('aboutPage', 'stack_title')}
@@ -186,34 +190,33 @@ export default function About() {
             <h2 className="text-4xl sm:text-6xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-white leading-[0.9]">
               {isUrdu ? 'TOOLS AUR ARCHITECTURAL BUNIYAD' : 'TOOLS & ARCHITECTURAL FOUNDATION'}
             </h2>
-          </div>
+          </FadeIn>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 font-mono text-xs">
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 font-mono text-xs">
             {technicalStack.map((group, idx) => (
-              <div
-                key={idx}
-                className="p-6 bg-white dark:bg-[#141414] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.15)] space-y-4"
-              >
-                <div className="font-bold text-[#0F0F0F] dark:text-white pb-2 border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] text-[11px] tracking-wider">
-                  {group.category}
+              <StaggerItem key={idx}>
+                <div className="card-hover-guided h-full p-6 bg-white dark:bg-[#141414] border border-[#08966a] space-y-4">
+                  <div className="font-bold text-[#0F0F0F] dark:text-white pb-2 border-b border-[#08966a]/20 dark:border-[#08966a]/30 text-[11px] tracking-wider">
+                    {group.category}
+                  </div>
+                  <ul className="space-y-2 text-[#575652] dark:text-[#A3A29E]">
+                    {group.items.map((item) => (
+                      <li key={item} className="flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 bg-[#059669] dark:bg-[#10B981]" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <ul className="space-y-2 text-[#575652] dark:text-[#A3A29E]">
-                  {group.items.map((item) => (
-                    <li key={item} className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 bg-[#059669] dark:bg-[#10B981]" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
       {/* ─── Bottom Navigation CTA ─── */}
       <section className="px-4 sm:px-8 py-16 sm:py-20 text-center bg-[#F6F5F0] dark:bg-[#0A0A0A]">
-        <div className="max-w-4xl mx-auto space-y-6">
+        <FadeIn className="max-w-4xl mx-auto space-y-6">
           <h3 className="font-display text-4xl sm:text-6xl uppercase tracking-tight text-[#0F0F0F] dark:text-white">
             {t('aboutPage', 'cta_title')}
           </h3>
@@ -221,14 +224,16 @@ export default function About() {
             {t('aboutPage', 'cta_sub')}
           </p>
           <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
-            <Link to="/contact" className="btn-outline text-xs border-[#059669] text-[#059669] hover:bg-[#059669] hover:text-white dark:border-[#10B981] dark:text-[#10B981] dark:hover:bg-[#10B981] dark:hover:text-black">
-              {t('aboutPage', 'cta_btn')} <ArrowRight size={14} />
+            <Link to="/contact" className="btn-outline text-xs border-[#059669] text-[#059669] hover:bg-[#059669] hover:text-white dark:border-[#10B981] dark:text-[#10B981] dark:hover:bg-[#10B981] dark:hover:text-black group">
+              <span>{t('aboutPage', 'cta_btn')}</span>
+              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform inline-block ml-1" />
             </Link>
-            <Link to="/work" className="btn-outline text-xs">
-              {isUrdu ? 'WORK ARCHIVE DEKHEIN' : 'VIEW WORK ARCHIVE'}
+            <Link to="/work" className="btn-outline text-xs group hover:border-[#08966a]">
+              <span>{isUrdu ? 'WORK ARCHIVE DEKHEIN' : 'VIEW WORK ARCHIVE'}</span>
+              <span className="group-hover:translate-x-1 transition-transform inline-block ml-1">→</span>
             </Link>
           </div>
-        </div>
+        </FadeIn>
       </section>
     </div>
   )

@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
+import { FadeIn } from './motion/MotionReveal'
 
 const AboutSection = () => {
   const { t, isUrdu } = useLanguage()
@@ -30,7 +31,7 @@ const AboutSection = () => {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* ── Left Column: Editorial Story (6 cols) ── */}
-          <div className="lg:col-span-6 space-y-6">
+          <FadeIn direction="left" className="lg:col-span-6 space-y-6">
             <div className="text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-[#059669] dark:bg-[#10B981] inline-block" />
               {t('aboutSection', 'badge')}
@@ -56,16 +57,17 @@ const AboutSection = () => {
             </div>
 
             <div className="pt-2">
-              <Link to="/about" className="btn-outline text-xs">
-                {t('aboutSection', 'cta')} <ArrowRight size={14} />
+              <Link to="/about" className="btn-outline text-xs group">
+                <span>{t('aboutSection', 'cta')}</span>
+                <ArrowRight size={14} className="arrow-slide" />
               </Link>
             </div>
-          </div>
+          </FadeIn>
 
           {/* ── Right Column: Handwritten Note & Engineering Tenets (6 cols) ── */}
-          <div className="lg:col-span-6 space-y-8 lg:pl-6">
+          <FadeIn direction="right" delay={0.15} className="lg:col-span-6 space-y-8 lg:pl-6">
             {/* Handwritten Note Callout */}
-            <div className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] relative">
+            <div className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] relative card-hover-guided">
               <span className="font-mono text-[10px] uppercase text-[#8E8D88] dark:text-[#6A6965] tracking-widest block mb-1">
                 {t('aboutSection', 'note_badge')}
               </span>
@@ -84,7 +86,7 @@ const AboutSection = () => {
                 {tenets.map((item, idx) => (
                   <div
                     key={idx}
-                    className="p-4 bg-white/60 dark:bg-[#161619]/60 border border-[rgba(15,15,15,0.12)] dark:border-[rgba(255,255,255,0.1)] space-y-1"
+                    className="p-4 bg-white/60 dark:bg-[#161619]/60 border border-[rgba(15,15,15,0.12)] dark:border-[rgba(255,255,255,0.1)] space-y-1 card-hover-guided"
                   >
                     <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] flex items-center gap-2">
                       <span className="text-[#059669] dark:text-[#10B981]">0{idx + 1}.</span>
@@ -97,7 +99,7 @@ const AboutSection = () => {
                 ))}
               </div>
             </div>
-          </div>
+          </FadeIn>
         </div>
       </div>
     </section>

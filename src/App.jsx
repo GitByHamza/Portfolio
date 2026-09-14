@@ -20,6 +20,7 @@ import Navbar from './components/Navbar'
 import { Footer } from './components/Footer'
 import PageCurtain from './components/PageCurtain'
 import { LanguageProvider } from './context/LanguageContext'
+import { ScrollProgress } from './components/motion/MotionReveal'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -98,6 +99,7 @@ function App() {
     <LanguageProvider>
       <PageCurtain />
       <SmoothScroll />
+      <ScrollProgress />
       <BrowserRouter>
         <ScrollToTop />
         <Routes>

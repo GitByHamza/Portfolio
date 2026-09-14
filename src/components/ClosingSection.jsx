@@ -2,13 +2,14 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Mail, Github, Linkedin, MessageSquare } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
+import { FadeIn } from './motion/MotionReveal'
 
 const ClosingSection = () => {
   const { t, isUrdu } = useLanguage()
 
   return (
     <section className="w-full bg-[#FAF9F5] dark:bg-[#161619] border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] py-20 sm:py-28 px-4 sm:px-8 transition-colors duration-200">
-      <div className="max-w-7xl mx-auto space-y-8">
+      <FadeIn direction="up" className="max-w-7xl mx-auto space-y-8">
         <div className="text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold flex items-center gap-2">
           <span className="w-1.5 h-1.5 bg-[#059669] dark:bg-[#10B981] inline-block" />
           {t('closing', 'badge')}
@@ -28,8 +29,9 @@ const ClosingSection = () => {
 
         {/* Buttons Row */}
         <div className="pt-4 flex flex-wrap items-center gap-3">
-          <Link to="/contact" className="btn-blue text-xs">
-            {t('closing', 'cta_start')} <ArrowRight size={14} />
+          <Link to="/contact" className="btn-blue text-xs group">
+            <span>{t('closing', 'cta_start')}</span>
+            <ArrowRight size={14} className="arrow-slide" />
           </Link>
 
           <Link to="/solutions" className="btn-outline text-xs">
@@ -70,7 +72,7 @@ const ClosingSection = () => {
             <Linkedin size={13} /> {t('closing', 'cta_linkedin')}
           </a>
         </div>
-      </div>
+      </FadeIn>
     </section>
   )
 }

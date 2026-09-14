@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, ArrowUpRight, Github, CheckCircle2, X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react'
 import { projectsData, getLocalizedProject } from '../data/projects'
 import { useLanguage } from '../context/LanguageContext'
+import { FadeIn, StaggerContainer, StaggerItem } from '../components/motion/MotionReveal'
 
 const ProjectDetails = () => {
   const { id } = useParams()
@@ -79,9 +80,9 @@ const ProjectDetails = () => {
       <div className="px-4 sm:px-8 py-4 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.1)] bg-[#FAF9F5] dark:bg-[#111111] flex items-center justify-between font-mono text-xs">
         <Link
           to="/work"
-          className="text-[#0F0F0F] dark:text-white hover:text-[#059669] dark:hover:text-[#10B981] transition-colors flex items-center gap-1.5 font-semibold"
+          className="text-[#0F0F0F] dark:text-white hover:text-[#059669] dark:hover:text-[#10B981] transition-colors flex items-center gap-1.5 font-semibold group"
         >
-          <ArrowLeft size={14} /> {t('projectDetails', 'back')}
+          <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> {t('projectDetails', 'back')}
         </Link>
         <div className="text-[#8E8D88] dark:text-[#737373]">
           CASE STUDY ID #{project.id}
@@ -90,7 +91,7 @@ const ProjectDetails = () => {
 
       {/* ─── Masthead Article Header ─── */}
       <section className="px-4 sm:px-8 py-12 sm:py-20 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.1)]">
-        <div className="max-w-7xl mx-auto space-y-4">
+        <FadeIn className="max-w-7xl mx-auto space-y-4">
           <div className="flex flex-wrap items-center gap-3 font-mono text-xs">
             <span className="tag-pill text-[10px] bg-[#059669]/10 dark:bg-[#059669]/20 text-[#059669] dark:text-[#10B981] border-[#059669]/30">
               {project.impact || (isUrdu ? 'PRODUCTION SYSTEM' : 'PRODUCTION SYSTEM')}
@@ -114,15 +115,15 @@ const ProjectDetails = () => {
                 href={project.demoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-outline text-xs border-[#059669] text-[#059669] hover:bg-[#059669] hover:text-white dark:border-[#10B981] dark:text-[#10B981] dark:hover:bg-[#10B981] dark:hover:text-black"
+                className="btn-outline text-xs border-[#059669] text-[#059669] hover:bg-[#059669] hover:text-white dark:border-[#10B981] dark:text-[#10B981] dark:hover:bg-[#10B981] dark:hover:text-black hover:shadow-md transition-all"
               >
                 {t('projectDetails', 'live_link')} <ArrowUpRight size={14} />
               </a>
             )}
 
             {project.offerUrl && (
-              <Link to={project.offerUrl} className="btn-outline text-xs">
-                {t('projectDetails', 'offer_link')} →
+              <Link to={project.offerUrl} className="btn-outline text-xs group hover:border-[#08966a]">
+                {t('projectDetails', 'offer_link')} <span className="group-hover:translate-x-1 transition-transform inline-block">→</span>
               </Link>
             )}
 
@@ -137,7 +138,7 @@ const ProjectDetails = () => {
               </a>
             )}
           </div>
-        </div>
+        </FadeIn>
       </section>
 
       {/* ─── Main Content & Sidebar Grid ─── */}
@@ -147,48 +148,50 @@ const ProjectDetails = () => {
           <div className="lg:col-span-8 space-y-12">
             {/* Primary Visual Showcase */}
             {project.mainImage && (
-              <div className="border border-[#08966a] bg-white dark:bg-[#141414] p-2 shadow-sm">
-                <img
-                  src={project.mainImage}
-                  alt={project.title}
-                  className="w-full h-auto object-cover max-h-[500px]"
-                />
-              </div>
+              <FadeIn delay={0.1}>
+                <div className="card-hover-guided border border-[#08966a] bg-white dark:bg-[#141414] p-2 shadow-sm">
+                  <img
+                    src={project.mainImage}
+                    alt={project.title}
+                    className="w-full h-auto object-cover max-h-[500px]"
+                  />
+                </div>
+              </FadeIn>
             )}
 
             {/* In-depth Narrative */}
-            <div className="space-y-4">
-              <div className="text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold">
+            <FadeIn delay={0.15} className="space-y-4">
+              <div className="text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-[#059669] dark:bg-[#10B981] inline-block" />
                 {t('projectDetails', 'overview_title')}
               </div>
               <p className="font-serif text-base sm:text-lg text-[#575652] dark:text-[#C5C4BE] leading-relaxed">
                 {project.description || project.overview}
               </p>
-            </div>
+            </FadeIn>
 
             {/* Key Features & Operational Capabilities */}
             {project.features && project.features.length > 0 && (
-              <div className="space-y-4 pt-6 border-t border-[rgba(15,15,15,0.12)] dark:border-[rgba(255,255,255,0.1)]">
+              <FadeIn delay={0.2} className="space-y-4 pt-6 border-t border-[rgba(15,15,15,0.12)] dark:border-[rgba(255,255,255,0.1)]">
                 <div className="text-[11px] font-mono uppercase tracking-widest text-[#0F0F0F] dark:text-white font-semibold">
                   {t('projectDetails', 'features_title')}
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
+                <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
                   {project.features.map((feature, i) => (
-                    <div
-                      key={i}
-                      className="p-3.5 bg-white dark:bg-[#141414] border border-[#08966a] flex items-start gap-2.5"
-                    >
-                      <CheckCircle2 size={15} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                      <span className="text-[#0F0F0F] dark:text-[#EDEDED] font-sans text-xs leading-normal">{feature}</span>
-                    </div>
+                    <StaggerItem key={i}>
+                      <div className="card-hover-guided p-3.5 bg-white dark:bg-[#141414] border border-[#08966a] flex items-start gap-2.5 h-full">
+                        <CheckCircle2 size={15} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                        <span className="text-[#0F0F0F] dark:text-[#EDEDED] font-sans text-xs leading-normal">{feature}</span>
+                      </div>
+                    </StaggerItem>
                   ))}
-                </div>
-              </div>
+                </StaggerContainer>
+              </FadeIn>
             )}
 
             {/* Screenshots Gallery */}
             {project.images && project.images.length > 0 && (
-              <div className="space-y-4 pt-6 border-t border-[rgba(15,15,15,0.12)] dark:border-[rgba(255,255,255,0.1)]">
+              <FadeIn delay={0.25} className="space-y-4 pt-6 border-t border-[rgba(15,15,15,0.12)] dark:border-[rgba(255,255,255,0.1)]">
                 <div className="flex items-center justify-between">
                   <div className="text-[11px] font-mono uppercase tracking-widest text-[#0F0F0F] dark:text-white font-semibold">
                     {t('projectDetails', 'screenshots_title')} ({project.images.length})
@@ -198,98 +201,106 @@ const ProjectDetails = () => {
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {project.images.map((img, idx) => (
-                    <div
-                      key={idx}
-                      onClick={() => openModal(idx)}
-                      className="group border border-[#08966a] bg-white dark:bg-[#141414] p-1.5 cursor-pointer hover:border-[#059669] dark:hover:border-[#10B981] transition-colors relative"
-                    >
-                      <div className="relative aspect-video overflow-hidden bg-[#ECEAE3] dark:bg-[#1E1E1E]">
-                        <img
-                          src={img}
-                          alt={`${project.title} screenshot ${idx + 1}`}
-                          className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-102"
-                        />
-                        <div className="absolute inset-0 bg-[#0F0F0F]/0 group-hover:bg-[#0F0F0F]/20 transition-colors flex items-center justify-center">
-                          <ZoomIn size={22} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <StaggerItem key={idx}>
+                      <div
+                        onClick={() => openModal(idx)}
+                        className="card-hover-guided group border border-[#08966a] bg-white dark:bg-[#141414] p-1.5 cursor-pointer relative"
+                      >
+                        <div className="relative aspect-video overflow-hidden bg-[#ECEAE3] dark:bg-[#1E1E1E]">
+                          <img
+                            src={img}
+                            alt={`${project.title} screenshot ${idx + 1}`}
+                            className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-102"
+                          />
+                          <div className="absolute inset-0 bg-[#0F0F0F]/0 group-hover:bg-[#0F0F0F]/20 transition-colors flex items-center justify-center">
+                            <ZoomIn size={22} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </StaggerItem>
                   ))}
-                </div>
-              </div>
+                </StaggerContainer>
+              </FadeIn>
             )}
           </div>
 
           {/* Sidebar Column (4 cols) */}
           <div className="lg:col-span-4 space-y-6 font-mono text-xs">
             {/* Tech Stack Breakdown */}
-            <div className="p-6 bg-white dark:bg-[#141414] border border-[#08966a] space-y-5">
-              <div className="text-[11px] font-bold text-[#0F0F0F] dark:text-white uppercase tracking-wider border-b border-[#08966a]/20 dark:border-[#08966a]/30 pb-2">
-                {t('projectDetails', 'stack_title')}
-              </div>
+            <FadeIn delay={0.2} direction="left">
+              <div className="card-hover-guided p-6 bg-white dark:bg-[#141414] border border-[#08966a] space-y-5">
+                <div className="text-[11px] font-bold text-[#0F0F0F] dark:text-white uppercase tracking-wider border-b border-[#08966a]/20 dark:border-[#08966a]/30 pb-2 flex items-center justify-between">
+                  <span>{t('projectDetails', 'stack_title')}</span>
+                  <span className="text-[9px] text-[#08966a] dark:text-[#10B981] font-mono">VERIFIED</span>
+                </div>
 
-              {project.techStack && (
-                <div className="space-y-3">
-                  {project.techStack.map((item, idx) => (
-                    <div key={idx} className="border-b border-[rgba(15,15,15,0.08)] dark:border-[rgba(255,255,255,0.08)] pb-2.5">
-                      <div className="text-[10px] text-[#8E8D88] dark:text-[#737373] uppercase tracking-widest mb-0.5">
-                        {item.category}
+                {project.techStack && (
+                  <div className="space-y-3">
+                    {project.techStack.map((item, idx) => (
+                      <div key={idx} className="border-b border-[rgba(15,15,15,0.08)] dark:border-[rgba(255,255,255,0.08)] pb-2.5">
+                        <div className="text-[10px] text-[#8E8D88] dark:text-[#737373] uppercase tracking-widest mb-0.5">
+                          {item.category}
+                        </div>
+                        <div className="text-[#0F0F0F] dark:text-white font-semibold text-[11px]">
+                          {item.tech}
+                        </div>
                       </div>
-                      <div className="text-[#0F0F0F] dark:text-white font-semibold text-[11px]">
-                        {item.tech}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+                    ))}
+                  </div>
+                )}
 
-              {/* Tags */}
-              <div className="pt-2 space-y-2">
-                <div className="text-[10px] text-[#8E8D88] dark:text-[#737373] uppercase tracking-widest">
-                  INDEX TAGS
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {project.tags?.map((tTag) => (
-                    <span key={tTag} className="tag-pill text-[9px]">
-                      {tTag}
-                    </span>
-                  ))}
+                {/* Tags */}
+                <div className="pt-2 space-y-2">
+                  <div className="text-[10px] text-[#8E8D88] dark:text-[#737373] uppercase tracking-widest">
+                    INDEX TAGS
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.tags?.map((tTag) => (
+                      <span key={tTag} className="tag-pill text-[9px]">
+                        {tTag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            </FadeIn>
 
             {/* Direct Consultation Box */}
-            <div className="p-6 bg-[#FAF9F5] dark:bg-[#161616] border border-[#08966a] space-y-3">
-              <div className="text-[10px] text-[#8E8D88] dark:text-[#737373] uppercase tracking-widest">
-                {t('projectDetails', 'inquire_button')}
+            <FadeIn delay={0.3} direction="left">
+              <div className="card-hover-guided p-6 bg-[#FAF9F5] dark:bg-[#161616] border border-[#08966a] space-y-3 relative overflow-hidden">
+                <div className="text-[10px] text-[#08966a] dark:text-[#10B981] font-mono uppercase tracking-widest font-semibold flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#08966a] dark:bg-[#10B981] inline-block animate-pulse" />
+                  {t('projectDetails', 'inquire_button')}
+                </div>
+                <div className="font-bold text-[#0F0F0F] dark:text-white text-sm">
+                  {isUrdu ? 'Kya aap aisa system engineer karwana chahte hain?' : 'Interested in engineering a platform like this?'}
+                </div>
+                <p className="font-serif text-[#575652] dark:text-[#A3A29E] text-xs leading-relaxed">
+                  {isUrdu ? 'Hum 100% source code ownership ke sath custom software systems banate hain.' : 'We design and engineer bespoke software systems with 100% code ownership.'}
+                </p>
+                <div className="pt-2">
+                  <Link to="/contact" className="btn-outline w-full justify-center text-xs group hover:border-[#08966a] hover:text-[#08966a] hover:bg-[#08966a]/5 transition-all">
+                    <span>{isUrdu ? 'INQUIRY SUBMIT KAREIN' : 'START AN INQUIRY'}</span>
+                    <span className="group-hover:translate-x-1 transition-transform inline-block">→</span>
+                  </Link>
+                </div>
               </div>
-              <div className="font-bold text-[#0F0F0F] dark:text-white">
-                {isUrdu ? 'Kya aap aisa system engineer karwana chahte hain?' : 'Interested in engineering a platform like this?'}
-              </div>
-              <p className="font-serif text-[#575652] dark:text-[#A3A29E] text-xs">
-                {isUrdu ? 'Hum 100% source code ownership ke sath custom software systems banate hain.' : 'We design and engineer bespoke software systems with 100% code ownership.'}
-              </p>
-              <div className="pt-2">
-                <Link to="/contact" className="btn-outline w-full justify-center text-xs hover:border-[#08966a] hover:text-[#08966a]">
-                  {isUrdu ? 'INQUIRY SUBMIT KAREIN →' : 'START AN INQUIRY →'}
-                </Link>
-              </div>
-            </div>
+            </FadeIn>
           </div>
         </div>
       </section>
 
       {/* ─── Pagination Footer ─── */}
       <section className="px-4 sm:px-8 py-8 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.1)] bg-[#FAF9F5] dark:bg-[#111111] font-mono text-xs">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+        <FadeIn className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           {prevProject ? (
             <Link
               to={`/project/${prevProject.id}`}
-              className="text-[#575652] dark:text-[#A3A29E] hover:text-[#059669] dark:hover:text-[#10B981] transition-colors flex items-center gap-2"
+              className="text-[#575652] dark:text-[#A3A29E] hover:text-[#059669] dark:hover:text-[#10B981] transition-colors flex items-center gap-2 group"
             >
-              <ArrowLeft size={14} /> {t('projectDetails', 'prev')}: {prevProject.title.slice(0, 25)}...
+              <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> {t('projectDetails', 'prev')}: {prevProject.title.slice(0, 25)}...
             </Link>
           ) : (
             <div />
@@ -298,14 +309,14 @@ const ProjectDetails = () => {
           {nextProject ? (
             <Link
               to={`/project/${nextProject.id}`}
-              className="text-[#575652] dark:text-[#A3A29E] hover:text-[#059669] dark:hover:text-[#10B981] transition-colors flex items-center gap-2"
+              className="text-[#575652] dark:text-[#A3A29E] hover:text-[#059669] dark:hover:text-[#10B981] transition-colors flex items-center gap-2 group"
             >
-              {t('projectDetails', 'next')}: {nextProject.title.slice(0, 25)}... <ArrowRight size={14} />
+              {t('projectDetails', 'next')}: {nextProject.title.slice(0, 25)}... <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           ) : (
             <div />
           )}
-        </div>
+        </FadeIn>
       </section>
 
       {/* ─── Fullscreen Image Modal Lightbox ─── */}

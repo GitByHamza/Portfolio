@@ -23,6 +23,7 @@ import {
   Maximize2,
   Info,
 } from 'lucide-react'
+import { FadeIn, StaggerContainer, StaggerItem } from '../../components/motion/MotionReveal'
 import PlanDetailModal from '../../components/PlanDetailModal'
 import ThemeToggle from '../../components/ThemeToggle'
 import { useLanguage } from '../../context/LanguageContext'
@@ -852,12 +853,7 @@ export default function TechRetailSolution() {
         {/* Subtle decorative emerald blur */}
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#10B981]/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto space-y-6 relative z-10">
-          {/* <div className="inline-flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold bg-[#ECFDF5] dark:bg-[rgba(16,185,129,0.15)] px-3 py-1 border border-[#059669]/25 dark:border-[#10B981]/30">
-            <span className="w-2 h-2 rounded-full bg-[#059669] dark:bg-[#10B981] animate-pulse shadow-[0_0_8px_#10B981]" />
-            {t.hero_badge}
-          </div> */}
-
+        <FadeIn direction="up" className="max-w-7xl mx-auto space-y-6 relative z-10">
           <h1 className="text-4xl sm:text-6xl md:text-8xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.9]">
             {t.hero_title_1}{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#059669] via-[#10B981] to-[#34D399] block sm:inline drop-shadow-xs">
@@ -872,40 +868,42 @@ export default function TechRetailSolution() {
           </p>
 
           {/* Key Metrics Row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-4 font-mono text-xs">
-            <div className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+          <StaggerContainer staggerDelay={0.08} className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-4 font-mono text-xs">
+            <StaggerItem className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 card-hover-guided">
               <div className="text-[#059669] dark:text-[#10B981] font-bold text-sm">100% OWNERSHIP</div>
               <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">{t.metrics_code}</div>
-            </div>
-            <div className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+            </StaggerItem>
+            <StaggerItem className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 card-hover-guided">
               <div className="text-[#059669] dark:text-[#10B981] font-bold text-sm">0% COMMISSION</div>
               <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">{t.metrics_tax}</div>
-            </div>
-            <div className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+            </StaggerItem>
+            <StaggerItem className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 card-hover-guided">
               <div className="text-[#059669] dark:text-[#10B981] font-bold text-sm">NEXT.JS SPEED</div>
               <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">{t.metrics_speed}</div>
-            </div>
-            <div className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+            </StaggerItem>
+            <StaggerItem className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 card-hover-guided">
               <div className="text-[#059669] dark:text-[#10B981] font-bold text-sm">SERIAL RMA</div>
               <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">{t.metrics_rma}</div>
-            </div>
-          </div>
+            </StaggerItem>
+          </StaggerContainer>
 
           {/* Actions */}
           <div className="pt-4 flex flex-wrap items-center gap-4 font-mono text-xs">
-            <a href="#plans" className="btn-blue text-xs shadow-sm">
-              {t.cta_primary} <ArrowRight size={14} />
+            <a href="#plans" className="btn-blue text-xs shadow-sm group">
+              <span>{t.cta_primary}</span>
+              <ArrowRight size={14} className="arrow-slide" />
             </a>
             <a
               href="https://store-demo-eight.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-outline text-xs"
+              className="btn-outline text-xs group"
             >
-              {t.cta_secondary} <ArrowUpRight size={14} />
+              <span>{t.cta_secondary}</span>
+              <ArrowUpRight size={14} className="arrow-slide" />
             </a>
           </div>
-        </div>
+        </FadeIn>
       </section>
 
       {/* ─── Core System Concept: One System For The Business ─── */}
@@ -923,56 +921,56 @@ export default function TechRetailSolution() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 font-mono text-xs">
-            <div className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+          <StaggerContainer staggerDelay={0.08} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 font-mono text-xs">
+            <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
               <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm">{t.arch_01_title}</div>
               <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
                 {t.arch_01_desc}
               </p>
-            </div>
+            </StaggerItem>
 
-            <div className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+            <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
               <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm">{t.arch_02_title}</div>
               <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
                 {t.arch_02_desc}
               </p>
-            </div>
+            </StaggerItem>
 
-            <div className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+            <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
               <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm">{t.arch_03_title}</div>
               <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
                 {t.arch_03_desc}
               </p>
-            </div>
+            </StaggerItem>
 
-            <div className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+            <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
               <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm">{t.arch_04_title}</div>
               <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
                 {t.arch_04_desc}
               </p>
-            </div>
+            </StaggerItem>
 
-            <div className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+            <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
               <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm">{t.arch_05_title}</div>
               <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
                 {t.arch_05_desc}
               </p>
-            </div>
+            </StaggerItem>
 
-            <div className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+            <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
               <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm">{t.arch_06_title}</div>
               <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
                 {t.arch_06_desc}
               </p>
-            </div>
-          </div>
+            </StaggerItem>
+          </StaggerContainer>
         </div>
       </section>
 
       {/* ─── Live Demo Experience Grid ─── */}
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)]">
         <div className="max-w-7xl mx-auto space-y-8">
-          <div>
+          <FadeIn direction="up">
             <div className="text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold mb-2">
               {t.demo_badge}
             </div>
@@ -982,61 +980,67 @@ export default function TechRetailSolution() {
             <p className="font-serif text-sm sm:text-base text-[#575652] dark:text-[#9B9A95] max-w-2xl mt-2">
               {t.demo_sub}
             </p>
-          </div>
+          </FadeIn>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 font-mono text-xs">
-            <a
-              href="https://store-demo-eight.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] hover:border-[#059669] dark:hover:border-[#10B981] transition-colors group block space-y-3 shadow-xs"
-            >
-              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm flex items-center justify-between">
-                <span>{t.demo_store_title}</span>
-                <ArrowUpRight size={14} className="text-[#059669] dark:text-[#10B981] group-hover:translate-x-0.5 transition-transform" />
-              </div>
-              <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95]">
-                {t.demo_store_desc}
-              </p>
-            </a>
+          <StaggerContainer staggerDelay={0.1} className="grid grid-cols-1 sm:grid-cols-3 gap-6 font-mono text-xs">
+            <StaggerItem>
+              <a
+                href="https://store-demo-eight.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] card-hover-guided group block space-y-3 shadow-xs h-full"
+              >
+                <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm flex items-center justify-between">
+                  <span>{t.demo_store_title}</span>
+                  <ArrowUpRight size={14} className="text-[#059669] dark:text-[#10B981] arrow-slide" />
+                </div>
+                <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95]">
+                  {t.demo_store_desc}
+                </p>
+              </a>
+            </StaggerItem>
 
-            <a
-              href="https://store-demo-eight.vercel.app/pc-builder"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] hover:border-[#059669] dark:hover:border-[#10B981] transition-colors group block space-y-3 shadow-xs"
-            >
-              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm flex items-center justify-between">
-                <span>{t.demo_pc_title}</span>
-                <ArrowUpRight size={14} className="text-[#059669] dark:text-[#10B981] group-hover:translate-x-0.5 transition-transform" />
-              </div>
-              <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95]">
-                {t.demo_pc_desc}
-              </p>
-            </a>
+            <StaggerItem>
+              <a
+                href="https://store-demo-eight.vercel.app/pc-builder"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] card-hover-guided group block space-y-3 shadow-xs h-full"
+              >
+                <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm flex items-center justify-between">
+                  <span>{t.demo_pc_title}</span>
+                  <ArrowUpRight size={14} className="text-[#059669] dark:text-[#10B981] arrow-slide" />
+                </div>
+                <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95]">
+                  {t.demo_pc_desc}
+                </p>
+              </a>
+            </StaggerItem>
 
-            <a
-              href="https://store-demo-eight.vercel.app/admin"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] hover:border-[#059669] dark:hover:border-[#10B981] transition-colors group block space-y-3 shadow-xs"
-            >
-              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm flex items-center justify-between">
-                <span>{t.demo_admin_title}</span>
-                <ArrowUpRight size={14} className="text-[#059669] dark:text-[#10B981] group-hover:translate-x-0.5 transition-transform" />
-              </div>
-              <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95]">
-                {t.demo_admin_desc}
-              </p>
-            </a>
-          </div>
+            <StaggerItem>
+              <a
+                href="https://store-demo-eight.vercel.app/admin"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] card-hover-guided group block space-y-3 shadow-xs h-full"
+              >
+                <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm flex items-center justify-between">
+                  <span>{t.demo_admin_title}</span>
+                  <ArrowUpRight size={14} className="text-[#059669] dark:text-[#10B981] arrow-slide" />
+                </div>
+                <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95]">
+                  {t.demo_admin_desc}
+                </p>
+              </a>
+            </StaggerItem>
+          </StaggerContainer>
         </div>
       </section>
 
       {/* ─── Pricing & Packages Tiers ─── */}
       <section id="plans" className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#121215]">
         <div className="max-w-7xl mx-auto space-y-12">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
+          <FadeIn direction="up" className="text-center max-w-3xl mx-auto space-y-3">
             <div className="inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold bg-[#ECFDF5] dark:bg-[rgba(16,185,129,0.15)] px-3 py-0.5 border border-[#059669]/25 dark:border-[#10B981]/30">
               <span className="w-1.5 h-1.5 rounded-full bg-[#059669] dark:bg-[#10B981]" />
               {t.plans_badge}
@@ -1047,11 +1051,30 @@ export default function TechRetailSolution() {
             <p className="font-serif text-sm sm:text-base text-[#575652] dark:text-[#9B9A95]">
               {t.plans_sub} {t.plans_sub_suffix}
             </p>
-          </div>
+          </FadeIn>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start font-mono text-xs">
+          {/* Guided Conversion Flow Ribbon */}
+          <FadeIn direction="up" delay={0.1} className="flex items-center justify-center gap-2 sm:gap-4 font-mono text-[10px] sm:text-xs text-[#575652] dark:text-[#9B9A95] uppercase tracking-wider pb-2 flex-wrap">
+            <span className="flex items-center gap-1.5 text-[#059669] dark:text-[#10B981] font-bold">
+              <span className="w-5 h-5 rounded-full border border-[#059669] dark:border-[#10B981] flex items-center justify-center text-[10px]">1</span>
+              {isUrdu ? 'Tier Muntakhib Karein' : 'Select Tier'}
+            </span>
+            <span className="text-[#8E8D88] dark:text-[#6A6965]">→</span>
+            <span className="flex items-center gap-1.5 text-[#059669] dark:text-[#10B981] font-bold">
+              <span className="w-5 h-5 rounded-full border border-[#059669] dark:border-[#10B981] flex items-center justify-center text-[10px]">2</span>
+              {isUrdu ? 'Live Proof Inspect Karein' : 'Inspect Previews'}
+            </span>
+            <span className="text-[#8E8D88] dark:text-[#6A6965]">→</span>
+            <span className="flex items-center gap-1.5 text-[#059669] dark:text-[#10B981] font-bold">
+              <span className="w-5 h-5 rounded-full border border-[#059669] dark:border-[#10B981] flex items-center justify-center text-[10px]">3</span>
+              {isUrdu ? 'WhatsApp Par Claim Karein' : 'Claim on WhatsApp'}
+            </span>
+          </FadeIn>
+
+          <StaggerContainer staggerDelay={0.12} className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start font-mono text-xs">
             {/* 1. Starter Store */}
-            <div className="p-8 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-6 flex flex-col justify-between hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
+            <StaggerItem className="h-full">
+              <div className="p-8 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-6 flex flex-col justify-between hover:border-[#059669] dark:hover:border-[#10B981] transition-colors h-full card-hover-guided">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-base">{t.starter_name}</div>
@@ -1125,157 +1148,162 @@ export default function TechRetailSolution() {
                 <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] text-center">{t.starter_support}</div>
               </div>
             </div>
+          </StaggerItem>
 
             {/* 2. Growth Retailer (Most Popular) */}
-            <div className="p-8 bg-white dark:bg-[#161619] border-2 border-[#059669] dark:border-[#10B981] space-y-6 flex flex-col justify-between shadow-lg relative hover:shadow-xl transition-shadow">
-              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#059669] dark:bg-[#10B981] text-white font-mono text-[9px] font-bold px-3 py-1 uppercase tracking-wider shadow-sm">
-                {t.growth_badge}
-              </div>
-
-              <div className="space-y-4">
-                <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-base">{t.growth_name}</div>
-                <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
-                  {t.growth_desc}
-                </p>
-
-                <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
-                  <div className="text-2xl font-display text-[#059669] dark:text-[#10B981]">{t.growth_price_pkr}</div>
-                  <div className="text-[11px] text-[#8E8D88] dark:text-[#6A6965]">{t.growth_price_usd}</div>
-                  <div className="text-[11px] text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.growth_delivery}</div>
+            <StaggerItem className="h-full">
+              <div className="p-8 bg-white dark:bg-[#161619] border-2 border-[#059669] dark:border-[#10B981] space-y-6 flex flex-col justify-between shadow-lg relative hover:shadow-xl transition-shadow h-full card-hover-guided">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#059669] dark:bg-[#10B981] text-white font-mono text-[9px] font-bold px-3 py-1 uppercase tracking-wider shadow-sm">
+                  {t.growth_badge}
                 </div>
 
-                {/* Clear Plan Differentiation Callout */}
-                <div className="p-3 bg-[#ECFDF5] dark:bg-[#10B981]/15 border border-[#059669]/25 dark:border-[#10B981]/30 text-[11px] text-[#0F0F0F] dark:text-[#EDECE6] space-y-1">
-                  <div className="font-bold text-[#059669] dark:text-[#10B981] text-[10px] uppercase">
-                    {t.growth_callout_label}
-                  </div>
-                  <p className="font-sans text-[11px] text-[#575652] dark:text-[#9B9A95]">
-                    {t.growth_callout_text}
+                <div className="space-y-4">
+                  <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-base">{t.growth_name}</div>
+                  <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
+                    {t.growth_desc}
                   </p>
+
+                  <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
+                    <div className="text-2xl font-display text-[#059669] dark:text-[#10B981]">{t.growth_price_pkr}</div>
+                    <div className="text-[11px] text-[#8E8D88] dark:text-[#6A6965]">{t.growth_price_usd}</div>
+                    <div className="text-[11px] text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.growth_delivery}</div>
+                  </div>
+
+                  {/* Clear Plan Differentiation Callout */}
+                  <div className="p-3 bg-[#ECFDF5] dark:bg-[#10B981]/15 border border-[#059669]/25 dark:border-[#10B981]/30 text-[11px] text-[#0F0F0F] dark:text-[#EDECE6] space-y-1">
+                    <div className="font-bold text-[#059669] dark:text-[#10B981] text-[10px] uppercase">
+                      {t.growth_callout_label}
+                    </div>
+                    <p className="font-sans text-[11px] text-[#575652] dark:text-[#9B9A95]">
+                      {t.growth_callout_text}
+                    </p>
+                  </div>
+
+                  <div className="pt-2 space-y-2 text-[11px] text-[#0F0F0F] dark:text-[#EDECE6]">
+                    <div className="flex items-start gap-2">
+                      <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span className="font-bold">{t.growth_f1}</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span>{t.growth_f2}</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span>{t.growth_f3}</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span>{t.growth_f4}</span>
+                    </div>
+                  </div>
+
+                  {/* Prominent Modal Trigger Button */}
+                  <div className="pt-3">
+                    <button
+                      onClick={() => setActiveModalKey('growth')}
+                      className="relative overflow-hidden w-full py-3 px-3 bg-[#059669] dark:bg-[#10B981] text-white font-mono text-[11px] font-extrabold uppercase tracking-wider hover:bg-[#047857] dark:hover:bg-[#059669] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-md animate-click-me-solid group"
+                    >
+                      <span className="relative flex h-2 w-2 shrink-0">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-90"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                      </span>
+                      <Info size={14} className="shrink-0 group-hover:rotate-12 transition-transform" />
+                      <span>{t.detail_btn}</span>
+                      <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/35 to-transparent pointer-events-none animate-shimmer-sweep" />
+                    </button>
+                  </div>
                 </div>
 
-                <div className="pt-2 space-y-2 text-[11px] text-[#0F0F0F] dark:text-[#EDECE6]">
-                  <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                    <span className="font-bold">{t.growth_f1}</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                    <span>{t.growth_f2}</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                    <span>{t.growth_f3}</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                    <span>{t.growth_f4}</span>
-                  </div>
-                </div>
-
-                {/* Prominent Modal Trigger Button */}
-                <div className="pt-3">
+                <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] space-y-3">
                   <button
-                    onClick={() => setActiveModalKey('growth')}
-                    className="relative overflow-hidden w-full py-3 px-3 bg-[#059669] dark:bg-[#10B981] text-white font-mono text-[11px] font-extrabold uppercase tracking-wider hover:bg-[#047857] dark:hover:bg-[#059669] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-md animate-click-me-solid group"
+                    onClick={() => openWhatsApp(t.growth_name, t.growth_price_pkr)}
+                    className="btn-blue w-full justify-center text-xs shadow-md animate-claim-solid group relative overflow-hidden transition-all duration-300 py-3.5 font-extrabold"
                   >
-                    <span className="relative flex h-2 w-2 shrink-0">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-90"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-                    </span>
-                    <Info size={14} className="shrink-0 group-hover:rotate-12 transition-transform" />
-                    <span>{t.detail_btn}</span>
-                    <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/35 to-transparent pointer-events-none animate-shimmer-sweep" />
+                    <MessageSquare size={15} className="animate-icon-wiggle group-hover:scale-125 transition-transform" />
+                    <span className="tracking-wider">{t.whatsapp_cta}</span>
+                    <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none animate-shimmer-sweep" />
                   </button>
+                  <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] text-center">{t.growth_support}</div>
                 </div>
               </div>
-
-              <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] space-y-3">
-                <button
-                  onClick={() => openWhatsApp(t.growth_name, t.growth_price_pkr)}
-                  className="btn-blue w-full justify-center text-xs shadow-md animate-claim-solid group relative overflow-hidden transition-all duration-300 py-3.5 font-extrabold"
-                >
-                  <MessageSquare size={15} className="animate-icon-wiggle group-hover:scale-125 transition-transform" />
-                  <span className="tracking-wider">{t.whatsapp_cta}</span>
-                  <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none animate-shimmer-sweep" />
-                </button>
-                <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] text-center">{t.growth_support}</div>
-              </div>
-            </div>
+            </StaggerItem>
 
             {/* 3. Enterprise Custom */}
-            <div className="p-8 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-6 flex flex-col justify-between hover:border-[#059669] dark:hover:border-[#10B981] transition-colors">
-              <div className="space-y-4">
-                <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-base">{t.enterprise_name}</div>
-                <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
-                  {t.enterprise_desc}
-                </p>
-
-                <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
-                  <div className="text-2xl font-display text-[#0F0F0F] dark:text-[#EDECE6]">{t.enterprise_price_pkr}</div>
-                  <div className="text-[11px] text-[#8E8D88] dark:text-[#6A6965]">{t.enterprise_price_usd}</div>
-                  <div className="text-[11px] text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.enterprise_delivery}</div>
-                </div>
-
-                {/* Clear Plan Differentiation Callout */}
-                <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] text-[11px] text-[#0F0F0F] dark:text-[#EDECE6] space-y-1">
-                  <div className="font-bold text-[#059669] dark:text-[#10B981] text-[10px] uppercase">
-                    {t.enterprise_callout_label}
-                  </div>
-                  <p className="font-sans text-[11px] text-[#575652] dark:text-[#9B9A95]">
-                    {t.enterprise_callout_text}
+            <StaggerItem className="h-full">
+              <div className="p-8 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-6 flex flex-col justify-between hover:border-[#059669] dark:hover:border-[#10B981] transition-colors h-full card-hover-guided">
+                <div className="space-y-4">
+                  <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-base">{t.enterprise_name}</div>
+                  <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
+                    {t.enterprise_desc}
                   </p>
+
+                  <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
+                    <div className="text-2xl font-display text-[#0F0F0F] dark:text-[#EDECE6]">{t.enterprise_price_pkr}</div>
+                    <div className="text-[11px] text-[#8E8D88] dark:text-[#6A6965]">{t.enterprise_price_usd}</div>
+                    <div className="text-[11px] text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.enterprise_delivery}</div>
+                  </div>
+
+                  {/* Clear Plan Differentiation Callout */}
+                  <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] text-[11px] text-[#0F0F0F] dark:text-[#EDECE6] space-y-1">
+                    <div className="font-bold text-[#059669] dark:text-[#10B981] text-[10px] uppercase">
+                      {t.enterprise_callout_label}
+                    </div>
+                    <p className="font-sans text-[11px] text-[#575652] dark:text-[#9B9A95]">
+                      {t.enterprise_callout_text}
+                    </p>
+                  </div>
+
+                  <div className="pt-2 space-y-2 text-[11px] text-[#0F0F0F] dark:text-[#EDECE6]">
+                    <div className="flex items-start gap-2">
+                      <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span className="font-bold">{t.enterprise_f1}</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span>{t.enterprise_f2}</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span>{t.enterprise_f3}</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span>{t.enterprise_f4}</span>
+                    </div>
+                  </div>
+
+                  {/* Prominent Modal Trigger Button */}
+                  <div className="pt-3">
+                    <button
+                      onClick={() => setActiveModalKey('enterprise')}
+                      className="relative overflow-hidden w-full py-3 px-3 bg-[#ECFDF5] dark:bg-[#10B981]/15 text-[#059669] dark:text-[#10B981] border-2 border-[#059669]/50 dark:border-[#10B981]/60 font-mono text-[11px] font-extrabold uppercase tracking-wider hover:bg-[#059669] dark:hover:bg-[#10B981] hover:text-white transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-sm animate-click-me group"
+                    >
+                      <span className="relative flex h-2 w-2 shrink-0">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#059669] dark:bg-[#10B981] opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#059669] dark:bg-[#10B981]"></span>
+                      </span>
+                      <Info size={14} className="shrink-0 group-hover:rotate-12 transition-transform" />
+                      <span>{t.detail_btn}</span>
+                      <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 dark:via-white/20 to-transparent pointer-events-none animate-shimmer-sweep" />
+                    </button>
+                  </div>
                 </div>
 
-                <div className="pt-2 space-y-2 text-[11px] text-[#0F0F0F] dark:text-[#EDECE6]">
-                  <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                    <span className="font-bold">{t.enterprise_f1}</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                    <span>{t.enterprise_f2}</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                    <span>{t.enterprise_f3}</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                    <span>{t.enterprise_f4}</span>
-                  </div>
-                </div>
-
-                {/* Prominent Modal Trigger Button */}
-                <div className="pt-3">
+                <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] space-y-3">
                   <button
-                    onClick={() => setActiveModalKey('enterprise')}
-                    className="relative overflow-hidden w-full py-3 px-3 bg-[#ECFDF5] dark:bg-[#10B981]/15 text-[#059669] dark:text-[#10B981] border-2 border-[#059669]/50 dark:border-[#10B981]/60 font-mono text-[11px] font-extrabold uppercase tracking-wider hover:bg-[#059669] dark:hover:bg-[#10B981] hover:text-white transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-sm animate-click-me group"
+                    onClick={() => openWhatsApp(t.enterprise_name, t.enterprise_price_pkr)}
+                    className="btn-outline w-full justify-center text-xs animate-claim-outline group relative overflow-hidden transition-all duration-300 py-3 font-bold"
                   >
-                    <span className="relative flex h-2 w-2 shrink-0">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#059669] dark:bg-[#10B981] opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-[#059669] dark:bg-[#10B981]"></span>
-                    </span>
-                    <Info size={14} className="shrink-0 group-hover:rotate-12 transition-transform" />
-                    <span>{t.detail_btn}</span>
-                    <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 dark:via-white/20 to-transparent pointer-events-none animate-shimmer-sweep" />
+                    <MessageSquare size={14} className="animate-icon-wiggle group-hover:scale-125 transition-transform text-[#059669] dark:text-[#10B981]" />
+                    <span>{t.whatsapp_cta}</span>
+                    <div className="absolute inset-0 w-1/3 h-full bg-gradient-to-r from-transparent via-[#059669]/10 to-transparent pointer-events-none animate-shimmer-sweep" />
                   </button>
+                  <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] text-center">{t.enterprise_support}</div>
                 </div>
               </div>
-
-              <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] space-y-3">
-                <button
-                  onClick={() => openWhatsApp(t.enterprise_name, t.enterprise_price_pkr)}
-                  className="btn-outline w-full justify-center text-xs animate-claim-outline group relative overflow-hidden transition-all duration-300 py-3 font-bold"
-                >
-                  <MessageSquare size={14} className="animate-icon-wiggle group-hover:scale-125 transition-transform text-[#059669] dark:text-[#10B981]" />
-                  <span>{t.whatsapp_cta}</span>
-                  <div className="absolute inset-0 w-1/3 h-full bg-gradient-to-r from-transparent via-[#059669]/10 to-transparent pointer-events-none animate-shimmer-sweep" />
-                </button>
-                <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] text-center">{t.enterprise_support}</div>
-              </div>
-            </div>
-          </div>
+            </StaggerItem>
+          </StaggerContainer>
 
           <div className="text-center pt-4">
             <Link

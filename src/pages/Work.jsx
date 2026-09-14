@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { projectsData, getLocalizedProject } from '../data/projects'
 import { useLanguage } from '../context/LanguageContext'
 import { ArrowRight, ExternalLink, Github, ArrowUpRight, Box } from 'lucide-react'
+import { FadeIn, StaggerContainer, StaggerItem } from '../components/motion/MotionReveal'
 
 export default function Work() {
   const { t, lang, isUrdu } = useLanguage()
@@ -52,7 +53,7 @@ export default function Work() {
     <div className="w-full bg-[#F6F5F0] dark:bg-[#0A0A0A] min-h-screen transition-colors duration-200">
       {/* ─── Page Header ─── */}
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.1)] bg-[#FAF9F5] dark:bg-[#111111]">
-        <div className="max-w-7xl mx-auto space-y-4">
+        <FadeIn className="max-w-7xl mx-auto space-y-4">
           <div className="text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold flex items-center gap-2">
             <span className="w-1.5 h-1.5 bg-[#059669] dark:bg-[#10B981] inline-block" />
             {t('workPage', 'badge')}
@@ -74,15 +75,15 @@ export default function Work() {
                 onClick={() => setFilterId(c.id)}
                 className={`px-4 py-2 border uppercase tracking-wider font-semibold transition-all cursor-pointer ${
                   filterId === c.id
-                    ? 'bg-[#0F0F0F] dark:bg-white text-white dark:text-[#0F0F0F] border-[#0F0F0F] dark:border-white'
-                    : 'bg-white dark:bg-[#181818] text-[#575652] dark:text-[#A3A29E] border-[rgba(15,15,15,0.18)] dark:border-[rgba(255,255,255,0.15)] hover:text-[#0F0F0F] dark:hover:text-white hover:border-[#0F0F0F] dark:hover:border-white'
+                    ? 'bg-[#0F0F0F] dark:bg-white text-white dark:text-[#0F0F0F] border-[#0F0F0F] dark:border-white shadow-sm'
+                    : 'bg-white dark:bg-[#181818] text-[#575652] dark:text-[#A3A29E] border-[rgba(15,15,15,0.18)] dark:border-[rgba(255,255,255,0.15)] hover:text-[#0F0F0F] dark:hover:text-white hover:border-[#08966a]'
                 }`}
               >
                 {c.label}
               </button>
             ))}
           </div>
-        </div>
+        </FadeIn>
       </section>
 
       {/* ─── Projects List ─── */}
@@ -91,21 +92,22 @@ export default function Work() {
           {filteredProjects.map((rawProject, idx) => {
             const project = getLocalizedProject(rawProject, lang)
             return (
-              <article
+              <FadeIn
                 key={project.id}
-                className="py-10 sm:py-14 hover:bg-[#FAF9F5] dark:hover:bg-[#111111] transition-colors"
+                delay={Math.min(idx * 0.08, 0.4)}
+                className="py-10 sm:py-14 hover:bg-[#FAF9F5]/70 dark:hover:bg-[#111111]/70 transition-colors"
               >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                   {/* Visual Thumbnail (4 cols) */}
                   <div className="lg:col-span-4">
                     <Link to={`/project/${project.id}`} className="block group">
-                      <div className="border border-[rgba(15,15,15,0.18)] dark:border-[rgba(255,255,255,0.15)] bg-white dark:bg-[#141414] p-2 shadow-sm group-hover:border-[#059669] dark:group-hover:border-[#10B981] transition-colors">
+                      <div className="card-hover-guided border border-[#08966a] bg-white dark:bg-[#141414] p-2 shadow-sm">
                         <div className="relative aspect-video overflow-hidden bg-[#ECEAE3] dark:bg-[#1E1E1E]">
                           {project.mainImage ? (
                             <img
                               src={project.mainImage}
                               alt={project.title}
-                              className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-102"
+                              className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-103"
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center text-[#8E8D88]">
@@ -113,7 +115,7 @@ export default function Work() {
                             </div>
                           )}
                           {project.impact && (
-                            <div className="absolute top-2 left-2 bg-[#0F0F0F] dark:bg-black text-white font-mono text-[9px] uppercase px-2 py-0.5 tracking-wider border border-white/20">
+                            <div className="absolute top-2 left-2 bg-[#0F0F0F] dark:bg-black text-white font-mono text-[9px] uppercase px-2 py-0.5 tracking-wider border border-[#08966a]/50">
                               {project.impact}
                             </div>
                           )}
@@ -153,8 +155,9 @@ export default function Work() {
                     </div>
 
                     <div className="pt-4 flex flex-wrap items-center gap-4 font-mono text-xs">
-                      <Link to={`/project/${project.id}`} className="btn-outline text-xs">
-                        {isUrdu ? 'CASE STUDY PARHEIN' : 'READ CASE STUDY'} <ArrowRight size={13} />
+                      <Link to={`/project/${project.id}`} className="btn-outline text-xs group hover:border-[#08966a]">
+                        <span>{isUrdu ? 'CASE STUDY PARHEIN' : 'READ CASE STUDY'}</span>
+                        <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
                       </Link>
 
                       {project.demoUrl && (
@@ -162,9 +165,10 @@ export default function Work() {
                           href={project.demoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="font-semibold text-[#059669] dark:text-[#10B981] hover:underline flex items-center gap-1"
+                          className="font-semibold text-[#059669] dark:text-[#10B981] hover:underline flex items-center gap-1 group"
                         >
-                          {t('workPage', 'live_link')} <ArrowUpRight size={13} />
+                          <span>{t('workPage', 'live_link')}</span>
+                          <ArrowUpRight size={13} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                         </a>
                       )}
 
@@ -181,7 +185,7 @@ export default function Work() {
                     </div>
                   </div>
                 </div>
-              </article>
+              </FadeIn>
             )
           })}
         </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Send, Mail, MessageSquare, MapPin, CheckCircle2, ArrowUpRight, AlertCircle } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { useLanguage } from '../context/LanguageContext'
+import { FadeIn, StaggerContainer, StaggerItem } from '../components/motion/MotionReveal'
 
 export default function Contact() {
   const { t, isUrdu } = useLanguage()
@@ -70,7 +71,7 @@ export default function Contact() {
     <div className="w-full bg-[#F6F5F0] dark:bg-[#0F0F11] min-h-screen text-[#0F0F0F] dark:text-[#EDECE6] transition-colors duration-200">
       {/* ─── Page Header ─── */}
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#161619]">
-        <div className="max-w-7xl mx-auto space-y-4">
+        <FadeIn className="max-w-7xl mx-auto space-y-4">
           <div className="text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold flex items-center gap-2">
             <span className="w-1.5 h-1.5 bg-[#059669] dark:bg-[#10B981] inline-block" />
             {t('contact', 'badge')}
@@ -83,14 +84,14 @@ export default function Contact() {
           <p className="font-serif text-lg sm:text-xl text-[#575652] dark:text-[#9B9A95] max-w-2xl leading-relaxed">
             {t('contact', 'desc')}
           </p>
-        </div>
+        </FadeIn>
       </section>
 
       {/* ─── Main Form & Sidebar Grid ─── */}
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)]">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Form Column (7 cols) */}
-          <div className="lg:col-span-7 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] p-6 sm:p-10 shadow-sm">
+          <FadeIn className="lg:col-span-7 card-hover-guided bg-white dark:bg-[#161619] border border-[#08966a] p-6 sm:p-10 shadow-sm">
             {submitted ? (
               <div className="py-12 text-center space-y-5">
                 <div className="w-12 h-12 rounded-full bg-[#ECFDF5] dark:bg-[#10B981]/20 text-[#059669] dark:text-[#10B981] flex items-center justify-center mx-auto border border-[#059669]/30">
@@ -234,13 +235,14 @@ export default function Contact() {
                 </button>
               </form>
             )}
-          </div>
+          </FadeIn>
 
           {/* Sidebar Channels & SLA (5 cols) */}
-          <div className="lg:col-span-5 space-y-6 font-mono text-xs">
+          <FadeIn direction="left" className="lg:col-span-5 space-y-6 font-mono text-xs">
             {/* Quick WhatsApp Card */}
-            <div className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-4">
-              <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] uppercase tracking-widest">
+            <div className="card-hover-guided p-6 bg-white dark:bg-[#161619] border border-[#08966a] space-y-4">
+              <div className="text-[10px] text-[#08966a] dark:text-[#10B981] uppercase tracking-widest font-semibold flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#08966a] dark:bg-[#10B981] animate-pulse" />
                 {t('contact', 'expedited')}
               </div>
               <div className="font-display text-2xl uppercase text-[#0F0F0F] dark:text-[#EDECE6] tracking-tight">
@@ -254,16 +256,18 @@ export default function Contact() {
                   href="https://wa.me/923091824000?text=Hi%20Hamza%2C%20I'd%20like%20to%20discuss%20a%20software%20or%20retail%20system%20project."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-blue text-xs w-full justify-center shadow-sm"
+                  className="btn-blue text-xs w-full justify-center shadow-sm group"
                 >
-                  <MessageSquare size={14} /> {t('contact', 'whatsapp_btn')}
+                  <MessageSquare size={14} />
+                  <span>{t('contact', 'whatsapp_btn')}</span>
+                  <ArrowUpRight size={13} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform ml-1" />
                 </a>
               </div>
             </div>
 
             {/* Structured Specifications */}
-            <div className="p-6 bg-[#FAF9F5] dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-4">
-              <div className="border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] pb-3">
+            <div className="card-hover-guided p-6 bg-[#FAF9F5] dark:bg-[#161619] border border-[#08966a] space-y-4">
+              <div className="border-b border-[#08966a]/20 dark:border-[#08966a]/30 pb-3">
                 <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] uppercase tracking-widest mb-1">
                   {t('contact', 'email_heading')}
                 </div>
@@ -275,7 +279,7 @@ export default function Contact() {
                 </a>
               </div>
 
-              <div className="border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] pb-3">
+              <div className="border-b border-[#08966a]/20 dark:border-[#08966a]/30 pb-3">
                 <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] uppercase tracking-widest mb-1">
                   {t('contact', 'sla_heading')}
                 </div>
@@ -283,7 +287,7 @@ export default function Contact() {
                 <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">{t('contact', 'sla_desc')}</div>
               </div>
 
-              <div className="border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] pb-3">
+              <div className="border-b border-[#08966a]/20 dark:border-[#08966a]/30 pb-3">
                 <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] uppercase tracking-widest mb-1">
                   {t('contact', 'timezone_heading')}
                 </div>
@@ -302,7 +306,7 @@ export default function Contact() {
                 </div>
               </div>
             </div>
-          </div>
+          </FadeIn>
         </div>
       </section>
     </div>
