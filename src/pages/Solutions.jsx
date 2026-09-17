@@ -20,6 +20,12 @@ export default function Solutions() {
       cms: isUrdu
         ? 'Vendor lock-in. Agar aap monthly subscription band karein to aapka data aur store band ho jata hai.'
         : 'Vendor lock-in. If you cancel your monthly store subscription, your store and customer data are inaccessible.',
+      freelancer: isUrdu
+        ? 'Code aap ka hota hai magar koi formal transfer process ya documentation nahi. Agar woh chale jayein to aap akele reh jate hain.'
+        : 'The code is yours but there is no formal transfer process and rarely any documentation. If they leave, you are on your own.',
+      agency: isUrdu
+        ? 'Agency aksar repo apne paas rakhti hai aur har tabdeeli ka bill banati hai. Malkiat aap ke contract par depend karti hai.'
+        : 'The agency often keeps the repo and bills you for every change. Ownership depends on the contract you sign.',
       badge: '100% IP TRANSFER',
     },
     {
@@ -30,6 +36,12 @@ export default function Solutions() {
       cms: isUrdu
         ? 'Har order par transaction percentage fees + mehangay plugins ke mahana charges.'
         : 'Platform transaction fees on every sale + recurring monthly costs for essential third-party plugins.',
+      freelancer: isUrdu
+        ? 'Koi platform cut nahi, magar har choti tabdeeli ke liye alag se ghante ke hisab se charge.'
+        : 'No platform cut, but every small change is billed again by the hour.',
+      agency: isUrdu
+        ? 'Bara upfront cost aur mahana retainer, commission ke baghair magar budget ke bhari bojh ke sath.'
+        : 'Large upfront cost plus a monthly retainer, no commission but a heavy ongoing budget.',
       badge: 'ZERO PLATFORM TAX',
     },
     {
@@ -40,6 +52,12 @@ export default function Solutions() {
       cms: isUrdu
         ? 'Aam theme templates aur plugin restrictions mein qaid.'
         : 'Locked into generic theme templates and constrained by marketplace plugin limitations.',
+      freelancer: isUrdu
+        ? 'Skill par depend karta hai. Custom logic ban sakta hai magar aksar maintenance aur scale par toot jata hai.'
+        : 'Depends on the individual. Custom logic is possible but often breaks under maintenance and scale.',
+      agency: isUrdu
+        ? 'Custom logic mumkin hai magar har feature ke liye lamba approval cycle aur bara bill.'
+        : 'Custom logic is possible but every feature comes with a long approval cycle and a large bill.',
       badge: 'TAILORED LOGIC',
     },
     {
@@ -50,6 +68,12 @@ export default function Solutions() {
       cms: isUrdu
         ? 'Plugin vulnerabilities ka khatra, spam attacks, aur auto-updates ke baad tootne wale checkouts.'
         : 'Frequent plugin security vulnerabilities, spam injections, and broken checkouts after auto-updates.',
+      freelancer: isUrdu
+        ? 'Security ka daromadar ek shakhs ki maloomat par. Koi formal audit ya uptime zimmedari nahi.'
+        : 'Security rests on one person’s knowledge. No formal audit and no uptime accountability.',
+      agency: isUrdu
+        ? 'Behtar process magar sust fixes, aur shared infrastructure par aksar doosre clients ke sath.'
+        : 'Better process but slow fixes, and often shared infrastructure used across other clients.',
       badge: 'ENTERPRISE STABILITY',
     },
   ]
@@ -128,18 +152,20 @@ export default function Solutions() {
                 </div>
 
                 <div className="pt-3 flex flex-wrap items-center gap-4">
-                  <Link to="/solutions/tech-retail" className="btn-blue text-xs shadow-sm group">
-                    <span>{t('solutionsPage', 'flagship_cta')}</span>
-                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  <Link to="/solutions/tech-retail" className="btn-blue text-xs shadow-sm group relative overflow-hidden">
+                    <span className="relative z-10">{t('solutionsPage', 'flagship_cta')}</span>
+                    <ArrowRight size={14} className="relative z-10 group-hover:translate-x-1.5 transition-transform" />
+                    <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none animate-shimmer-sweep" />
                   </Link>
                   <a
                     href="https://store-demo-eight.vercel.app/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-mono text-xs font-semibold text-[#059669] dark:text-[#10B981] hover:underline flex items-center gap-1 group"
+                    className="btn-outline text-xs group relative overflow-hidden"
                   >
-                    <span>{t('solutionsPage', 'flagship_demo')}</span>
-                    <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    <span className="relative z-10">{t('solutionsPage', 'flagship_demo')}</span>
+                    <ArrowUpRight size={14} className="relative z-10 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    <div className="absolute inset-0 w-1/3 h-full bg-gradient-to-r from-transparent via-[#10B981]/15 to-transparent pointer-events-none animate-shimmer-sweep" />
                   </a>
                 </div>
               </div>
@@ -272,32 +298,46 @@ export default function Solutions() {
           </div>
 
           <div className="border border-[#08966a] bg-white dark:bg-[#161619] overflow-hidden shadow-sm card-hover-guided">
-            <div className="grid grid-cols-1 md:grid-cols-12 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#1F1F24] font-mono text-xs font-bold uppercase tracking-wider text-[#575652] dark:text-[#9B9A95]">
-              <div className="p-4 md:col-span-4 hidden md:block">{t('solutionsPage', 'matrix_feature')}</div>
-              <div className="p-4 md:col-span-4 text-[#059669] dark:text-[#10B981] bg-[#ECFDF5] dark:bg-[#10B981]/15 border-l md:border-r border-[#08966a]/20 dark:border-[#08966a]/30 font-extrabold flex items-center gap-1.5">
+            <div className="hidden md:grid md:grid-cols-[1.3fr_1fr_1fr_1fr_1fr] border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#1F1F24] font-mono text-xs font-bold uppercase tracking-wider text-[#575652] dark:text-[#9B9A95]">
+              <div className="p-4">{t('solutionsPage', 'matrix_feature')}</div>
+              <div className="p-4 text-[#059669] dark:text-[#10B981] bg-[#ECFDF5] dark:bg-[#10B981]/15 border-l border-r border-[#08966a]/20 dark:border-[#08966a]/30 font-extrabold flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#059669] dark:bg-[#10B981]" />
                 {t('solutionsPage', 'matrix_txs')}
               </div>
-              <div className="p-4 md:col-span-4">
-                {t('solutionsPage', 'matrix_shopify')}
-              </div>
+              <div className="p-4 border-r border-[rgba(15,15,15,0.08)] dark:border-[rgba(255,255,255,0.08)]">{t('solutionsPage', 'matrix_freelancer')}</div>
+              <div className="p-4 border-r border-[rgba(15,15,15,0.08)] dark:border-[rgba(255,255,255,0.08)]">{t('solutionsPage', 'matrix_agency')}</div>
+              <div className="p-4">{t('solutionsPage', 'matrix_shopify')}</div>
             </div>
 
             <div className="divide-y divide-[rgba(15,15,15,0.1)] dark:divide-[rgba(255,255,255,0.1)] font-mono text-xs">
               {comparisonItems.map((item, idx) => (
-                <div key={idx} className="grid grid-cols-1 md:grid-cols-12 p-4 sm:p-5 gap-3 md:gap-0 items-center">
-                  <div className="md:col-span-4 pr-4">
+                <div key={idx} className="grid grid-cols-1 md:grid-cols-[1.3fr_1fr_1fr_1fr_1fr] p-4 sm:p-5 gap-3 md:gap-0 items-start">
+                  <div className="md:pr-4">
                     <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{item.dimension}</div>
                     <span className="tag-green text-[9px] mt-1 inline-block">{item.badge}</span>
                   </div>
 
-                  <div className="md:col-span-4 md:px-4 text-[#0F0F0F] dark:text-[#EDECE6] flex items-start gap-2 bg-[#ECFDF5]/50 dark:bg-[#10B981]/10 py-2 border-l border-r border-[#08966a]/20 dark:border-[#10B981]/20 font-medium">
+                  <div className="md:px-4 text-[#0F0F0F] dark:text-[#EDECE6] flex items-start gap-2 bg-[#ECFDF5]/50 dark:bg-[#10B981]/10 py-2 border-l border-r border-[#08966a]/20 dark:border-[#10B981]/20 font-medium">
                     <CheckCircle2 size={16} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                    <span className="md:hidden font-bold text-[9px] uppercase tracking-wider text-[#059669] dark:text-[#10B981] mr-1">{t('solutionsPage', 'matrix_txs')}</span>
                     <span>{item.texcodes}</span>
                   </div>
 
-                  <div className="md:col-span-4 md:px-4 text-[#575652] dark:text-[#9B9A95] flex items-start gap-2 py-2">
+                  <div className="md:px-4 text-[#575652] dark:text-[#9B9A95] flex items-start gap-2 py-2 md:border-r md:border-[rgba(15,15,15,0.08)] dark:md:border-[rgba(255,255,255,0.08)]">
                     <XCircle size={16} className="text-[#8E8D88] dark:text-[#6A6965] shrink-0 mt-0.5" />
+                    <span className="md:hidden font-bold text-[9px] uppercase tracking-wider text-[#8E8D88] dark:text-[#6A6965] mr-1">{t('solutionsPage', 'matrix_freelancer')}</span>
+                    <span>{item.freelancer}</span>
+                  </div>
+
+                  <div className="md:px-4 text-[#575652] dark:text-[#9B9A95] flex items-start gap-2 py-2 md:border-r md:border-[rgba(15,15,15,0.08)] dark:md:border-[rgba(255,255,255,0.08)]">
+                    <XCircle size={16} className="text-[#8E8D88] dark:text-[#6A6965] shrink-0 mt-0.5" />
+                    <span className="md:hidden font-bold text-[9px] uppercase tracking-wider text-[#8E8D88] dark:text-[#6A6965] mr-1">{t('solutionsPage', 'matrix_agency')}</span>
+                    <span>{item.agency}</span>
+                  </div>
+
+                  <div className="md:px-4 text-[#575652] dark:text-[#9B9A95] flex items-start gap-2 py-2">
+                    <XCircle size={16} className="text-[#8E8D88] dark:text-[#6A6965] shrink-0 mt-0.5" />
+                    <span className="md:hidden font-bold text-[9px] uppercase tracking-wider text-[#8E8D88] dark:text-[#6A6965] mr-1">{t('solutionsPage', 'matrix_shopify')}</span>
                     <span>{item.cms}</span>
                   </div>
                 </div>

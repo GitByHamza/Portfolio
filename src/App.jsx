@@ -86,9 +86,9 @@ function App() {
       window.history.scrollRestoration = 'manual'
     }
 
-    // Initial theme sync
+    // Initial theme sync: default to Light unless user explicitly chose Dark
     const savedTheme = localStorage.getItem('Theme')
-    if (savedTheme === 'Dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    if (savedTheme === 'Dark') {
       document.documentElement.classList.add('dark')
     } else {
       document.documentElement.classList.remove('dark')

@@ -133,28 +133,53 @@ body::before {
 
 /* Editorial Buttons */
 .btn-blue {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background-color: var(--blue);
+  background: linear-gradient(135deg, #065F46 0%, #047857 100%);
   color: #FFFFFF;
+  border: 1px solid #059669;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   padding: 0.85rem 1.5rem;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
   border-radius: 0;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(4, 120, 87, 0.25);
 }
 
 .btn-blue:hover {
-  background-color: var(--blue-hover);
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, #047857 0%, #059669 100%);
+  border-color: #10B981;
+  color: #FFFFFF;
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 4px 20px rgba(5, 150, 105, 0.4);
+}
+
+.dark .btn-blue {
+  background: linear-gradient(135deg, #064E3B 0%, #065F46 60%, #047857 100%);
+  color: #FFFFFF;
+  border: 1px solid #10B981;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.3), 0 2px 8px rgba(0, 0, 0, 0.4);
+  animation: btn-alive-pulse 2.6s ease-in-out infinite;
+}
+
+.dark .btn-blue:hover {
+  animation: none;
+  background: linear-gradient(135deg, #065F46 0%, #047857 60%, #059669 100%);
+  border-color: #34D399;
+  color: #FFFFFF;
+  transform: translateY(-2.5px) scale(1.025);
+  box-shadow: 0 0 28px rgba(16, 185, 129, 0.7), 0 4px 14px rgba(0, 0, 0, 0.5);
 }
 
 .btn-outline {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -168,19 +193,32 @@ body::before {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   padding: 0.85rem 1.5rem;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
   border-radius: 0;
+  overflow: hidden;
 }
 
 .btn-outline:hover {
   background-color: var(--ink);
   color: var(--paper);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 .dark .btn-outline {
-  border-color: rgba(255, 255, 255, 0.25);
-  color: var(--ink);
+  background-color: rgba(6, 78, 59, 0.25);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #EDECE6;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.12);
+  animation: btn-outline-pulse 3.2s ease-in-out infinite;
+}
+
+.dark .btn-outline:hover {
+  animation: none;
+  background-color: #064E3B;
+  border-color: #10B981;
+  color: #FFFFFF;
+  transform: translateY(-2px) scale(1.015);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.45);
 }
 
 .dark .btn-outline:hover {
@@ -325,6 +363,30 @@ body::before {
 /* ==========================================================================
    Attention-Catching Call-to-Action Animations (Click Me & WhatsApp Buttons)
    ========================================================================== */
+
+@keyframes btn-alive-pulse {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.28), 0 2px 8px rgba(0, 0, 0, 0.35);
+    transform: translateY(0);
+  }
+  50% {
+    box-shadow: 0 0 26px rgba(16, 185, 129, 0.65), 0 0 10px rgba(52, 211, 153, 0.45);
+    transform: translateY(-1.5px);
+  }
+}
+
+@keyframes btn-outline-pulse {
+  0%, 100% {
+    border-color: rgba(16, 185, 129, 0.35);
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.08);
+    transform: translateY(0);
+  }
+  50% {
+    border-color: rgba(16, 185, 129, 0.75);
+    box-shadow: 0 0 16px rgba(16, 185, 129, 0.3);
+    transform: translateY(-1px);
+  }
+}
 
 @keyframes pulse-attention-soft {
   0%, 100% {

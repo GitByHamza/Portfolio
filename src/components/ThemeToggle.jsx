@@ -26,10 +26,7 @@ function applyTheme(dark) {
 export default function ThemeToggle({ className, variant = 'full' }) {
   const [isDarkMode, setIsDarkMode] = useState(() => {
     if (typeof window !== 'undefined') {
-      return (
-        document.documentElement.classList.contains('dark') ||
-        localStorage.getItem('Theme') === 'Dark'
-      )
+      return localStorage.getItem('Theme') === 'Dark'
     }
     return false
   })

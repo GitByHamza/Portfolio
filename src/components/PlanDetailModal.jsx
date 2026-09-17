@@ -22,6 +22,7 @@ const MODAL_I18N = {
     ideal_fit: 'IDEAL CLIENT PROFILE & BUSINESS FIT:',
     artifacts_title: 'SYSTEM INTERFACE ARTIFACTS INCLUDED IN THIS TIER:',
     artifacts_hint: 'CLICK ANY IMAGE TO EXPAND',
+    artifacts_hint_mobile: 'SWIPE TO BROWSE • TAP TO EXPAND',
     modules_title: 'COMPREHENSIVE DELIVERABLE MODULES & ARCHITECTURAL SCOPE:',
     exclusions_title: 'STRICT SCOPE BOUNDARIES // WHAT IS NOT INCLUDED IN THIS TIER:',
     milestones_title: 'ETHICAL MILESTONE PAYMENT & 100% OWNERSHIP PLEDGE',
@@ -39,6 +40,10 @@ const MODAL_I18N = {
     lightbox_return: 'Click outside or press ESC to return to plan specification',
     preview_tag: 'SYSTEM PREVIEW',
     preview_counter: 'PREVIEW',
+    guarantee_note:
+      'The delivery date in this plan is written into the contract, not a rough estimate. If we miss it and the delay is on our side, every full week late earns you one free month of the Care Plan. Support replies land within 4 business hours and we hold 99.5% uptime.',
+    payment_note:
+      'Payment is split 40 / 40 / 20 across deposit, approved demo, and launch handover. You order on WhatsApp and pay by bank transfer or COD by default. Add a payment gateway later if you want cards and wallets. Prices are in PKR and, for overseas clients, invoiced at the exchange rate on the invoice date.',
   },
   'ur-en': {
     badge_default: 'TASDEEQ SHUDA SCOPE SPECIFICATION',
@@ -47,6 +52,7 @@ const MODAL_I18N = {
     ideal_fit: 'DUKAN KA PROFILE AUR BUSINESS FIT:',
     artifacts_title: 'IS PLAN MEIN SHAMIL SYSTEM INTERFACES:',
     artifacts_hint: 'TASVEER BARI DEKHNE KE LIYE CLICK KAREIN',
+    artifacts_hint_mobile: 'SWIPE KAREIN • BARI DEKHNE KE LIYE TAP KAREIN',
     modules_title: 'MUKAMMAL DELIVERABLE MODULES AUR ARCHITECTURAL SCOPE:',
     exclusions_title: 'STRICT SCOPE BOUNDARIES // YEH CHEEZAIN IS PLAN MEIN SHAMIL NAHI:',
     milestones_title: 'ETHICAL MILESTONE PAYMENT AUR 100% MALIKANA HUQOOQ:',
@@ -64,18 +70,60 @@ const MODAL_I18N = {
     lightbox_return: 'Wapas aane ke liye bahar click karein ya ESC dabayein',
     preview_tag: 'SYSTEM PREVIEW',
     preview_counter: 'PREVIEW',
+    guarantee_note:
+      'Is plan ki delivery date contract mein likhi jati hai, andaza nahi. Agar hum se delay ho jaye, to har mukammal hafte ki der par aapko ek mahana Care Plan muft milta hai. Support ka jawab 4 business ghanton ke andar aata hai aur hum 99.5% uptime barqarar rakhte hain.',
+    payment_note:
+      'Raqam 40 / 40 / 20 mein banti hai: peshgi, approved demo, aur launch handover. Order WhatsApp par hota hai aur payment bank transfer ya COD se, default ke tor par. Baad mein chahein to payment gateway add karwa lein. Qeematein PKR mein hain aur overseas clients ke liye invoice ki tareekh ke rate par lagai jati hain.',
   },
 }
 
 export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhatsApp }) {
   const bodyRef = useRef(null)
+  const galleryRef = useRef(null)
   const [expandedImageIndex, setExpandedImageIndex] = useState(null)
+  const [activeArtifact, setActiveArtifact] = useState(0)
   const t = MODAL_I18N[lang] || MODAL_I18N.en
 
-  // Reset expanded image when plan changes
+  // Reset expanded image and mobile gallery position when plan changes
   useEffect(() => {
     setExpandedImageIndex(null)
+    setActiveArtifact(0)
+    if (galleryRef.current) galleryRef.current.scrollLeft = 0
   }, [plan])
+
+  // Track which artifact card is centered while swiping on mobile
+  const handleGalleryScroll = () => {
+    const el = galleryRef.current
+    if (!el) return
+    const cards = Array.from(el.children)
+    if (!cards.length) return
+    const elRect = el.getBoundingClientRect()
+    const centerX = elRect.left + elRect.width / 2
+    let nearest = 0
+    let bestDist = Infinity
+    cards.forEach((card, i) => {
+      const r = card.getBoundingClientRect()
+      const dist = Math.abs(r.left + r.width / 2 - centerX)
+      if (dist < bestDist) {
+        bestDist = dist
+        nearest = i
+      }
+    })
+    setActiveArtifact(nearest)
+  }
+
+  // Dot tap: bring that artifact card to the center of the swipe row
+  const scrollToArtifact = (idx) => {
+    const el = galleryRef.current
+    const card = el?.children[idx]
+    if (!el || !card) return
+    const elRect = el.getBoundingClientRect()
+    const cardRect = card.getBoundingClientRect()
+    el.scrollTo({
+      left: el.scrollLeft + (cardRect.left - elRect.left) - (el.clientWidth - cardRect.width) / 2,
+      behavior: 'smooth',
+    })
+  }
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -205,14 +253,19 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
               <div className="space-y-3 font-mono text-xs">
                 <div className="text-[11px] font-bold uppercase tracking-wider text-[#0F0F0F] dark:text-[#EDECE6] flex items-center justify-between">
                   <span>{t.artifacts_title}</span>
-                  <span className="text-[10px] text-[#8E8D88] dark:text-[#6A6965]">{t.artifacts_hint}</span>
+                  <span className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] hidden sm:inline">{t.artifacts_hint}</span>
+                  <span className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] sm:hidden">{t.artifacts_hint_mobile}</span>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                <div
+                  ref={galleryRef}
+                  onScroll={handleGalleryScroll}
+                  className="-mx-4 px-4 flex gap-3 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-1 sm:mx-0 sm:px-0 sm:pb-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:snap-none lg:grid-cols-3"
+                >
                   {plan.artifacts.map((art, idx) => (
                     <div
                       key={idx}
                       onClick={() => setExpandedImageIndex(idx)}
-                      className="group border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] hover:border-[#059669] dark:hover:border-[#10B981] bg-white dark:bg-[#1F1F24] p-1.5 shadow-xs space-y-1.5 cursor-zoom-in transition-all"
+                      className="group w-[80%] shrink-0 snap-center sm:w-auto sm:shrink sm:snap-align-none border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] hover:border-[#059669] dark:hover:border-[#10B981] bg-white dark:bg-[#1F1F24] p-1.5 shadow-xs space-y-1.5 cursor-zoom-in transition-all"
                       title="Click to expand full image"
                     >
                       <div className="relative aspect-video overflow-hidden bg-[#ECEAE3] dark:bg-[#121215]">
@@ -239,6 +292,24 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
                     </div>
                   ))}
                 </div>
+
+                {/* Swipe position dots (mobile only) */}
+                {plan.artifacts.length > 1 && (
+                  <div className="flex sm:hidden items-center justify-center gap-1.5">
+                    {plan.artifacts.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => scrollToArtifact(i)}
+                        aria-label={`Go to preview ${i + 1}`}
+                        className={`h-1.5 cursor-pointer transition-all ${
+                          i === activeArtifact
+                            ? 'w-5 bg-[#059669] dark:bg-[#10B981]'
+                            : 'w-1.5 bg-[rgba(15,15,15,0.2)] dark:bg-[rgba(255,255,255,0.2)] hover:bg-[rgba(15,15,15,0.45)] dark:hover:bg-[rgba(255,255,255,0.45)]'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
             )}
 
@@ -312,6 +383,28 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
                   <span className="text-[#575652] dark:text-[#9B9A95] text-[10px]">{t.handover_desc}</span>
                 </div>
               </div>
+            </div>
+
+            {/* Delivery Guarantee Note */}
+            <div className="p-4 bg-[#FAF9F5] dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] font-mono text-xs space-y-2">
+              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] uppercase tracking-wider flex items-center gap-2">
+                <Clock size={15} className="text-[#059669] dark:text-[#10B981]" />
+                <span>{lang === 'ur-en' ? 'DELIVERY AUR SLA ZIMMEDARI' : 'DELIVERY AND SLA COMMITMENT'}</span>
+              </div>
+              <p className="font-serif text-[11px] leading-relaxed text-[#575652] dark:text-[#9B9A95] normal-case tracking-normal">
+                {t.guarantee_note}
+              </p>
+            </div>
+
+            {/* Payment & Ordering Note */}
+            <div className="p-4 bg-[#FAF9F5] dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] font-mono text-xs space-y-2">
+              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] uppercase tracking-wider flex items-center gap-2">
+                <MessageSquare size={15} className="text-[#059669] dark:text-[#10B981]" />
+                <span>{lang === 'ur-en' ? 'PAYMENT AUR ORDER KARNE KA TAREEQA' : 'HOW PAYMENT AND ORDERING WORK'}</span>
+              </div>
+              <p className="font-serif text-[11px] leading-relaxed text-[#575652] dark:text-[#9B9A95] normal-case tracking-normal">
+                {t.payment_note}
+              </p>
             </div>
           </div>
 

@@ -78,7 +78,7 @@ export default function SolutionsSection() {
               </div>
 
               <div className="pt-2 text-xs font-mono text-amber-400 font-bold">
-                Investment: PKR 280,000 – 780,000 (~$1,200 – $3,100)
+                Investment: PKR 280,000 – 950,000+ (~$1,000 – $3,400)
               </div>
             </div>
 

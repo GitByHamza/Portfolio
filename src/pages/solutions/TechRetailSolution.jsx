@@ -22,11 +22,14 @@ import {
   CheckCircle2,
   Maximize2,
   Info,
+  ChevronDown,
 } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { FadeIn, StaggerContainer, StaggerItem } from '../../components/motion/MotionReveal'
 import PlanDetailModal from '../../components/PlanDetailModal'
 import ThemeToggle from '../../components/ThemeToggle'
 import { useLanguage } from '../../context/LanguageContext'
+import { projectsData, getLocalizedProject } from '../../data/projects'
 
 /**
  * Geo / Country / Timezone auto-selection helper:
@@ -154,21 +157,21 @@ const I18N_DATA = {
       'Inspect 1-click admin demo mode, stock updates, orders, and warranty logs.',
 
     plans_badge: 'COMMERCIAL INVESTMENT TIERS',
-    plans_title: 'Transparent, Fixed Investment Retail Plans',
+    plans_title: 'Plans.',
     plans_sub:
       'Zero monthly sales commissions. 100% client code and database ownership upon completion.',
     plans_sub_suffix:
       'Click any plan below to inspect the complete deliverable breakdown, architecture specs, and visual previews.',
     detail_btn: 'CLICK ME FOR FULL DETAIL & PREVIEWS →',
 
-    starter_name: 'Starter Store',
+    starter_name: 'Single Store Launch',
     starter_badge: 'SINGLE OUTLET',
     starter_desc:
-      'For single-location computer stores & CCTV shops starting online sales with direct WhatsApp dispatch.',
-    starter_price_pkr: 'PKR 280,000 – 350,000',
-    starter_price_usd: '~$1,000 – $1,250 USD',
-    starter_delivery: '⚡ 10–14 Days Guaranteed Delivery',
-    starter_support: 'Optional Hosting & Maintenance: PKR 14,000 / mo',
+      'For single location computer stores & CCTV shops starting online sales with direct WhatsApp dispatch.',
+    starter_price_pkr: 'PKR 280,000',
+    starter_price_usd: '~$1,000 USD',
+    starter_delivery: '⚡ Delivered in 10 days, guaranteed',
+    starter_support: 'Optional Care Plan: PKR 14,000 / mo',
     starter_callout_label: 'CORE CAPABILITY:',
     starter_callout_text:
       'Essential single-store online storefront with direct WhatsApp checkout and basic stock management.',
@@ -177,14 +180,14 @@ const I18N_DATA = {
     starter_f3: 'Basic Stock Updates & Orders',
     starter_f4: '100% Client Code & DB Ownership',
 
-    growth_name: 'Growth Retailer',
+    growth_name: 'Multi Branch Growth',
     growth_badge: '★ MOST POPULAR // BEST VALUE',
     growth_desc:
-      'For established electronics & hardware retailers selling across physical shops and online with custom PC builds.',
-    growth_price_pkr: 'PKR 550,000 – 780,000',
-    growth_price_usd: '~$2,000 – $2,800 USD',
-    growth_delivery: '⚡ 3–4 Weeks Guaranteed Delivery',
-    growth_support: 'Optional Managed Hosting & Support: PKR 28,000 / mo',
+      'For established electronics and hardware retailers selling across physical shops and online with custom PC builds.',
+    growth_price_pkr: 'PKR 550,000',
+    growth_price_usd: '~$2,000 USD',
+    growth_delivery: '⚡ Delivered in 21 days, guaranteed',
+    growth_support: 'Optional Care Plan: PKR 28,000 / mo',
     growth_callout_label: 'MAJOR UPGRADE OVER STARTER:',
     growth_callout_text:
       'Adds the real-time PC Builder compatibility engine, 3-branch stock sync, and serial number warranty RMA tracking.',
@@ -192,15 +195,16 @@ const I18N_DATA = {
     growth_f2: '3-Branch Inventory Synchronization',
     growth_f3: 'Hardware Serial Number & RMA Warranty Tracking',
     growth_f4: 'Promotional Sliders, Flash Sales & Coupons',
+    growth_f5: 'Online Card & Wallet Payment Gateway (Included — No +50K Fee)',
 
-    enterprise_name: 'Enterprise Custom',
+    enterprise_name: 'Chain and Distribution OS',
     enterprise_badge: '★ COMPLETE RETAIL OS',
     enterprise_desc:
-      'For multi-branch retail chains, wholesale hardware distributors, and computer importers operating high volume.',
-    enterprise_price_pkr: 'PKR 950,000 – 1,450,000',
-    enterprise_price_usd: '~$3,400 – $5,200 USD',
-    enterprise_delivery: '⚡ ~6 Weeks Staging & Delivery',
-    enterprise_support: 'Dedicated Enterprise Support Retainer: PKR 55,000 / mo',
+      'For multi branch retail chains, wholesale hardware distributors, and computer importers operating high volume.',
+    enterprise_price_pkr: 'From PKR 950,000',
+    enterprise_price_usd: '~$3,400 USD',
+    enterprise_delivery: '⚡ Delivered in 30 days, guaranteed',
+    enterprise_support: 'Dedicated Care Plan: PKR 55,000 / mo',
     enterprise_callout_label: 'MAJOR UPGRADE OVER GROWTH:',
     enterprise_callout_text:
       'Adds unlimited branches, full theme content CMS, multi-guard staff RBAC, and bespoke POS/Courier API sync.',
@@ -208,6 +212,7 @@ const I18N_DATA = {
     enterprise_f2: 'Granular Staff RBAC (Super Admin, Manager, Cashier)',
     enterprise_f3: 'Complete Theme & Navigation Content CMS',
     enterprise_f4: 'Custom POS Hardware & Courier API Sync',
+    enterprise_f5: 'Multi-Gateway Card & Wallet Prepay Integration (Included)',
 
     whatsapp_cta: 'Claim This Solution on WhatsApp',
     view_terms: 'Review Contract Scope & Warranty Terms →',
@@ -219,7 +224,7 @@ const I18N_DATA = {
     hero_title_2: 'Baghair Kisi Mahana Platform Commission Ke',
     hero_sub:
       'Slow websites aur mehangay monthly platform charges par waqt aur paisa zaya karna band karein. Hum aapke computer aur electronics store ke liye custom Next.js web store deploy karte hain — jisme live PC Builder compatibility, multi-branch stock sync aur WhatsApp automated dispatch shamil hai.',
-    cta_primary: 'Apna Retail Plan Muntakhib Karein',
+    cta_primary: 'Apna Retail Plan Select Karein',
     cta_secondary: 'Live Demo Check Karein',
     metrics_code: '100% Code aur Data Ka Mukammal Ikhtiyar',
     metrics_tax: 'Baghair Kisi Sales Commission Ke',
@@ -227,9 +232,9 @@ const I18N_DATA = {
     metrics_rma: 'Serial Number aur Warranty Tracking',
 
     arch_badge: 'SYSTEM ARCHITECTURE',
-    arch_title: 'RETAIL KAROBAR KE LIYE EK YAKJA SYSTEM',
+    arch_title: 'ONLINE AUR DUKAN DONO KE LIYE COMBINED SYSTEM',
     arch_sub:
-      'Sirf ek aam website nahi. Storefront, godam, physical dukanein aur customer notifications ko aapas mein jorne wala mukammal system.',
+      'Sirf ek aam website nahi. Storefront, godam, physical dukan aur customer orders ko jorne wala complete system.',
     arch_01_title: '01. CUSTOM WEB STOREFRONT',
     arch_01_desc:
       'PC hardware, CCTV packages aur electronics ke liye tayyar shuda tez tareen Next.js web store.',
@@ -264,37 +269,37 @@ const I18N_DATA = {
       '1-click admin demo login, live stock updates, orders tracker aur warranty serial numbers inspect karein.',
 
     plans_badge: 'COMMERCIAL INVESTMENT TIERS',
-    plans_title: 'Wazeh aur Munasib Retail Packages',
+    plans_title: 'Plans.',
     plans_sub:
       'Baghair kisi mahana sales commission ke. Mukammal source code ownership. Apni dukan ke mutabiq plan chunein.',
     plans_sub_suffix:
       'Mukammal architecture specs, modules aur visual previews dekhne ke liye kisi bhi plan par click karein.',
     detail_btn: 'MUKAMMAL DETAILS AUR PREVIEWS DEKHEIN →',
 
-    starter_name: 'Starter Store',
+    starter_name: 'Single Store Launch',
     starter_badge: 'SINGLE DUKAN',
     starter_desc:
-      'Single-location computer shops aur CCTV vendors ke liye jo direct WhatsApp dispatch ke sath online sales shuru kar rahe hain.',
-    starter_price_pkr: 'PKR 280,000 – 350,000',
-    starter_price_usd: '~$1,000 – $1,250 USD',
-    starter_delivery: '⚡ 10–14 Dinon Mein Guaranteed Delivery',
-    starter_support: 'Ikhtiyari Cloud Hosting aur Support: PKR 14,000 / mahana',
-    starter_callout_label: 'BUNYADI SALAHIYAT:',
+      'Single location computer shops aur CCTV vendors ke liye jo direct WhatsApp dispatch ke sath online sales shuru kar rahe hain.',
+    starter_price_pkr: 'PKR 280,000',
+    starter_price_usd: '~$1,000 USD',
+    starter_delivery: '⚡ 10 dinon mein delivery, guaranteed',
+    starter_support: 'Optional Care Plan: PKR 14,000 / month',
+    starter_callout_label: 'MAIN CAPABILITY:',
     starter_callout_text:
       'Single dukan ke liye online storefront jisme direct WhatsApp order checkout aur basic stock manager shamil hai.',
     starter_f1: 'Next.js Storefront (50 Products Tak)',
     starter_f2: 'Direct WhatsApp Order Dispatch',
     starter_f3: 'Live Stock Updates aur Orders Tracker',
-    starter_f4: '100% Source Code aur Database Malikana Huqooq',
+    starter_f4: '100% Client Code aur Database Ownership',
 
-    growth_name: 'Growth Retailer',
+    growth_name: 'Multi Branch Growth',
     growth_badge: '★ SAB SE ZYADA PASANDIDAH // BEHTAREEN VALUE',
     growth_desc:
       'Bari electronics aur hardware dukanon ke liye jahan custom gaming PC builds aur physical store sync zaroori hai.',
-    growth_price_pkr: 'PKR 550,000 – 780,000',
-    growth_price_usd: '~$2,000 – $2,800 USD',
-    growth_delivery: '⚡ 3–4 Hafton Mein Guaranteed Delivery',
-    growth_support: 'Ikhtiyari Managed Cloud Hosting aur Support: PKR 28,000 / mahana',
+    growth_price_pkr: 'PKR 550,000',
+    growth_price_usd: '~$2,000 USD',
+    growth_delivery: '⚡ 21 dinon mein delivery, guaranteed',
+    growth_support: 'Optional Care Plan: PKR 28,000 / month',
     growth_callout_label: 'STARTER SE BARI UPGRADES:',
     growth_callout_text:
       'Isme real-time PC Builder compatibility engine, 3-branch stock sync, aur serial number warranty tracking shamil hai.',
@@ -302,15 +307,16 @@ const I18N_DATA = {
     growth_f2: '3 Physical Branches Ki Stock Synchronization',
     growth_f3: 'Hardware Serial Number aur RMA Warranty Tracker',
     growth_f4: 'Promotional Sliders, Flash Sales aur Coupons',
+    growth_f5: 'Card Prepay Online Payment Gateway (Shamil Hai — Baghair Kisi 50K Fee Ke)',
 
-    enterprise_name: 'Enterprise Custom',
+    enterprise_name: 'Chain and Distribution OS',
     enterprise_badge: '★ MUKAMMAL RETAIL OS',
     enterprise_desc:
-      'Multi-branch retail chains, wholesale distributors aur computer importers ke liye jo bara volume operate karte hain.',
-    enterprise_price_pkr: 'PKR 950,000 – 1,450,000',
-    enterprise_price_usd: '~$3,400 – $5,200 USD',
-    enterprise_delivery: '⚡ ~6 Hafton Mein Staging aur Launch',
-    enterprise_support: 'Dedicated Enterprise Support Retainer: PKR 55,000 / mahana',
+      'Multi branch retail chains, wholesale distributors aur computer importers ke liye jo bara volume operate karte hain.',
+    enterprise_price_pkr: 'PKR 950,000 se shuru',
+    enterprise_price_usd: '~$3,400 USD',
+    enterprise_delivery: '⚡ 30 dinon mein delivery, guaranteed',
+    enterprise_support: 'Dedicated Care Plan: PKR 55,000 / mahana',
     enterprise_callout_label: 'GROWTH SE BARI UPGRADES:',
     enterprise_callout_text:
       'La-mehdood branches, mukammal dynamic theme CMS, granular staff RBAC, aur courier/POS API integration.',
@@ -318,6 +324,7 @@ const I18N_DATA = {
     enterprise_f2: 'Staff Permissions (Super Admin, Manager, Cashier)',
     enterprise_f3: 'Mukammal Storefront Theme aur Content CMS',
     enterprise_f4: 'Custom POS Hardware aur Courier API Sync',
+    enterprise_f5: 'Online Payment Gateways aur Custom Financial APIs Shamil',
 
     whatsapp_cta: 'Yeh Plan WhatsApp Par Book Karein',
     view_terms: 'Mukammal Sharaait aur Guarantees Dekhein →',
@@ -327,12 +334,12 @@ const I18N_DATA = {
 const PLANS_DETAIL = {
   en: {
     starter: {
-      name: 'Starter Store',
+      name: 'Single Store Launch',
       code: 'TXS-STARTER',
       badge: 'ENTRY LEVEL // SINGLE OUTLET',
-      pricePkr: 'PKR 280,000 – 350,000',
-      priceUsd: '~$1,000 – $1,250 USD',
-      delivery: '10–14 Days Delivery',
+      pricePkr: 'PKR 280,000',
+      priceUsd: '~$1,000 USD',
+      delivery: '10 days, guaranteed',
       idealFor:
         'Single-location computer shops, CCTV vendors, and electronics retail counters beginning online sales with direct WhatsApp dispatch without ongoing platform taxes.',
       artifacts: [
@@ -389,18 +396,21 @@ const PLANS_DETAIL = {
       ],
       exclusions: [
         'Interactive PC Builder compatibility engine (Available in Growth & Enterprise).',
-        'Multi-branch stock synchronization (Single outlet stock only).',
+        'Multi branch stock synchronization (Single outlet stock only).',
         'Hardware serial number and RMA warranty lifecycle tracking.',
-        'Self-managed promotional banner CMS (layout branding is managed).',
+        'Self managed promotional banner CMS (layout branding is managed).',
+        'Product photos, descriptions, and data entry beyond the first 50 SKUs. You supply the content and we set it up.',
+        'Online card prepay payment gateway (Available as +PKR 50,000 add-on; included free in Growth & Chain plans).',
+        'Unlimited revisions. Two revision rounds are included per milestone and further changes are billed hourly.',
       ],
     },
     growth: {
-      name: 'Growth Retailer',
+      name: 'Multi Branch Growth',
       code: 'TXS-GROWTH',
       badge: '★ MOST POPULAR // BEST VALUE',
-      pricePkr: 'PKR 550,000 – 780,000',
-      priceUsd: '~$2,000 – $2,800 USD',
-      delivery: '3–4 Weeks Delivery',
+      pricePkr: 'PKR 550,000',
+      priceUsd: '~$2,000 USD',
+      delivery: '21 days, guaranteed',
       idealFor:
         'Established computer hardware and gaming PC retailers selling high-ticket rigs, components, and managing stock across shop counters and online simultaneously.',
       artifacts: [
@@ -463,20 +473,32 @@ const PLANS_DETAIL = {
             'Automated professional PDF receipts and invoice generation',
           ],
         },
+        {
+          title: 'Online Payment Gateway Integration (Included — Save PKR 50,000)',
+          desc: 'Direct card and mobile wallet checkout for prepaid orders at zero extra integration fee.',
+          items: [
+            'Paymob, Bank Alfalah Alfa, Keenu, or PayFast payment gateway integration',
+            'Accept Visa, MasterCard, and UnionPay debit/credit cards directly on checkout',
+            'JazzCash & EasyPaisa direct mobile wallet payments',
+            'Zero add-on fee (PKR 50,000 extra fee waived for Growth plan)',
+          ],
+        },
       ],
       exclusions: [
         'Limited to 3 branch nodes (Unlimited branches supported in Enterprise).',
         'Does not include custom external accounting ERP/FBR direct API integrations.',
         'Super Admin vs Cashier granular permission matrices (Single admin level).',
+        'Product photos, descriptions, and catalog migration beyond the included setup. You supply the content.',
+        'Unlimited revisions. Two revision rounds are included per milestone and further changes are billed hourly.',
       ],
     },
     enterprise: {
-      name: 'Enterprise Custom',
+      name: 'Chain and Distribution OS',
       code: 'TXS-ENTERPRISE',
       badge: '★ COMPLETE RETAIL OS',
-      pricePkr: 'PKR 950,000 – 1,450,000',
-      priceUsd: '~$3,400 – $5,200 USD',
-      delivery: '~6 Weeks Staging & Delivery',
+      pricePkr: 'From PKR 950,000',
+      priceUsd: '~$3,400 USD',
+      delivery: '30 days, guaranteed',
       idealFor:
         'High-volume computer retail chains, nationwide hardware distributors, and tech importers with multi-branch networks requiring a custom enterprise ERP.',
       artifacts: [
@@ -539,20 +561,32 @@ const PLANS_DETAIL = {
             'FBR digital invoice compliance (optional integration)',
           ],
         },
+        {
+          title: 'Multi-Gateway Online Prepay & Financial Engine (Included)',
+          desc: 'Enterprise-grade payment routing and automated settlement reconciliation.',
+          items: [
+            'Multiple simultaneous payment gateways for high-volume failover',
+            'Direct credit/debit card, Raast P2M QR, JazzCash, and EasyPaisa integrations',
+            'Automated payment reconciliation reports with bank statements',
+            'Zero add-on fee (included standard in Chain and Distribution OS)',
+          ],
+        },
       ],
       exclusions: [
         'Bespoke custom hardware firmware modifications (quoted separately on request).',
+        'Bulk product photography and catalog data entry. You supply the content or we add it as a paid add-on.',
+        'Unlimited revisions. Two revision rounds are included per milestone and further changes are billed hourly.',
       ],
     },
   },
   'ur-en': {
     starter: {
-      name: 'Starter Store',
+      name: 'Single Store Launch',
       code: 'TXS-STARTER',
       badge: 'ENTRY LEVEL // SINGLE DUKAN',
-      pricePkr: 'PKR 280,000 – 350,000',
-      priceUsd: '~$1,000 – $1,250 USD',
-      delivery: '10–14 Dinon Mein Delivery',
+      pricePkr: 'PKR 280,000',
+      priceUsd: '~$1,000 USD',
+      delivery: '10 dinon mein, guaranteed',
       idealFor:
         'Single-location computer dukanon, CCTV vendors, aur retail counters ke liye jo direct WhatsApp order dispatch ke sath online sales shuru karna chahte hain — baghair kisi mahana platform tax ke.',
       artifacts: [
@@ -609,18 +643,21 @@ const PLANS_DETAIL = {
       ],
       exclusions: [
         'Interactive PC Builder compatibility engine (Growth aur Enterprise mein dastiyab hai).',
-        'Multi-branch stock synchronization (Sirf single outlet inventory support karta hai).',
+        'Multi branch stock synchronization (Sirf single outlet inventory support karta hai).',
         'Hardware serial number aur RMA warranty lifecycle tracking.',
-        'Self-managed promotional banner CMS (Layout branding managed rehti hai).',
+        'Self managed promotional banner CMS (Layout branding managed rehti hai).',
+        'Product photos, descriptions aur pehle 50 SKUs se zyada data entry. Content aap dein ge, hum setup karein ge.',
+        'Online card prepay payment gateway (Sirf +PKR 50,000 add-on ke tor par dastiyab hai; Growth aur Enterprise mein shamil hai).',
+        'La-mehdood revisions nahi. Har milestone par 2 revision rounds shamil hain, uske baad changes hourly charge honge.',
       ],
     },
     growth: {
-      name: 'Growth Retailer',
+      name: 'Multi Branch Growth',
       code: 'TXS-GROWTH',
       badge: '★ SAB SE ZYADA PASANDIDAH // BEHTAREEN VALUE',
-      pricePkr: 'PKR 550,000 – 780,000',
-      priceUsd: '~$2,000 – $2,800 USD',
-      delivery: '3–4 Hafton Mein Delivery',
+      pricePkr: 'PKR 550,000',
+      priceUsd: '~$2,000 USD',
+      delivery: '21 dinon mein, guaranteed',
       idealFor:
         'Established computer hardware aur gaming PC retailers ke liye jo high-ticket custom rigs aur components bechte hain, aur dukan counter aur online stock ko ek sath chalate hain.',
       artifacts: [
@@ -658,7 +695,7 @@ const PLANS_DETAIL = {
         },
         {
           title: 'Multi-Branch Inventory Synchronization (3 Branches Tak)',
-          desc: 'Mukhtalif physical dukanon ke darmiyan yakja stock management.',
+          desc: 'Mukhtalif physical dukanon ke darmiyan combined stock management.',
           items: [
             '3 physical branches tak connect karein (maslan Hafeez Centre, Techno City) + central warehouse',
             'Branch-level stock matrix admin panel mein live nazar aayegi',
@@ -683,20 +720,32 @@ const PLANS_DETAIL = {
             'Automated professional PDF receipts aur printable customer invoices',
           ],
         },
+        {
+          title: 'Online Payment Gateway Integration (Shamil Hai — PKR 50,000 Bachat)',
+          desc: 'Baghair kisi izafi fee ke online card aur wallet payments receive karein.',
+          items: [
+            'Paymob, Bank Alfalah Alfa, Keenu ya PayFast payment gateway integration',
+            'Visa, MasterCard aur UnionPay cards se peshgi payment direct account mein',
+            'JazzCash aur EasyPaisa mobile wallets se aasan checkout',
+            'PKR 50,000 ki izafi fee bilkul FREE (Growth plan mein pehle se shamil hai)',
+          ],
+        },
       ],
       exclusions: [
         'Sirf 3 branches tak mehdood (La-mehdood branches Enterprise tier mein shamil hain).',
         'Custom external accounting ERP ya FBR direct API integration shamil nahi.',
         'Super Admin vs Cashier granular staff permission matrix (Single admin level access).',
+        'Product photos, descriptions aur included setup se zyada catalog migration. Content aap dein ge.',
+        'La-mehdood revisions nahi. Har milestone par 2 revision rounds shamil hain, uske baad changes hourly charge honge.',
       ],
     },
     enterprise: {
-      name: 'Enterprise Custom',
+      name: 'Chain and Distribution OS',
       code: 'TXS-ENTERPRISE',
       badge: '★ MUKAMMAL RETAIL OS',
-      pricePkr: 'PKR 950,000 – 1,450,000',
-      priceUsd: '~$3,400 – $5,200 USD',
-      delivery: '~6 Hafton Mein Staging aur Launch',
+      pricePkr: 'PKR 950,000 se shuru',
+      priceUsd: '~$3,400 USD',
+      delivery: '30 dinon mein, guaranteed',
       idealFor:
         'Bari computer retail chains, nationwide hardware distributors, aur tech importers ke liye jinko multi-branch network aur custom enterprise ERP ki zaroorat hoti hai.',
       artifacts: [
@@ -759,21 +808,202 @@ const PLANS_DETAIL = {
             'FBR digital invoice tax compliance (ikhtiyari integration)',
           ],
         },
+        {
+          title: 'Enterprise Multi-Gateway Prepay aur Financial Engine (Shamil Hai)',
+          desc: 'High-volume transactions ke liye payment routing aur auto bank reconciliation.',
+          items: [
+            'Ek se zyada payment gateways tak seamlessly connect karein',
+            'Credit/Debit card, Raast QR, JazzCash aur EasyPaisa support',
+            'Bank statements aur daily sales ki auto reconciliation reports',
+            'Koi izafi charges nahi (Chain and Distribution OS mein standard shamil hai)',
+          ],
+        },
       ],
       exclusions: [
         'Custom hardware firmware modifications (zaroorat ke mutabiq alag quote ki jayegi).',
+        'Bulk product photography aur catalog data entry. Content aap dein ge ya hum paid add-on ke tor par add karein ge.',
+        'La-mehdood revisions nahi. Har milestone par 2 revision rounds shamil hain, uske baad changes hourly charge honge.',
       ],
     },
   },
 }
 
+const EXTRAS_DATA = [
+  {
+    en: 'Extra branch or warehouse node',
+    ur: 'Extra branch ya godam node',
+    price: '+ PKR 60,000',
+    descEn:
+      'Adds another physical shop (e.g. Hafeez Centre, Techno City) or godown to your system. Monitor live stock counts separately, make counter sales per branch, and track stock transfers between shops.',
+    descUr:
+      'Aapki ek aur dukan (maslan Hafeez Centre ya Techno City) ya godam ko system se jodta hai. Har branch ka alag stock nazar aayega, counter sale hogi aur dukanon ke darmiyan stock transfer track hoga.',
+  },
+  {
+    en: 'Wholesale and B2B pricing module',
+    ur: 'Wholesale aur B2B pricing module',
+    price: '+ PKR 90,000',
+    descEn:
+      'Allows verified bulk buyers and dealers to log in and order at special discounted dealer rates, with minimum quantity rules (e.g. 5+ pieces) and separate customer account ledgers (Khata).',
+    descUr:
+      'Dealers aur wholesale khareedaron ke liye alag bulk rate dikhata hai. Wo login kar ke sasti rate par baray order de sakenge aur unka alag khata chalay ga.',
+  },
+  {
+    en: 'Loyalty, wallet and gift cards',
+    ur: 'Loyalty, wallet aur gift cards',
+    price: '+ PKR 70,000',
+    descEn:
+      'Rewards customers with cashback points in their digital store wallet on every purchase, and lets you issue digital gift vouchers so customers keep coming back to your shop.',
+    descUr:
+      'Customers ko har khareedari par reward points aur wallet cashback milta hai taake wo bar bar aap hi ki dukan se samaan khareedein.',
+  },
+  {
+    en: 'Multi vendor marketplace',
+    ur: 'Multi vendor marketplace',
+    price: '+ PKR 150,000',
+    descEn:
+      'Turns your site into an open platform like Daraz or Amazon where other third-party computer sellers and shops can list their own products, while you automatically collect a percentage commission on every sale.',
+    descUr:
+      'Aapki website ko Daraz ki tarah banata hai jahan doosray tech sellers aur shops apna samaan list karenge aur aap har sale par apna commission rakhain ge.',
+  },
+  {
+    en: 'Advanced staff roles and permissions',
+    ur: 'Advanced staff roles aur permissions',
+    price: '+ PKR 40,000',
+    descEn:
+      'Protects sensitive store data. Lets cashiers only make sales receipts, technicians view RMA repairs, and stock staff scan inventory — while purchase costs and profit margins remain strictly visible to the owner only.',
+    descUr:
+      'Dukan ke har mulazim ke liye alag ikhtiyar. Cashier sirf bill banaye ga, technician sirf warranty dekhe ga, aur dukan ka asli munafa ya purchase cost sirf maalik ko nazar aayegi.',
+  },
+  {
+    en: 'Product data entry beyond 50 SKUs',
+    ur: '50 SKUs se zyada product data entry',
+    price: '+ PKR 15,000 / 50',
+    descEn:
+      "Don't have time to enter products? Our team cleans high-res photos, writes full technical specs (RAM generation, CPU socket, wattage), and uploads inventory in batches of 50 items.",
+    descUr:
+      'Agar aapke paas product upload karne ka waqt nahi, to hamari team 50 products ki tasweerein, specs aur qeematein khud system mein daal kar degi.',
+  },
+  {
+    en: 'Courier tracking integration',
+    ur: 'Courier tracking integration',
+    price: '+ PKR 50,000',
+    descEn:
+      "Generates courier booking slips (Trax, PostEx, Leopards, TCS) with 1 click directly from your admin panel, and automatically sends the live tracking link to your customer's WhatsApp.",
+    descUr:
+      'Admin panel se 1-click par courier slips (Trax, PostEx, Leopards, TCS) banayein aur tracking link customer ke WhatsApp par auto send ho jaye ga.',
+  },
+  {
+    en: 'Online payment gateway for card prepay',
+    ur: 'Card prepay ke liye online payment gateway',
+    price: '+ PKR 50,000',
+    starterOnly: true,
+    descEn:
+      'Accepts Visa, Mastercard, PayPak, EasyPaisa, and JazzCash directly on your site for upfront prepaid orders. (Note: Multi Branch Growth and Chain plans already INCLUDE this at zero extra cost — no 50K fee).',
+    descUr:
+      'Website par hi Visa, Mastercard, EasyPaisa aur JazzCash se peshgi online payment receive karein. (Note: Multi-Branch Growth aur Chain plans mein yeh pehle se bilkul SHAMIL hai — baghair kisi 50K fee ke).',
+  },
+  {
+    en: 'FBR or accounting API integration',
+    ur: 'FBR ya accounting API integration',
+    price: '+ PKR 80,000',
+    descEn:
+      "Connects your sales counter directly with FBR's POS digital invoice system for tax compliance, or syncs your daily books with QuickBooks, Zoho, or Xero automatically.",
+    descUr:
+      'Dukan ki sales ko FBR digital invoicing system se direct jodta hai, ya aapke rozana khate ko QuickBooks aur Xero se auto-sync karta hai.',
+  },
+]
+
 export default function TechRetailSolution() {
   const { lang, setLang, isUrdu } = useLanguage()
   const [activeModalKey, setActiveModalKey] = useState(null)
+  const [expandedExtra, setExpandedExtra] = useState(null)
   const t = I18N_DATA[lang] || I18N_DATA.en
   const activePlan = activeModalKey
     ? (PLANS_DETAIL[lang] || PLANS_DETAIL.en)[activeModalKey]
     : null
+
+  const toggleExtra = (index) => {
+    setExpandedExtra((prev) => (prev === index ? null : index))
+  }
+
+  const renderExtraCard = (a, i) => {
+    const isOpen = expandedExtra === i
+    return (
+      <motion.div
+        layout
+        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        key={i}
+        onClick={() => toggleExtra(i)}
+        className={`border p-4 transition-colors duration-200 cursor-pointer select-none group flex flex-col ${
+          isOpen
+            ? 'bg-[#F0FDF4] dark:bg-[#14261C] border-[#059669] dark:border-[#10B981] shadow-sm'
+            : 'bg-[#FAF9F5] dark:bg-[#0F0F11] border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] hover:border-[#059669]/60 dark:hover:border-[#10B981]/60'
+        }`}
+      >
+        <div className="flex items-start justify-between gap-3">
+          <div className="space-y-1">
+            <span className="font-sans text-xs text-[#0F0F0F] dark:text-[#EDECE6] font-semibold leading-snug group-hover:text-[#059669] dark:group-hover:text-[#10B981] transition-colors block">
+              {isUrdu ? a.ur : a.en}
+            </span>
+            {a.starterOnly && (
+              <span className="inline-block px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-[#ECFDF5] dark:bg-[#10B981]/20 text-[#059669] dark:text-[#10B981] border border-[#059669]/30">
+                {isUrdu ? 'Growth & Chain mein SHAMIL (Bina 50K Fee)' : 'INCLUDED in Growth & Chain (Save 50K)'}
+              </span>
+            )}
+          </div>
+          <div className="flex items-center gap-1.5 shrink-0">
+            <div className="text-right">
+              <span className="font-mono text-[11px] text-[#059669] dark:text-[#10B981] whitespace-nowrap font-bold block">
+                {a.price}
+              </span>
+              {a.starterOnly && (
+                <span className="font-mono text-[9px] text-[#8E8D88] dark:text-[#6A6965] block">
+                  {isUrdu ? '(Sirf Starter)' : '(Starter Only)'}
+                </span>
+              )}
+            </div>
+            <motion.div
+              animate={{ rotate: isOpen ? 180 : 0 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className={`p-1 rounded-full ${
+                isOpen
+                  ? 'bg-[#059669] text-white'
+                  : 'text-[#8E8D88] dark:text-[#6A6965] group-hover:text-[#059669] dark:group-hover:text-[#10B981] group-hover:bg-[rgba(5,150,105,0.1)]'
+              }`}
+            >
+              <ChevronDown size={14} />
+            </motion.div>
+          </div>
+        </div>
+
+        <AnimatePresence initial={false}>
+          {isOpen && (
+            <motion.div
+              key="content"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden"
+            >
+              <div className="mt-3 pt-3 border-t border-[rgba(15,15,15,0.08)] dark:border-[rgba(255,255,255,0.08)] space-y-2">
+                <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
+                  {isUrdu ? a.descUr : a.descEn}
+                </p>
+                {a.starterOnly && (
+                  <div className="p-2 bg-[#ECFDF5] dark:bg-[#10B981]/15 border border-[#059669]/30 text-[11px] text-[#059669] dark:text-[#10B981] font-sans font-medium rounded-sm">
+                    {isUrdu
+                      ? '✓ Multi Branch Growth (PKR 550,000) aur Chain OS (PKR 950,000) plans mein online payment gateway pehle se mukammal shamil hai — koi +50,000 fee nahi deni parti.'
+                      : '✓ Online payment gateway is already included standard in Multi Branch Growth (PKR 550,000) & Chain OS (PKR 950,000) plans at NO extra charge.'}
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    )
+  }
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -889,18 +1119,20 @@ export default function TechRetailSolution() {
 
           {/* Actions */}
           <div className="pt-4 flex flex-wrap items-center gap-4 font-mono text-xs">
-            <a href="#plans" className="btn-blue text-xs shadow-sm group">
-              <span>{t.cta_primary}</span>
-              <ArrowRight size={14} className="arrow-slide" />
+            <a href="#plans" className="btn-blue text-xs shadow-sm group relative overflow-hidden">
+              <span className="relative z-10">{t.cta_primary}</span>
+              <ArrowRight size={14} className="relative z-10 arrow-slide" />
+              <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none animate-shimmer-sweep" />
             </a>
             <a
               href="https://store-demo-eight.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-outline text-xs group"
+              className="btn-outline text-xs group relative overflow-hidden"
             >
-              <span>{t.cta_secondary}</span>
-              <ArrowUpRight size={14} className="arrow-slide" />
+              <span className="relative z-10">{t.cta_secondary}</span>
+              <ArrowUpRight size={14} className="relative z-10 arrow-slide" />
+              <div className="absolute inset-0 w-1/3 h-full bg-gradient-to-r from-transparent via-[#10B981]/15 to-transparent pointer-events-none animate-shimmer-sweep" />
             </a>
           </div>
         </FadeIn>
@@ -1072,7 +1304,7 @@ export default function TechRetailSolution() {
           </FadeIn>
 
           <StaggerContainer staggerDelay={0.12} className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start font-mono text-xs">
-            {/* 1. Starter Store */}
+            {/* 1. Single Store Launch */}
             <StaggerItem className="h-full">
               <div className="p-8 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-6 flex flex-col justify-between hover:border-[#059669] dark:hover:border-[#10B981] transition-colors h-full card-hover-guided">
               <div className="space-y-4">
@@ -1150,7 +1382,7 @@ export default function TechRetailSolution() {
             </div>
           </StaggerItem>
 
-            {/* 2. Growth Retailer (Most Popular) */}
+            {/* 2. Multi Branch Growth (Most Popular) */}
             <StaggerItem className="h-full">
               <div className="p-8 bg-white dark:bg-[#161619] border-2 border-[#059669] dark:border-[#10B981] space-y-6 flex flex-col justify-between shadow-lg relative hover:shadow-xl transition-shadow h-full card-hover-guided">
                 <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#059669] dark:bg-[#10B981] text-white font-mono text-[9px] font-bold px-3 py-1 uppercase tracking-wider shadow-sm">
@@ -1196,6 +1428,10 @@ export default function TechRetailSolution() {
                       <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                       <span>{t.growth_f4}</span>
                     </div>
+                    <div className="flex items-start gap-2 text-[#059669] dark:text-[#10B981] font-semibold">
+                      <Check size={14} className="shrink-0 mt-0.5" />
+                      <span>{t.growth_f5}</span>
+                    </div>
                   </div>
 
                   {/* Prominent Modal Trigger Button */}
@@ -1229,7 +1465,7 @@ export default function TechRetailSolution() {
               </div>
             </StaggerItem>
 
-            {/* 3. Enterprise Custom */}
+            {/* 3. Chain and Distribution OS */}
             <StaggerItem className="h-full">
               <div className="p-8 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-6 flex flex-col justify-between hover:border-[#059669] dark:hover:border-[#10B981] transition-colors h-full card-hover-guided">
                 <div className="space-y-4">
@@ -1271,6 +1507,10 @@ export default function TechRetailSolution() {
                       <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                       <span>{t.enterprise_f4}</span>
                     </div>
+                    <div className="flex items-start gap-2 text-[#059669] dark:text-[#10B981] font-semibold">
+                      <Check size={14} className="shrink-0 mt-0.5" />
+                      <span>{t.enterprise_f5}</span>
+                    </div>
                   </div>
 
                   {/* Prominent Modal Trigger Button */}
@@ -1305,12 +1545,207 @@ export default function TechRetailSolution() {
             </StaggerItem>
           </StaggerContainer>
 
+          {/* Limited build slots */}
+          <FadeIn direction="up" className="text-center font-mono text-[11px] sm:text-xs uppercase tracking-wider text-[#575652] dark:text-[#9B9A95] max-w-2xl mx-auto">
+            {isUrdu
+              ? 'Hum har mahine sirf 3 retail builds lete hain taake har project ko pura waqt mile. Agli available start date ke liye WhatsApp par rabta karein.'
+              : 'We take on only 3 retail builds each month so every project gets full attention. Message us on WhatsApp to confirm the next available start date.'}
+          </FadeIn>
+
+          {/* Extras menu */}
+          <FadeIn direction="up" className="bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] p-6 sm:p-8 space-y-5">
+            <div className="space-y-2">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="font-mono text-[11px] uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold">
+                  {isUrdu ? 'EXTRAS // SIRF ZAROORAT KI CHEEZ ADD KAREIN' : 'EXTRAS // PAY ONLY FOR WHAT YOU NEED'}
+                </div>
+                <div className="font-mono text-[10px] text-[#059669] dark:text-[#10B981] flex items-center gap-1 font-medium bg-[#ECFDF5] dark:bg-[#10B981]/15 px-2 py-0.5 rounded border border-[#059669]/25">
+                  <ChevronDown size={12} className="shrink-0" />
+                  <span>{isUrdu ? 'Kisi bhi item par click karein wazahat dekhne ke liye' : 'Click any item below to view simple layman explanation'}</span>
+                </div>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6]">
+                {isUrdu ? 'Base price mein yeh shamil nahi. Jo chahiye add karein.' : 'Not in the base price. Add only what you need.'}
+              </h3>
+              <p className="font-serif text-sm text-[#575652] dark:text-[#9B9A95] max-w-3xl">
+                {isUrdu
+                  ? 'Har plan ek fixed base price par aata hai. Extra modules neeche diye gaye hain aur final invoice mein saaf lafzon mein add hotay hain. Koi chhupa hua cost nahi.'
+                  : 'Every plan starts at one fixed base price. Extra modules are listed below and added to your final invoice in plain terms. No hidden costs.'}
+              </p>
+            </div>
+            {/* Desktop 3-Column Layout: when an item in one column opens, only that column moves down; other columns are completely unaffected */}
+            <div className="hidden lg:grid lg:grid-cols-3 gap-3 items-start">
+              {[
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+              ].map((colIndices, colIdx) => (
+                <div key={colIdx} className="flex flex-col gap-3">
+                  {colIndices.map((idx) => renderExtraCard(EXTRAS_DATA[idx], idx))}
+                </div>
+              ))}
+            </div>
+
+            {/* Tablet 2-Column Layout */}
+            <div className="hidden sm:grid lg:hidden sm:grid-cols-2 gap-3 items-start">
+              {[
+                [0, 2, 4, 6, 8],
+                [1, 3, 5, 7],
+              ].map((colIndices, colIdx) => (
+                <div key={colIdx} className="flex flex-col gap-3">
+                  {colIndices.map((idx) => renderExtraCard(EXTRAS_DATA[idx], idx))}
+                </div>
+              ))}
+            </div>
+
+            {/* Mobile 1-Column Layout */}
+            <div className="flex sm:hidden flex-col gap-3">
+              {EXTRAS_DATA.map((item, idx) => renderExtraCard(item, idx))}
+            </div>
+            <p className="font-mono text-[10px] text-[#8E8D88] dark:text-[#6A6965]">
+              {isUrdu
+                ? 'Tamam extra prices fixed hain aur pehle se bataye jate hain. Final scope WhatsApp par confirm hota hai.'
+                : 'All extra prices are fixed and quoted up front. Final scope is confirmed on WhatsApp before work starts.'}
+            </p>
+          </FadeIn>
+
+          {/* Care Plan */}
+          <FadeIn direction="up" className="space-y-5">
+            <div className="text-center space-y-2">
+              <div className="font-mono text-[11px] uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold">
+                {isUrdu ? 'CARE PLAN // LAUNCH KE BAAD' : 'CARE PLAN // AFTER LAUNCH'}
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6]">
+                {isUrdu ? 'Launch ke baad hum sambhal lete hain' : 'We keep it running after launch'}
+              </h3>
+              <p className="font-serif text-sm text-[#575652] dark:text-[#9B9A95] max-w-2xl mx-auto">
+                {isUrdu
+                  ? '30 din ki warranty ke baad, Care Plan aapke system ko online, secure aur updated rakhta hai. Code aapka hai, hosting hum par chhod dein ya khud manage karein.'
+                  : 'After the 30 day warranty, a Care Plan keeps your system online, secure and updated. You own the code, so let us host it or run it yourself.'}
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                { name: 'Basic Care', price: 'PKR 14,000 / mo', en: ['Managed hosting and SSL', 'Daily backups', 'Uptime monitoring', 'Small text and image edits', 'Email support'], ur: ['Managed hosting aur SSL', 'Rozana backups', 'Uptime monitoring', 'Chhoti text aur image edits', 'Email support'] },
+                { name: 'Growth Care', price: 'PKR 28,000 / mo', en: ['Everything in Basic Care', 'Priority support within 4 business hours', 'Monthly feature tweaks', 'Multi branch hosting', 'WhatsApp support'], ur: ['Basic Care ki sab cheezein', '4 business hours ke andar priority support', 'Mahana feature tweaks', 'Multi branch hosting', 'WhatsApp support'] },
+                { name: 'Enterprise Care', price: 'PKR 55,000 / mo', en: ['Everything in Growth Care', 'Dedicated engineer hours each month', 'Integration and API support', '99.5% uptime target', 'Phone support'], ur: ['Growth Care ki sab cheezein', 'Har mahine dedicated engineer hours', 'Integration aur API support', '99.5% uptime target', 'Phone support'] },
+              ].map((c, i) => (
+                <div key={i} className="bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] p-5 space-y-3">
+                  <div className="font-mono text-xs uppercase tracking-wider text-[#0F0F0F] dark:text-[#EDECE6] font-semibold">{c.name}</div>
+                  <div className="font-display text-2xl text-[#059669] dark:text-[#10B981]">{c.price}</div>
+                  <ul className="space-y-1.5">
+                    {(isUrdu ? c.ur : c.en).map((li, j) => (
+                      <li key={j} className="flex items-start gap-2 font-sans text-xs text-[#575652] dark:text-[#9B9A95]">
+                        <Check size={13} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                        <span>{li}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </FadeIn>
+
           <div className="text-center pt-4">
             <Link
               to="/solutions/tech-retail/terms"
               className="text-xs font-mono font-semibold text-[#059669] dark:text-[#10B981] hover:underline"
             >
               {t.view_terms}
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Payback / ROI ─── */}
+      <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#0F0F11]">
+        <div className="max-w-4xl mx-auto space-y-6 text-center">
+          <div className="font-mono text-[11px] uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold">
+            {isUrdu ? 'WAPSI // YEH KHUD KO KAISE PAY KARTA HAI' : 'PAYBACK // HOW THIS PAYS FOR ITSELF'}
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.95]">
+            {isUrdu ? 'Aap ek dafa pay karte hain, phir commission nahi' : 'You pay once, then never pay commission again'}
+          </h2>
+          <p className="font-serif text-sm sm:text-base text-[#575652] dark:text-[#9B9A95] leading-relaxed">
+            {isUrdu
+              ? 'Rented platform par aap har mahine subscription dete hain aur har order par ek cut kat ta hai. Yeh kharcha kabhi khatam nahi hota. Yahan aap system ke mukammal malik bante hain. Jo paisa aap har mahine platform ko dete, wahi bachat is build ko kuch hi arsay mein pura kar deti hai.'
+              : 'On a rented platform you pay a subscription every month plus a cut on every order, and that bill never ends. Here you own the system outright. The money you would have handed a platform every month stays in your business, and that saving is what pays the build back.'}
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+            {[
+              { big: 'PKR 0', en: 'monthly platform fee after launch', ur: 'launch ke baad mahana platform fee' },
+              { big: '0%', en: 'commission on your orders, ever', ur: 'aapke orders par commission, kabhi nahi' },
+              { big: '100%', en: 'of the code and data is yours', ur: 'code aur data par aapka mukammal haq' },
+            ].map((s, i) => (
+              <div key={i} className="bg-[#FAF9F5] dark:bg-[#161619] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] p-5 space-y-1">
+                <div className="font-display text-3xl text-[#059669] dark:text-[#10B981]">{s.big}</div>
+                <div className="font-sans text-xs text-[#575652] dark:text-[#9B9A95]">{isUrdu ? s.ur : s.en}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Real builds / proof ─── */}
+      <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#121215]">
+        <div className="max-w-7xl mx-auto space-y-8">
+          <div className="text-center space-y-3 max-w-3xl mx-auto">
+            <div className="font-mono text-[11px] uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold">
+              {isUrdu ? 'ASLI KAAM // KHUD KHOL KAR DEKHEIN' : 'REAL WORK // OPEN IT YOURSELF'}
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.95]">
+              {isUrdu ? 'Yeh asli builds hain, aap abhi khol kar dekh sakte hain' : 'These are real builds you can open right now'}
+            </h2>
+            <p className="font-serif text-sm sm:text-base text-[#575652] dark:text-[#9B9A95]">
+              {isUrdu
+                ? 'Hum nakli testimonials nahi dikhate. Neeche diye gaye systems asli aur live hain. Click karein, khud test karein, phir faisla karein.'
+                : 'We will not pad this page with fake quotes. The systems below are real and live. Click them, test them yourself, then decide.'}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {projectsData
+              .filter((p) => [7, 1, 4].includes(p.id))
+              .map((p) => {
+                const lp = getLocalizedProject(p, lang)
+                return (
+                  <div key={p.id} className="bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] overflow-hidden flex flex-col group">
+                    <div className="relative aspect-[16/10] overflow-hidden bg-[#0F0F0F]">
+                      <img
+                        src={p.mainImage}
+                        alt={p.title}
+                        loading="lazy"
+                        className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                      />
+                    </div>
+                    <div className="p-5 space-y-2 flex-1 flex flex-col">
+                      <div className="font-mono text-[10px] uppercase tracking-wider text-[#059669] dark:text-[#10B981]">{lp.impact}</div>
+                      <h3 className="font-display text-lg uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-tight">{p.title}</h3>
+                      <div className="mt-auto pt-3 flex items-center gap-3 flex-wrap">
+                        {p.demoUrl ? (
+                          <a href={p.demoUrl} target="_blank" rel="noopener noreferrer" className="btn-outline text-[11px] py-2">
+                            <ExternalLink size={13} />
+                            <span>{isUrdu ? 'Live Demo Kholein' : 'Open Live Demo'}</span>
+                          </a>
+                        ) : null}
+                        {p.githubUrl && p.githubUrl !== '#' ? (
+                          <a
+                            href={p.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-mono text-[11px] text-[#575652] dark:text-[#9B9A95] hover:text-[#059669] dark:hover:text-[#10B981]"
+                          >
+                            {isUrdu ? 'Code dekhein' : 'View code'}
+                          </a>
+                        ) : null}
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+          </div>
+          <div className="text-center pt-2">
+            <Link to="/projects" className="font-mono text-xs font-semibold text-[#059669] dark:text-[#10B981] hover:underline">
+              {isUrdu ? 'Tamam projects dekhein →' : 'See all projects →'}
             </Link>
           </div>
         </div>
