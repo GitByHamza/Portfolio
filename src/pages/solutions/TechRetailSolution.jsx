@@ -111,7 +111,7 @@ const I18N_DATA = {
     hero_title_accent: 'Online & Multi-Branch',
     hero_title_2: 'Without Monthly Platform Commissions',
     hero_sub:
-      'Eliminate slow off-the-shelf templates and recurring monthly software subscriptions. We deploy a custom Next.js high-performance retail system featuring a real-time PC Builder compatibility engine, multi-branch warehouse inventory, and automated WhatsApp order dispatch.',
+      'Ditch slow templates and monthly subscriptions. We build a custom Next.js retail system: PC Builder compatibility engine, multi-branch inventory, automated WhatsApp dispatch.',
     cta_primary: 'Choose Your Solution Plan',
     cta_secondary: 'Explore Live Store Demo',
     metrics_code: '100% Client Code Ownership',
@@ -223,9 +223,9 @@ const I18N_DATA = {
     hero_title_accent: 'Online aur Multi-Branch',
     hero_title_2: 'Baghair Kisi Mahana Platform Commission Ke',
     hero_sub:
-      'Slow websites aur mehangay monthly platform charges par waqt aur paisa zaya karna band karein. Hum aapke computer aur electronics store ke liye custom Next.js web store deploy karte hain — jisme live PC Builder compatibility, multi-branch stock sync aur WhatsApp automated dispatch shamil hai.',
+      'Slow templates aur monthly subscriptions khatam. Hum banate hain custom Next.js retail system: PC Builder compatibility engine, multi-branch stock sync, automated WhatsApp dispatch.',
     cta_primary: 'Apna Retail Plan Select Karein',
-    cta_secondary: 'Live Demo Check Karein',
+    cta_secondary: 'Live Demo Test Karein',
     metrics_code: '100% Code aur Data Ka Mukammal Ikhtiyar',
     metrics_tax: 'Baghair Kisi Sales Commission Ke',
     metrics_speed: 'Tez Tareen Next.js Server Rendering',
@@ -255,12 +255,12 @@ const I18N_DATA = {
       'Mukammal GitHub source code aur PostgreSQL database ki ownership aapke company account ko transfer hoti hai.',
 
     demo_badge: 'VERIFIABLE SYSTEM DEMONSTRATION',
-    demo_title: 'LIVE PRODUCTION INTERFACE CHECK KAREIN',
+    demo_title: 'LIVE PRODUCTION INTERFACE TEST KAREIN',
     demo_sub:
       'Humare hosted sandbox environment par live customer shopping aur admin management controls khud chala kar dekhein.',
     demo_store_title: '01. STOREFRONT DEMO',
     demo_store_desc:
-      'Live product catalog, hardware filters, shopping cart aur modern dark layout check karein.',
+      'Live product catalog, hardware filters, shopping cart aur modern dark layout test karein.',
     demo_pc_title: '02. PC BUILDER ENGINE',
     demo_pc_desc:
       'Socket compatibility check, wattage calculator aur WhatsApp custom build share kar ke dekhein.',
@@ -398,10 +398,8 @@ const PLANS_DETAIL = {
         'Interactive PC Builder compatibility engine (Available in Growth & Enterprise).',
         'Multi branch stock synchronization (Single outlet stock only).',
         'Hardware serial number and RMA warranty lifecycle tracking.',
-        'Self managed promotional banner CMS (layout branding is managed).',
         'Product photos, descriptions, and data entry beyond the first 50 SKUs. You supply the content and we set it up.',
         'Online card prepay payment gateway (Available as +PKR 50,000 add-on; included free in Growth & Chain plans).',
-        'Unlimited revisions. Two revision rounds are included per milestone and further changes are billed hourly.',
       ],
     },
     growth: {
@@ -645,10 +643,8 @@ const PLANS_DETAIL = {
         'Interactive PC Builder compatibility engine (Growth aur Enterprise mein dastiyab hai).',
         'Multi branch stock synchronization (Sirf single outlet inventory support karta hai).',
         'Hardware serial number aur RMA warranty lifecycle tracking.',
-        'Self managed promotional banner CMS (Layout branding managed rehti hai).',
         'Product photos, descriptions aur pehle 50 SKUs se zyada data entry. Content aap dein ge, hum setup karein ge.',
         'Online card prepay payment gateway (Sirf +PKR 50,000 add-on ke tor par dastiyab hai; Growth aur Enterprise mein shamil hai).',
-        'La-mehdood revisions nahi. Har milestone par 2 revision rounds shamil hain, uske baad changes hourly charge honge.',
       ],
     },
     growth: {
@@ -942,22 +938,22 @@ export default function TechRetailSolution() {
       >
         <div className="flex items-start justify-between gap-3">
           <div className="space-y-1">
-            <span className="font-sans text-xs text-[#0F0F0F] dark:text-[#EDECE6] font-semibold leading-snug group-hover:text-[#059669] dark:group-hover:text-[#10B981] transition-colors block">
+            <span className="offer-ui text-[#0F0F0F] dark:text-[#EDECE6] font-semibold group-hover:text-[#059669] dark:group-hover:text-[#10B981] transition-colors block">
               {isUrdu ? a.ur : a.en}
             </span>
             {a.starterOnly && (
-              <span className="inline-block px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-[#ECFDF5] dark:bg-[#10B981]/20 text-[#059669] dark:text-[#10B981] border border-[#059669]/30">
+              <span className="inline-block px-1.5 py-0.5 rounded offer-ui font-bold bg-[#ECFDF5] dark:bg-[#10B981]/20 text-[#059669] dark:text-[#10B981] border border-[#059669]/30">
                 {isUrdu ? 'Growth & Chain mein SHAMIL (Bina 50K Fee)' : 'INCLUDED in Growth & Chain (Save 50K)'}
               </span>
             )}
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
             <div className="text-right">
-              <span className="font-mono text-[11px] text-[#059669] dark:text-[#10B981] whitespace-nowrap font-bold block">
+              <span className="offer-ui text-[#059669] dark:text-[#10B981] whitespace-nowrap font-bold block">
                 {a.price}
               </span>
               {a.starterOnly && (
-                <span className="font-mono text-[9px] text-[#8E8D88] dark:text-[#6A6965] block">
+                <span className="offer-ui text-[#8E8D88] dark:text-[#6A6965] block">
                   {isUrdu ? '(Sirf Starter)' : '(Starter Only)'}
                 </span>
               )}
@@ -987,11 +983,11 @@ export default function TechRetailSolution() {
               className="overflow-hidden"
             >
               <div className="mt-3 pt-3 border-t border-[rgba(15,15,15,0.08)] dark:border-[rgba(255,255,255,0.08)] space-y-2">
-                <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
+                <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
                   {isUrdu ? a.descUr : a.descEn}
                 </p>
                 {a.starterOnly && (
-                  <div className="p-2 bg-[#ECFDF5] dark:bg-[#10B981]/15 border border-[#059669]/30 text-[11px] text-[#059669] dark:text-[#10B981] font-sans font-medium rounded-sm">
+                  <div className="p-2 bg-[#ECFDF5] dark:bg-[#10B981]/15 border border-[#059669]/30 offer-ui text-[#059669] dark:text-[#10B981] font-medium rounded-sm">
                     {isUrdu
                       ? '✓ Multi Branch Growth (PKR 550,000) aur Chain OS (PKR 950,000) plans mein online payment gateway pehle se mukammal shamil hai — koi +50,000 fee nahi deni parti.'
                       : '✓ Online payment gateway is already included standard in Multi Branch Growth (PKR 550,000) & Chain OS (PKR 950,000) plans at NO extra charge.'}
@@ -1036,7 +1032,7 @@ export default function TechRetailSolution() {
 
       {/* ─── Top Language Toggle Bar ─── */}
       {/* <div className="border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#161619] px-4 sm:px-8 py-2.5">
-        <div className="max-w-7xl mx-auto flex items-center justify-between font-mono text-xs">
+        <div className="max-w-7xl mx-auto flex items-center justify-between offer-ui">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#059669] dark:bg-[#10B981] animate-pulse shadow-[0_0_8px_#10B981]" />
             <span className="text-[#0F0F0F] dark:text-[#EDECE6] font-bold uppercase tracking-wider hidden sm:inline">
@@ -1052,7 +1048,7 @@ export default function TechRetailSolution() {
               <Globe size={13} className="text-[#575652] dark:text-[#9B9A95]" />
               <button
                 onClick={() => handleLanguageChange('en')}
-                className={`px-2.5 py-1 text-[11px] font-bold transition-colors cursor-pointer border ${
+                className={`px-2.5 py-1 offer-ui font-bold transition-colors cursor-pointer border${
                   lang === 'en'
                     ? 'bg-[#059669] text-white border-[#059669] dark:bg-[#10B981] dark:border-[#10B981]'
                     : 'bg-white text-[#575652] border-[rgba(15,15,15,0.14)] hover:text-[#0F0F0F] dark:bg-[#161619] dark:text-[#9B9A95] dark:border-[rgba(255,255,255,0.12)]'
@@ -1062,7 +1058,7 @@ export default function TechRetailSolution() {
               </button>
               <button
                 onClick={() => handleLanguageChange('ur-en')}
-                className={`px-2.5 py-1 text-[11px] font-bold transition-colors cursor-pointer border ${
+                className={`px-2.5 py-1 offer-ui font-bold transition-colors cursor-pointer border${
                   lang === 'ur-en'
                     ? 'bg-[#059669] text-white border-[#059669] dark:bg-[#10B981] dark:border-[#10B981]'
                     : 'bg-white text-[#575652] border-[rgba(15,15,15,0.14)] hover:text-[#0F0F0F] dark:bg-[#161619] dark:text-[#9B9A95] dark:border-[rgba(255,255,255,0.12)]'
@@ -1084,7 +1080,7 @@ export default function TechRetailSolution() {
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#10B981]/10 rounded-full blur-3xl pointer-events-none" />
 
         <FadeIn direction="up" className="max-w-7xl mx-auto space-y-6 relative z-10">
-          <h1 className="text-4xl sm:text-6xl md:text-8xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.9]">
+          <h1 className="offer-h1 text-[#0F0F0F] dark:text-[#EDECE6]">
             {t.hero_title_1}{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#059669] via-[#10B981] to-[#34D399] block sm:inline drop-shadow-xs">
               {t.hero_title_accent}
@@ -1093,33 +1089,33 @@ export default function TechRetailSolution() {
             {t.hero_title_2}
           </h1>
 
-          <p className="font-serif text-lg sm:text-xl text-[#575652] dark:text-[#9B9A95] max-w-3xl leading-relaxed">
+          <p className="offer-lede text-[#575652] dark:text-[#9B9A95] max-w-3xl">
             {t.hero_sub}
           </p>
 
           {/* Key Metrics Row */}
-          <StaggerContainer staggerDelay={0.08} className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-4 font-mono text-xs">
+          <StaggerContainer staggerDelay={0.08} className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-4 offer-ui">
             <StaggerItem className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 card-hover-guided">
-              <div className="text-[#059669] dark:text-[#10B981] font-bold text-sm">100% OWNERSHIP</div>
-              <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">{t.metrics_code}</div>
+              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">100% OWNERSHIP</div>
+              <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t.metrics_code}</div>
             </StaggerItem>
             <StaggerItem className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 card-hover-guided">
-              <div className="text-[#059669] dark:text-[#10B981] font-bold text-sm">0% COMMISSION</div>
-              <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">{t.metrics_tax}</div>
+              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">0% COMMISSION</div>
+              <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t.metrics_tax}</div>
             </StaggerItem>
             <StaggerItem className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 card-hover-guided">
-              <div className="text-[#059669] dark:text-[#10B981] font-bold text-sm">NEXT.JS SPEED</div>
-              <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">{t.metrics_speed}</div>
+              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">NEXT.JS SPEED</div>
+              <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t.metrics_speed}</div>
             </StaggerItem>
             <StaggerItem className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 card-hover-guided">
-              <div className="text-[#059669] dark:text-[#10B981] font-bold text-sm">SERIAL RMA</div>
-              <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">{t.metrics_rma}</div>
+              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">SERIAL RMA</div>
+              <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t.metrics_rma}</div>
             </StaggerItem>
           </StaggerContainer>
 
           {/* Actions */}
-          <div className="pt-4 flex flex-wrap items-center gap-4 font-mono text-xs">
-            <a href="#plans" className="btn-blue text-xs shadow-sm group relative overflow-hidden">
+          <div className="pt-4 flex flex-wrap items-center gap-4 offer-ui">
+            <a href="#plans" className="btn-blue offer-btn offer-btn-xl shadow-sm group relative overflow-hidden">
               <span className="relative z-10">{t.cta_primary}</span>
               <ArrowRight size={14} className="relative z-10 arrow-slide" />
               <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none animate-shimmer-sweep" />
@@ -1128,7 +1124,7 @@ export default function TechRetailSolution() {
               href="https://store-demo-eight.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-outline text-xs group relative overflow-hidden"
+              className="btn-outline offer-btn offer-btn-lg group relative overflow-hidden"
             >
               <span className="relative z-10">{t.cta_secondary}</span>
               <ArrowUpRight size={14} className="relative z-10 arrow-slide" />
@@ -1142,56 +1138,56 @@ export default function TechRetailSolution() {
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#121215]">
         <div className="max-w-7xl mx-auto space-y-12">
           <div>
-            <div className="text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold mb-2">
+            <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold mb-2">
               {t.arch_badge}
             </div>
-            <h2 className="text-4xl sm:text-6xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.9]">
+            <h2 className="offer-h1 text-[#0F0F0F] dark:text-[#EDECE6]">
               {t.arch_title}
             </h2>
-            <p className="font-serif text-base sm:text-lg text-[#575652] dark:text-[#9B9A95] max-w-2xl mt-3 leading-relaxed">
+            <p className="offer-body text-[#575652] dark:text-[#9B9A95] max-w-2xl mt-3">
               {t.arch_sub}
             </p>
           </div>
 
-          <StaggerContainer staggerDelay={0.08} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 font-mono text-xs">
+          <StaggerContainer staggerDelay={0.08} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 offer-ui">
             <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
-              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm">{t.arch_01_title}</div>
-              <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
+              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui">{t.arch_01_title}</div>
+              <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
                 {t.arch_01_desc}
               </p>
             </StaggerItem>
 
             <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
-              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm">{t.arch_02_title}</div>
-              <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
+              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui">{t.arch_02_title}</div>
+              <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
                 {t.arch_02_desc}
               </p>
             </StaggerItem>
 
             <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
-              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm">{t.arch_03_title}</div>
-              <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
+              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui">{t.arch_03_title}</div>
+              <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
                 {t.arch_03_desc}
               </p>
             </StaggerItem>
 
             <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
-              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm">{t.arch_04_title}</div>
-              <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
+              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui">{t.arch_04_title}</div>
+              <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
                 {t.arch_04_desc}
               </p>
             </StaggerItem>
 
             <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
-              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm">{t.arch_05_title}</div>
-              <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
+              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui">{t.arch_05_title}</div>
+              <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
                 {t.arch_05_desc}
               </p>
             </StaggerItem>
 
             <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
-              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm">{t.arch_06_title}</div>
-              <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
+              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui">{t.arch_06_title}</div>
+              <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
                 {t.arch_06_desc}
               </p>
             </StaggerItem>
@@ -1203,18 +1199,18 @@ export default function TechRetailSolution() {
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)]">
         <div className="max-w-7xl mx-auto space-y-8">
           <FadeIn direction="up">
-            <div className="text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold mb-2">
+            <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold mb-2">
               {t.demo_badge}
             </div>
-            <h2 className="text-4xl sm:text-6xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.9]">
+            <h2 className="offer-h1 text-[#0F0F0F] dark:text-[#EDECE6]">
               {t.demo_title}
             </h2>
-            <p className="font-serif text-sm sm:text-base text-[#575652] dark:text-[#9B9A95] max-w-2xl mt-2">
+            <p className="offer-body text-[#575652] dark:text-[#9B9A95] max-w-2xl mt-2">
               {t.demo_sub}
             </p>
           </FadeIn>
 
-          <StaggerContainer staggerDelay={0.1} className="grid grid-cols-1 sm:grid-cols-3 gap-6 font-mono text-xs">
+          <StaggerContainer staggerDelay={0.1} className="grid grid-cols-1 sm:grid-cols-3 gap-6 offer-ui">
             <StaggerItem>
               <a
                 href="https://store-demo-eight.vercel.app/"
@@ -1222,11 +1218,11 @@ export default function TechRetailSolution() {
                 rel="noopener noreferrer"
                 className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] card-hover-guided group block space-y-3 shadow-xs h-full"
               >
-                <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm flex items-center justify-between">
+                <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui flex items-center justify-between">
                   <span>{t.demo_store_title}</span>
                   <ArrowUpRight size={14} className="text-[#059669] dark:text-[#10B981] arrow-slide" />
                 </div>
-                <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95]">
+                <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
                   {t.demo_store_desc}
                 </p>
               </a>
@@ -1239,11 +1235,11 @@ export default function TechRetailSolution() {
                 rel="noopener noreferrer"
                 className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] card-hover-guided group block space-y-3 shadow-xs h-full"
               >
-                <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm flex items-center justify-between">
+                <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui flex items-center justify-between">
                   <span>{t.demo_pc_title}</span>
                   <ArrowUpRight size={14} className="text-[#059669] dark:text-[#10B981] arrow-slide" />
                 </div>
-                <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95]">
+                <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
                   {t.demo_pc_desc}
                 </p>
               </a>
@@ -1256,11 +1252,11 @@ export default function TechRetailSolution() {
                 rel="noopener noreferrer"
                 className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] card-hover-guided group block space-y-3 shadow-xs h-full"
               >
-                <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-sm flex items-center justify-between">
+                <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui flex items-center justify-between">
                   <span>{t.demo_admin_title}</span>
                   <ArrowUpRight size={14} className="text-[#059669] dark:text-[#10B981] arrow-slide" />
                 </div>
-                <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95]">
+                <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
                   {t.demo_admin_desc}
                 </p>
               </a>
@@ -1273,66 +1269,66 @@ export default function TechRetailSolution() {
       <section id="plans" className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#121215]">
         <div className="max-w-7xl mx-auto space-y-12">
           <FadeIn direction="up" className="text-center max-w-3xl mx-auto space-y-3">
-            <div className="inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold bg-[#ECFDF5] dark:bg-[rgba(16,185,129,0.15)] px-3 py-0.5 border border-[#059669]/25 dark:border-[#10B981]/30">
+            <div className="inline-flex items-center gap-1.5 offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold bg-[#ECFDF5] dark:bg-[rgba(16,185,129,0.15)] px-3 py-0.5 border border-[#059669]/25 dark:border-[#10B981]/30">
               <span className="w-1.5 h-1.5 rounded-full bg-[#059669] dark:bg-[#10B981]" />
               {t.plans_badge}
             </div>
-            <h2 className="text-4xl sm:text-6xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.9]">
+            <h2 className="offer-h1 text-[#0F0F0F] dark:text-[#EDECE6]">
               {t.plans_title}
             </h2>
-            <p className="font-serif text-sm sm:text-base text-[#575652] dark:text-[#9B9A95]">
+            <p className="offer-body text-[#575652] dark:text-[#9B9A95]">
               {t.plans_sub} {t.plans_sub_suffix}
             </p>
           </FadeIn>
 
           {/* Guided Conversion Flow Ribbon */}
-          <FadeIn direction="up" delay={0.1} className="flex items-center justify-center gap-2 sm:gap-4 font-mono text-[10px] sm:text-xs text-[#575652] dark:text-[#9B9A95] uppercase tracking-wider pb-2 flex-wrap">
+          <FadeIn direction="up" delay={0.1} className="flex items-center justify-center gap-2 sm:gap-4 offer-eyebrow text-[#575652] dark:text-[#9B9A95] pb-2 flex-wrap">
             <span className="flex items-center gap-1.5 text-[#059669] dark:text-[#10B981] font-bold">
-              <span className="w-5 h-5 rounded-full border border-[#059669] dark:border-[#10B981] flex items-center justify-center text-[10px]">1</span>
+              <span className="w-5 h-5 rounded-full border border-[#059669] dark:border-[#10B981] flex items-center justify-center offer-ui">1</span>
               {isUrdu ? 'Tier Muntakhib Karein' : 'Select Tier'}
             </span>
             <span className="text-[#8E8D88] dark:text-[#6A6965]">→</span>
             <span className="flex items-center gap-1.5 text-[#059669] dark:text-[#10B981] font-bold">
-              <span className="w-5 h-5 rounded-full border border-[#059669] dark:border-[#10B981] flex items-center justify-center text-[10px]">2</span>
+              <span className="w-5 h-5 rounded-full border border-[#059669] dark:border-[#10B981] flex items-center justify-center offer-ui">2</span>
               {isUrdu ? 'Live Proof Inspect Karein' : 'Inspect Previews'}
             </span>
             <span className="text-[#8E8D88] dark:text-[#6A6965]">→</span>
             <span className="flex items-center gap-1.5 text-[#059669] dark:text-[#10B981] font-bold">
-              <span className="w-5 h-5 rounded-full border border-[#059669] dark:border-[#10B981] flex items-center justify-center text-[10px]">3</span>
+              <span className="w-5 h-5 rounded-full border border-[#059669] dark:border-[#10B981] flex items-center justify-center offer-ui">3</span>
               {isUrdu ? 'WhatsApp Par Claim Karein' : 'Claim on WhatsApp'}
             </span>
           </FadeIn>
 
-          <StaggerContainer staggerDelay={0.12} className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start font-mono text-xs">
+          <StaggerContainer staggerDelay={0.12} className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start offer-ui">
             {/* 1. Single Store Launch */}
             <StaggerItem className="h-full">
               <div className="p-8 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-6 flex flex-col justify-between hover:border-[#059669] dark:hover:border-[#10B981] transition-colors h-full card-hover-guided">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-base">{t.starter_name}</div>
-                  <span className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] uppercase">{t.starter_badge}</span>
+                  <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui">{t.starter_name}</div>
+                  <span className="offer-eyebrow text-[#8E8D88] dark:text-[#6A6965]">{t.starter_badge}</span>
                 </div>
-                <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
+                <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
                   {t.starter_desc}
                 </p>
 
                 <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
-                  <div className="text-2xl font-display text-[#0F0F0F] dark:text-[#EDECE6]">{t.starter_price_pkr}</div>
-                  <div className="text-[11px] text-[#8E8D88] dark:text-[#6A6965]">{t.starter_price_usd}</div>
-                  <div className="text-[11px] text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.starter_delivery}</div>
+                  <div className="offer-h3 text-[#0F0F0F] dark:text-[#EDECE6]">{t.starter_price_pkr}</div>
+                  <div className="offer-ui text-[#8E8D88] dark:text-[#6A6965]">{t.starter_price_usd}</div>
+                  <div className="offer-ui text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.starter_delivery}</div>
                 </div>
 
                 {/* Clear Plan Differentiation Callout */}
-                <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] text-[11px] text-[#0F0F0F] dark:text-[#EDECE6] space-y-1">
-                  <div className="font-bold text-[#059669] dark:text-[#10B981] text-[10px] uppercase">
+                <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] offer-ui text-[#0F0F0F] dark:text-[#EDECE6] space-y-1">
+                  <div className="font-bold text-[#059669] dark:text-[#10B981] offer-eyebrow">
                     {t.starter_callout_label}
                   </div>
-                  <p className="font-sans text-[11px] text-[#575652] dark:text-[#9B9A95]">
+                  <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
                     {t.starter_callout_text}
                   </p>
                 </div>
 
-                <div className="pt-2 space-y-2 text-[11px] text-[#0F0F0F] dark:text-[#EDECE6]">
+                <div className="pt-2 space-y-2 offer-ui text-[#0F0F0F] dark:text-[#EDECE6]">
                   <div className="flex items-start gap-2">
                     <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                     <span>{t.starter_f1}</span>
@@ -1355,13 +1351,13 @@ export default function TechRetailSolution() {
                 <div className="pt-3">
                   <button
                     onClick={() => setActiveModalKey('starter')}
-                    className="relative overflow-hidden w-full py-3 px-3 bg-[#ECFDF5] dark:bg-[#10B981]/15 text-[#059669] dark:text-[#10B981] border-2 border-[#059669]/50 dark:border-[#10B981]/60 font-mono text-[11px] font-extrabold uppercase tracking-wider hover:bg-[#059669] dark:hover:bg-[#10B981] hover:text-white transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-sm animate-click-me group"
+                    className="relative overflow-hidden w-full bg-[#ECFDF5] dark:bg-[#10B981]/15 text-[#059669] dark:text-[#10B981] border-2 border-[#059669]/50 dark:border-[#10B981]/60 offer-btn offer-btn-sm font-extrabold hover:bg-[#059669] dark:hover:bg-[#10B981] hover:text-white transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-sm animate-click-me group"
                   >
                     <span className="relative flex h-2 w-2 shrink-0">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#059669] dark:bg-[#10B981] opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-[#059669] dark:bg-[#10B981]"></span>
                     </span>
-                    <Info size={14} className="shrink-0 group-hover:rotate-12 transition-transform" />
+                    <Info size={18} className="shrink-0 group-hover:rotate-12 transition-transform" />
                     <span>{t.detail_btn}</span>
                     <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 dark:via-white/20 to-transparent pointer-events-none animate-shimmer-sweep" />
                   </button>
@@ -1371,13 +1367,13 @@ export default function TechRetailSolution() {
               <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] space-y-3">
                 <button
                   onClick={() => openWhatsApp(t.starter_name, t.starter_price_pkr)}
-                  className="btn-outline w-full justify-center text-xs animate-claim-outline group relative overflow-hidden transition-all duration-300 py-3 font-bold"
+                  className="btn-outline w-full justify-center offer-btn offer-btn-lg animate-claim-outline group relative overflow-hidden transition-all duration-300"
                 >
                   <MessageSquare size={14} className="animate-icon-wiggle group-hover:scale-125 transition-transform text-[#059669] dark:text-[#10B981]" />
                   <span>{t.whatsapp_cta}</span>
                   <div className="absolute inset-0 w-1/3 h-full bg-gradient-to-r from-transparent via-[#059669]/10 to-transparent pointer-events-none animate-shimmer-sweep" />
                 </button>
-                <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] text-center">{t.starter_support}</div>
+                <div className="offer-ui text-[#8E8D88] dark:text-[#6A6965] text-center">{t.starter_support}</div>
               </div>
             </div>
           </StaggerItem>
@@ -1385,33 +1381,33 @@ export default function TechRetailSolution() {
             {/* 2. Multi Branch Growth (Most Popular) */}
             <StaggerItem className="h-full">
               <div className="p-8 bg-white dark:bg-[#161619] border-2 border-[#059669] dark:border-[#10B981] space-y-6 flex flex-col justify-between shadow-lg relative hover:shadow-xl transition-shadow h-full card-hover-guided">
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#059669] dark:bg-[#10B981] text-white font-mono text-[9px] font-bold px-3 py-1 uppercase tracking-wider shadow-sm">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#059669] dark:bg-[#10B981] text-white offer-eyebrow font-bold px-3 py-1 shadow-sm">
                   {t.growth_badge}
                 </div>
 
                 <div className="space-y-4">
-                  <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-base">{t.growth_name}</div>
-                  <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
+                  <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui">{t.growth_name}</div>
+                  <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
                     {t.growth_desc}
                   </p>
 
                   <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
-                    <div className="text-2xl font-display text-[#059669] dark:text-[#10B981]">{t.growth_price_pkr}</div>
-                    <div className="text-[11px] text-[#8E8D88] dark:text-[#6A6965]">{t.growth_price_usd}</div>
-                    <div className="text-[11px] text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.growth_delivery}</div>
+                    <div className="offer-h3 text-[#059669] dark:text-[#10B981]">{t.growth_price_pkr}</div>
+                    <div className="offer-ui text-[#8E8D88] dark:text-[#6A6965]">{t.growth_price_usd}</div>
+                    <div className="offer-ui text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.growth_delivery}</div>
                   </div>
 
                   {/* Clear Plan Differentiation Callout */}
-                  <div className="p-3 bg-[#ECFDF5] dark:bg-[#10B981]/15 border border-[#059669]/25 dark:border-[#10B981]/30 text-[11px] text-[#0F0F0F] dark:text-[#EDECE6] space-y-1">
-                    <div className="font-bold text-[#059669] dark:text-[#10B981] text-[10px] uppercase">
+                  <div className="p-3 bg-[#ECFDF5] dark:bg-[#10B981]/15 border border-[#059669]/25 dark:border-[#10B981]/30 offer-ui text-[#0F0F0F] dark:text-[#EDECE6] space-y-1">
+                    <div className="font-bold text-[#059669] dark:text-[#10B981] offer-eyebrow">
                       {t.growth_callout_label}
                     </div>
-                    <p className="font-sans text-[11px] text-[#575652] dark:text-[#9B9A95]">
+                    <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
                       {t.growth_callout_text}
                     </p>
                   </div>
 
-                  <div className="pt-2 space-y-2 text-[11px] text-[#0F0F0F] dark:text-[#EDECE6]">
+                  <div className="pt-2 space-y-2 offer-ui text-[#0F0F0F] dark:text-[#EDECE6]">
                     <div className="flex items-start gap-2">
                       <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                       <span className="font-bold">{t.growth_f1}</span>
@@ -1438,13 +1434,13 @@ export default function TechRetailSolution() {
                   <div className="pt-3">
                     <button
                       onClick={() => setActiveModalKey('growth')}
-                      className="relative overflow-hidden w-full py-3 px-3 bg-[#059669] dark:bg-[#10B981] text-white font-mono text-[11px] font-extrabold uppercase tracking-wider hover:bg-[#047857] dark:hover:bg-[#059669] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-md animate-click-me-solid group"
+                      className="relative overflow-hidden w-full bg-[#059669] dark:bg-[#10B981] text-white offer-btn offer-btn-sm font-extrabold hover:bg-[#047857] dark:hover:bg-[#059669] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-md animate-click-me-solid group"
                     >
                       <span className="relative flex h-2 w-2 shrink-0">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-90"></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
                       </span>
-                      <Info size={14} className="shrink-0 group-hover:rotate-12 transition-transform" />
+                      <Info size={18} className="shrink-0 group-hover:rotate-12 transition-transform" />
                       <span>{t.detail_btn}</span>
                       <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/35 to-transparent pointer-events-none animate-shimmer-sweep" />
                     </button>
@@ -1454,13 +1450,13 @@ export default function TechRetailSolution() {
                 <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] space-y-3">
                   <button
                     onClick={() => openWhatsApp(t.growth_name, t.growth_price_pkr)}
-                    className="btn-blue w-full justify-center text-xs shadow-md animate-claim-solid group relative overflow-hidden transition-all duration-300 py-3.5 font-extrabold"
+                    className="btn-blue w-full justify-center offer-btn offer-btn-xl shadow-md animate-claim-solid group relative overflow-hidden transition-all duration-300"
                   >
                     <MessageSquare size={15} className="animate-icon-wiggle group-hover:scale-125 transition-transform" />
                     <span className="tracking-wider">{t.whatsapp_cta}</span>
                     <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none animate-shimmer-sweep" />
                   </button>
-                  <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] text-center">{t.growth_support}</div>
+                  <div className="offer-ui text-[#8E8D88] dark:text-[#6A6965] text-center">{t.growth_support}</div>
                 </div>
               </div>
             </StaggerItem>
@@ -1469,28 +1465,28 @@ export default function TechRetailSolution() {
             <StaggerItem className="h-full">
               <div className="p-8 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-6 flex flex-col justify-between hover:border-[#059669] dark:hover:border-[#10B981] transition-colors h-full card-hover-guided">
                 <div className="space-y-4">
-                  <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] text-base">{t.enterprise_name}</div>
-                  <p className="font-sans text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
+                  <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui">{t.enterprise_name}</div>
+                  <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
                     {t.enterprise_desc}
                   </p>
 
                   <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
-                    <div className="text-2xl font-display text-[#0F0F0F] dark:text-[#EDECE6]">{t.enterprise_price_pkr}</div>
-                    <div className="text-[11px] text-[#8E8D88] dark:text-[#6A6965]">{t.enterprise_price_usd}</div>
-                    <div className="text-[11px] text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.enterprise_delivery}</div>
+                    <div className="offer-h3 text-[#0F0F0F] dark:text-[#EDECE6]">{t.enterprise_price_pkr}</div>
+                    <div className="offer-ui text-[#8E8D88] dark:text-[#6A6965]">{t.enterprise_price_usd}</div>
+                    <div className="offer-ui text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.enterprise_delivery}</div>
                   </div>
 
                   {/* Clear Plan Differentiation Callout */}
-                  <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] text-[11px] text-[#0F0F0F] dark:text-[#EDECE6] space-y-1">
-                    <div className="font-bold text-[#059669] dark:text-[#10B981] text-[10px] uppercase">
+                  <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] offer-ui text-[#0F0F0F] dark:text-[#EDECE6] space-y-1">
+                    <div className="font-bold text-[#059669] dark:text-[#10B981] offer-eyebrow">
                       {t.enterprise_callout_label}
                     </div>
-                    <p className="font-sans text-[11px] text-[#575652] dark:text-[#9B9A95]">
+                    <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
                       {t.enterprise_callout_text}
                     </p>
                   </div>
 
-                  <div className="pt-2 space-y-2 text-[11px] text-[#0F0F0F] dark:text-[#EDECE6]">
+                  <div className="pt-2 space-y-2 offer-ui text-[#0F0F0F] dark:text-[#EDECE6]">
                     <div className="flex items-start gap-2">
                       <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                       <span className="font-bold">{t.enterprise_f1}</span>
@@ -1517,13 +1513,13 @@ export default function TechRetailSolution() {
                   <div className="pt-3">
                     <button
                       onClick={() => setActiveModalKey('enterprise')}
-                      className="relative overflow-hidden w-full py-3 px-3 bg-[#ECFDF5] dark:bg-[#10B981]/15 text-[#059669] dark:text-[#10B981] border-2 border-[#059669]/50 dark:border-[#10B981]/60 font-mono text-[11px] font-extrabold uppercase tracking-wider hover:bg-[#059669] dark:hover:bg-[#10B981] hover:text-white transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-sm animate-click-me group"
+                      className="relative overflow-hidden w-full bg-[#ECFDF5] dark:bg-[#10B981]/15 text-[#059669] dark:text-[#10B981] border-2 border-[#059669]/50 dark:border-[#10B981]/60 offer-btn offer-btn-sm font-extrabold hover:bg-[#059669] dark:hover:bg-[#10B981] hover:text-white transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-sm animate-click-me group"
                     >
                       <span className="relative flex h-2 w-2 shrink-0">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#059669] dark:bg-[#10B981] opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-[#059669] dark:bg-[#10B981]"></span>
                       </span>
-                      <Info size={14} className="shrink-0 group-hover:rotate-12 transition-transform" />
+                      <Info size={18} className="shrink-0 group-hover:rotate-12 transition-transform" />
                       <span>{t.detail_btn}</span>
                       <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 dark:via-white/20 to-transparent pointer-events-none animate-shimmer-sweep" />
                     </button>
@@ -1533,20 +1529,20 @@ export default function TechRetailSolution() {
                 <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] space-y-3">
                   <button
                     onClick={() => openWhatsApp(t.enterprise_name, t.enterprise_price_pkr)}
-                    className="btn-outline w-full justify-center text-xs animate-claim-outline group relative overflow-hidden transition-all duration-300 py-3 font-bold"
+                    className="btn-outline w-full justify-center offer-btn offer-btn-lg animate-claim-outline group relative overflow-hidden transition-all duration-300"
                   >
                     <MessageSquare size={14} className="animate-icon-wiggle group-hover:scale-125 transition-transform text-[#059669] dark:text-[#10B981]" />
                     <span>{t.whatsapp_cta}</span>
                     <div className="absolute inset-0 w-1/3 h-full bg-gradient-to-r from-transparent via-[#059669]/10 to-transparent pointer-events-none animate-shimmer-sweep" />
                   </button>
-                  <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] text-center">{t.enterprise_support}</div>
+                  <div className="offer-ui text-[#8E8D88] dark:text-[#6A6965] text-center">{t.enterprise_support}</div>
                 </div>
               </div>
             </StaggerItem>
           </StaggerContainer>
 
           {/* Limited build slots */}
-          <FadeIn direction="up" className="text-center font-mono text-[11px] sm:text-xs uppercase tracking-wider text-[#575652] dark:text-[#9B9A95] max-w-2xl mx-auto">
+          <FadeIn direction="up" className="text-center offer-body text-[#575652] dark:text-[#9B9A95] max-w-2xl mx-auto">
             {isUrdu
               ? 'Hum har mahine sirf 3 retail builds lete hain taake har project ko pura waqt mile. Agli available start date ke liye WhatsApp par rabta karein.'
               : 'We take on only 3 retail builds each month so every project gets full attention. Message us on WhatsApp to confirm the next available start date.'}
@@ -1556,18 +1552,18 @@ export default function TechRetailSolution() {
           <FadeIn direction="up" className="bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] p-6 sm:p-8 space-y-5">
             <div className="space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <div className="font-mono text-[11px] uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold">
+                <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold">
                   {isUrdu ? 'EXTRAS // SIRF ZAROORAT KI CHEEZ ADD KAREIN' : 'EXTRAS // PAY ONLY FOR WHAT YOU NEED'}
                 </div>
-                <div className="font-mono text-[10px] text-[#059669] dark:text-[#10B981] flex items-center gap-1 font-medium bg-[#ECFDF5] dark:bg-[#10B981]/15 px-2 py-0.5 rounded border border-[#059669]/25">
+                <div className="offer-ui text-[#059669] dark:text-[#10B981] flex items-center gap-1 font-medium bg-[#ECFDF5] dark:bg-[#10B981]/15 px-2 py-0.5 rounded border border-[#059669]/25">
                   <ChevronDown size={12} className="shrink-0" />
                   <span>{isUrdu ? 'Kisi bhi item par click karein wazahat dekhne ke liye' : 'Click any item below to view simple layman explanation'}</span>
                 </div>
               </div>
-              <h3 className="text-2xl sm:text-3xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6]">
+              <h3 className="offer-h2 text-[#0F0F0F] dark:text-[#EDECE6]">
                 {isUrdu ? 'Base price mein yeh shamil nahi. Jo chahiye add karein.' : 'Not in the base price. Add only what you need.'}
               </h3>
-              <p className="font-serif text-sm text-[#575652] dark:text-[#9B9A95] max-w-3xl">
+              <p className="offer-body text-[#575652] dark:text-[#9B9A95] max-w-3xl">
                 {isUrdu
                   ? 'Har plan ek fixed base price par aata hai. Extra modules neeche diye gaye hain aur final invoice mein saaf lafzon mein add hotay hain. Koi chhupa hua cost nahi.'
                   : 'Every plan starts at one fixed base price. Extra modules are listed below and added to your final invoice in plain terms. No hidden costs.'}
@@ -1602,7 +1598,7 @@ export default function TechRetailSolution() {
             <div className="flex sm:hidden flex-col gap-3">
               {EXTRAS_DATA.map((item, idx) => renderExtraCard(item, idx))}
             </div>
-            <p className="font-mono text-[10px] text-[#8E8D88] dark:text-[#6A6965]">
+            <p className="offer-ui text-[#8E8D88] dark:text-[#6A6965]">
               {isUrdu
                 ? 'Tamam extra prices fixed hain aur pehle se bataye jate hain. Final scope WhatsApp par confirm hota hai.'
                 : 'All extra prices are fixed and quoted up front. Final scope is confirmed on WhatsApp before work starts.'}
@@ -1612,13 +1608,13 @@ export default function TechRetailSolution() {
           {/* Care Plan */}
           <FadeIn direction="up" className="space-y-5">
             <div className="text-center space-y-2">
-              <div className="font-mono text-[11px] uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold">
+              <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold">
                 {isUrdu ? 'CARE PLAN // LAUNCH KE BAAD' : 'CARE PLAN // AFTER LAUNCH'}
               </div>
-              <h3 className="text-2xl sm:text-3xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6]">
+              <h3 className="offer-h2 text-[#0F0F0F] dark:text-[#EDECE6]">
                 {isUrdu ? 'Launch ke baad hum sambhal lete hain' : 'We keep it running after launch'}
               </h3>
-              <p className="font-serif text-sm text-[#575652] dark:text-[#9B9A95] max-w-2xl mx-auto">
+              <p className="offer-body text-[#575652] dark:text-[#9B9A95] max-w-2xl mx-auto">
                 {isUrdu
                   ? '30 din ki warranty ke baad, Care Plan aapke system ko online, secure aur updated rakhta hai. Code aapka hai, hosting hum par chhod dein ya khud manage karein.'
                   : 'After the 30 day warranty, a Care Plan keeps your system online, secure and updated. You own the code, so let us host it or run it yourself.'}
@@ -1631,11 +1627,11 @@ export default function TechRetailSolution() {
                 { name: 'Enterprise Care', price: 'PKR 55,000 / mo', en: ['Everything in Growth Care', 'Dedicated engineer hours each month', 'Integration and API support', '99.5% uptime target', 'Phone support'], ur: ['Growth Care ki sab cheezein', 'Har mahine dedicated engineer hours', 'Integration aur API support', '99.5% uptime target', 'Phone support'] },
               ].map((c, i) => (
                 <div key={i} className="bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] p-5 space-y-3">
-                  <div className="font-mono text-xs uppercase tracking-wider text-[#0F0F0F] dark:text-[#EDECE6] font-semibold">{c.name}</div>
-                  <div className="font-display text-2xl text-[#059669] dark:text-[#10B981]">{c.price}</div>
+                  <div className="offer-ui-strong text-[#0F0F0F] dark:text-[#EDECE6]">{c.name}</div>
+                  <div className="offer-h3 text-[#059669] dark:text-[#10B981]">{c.price}</div>
                   <ul className="space-y-1.5">
                     {(isUrdu ? c.ur : c.en).map((li, j) => (
-                      <li key={j} className="flex items-start gap-2 font-sans text-xs text-[#575652] dark:text-[#9B9A95]">
+                      <li key={j} className="flex items-start gap-2 offer-ui text-[#575652] dark:text-[#9B9A95]">
                         <Check size={13} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                         <span>{li}</span>
                       </li>
@@ -1649,7 +1645,7 @@ export default function TechRetailSolution() {
           <div className="text-center pt-4">
             <Link
               to="/solutions/tech-retail/terms"
-              className="text-xs font-mono font-semibold text-[#059669] dark:text-[#10B981] hover:underline"
+              className="offer-ui font-semibold text-[#059669] dark:text-[#10B981] hover:underline"
             >
               {t.view_terms}
             </Link>
@@ -1660,13 +1656,13 @@ export default function TechRetailSolution() {
       {/* ─── Payback / ROI ─── */}
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#0F0F11]">
         <div className="max-w-4xl mx-auto space-y-6 text-center">
-          <div className="font-mono text-[11px] uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold">
+          <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold">
             {isUrdu ? 'WAPSI // YEH KHUD KO KAISE PAY KARTA HAI' : 'PAYBACK // HOW THIS PAYS FOR ITSELF'}
           </div>
-          <h2 className="text-3xl sm:text-5xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.95]">
+          <h2 className="offer-h2 text-[#0F0F0F] dark:text-[#EDECE6]">
             {isUrdu ? 'Aap ek dafa pay karte hain, phir commission nahi' : 'You pay once, then never pay commission again'}
           </h2>
-          <p className="font-serif text-sm sm:text-base text-[#575652] dark:text-[#9B9A95] leading-relaxed">
+          <p className="offer-body text-[#575652] dark:text-[#9B9A95]">
             {isUrdu
               ? 'Rented platform par aap har mahine subscription dete hain aur har order par ek cut kat ta hai. Yeh kharcha kabhi khatam nahi hota. Yahan aap system ke mukammal malik bante hain. Jo paisa aap har mahine platform ko dete, wahi bachat is build ko kuch hi arsay mein pura kar deti hai.'
               : 'On a rented platform you pay a subscription every month plus a cut on every order, and that bill never ends. Here you own the system outright. The money you would have handed a platform every month stays in your business, and that saving is what pays the build back.'}
@@ -1678,8 +1674,8 @@ export default function TechRetailSolution() {
               { big: '100%', en: 'of the code and data is yours', ur: 'code aur data par aapka mukammal haq' },
             ].map((s, i) => (
               <div key={i} className="bg-[#FAF9F5] dark:bg-[#161619] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] p-5 space-y-1">
-                <div className="font-display text-3xl text-[#059669] dark:text-[#10B981]">{s.big}</div>
-                <div className="font-sans text-xs text-[#575652] dark:text-[#9B9A95]">{isUrdu ? s.ur : s.en}</div>
+                <div className="offer-h2 text-[#059669] dark:text-[#10B981]">{s.big}</div>
+                <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{isUrdu ? s.ur : s.en}</div>
               </div>
             ))}
           </div>
@@ -1690,13 +1686,13 @@ export default function TechRetailSolution() {
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#121215]">
         <div className="max-w-7xl mx-auto space-y-8">
           <div className="text-center space-y-3 max-w-3xl mx-auto">
-            <div className="font-mono text-[11px] uppercase tracking-widest text-[#059669] dark:text-[#10B981] font-semibold">
+            <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold">
               {isUrdu ? 'ASLI KAAM // KHUD KHOL KAR DEKHEIN' : 'REAL WORK // OPEN IT YOURSELF'}
             </div>
-            <h2 className="text-3xl sm:text-5xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.95]">
+            <h2 className="offer-h2 text-[#0F0F0F] dark:text-[#EDECE6]">
               {isUrdu ? 'Yeh asli builds hain, aap abhi khol kar dekh sakte hain' : 'These are real builds you can open right now'}
             </h2>
-            <p className="font-serif text-sm sm:text-base text-[#575652] dark:text-[#9B9A95]">
+            <p className="offer-body text-[#575652] dark:text-[#9B9A95]">
               {isUrdu
                 ? 'Hum nakli testimonials nahi dikhate. Neeche diye gaye systems asli aur live hain. Click karein, khud test karein, phir faisla karein.'
                 : 'We will not pad this page with fake quotes. The systems below are real and live. Click them, test them yourself, then decide.'}
@@ -1718,12 +1714,12 @@ export default function TechRetailSolution() {
                       />
                     </div>
                     <div className="p-5 space-y-2 flex-1 flex flex-col">
-                      <div className="font-mono text-[10px] uppercase tracking-wider text-[#059669] dark:text-[#10B981]">{lp.impact}</div>
-                      <h3 className="font-display text-lg uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-tight">{p.title}</h3>
+                      <div className="offer-eyebrow text-[#059669] dark:text-[#10B981]">{lp.impact}</div>
+                      <h3 className="offer-h3 text-[#0F0F0F] dark:text-[#EDECE6]">{p.title}</h3>
                       <div className="mt-auto pt-3 flex items-center gap-3 flex-wrap">
                         {p.demoUrl ? (
-                          <a href={p.demoUrl} target="_blank" rel="noopener noreferrer" className="btn-outline text-[11px] py-2">
-                            <ExternalLink size={13} />
+                          <a href={p.demoUrl} target="_blank" rel="noopener noreferrer" className="btn-outline offer-btn offer-btn-sm">
+                            <ExternalLink size={18} />
                             <span>{isUrdu ? 'Live Demo Kholein' : 'Open Live Demo'}</span>
                           </a>
                         ) : null}
@@ -1732,7 +1728,7 @@ export default function TechRetailSolution() {
                             href={p.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="font-mono text-[11px] text-[#575652] dark:text-[#9B9A95] hover:text-[#059669] dark:hover:text-[#10B981]"
+                            className="offer-ui text-[#575652] dark:text-[#9B9A95] hover:text-[#059669] dark:hover:text-[#10B981]"
                           >
                             {isUrdu ? 'Code dekhein' : 'View code'}
                           </a>
@@ -1744,7 +1740,7 @@ export default function TechRetailSolution() {
               })}
           </div>
           <div className="text-center pt-2">
-            <Link to="/projects" className="font-mono text-xs font-semibold text-[#059669] dark:text-[#10B981] hover:underline">
+            <Link to="/projects" className="offer-ui font-semibold text-[#059669] dark:text-[#10B981] hover:underline">
               {isUrdu ? 'Tamam projects dekhein →' : 'See all projects →'}
             </Link>
           </div>

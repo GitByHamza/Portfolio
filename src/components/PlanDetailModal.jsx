@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
+import { Link } from 'react-router-dom'
 import {
   X,
   CheckCircle2,
@@ -25,6 +26,7 @@ const MODAL_I18N = {
     artifacts_hint_mobile: 'SWIPE TO BROWSE • TAP TO EXPAND',
     modules_title: 'COMPREHENSIVE DELIVERABLE MODULES & ARCHITECTURAL SCOPE:',
     exclusions_title: 'STRICT SCOPE BOUNDARIES // WHAT IS NOT INCLUDED IN THIS TIER:',
+    exclusions_terms: 'Full scope boundaries, revision policy & warranty terms →',
     milestones_title: 'ETHICAL MILESTONE PAYMENT & 100% OWNERSHIP PLEDGE',
     deposit_label: '40% Deposit',
     deposit_desc: 'Project initiation & repository setup',
@@ -55,6 +57,7 @@ const MODAL_I18N = {
     artifacts_hint_mobile: 'SWIPE KAREIN • BARI DEKHNE KE LIYE TAP KAREIN',
     modules_title: 'MUKAMMAL DELIVERABLE MODULES AUR ARCHITECTURAL SCOPE:',
     exclusions_title: 'STRICT SCOPE BOUNDARIES // YEH CHEEZAIN IS PLAN MEIN SHAMIL NAHI:',
+    exclusions_terms: 'Mukammal scope boundaries, revision policy & warranty sharaait →',
     milestones_title: 'ETHICAL MILESTONE PAYMENT AUR 100% MALIKANA HUQOOQ:',
     deposit_label: '40% Peshgi Raqam',
     deposit_desc: 'Project initiation aur repository setup',
@@ -187,7 +190,7 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
   const modalContent = (
     <>
       <div
-        className="fixed inset-0 z-[9999] bg-[#0F0F0F]/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 font-mono text-xs overflow-hidden overscroll-contain"
+        className="fixed inset-0 z-[9999] bg-[#0F0F0F]/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 offer-ui overflow-hidden overscroll-contain"
         onClick={onClose}
         data-lenis-prevent="true"
         onWheel={(e) => e.stopPropagation()}
@@ -202,18 +205,18 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
           <div className="p-4 sm:p-6 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#1A1A1E] flex items-start justify-between gap-4 shrink-0">
             <div className="space-y-1.5">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="tag-blue text-[10px]">
+                <span className="tag-blue offer-badge">
                   {plan.badge || t.badge_default}
                 </span>
-                <span className="text-[11px] text-[#8E8D88] dark:text-[#6A6965] uppercase">
+                <span className="offer-eyebrow text-[#8E8D88] dark:text-[#6A6965]">
                   {t.plan_code} {plan.code}
                 </span>
               </div>
-              <h2 className="text-2xl sm:text-4xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-tight">
+              <h2 className="offer-h2 text-[#0F0F0F] dark:text-[#EDECE6]">
                 {plan.name} — {t.spec_suffix}
               </h2>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[#575652] dark:text-[#9B9A95] text-[11px]">
-                <span className="text-[#059669] dark:text-[#10B981] font-bold text-base">{plan.pricePkr}</span>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[#575652] dark:text-[#9B9A95] offer-ui">
+                <span className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{plan.pricePkr}</span>
                 <span>({plan.priceUsd})</span>
                 <span className="text-[rgba(15,15,15,0.2)] dark:text-[rgba(255,255,255,0.2)]">|</span>
                 <span className="flex items-center gap-1 font-semibold text-[#0F0F0F] dark:text-[#EDECE6]">
@@ -235,26 +238,26 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
           <div
             ref={bodyRef}
             data-lenis-prevent="true"
-            className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-4 sm:p-8 space-y-8 font-sans text-sm focus:outline-none"
+            className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-4 sm:p-8 space-y-8 offer-ui focus:outline-none"
             tabIndex={0}
           >
             {/* Ideal Client Profile */}
-            <div className="p-4 bg-white dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.12)] dark:border-[rgba(255,255,255,0.1)] space-y-1 font-mono text-xs">
-              <span className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] uppercase tracking-widest block font-bold">
+            <div className="p-4 bg-white dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.12)] dark:border-[rgba(255,255,255,0.1)] space-y-1 offer-ui">
+              <span className="offer-eyebrow text-[#8E8D88] dark:text-[#6A6965] block font-bold">
                 {t.ideal_fit}
               </span>
-              <p className="font-serif text-sm text-[#0F0F0F] dark:text-[#EDECE6] leading-relaxed">
+              <p className="offer-body text-[#0F0F0F] dark:text-[#EDECE6]">
                 {plan.idealFor}
               </p>
             </div>
 
             {/* Feature Visual Artifacts Gallery */}
             {plan.artifacts && plan.artifacts.length > 0 && (
-              <div className="space-y-3 font-mono text-xs">
-                <div className="text-[11px] font-bold uppercase tracking-wider text-[#0F0F0F] dark:text-[#EDECE6] flex items-center justify-between">
+              <div className="space-y-3 offer-ui">
+                <div className="offer-eyebrow font-bold text-[#0F0F0F] dark:text-[#EDECE6] flex items-center justify-between">
                   <span>{t.artifacts_title}</span>
-                  <span className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] hidden sm:inline">{t.artifacts_hint}</span>
-                  <span className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] sm:hidden">{t.artifacts_hint_mobile}</span>
+                  <span className="offer-ui text-[#8E8D88] dark:text-[#6A6965] hidden sm:inline">{t.artifacts_hint}</span>
+                  <span className="offer-ui text-[#8E8D88] dark:text-[#6A6965] sm:hidden">{t.artifacts_hint_mobile}</span>
                 </div>
                 <div
                   ref={galleryRef}
@@ -275,17 +278,17 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
                           className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
                           loading="lazy"
                         />
-                        <div className="absolute bottom-1 left-1 bg-[#0F0F0F] dark:bg-[#059669] text-white font-mono text-[8px] uppercase px-1.5 py-0.5">
+                        <div className="absolute bottom-1 left-1 bg-[#0F0F0F] dark:bg-[#059669] text-white offer-eyebrow px-1.5 py-0.5">
                           {art.tag}
                         </div>
                         {/* Hover Overlay with Zoom Icon */}
                         <div className="absolute inset-0 bg-[#0F0F0F]/0 group-hover:bg-[#0F0F0F]/30 flex items-center justify-center transition-colors">
-                          <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/95 dark:bg-[#161619]/95 text-[#0F0F0F] dark:text-[#EDECE6] px-2 py-1 font-mono text-[10px] font-bold flex items-center gap-1 shadow-md border border-[rgba(15,15,15,0.15)] dark:border-[rgba(255,255,255,0.15)]">
+                          <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/95 dark:bg-[#161619]/95 text-[#0F0F0F] dark:text-[#EDECE6] px-2 py-1 offer-ui font-bold flex items-center gap-1 shadow-md border border-[rgba(15,15,15,0.15)] dark:border-[rgba(255,255,255,0.15)]">
                             <ZoomIn size={12} className="text-[#059669] dark:text-[#10B981]" /> {t.expand}
                           </span>
                         </div>
                       </div>
-                      <div className="px-1 font-mono text-[10px] font-semibold text-[#0F0F0F] dark:text-[#EDECE6] group-hover:text-[#059669] dark:group-hover:text-[#10B981] transition-colors truncate flex items-center justify-between">
+                      <div className="px-1 offer-ui font-semibold text-[#0F0F0F] dark:text-[#EDECE6] group-hover:text-[#059669] dark:group-hover:text-[#10B981] transition-colors truncate flex items-center justify-between">
                         <span className="truncate">{art.title}</span>
                         <Maximize2 size={10} className="text-[#8E8D88] dark:text-[#6A6965] group-hover:text-[#059669] dark:group-hover:text-[#10B981] shrink-0 ml-1" />
                       </div>
@@ -315,7 +318,7 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
 
             {/* Included Modules Detail */}
             <div className="space-y-4">
-              <div className="font-mono text-xs font-bold uppercase tracking-wider text-[#0F0F0F] dark:text-[#EDECE6] border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] pb-2">
+              <div className="offer-eyebrow font-bold text-[#0F0F0F] dark:text-[#EDECE6] border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] pb-2">
                 {t.modules_title}
               </div>
 
@@ -325,15 +328,15 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
                     key={i}
                     className="p-4 bg-white dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.12)] dark:border-[rgba(255,255,255,0.1)] space-y-2"
                   >
-                    <div className="font-mono text-xs font-bold text-[#0F0F0F] dark:text-[#EDECE6] flex items-center gap-2">
+                    <div className="offer-ui font-bold text-[#0F0F0F] dark:text-[#EDECE6] flex items-center gap-2">
                       <CheckCircle2 size={15} className="text-[#059669] dark:text-[#10B981] shrink-0" />
                       <span>{mod.title}</span>
                     </div>
-                    <p className="text-xs text-[#575652] dark:text-[#9B9A95] leading-relaxed">
+                    <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
                       {mod.desc}
                     </p>
                     {mod.items && (
-                      <ul className="font-mono text-[11px] text-[#0F0F0F] dark:text-[#EDECE6] space-y-1 pt-1 border-t border-[rgba(15,15,15,0.06)] dark:border-[rgba(255,255,255,0.08)]">
+                      <ul className="offer-ui text-[#0F0F0F] dark:text-[#EDECE6] space-y-1 pt-1 border-t border-[rgba(15,15,15,0.06)] dark:border-[rgba(255,255,255,0.08)]">
                         {mod.items.map((item, j) => (
                           <li key={j} className="flex items-start gap-1.5 text-[#575652] dark:text-[#9B9A95]">
                             <span className="text-[#059669] dark:text-[#10B981]">•</span>
@@ -348,12 +351,12 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
             </div>
 
             {/* Scope Boundaries / Exclusions */}
-            <div className="p-4 sm:p-5 bg-white dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 font-mono text-xs">
+            <div className="p-4 sm:p-5 bg-white dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 offer-ui">
               <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] uppercase tracking-wider flex items-center gap-2">
                 <XCircle size={15} className="text-[#8E8D88] dark:text-[#6A6965]" />
                 <span>{t.exclusions_title}</span>
               </div>
-              <ul className="space-y-1.5 text-[#575652] dark:text-[#9B9A95] text-[11px]">
+              <ul className="space-y-1.5 text-[#575652] dark:text-[#9B9A95] offer-ui">
                 {plan.exclusions.map((exc, idx) => (
                   <li key={idx} className="flex items-start gap-2">
                     <span className="text-red-500 font-bold shrink-0">✕</span>
@@ -361,55 +364,63 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
                   </li>
                 ))}
               </ul>
+              <Link
+                to="/solutions/tech-retail/terms"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="offer-ui inline-flex items-center gap-1.5 font-semibold text-[#059669] dark:text-[#10B981] hover:underline pt-1 border-t border-[rgba(15,15,15,0.08)] dark:border-[rgba(255,255,255,0.08)] mt-1"
+              >
+                {t.exclusions_terms}
+              </Link>
             </div>
 
             {/* Payment Milestones & Ownership Policy */}
-            <div className="p-4 bg-[#ECFDF5] dark:bg-[#10B981]/15 border border-[#059669]/25 dark:border-[#10B981]/30 font-mono text-xs space-y-2">
+            <div className="p-4 bg-[#ECFDF5] dark:bg-[#10B981]/15 border border-[#059669]/25 dark:border-[#10B981]/30 offer-ui space-y-2">
               <div className="font-bold text-[#059669] dark:text-[#10B981] uppercase tracking-wider flex items-center gap-2">
                 <ShieldCheck size={15} />
                 <span>{t.milestones_title}</span>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-[11px] text-[#0F0F0F] dark:text-[#EDECE6]">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 offer-ui text-[#0F0F0F] dark:text-[#EDECE6]">
                 <div className="p-2 bg-white/70 dark:bg-[#161619]/70 border border-[#059669]/20 dark:border-[#10B981]/30">
                   <span className="font-bold block text-[#059669] dark:text-[#10B981]">{t.deposit_label}</span>
-                  <span className="text-[#575652] dark:text-[#9B9A95] text-[10px]">{t.deposit_desc}</span>
+                  <span className="text-[#575652] dark:text-[#9B9A95] offer-ui">{t.deposit_desc}</span>
                 </div>
                 <div className="p-2 bg-white/70 dark:bg-[#161619]/70 border border-[#059669]/20 dark:border-[#10B981]/30">
                   <span className="font-bold block text-[#059669] dark:text-[#10B981]">{t.demo_label}</span>
-                  <span className="text-[#575652] dark:text-[#9B9A95] text-[10px]">{t.demo_desc}</span>
+                  <span className="text-[#575652] dark:text-[#9B9A95] offer-ui">{t.demo_desc}</span>
                 </div>
                 <div className="p-2 bg-white/70 dark:bg-[#161619]/70 border border-[#059669]/20 dark:border-[#10B981]/30">
                   <span className="font-bold block text-[#059669] dark:text-[#10B981]">{t.handover_label}</span>
-                  <span className="text-[#575652] dark:text-[#9B9A95] text-[10px]">{t.handover_desc}</span>
+                  <span className="text-[#575652] dark:text-[#9B9A95] offer-ui">{t.handover_desc}</span>
                 </div>
               </div>
             </div>
 
             {/* Delivery Guarantee Note */}
-            <div className="p-4 bg-[#FAF9F5] dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] font-mono text-xs space-y-2">
+            <div className="p-4 bg-[#FAF9F5] dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] offer-ui space-y-2">
               <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] uppercase tracking-wider flex items-center gap-2">
                 <Clock size={15} className="text-[#059669] dark:text-[#10B981]" />
                 <span>{lang === 'ur-en' ? 'DELIVERY AUR SLA ZIMMEDARI' : 'DELIVERY AND SLA COMMITMENT'}</span>
               </div>
-              <p className="font-serif text-[11px] leading-relaxed text-[#575652] dark:text-[#9B9A95] normal-case tracking-normal">
+              <p className="offer-body text-[#575652] dark:text-[#9B9A95] normal-case tracking-normal">
                 {t.guarantee_note}
               </p>
             </div>
 
             {/* Payment & Ordering Note */}
-            <div className="p-4 bg-[#FAF9F5] dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] font-mono text-xs space-y-2">
+            <div className="p-4 bg-[#FAF9F5] dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] offer-ui space-y-2">
               <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] uppercase tracking-wider flex items-center gap-2">
                 <MessageSquare size={15} className="text-[#059669] dark:text-[#10B981]" />
                 <span>{lang === 'ur-en' ? 'PAYMENT AUR ORDER KARNE KA TAREEQA' : 'HOW PAYMENT AND ORDERING WORK'}</span>
               </div>
-              <p className="font-serif text-[11px] leading-relaxed text-[#575652] dark:text-[#9B9A95] normal-case tracking-normal">
+              <p className="offer-body text-[#575652] dark:text-[#9B9A95] normal-case tracking-normal">
                 {t.payment_note}
               </p>
             </div>
           </div>
 
           {/* ─── Modal Footer Actions (Fixed / Non-scrolling) ─── */}
-          <div className="p-4 sm:p-6 border-t border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#1A1A1E] flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs shrink-0">
+          <div className="p-4 sm:p-6 border-t border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#1A1A1E] flex flex-col sm:flex-row items-center justify-between gap-4 offer-ui shrink-0">
             <div className="flex items-center gap-3">
               <a
                 href="https://store-demo-eight.vercel.app/"
@@ -430,18 +441,18 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
               </a>
             </div>
 
-            <div className="flex items-center gap-3 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
               <button
                 onClick={() => onOpenWhatsApp(plan.name, plan.pricePkr)}
-                className="btn-blue text-xs flex-1 sm:flex-none justify-center cursor-pointer animate-claim-solid group relative overflow-hidden py-3 px-5 font-bold shadow-md"
+                className="btn-blue offer-btn offer-btn-xl w-full sm:w-auto sm:flex-none justify-center cursor-pointer animate-claim-solid group relative overflow-hidden shadow-md"
               >
-                <MessageSquare size={14} className="animate-icon-wiggle group-hover:scale-125 transition-transform" />
+                <MessageSquare size={20} className="animate-icon-wiggle group-hover:scale-125 transition-transform" />
                 <span>{t.claim_whatsapp}</span>
                 <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none animate-shimmer-sweep" />
               </button>
               <button
                 onClick={onClose}
-                className="btn-outline text-xs cursor-pointer"
+                className="btn-outline offer-btn cursor-pointer"
               >
                 {t.close}
               </button>
@@ -453,7 +464,7 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
       {/* ─── Fullscreen Image Modal Lightbox (Expands on Click) ─── */}
       {expandedImageIndex !== null && plan.artifacts && plan.artifacts[expandedImageIndex] && (
         <div
-          className="fixed inset-0 z-[10000] bg-[#0F0F0F]/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 font-mono text-xs"
+          className="fixed inset-0 z-[10000] bg-[#0F0F0F]/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 offer-ui"
           onClick={() => setExpandedImageIndex(null)}
           onWheel={(e) => e.stopPropagation()}
         >
@@ -464,13 +475,13 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
             {/* Lightbox Masthead */}
             <div className="flex items-center justify-between border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] pb-2 px-1">
               <div className="flex items-center gap-2">
-                <span className="tag-blue text-[10px]">
+                <span className="tag-blue offer-badge">
                   {plan.artifacts[expandedImageIndex].tag || t.preview_tag}
                 </span>
-                <span className="text-base sm:text-lg font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6]">
+                <span className="offer-h3 text-[#0F0F0F] dark:text-[#EDECE6]">
                   {plan.artifacts[expandedImageIndex].title}
                 </span>
-                <span className="text-[11px] text-[#8E8D88] dark:text-[#6A6965] hidden sm:inline">
+                <span className="offer-ui text-[#8E8D88] dark:text-[#6A6965] hidden sm:inline">
                   // {t.preview_counter} {expandedImageIndex + 1} / {plan.artifacts.length}
                 </span>
               </div>
@@ -523,14 +534,14 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
             </div>
 
             {/* Lightbox Footer Caption */}
-            <div className="flex items-center justify-between text-[11px] text-[#575652] dark:text-[#9B9A95] pt-1 px-1">
+            <div className="flex items-center justify-between offer-ui text-[#575652] dark:text-[#9B9A95] pt-1 px-1">
               <span>
-                {t.lightbox_return} (<kbd className="px-1.5 py-0.5 bg-white dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.2)] dark:border-[rgba(255,255,255,0.2)] text-[10px] text-[#0F0F0F] dark:text-[#EDECE6]">
+                {t.lightbox_return} (<kbd className="px-1.5 py-0.5 bg-white dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.2)] dark:border-[rgba(255,255,255,0.2)] offer-badge text-[#0F0F0F] dark:text-[#EDECE6]">
                   ESC
                 </kbd>)
               </span>
-              <span className="font-semibold text-[#0F0F0F] dark:text-[#EDECE6] hidden sm:inline">
-                {plan.name} // {plan.code}
+              <span className="offer-ui font-semibold text-[#0F0F0F] dark:text-[#EDECE6] hidden sm:inline">
+                {plan.name} // <span className="offer-code">{plan.code}</span>
               </span>
             </div>
           </div>

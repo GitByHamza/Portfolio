@@ -197,7 +197,7 @@ export const ur = {
     flagship_delivery_label: 'DELIVERY TIMELINE:',
     flagship_delivery_val: '⚡ 10 Se 30 Dinon Mein Guaranteed',
     flagship_cta: 'TECH RETAIL OS OFFER DEKHEIN',
-    flagship_demo: 'LIVE DEMO CHECK KAREIN',
+    flagship_demo: 'LIVE DEMO TEST KAREIN',
     tiers_title: 'TEEN MUNASIB DEPLOYMENT PACKAGES',
     tier1_title: 'Single Store Launch',
     tier1_price: 'PKR 280,000',
