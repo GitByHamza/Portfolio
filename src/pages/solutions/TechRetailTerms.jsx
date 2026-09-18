@@ -5,6 +5,11 @@ import { useLanguage } from '../../context/LanguageContext'
 
 export default function TechRetailTerms() {
   const { isUrdu } = useLanguage()
+  const currency = typeof window !== 'undefined'
+    ? localStorage.getItem('texcodes_currency') ||
+      localStorage.getItem('tex_pref_currency') ||
+      (['Asia/Karachi', 'Asia/Kolkata'].includes(Intl.DateTimeFormat().resolvedOptions().timeZone) ? 'PKR' : 'USD')
+    : 'USD'
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -62,7 +67,7 @@ export default function TechRetailTerms() {
             <div className="bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] p-5 space-y-3 font-mono text-xs text-[#0F0F0F] dark:text-[#EDECE6]">
               <div>
                 <span className="font-bold text-[#059669] dark:text-[#10B981]">
-                  • Single Store Launch (PKR 280,000 / 10 {isUrdu ? 'Din, guaranteed' : 'Days, guaranteed'}):
+                  • Single Store Launch ({currency === 'USD' ? '$2,450 USD' : 'PKR 280,000'} | 10 {isUrdu ? 'Din, guaranteed' : 'Days, guaranteed'}):
                 </span>
                 <p className="text-[#575652] dark:text-[#9B9A95] mt-0.5">
                   {isUrdu
@@ -73,7 +78,7 @@ export default function TechRetailTerms() {
 
               <div className="pt-2 border-t border-[rgba(15,15,15,0.08)] dark:border-[rgba(255,255,255,0.08)]">
                 <span className="font-bold text-[#059669] dark:text-[#10B981]">
-                  • Multi Branch Growth (PKR 550,000 / 21 {isUrdu ? 'Din, guaranteed' : 'Days, guaranteed'}):
+                  • Multi Branch Growth ({currency === 'USD' ? '$4,850 USD' : 'PKR 550,000'} | 21 {isUrdu ? 'Din, guaranteed' : 'Days, guaranteed'}):
                 </span>
                 <p className="text-[#575652] dark:text-[#9B9A95] mt-0.5">
                   {isUrdu
@@ -84,7 +89,7 @@ export default function TechRetailTerms() {
 
               <div className="pt-2 border-t border-[rgba(15,15,15,0.08)] dark:border-[rgba(255,255,255,0.08)]">
                 <span className="font-bold text-[#059669] dark:text-[#10B981]">
-                  • Chain and Distribution OS ({isUrdu ? 'PKR 950,000 se shuru' : 'From PKR 950,000'} / 30 {isUrdu ? 'Din, guaranteed' : 'Days, guaranteed'}):
+                  • Chain and Distribution OS ({currency === 'USD' ? (isUrdu ? '$8,500 USD se shuru' : 'From $8,500 USD') : (isUrdu ? 'PKR 950,000 se shuru' : 'From PKR 950,000')} | 30 {isUrdu ? 'Din, guaranteed' : 'Days, guaranteed'}):
                 </span>
                 <p className="text-[#575652] dark:text-[#9B9A95] mt-0.5">
                   {isUrdu
@@ -151,17 +156,30 @@ export default function TechRetailTerms() {
           <section className="space-y-3">
             <h2 className="text-xl font-display uppercase text-[#0F0F0F] dark:text-[#EDECE6] tracking-wide flex items-center gap-2">
               <span className="text-[#059669] dark:text-[#10B981] font-mono">04.</span>{' '}
-              {isUrdu ? 'Delivery Timeline aur Late Delivery Remedy' : 'Delivery Timeline and Late Delivery Remedy'}
+              {isUrdu ? 'Delivery Timeline, Staging Guarantee aur Late Remedy' : 'Delivery Timeline, Staging Guarantee & Late Remedy'}
             </h2>
             <p>
               {isUrdu
-                ? 'Delivery ka waqt contract mein likha hota hai, andaza nahi. Single Store Launch 10 din, Multi Branch Growth 21 din, aur Chain and Distribution OS 30 din mein deliver hota hai. Yeh din tab se shuru hote hain jab aap ka content aur pehli qist hamare paas pohanch jaye.'
-                : 'The delivery window is written into the contract, not an estimate. Single Store Launch ships in 10 days, Multi Branch Growth in 21 days, and Chain and Distribution OS in 30 days. The clock starts the day your content and first installment reach us.'}
+                ? 'Delivery ka waqt contract mein likha hota hai, andaza nahi. Single Store Launch 10 din, Multi Branch Growth 21 din, aur Chain and Distribution OS 30 din mein deliver hota hai. Yeh din tab se shuru hote hain jab aap ka content aur pehli milestone qist hamare paas pohanch jaye.'
+                : 'The delivery window is written into the contract, not an estimate. Single Store Launch ships in 10 days, Multi Branch Growth in 21 days, and Chain and Distribution OS in 30 days. The clock starts the day your content and commencement milestone deposit reach us.'}
             </p>
+            <div className="p-5 bg-white dark:bg-[#161619] border border-[#059669]/30 dark:border-[#10B981]/30 space-y-2 font-mono text-xs">
+              <div className="font-bold text-[#059669] dark:text-[#10B981] uppercase tracking-wider flex items-center gap-2">
+                <ShieldCheck size={16} />
+                <span>
+                  {isUrdu ? '100% MILESTONE-PROTECTED STAGING GUARANTEE' : '100% MILESTONE-PROTECTED STAGING GUARANTEE'}
+                </span>
+              </div>
+              <p className="text-[#575652] dark:text-[#9B9A95] font-sans">
+                {isUrdu
+                  ? 'Secondary settlement aur final public launch se pehle, aapka mukammal custom system aapki private staging URL par deploy hota hai. Aap live PC Builder, multi-branch stock sync aur WhatsApp ordering apne actual products ke sath test karte hain. Agar staging demo mutafiqa technical specs fulfill na kare, to aapki deposit 100% fori wapas, database schema blueprint muft aapka, aur waqt ke azaale ke tor par courtesy credit diya jata hai.'
+                  : 'Before secondary settlement and public launch, your fully functional custom system is deployed to a private live staging URL populated with your products. You personally test the PC Builder compatibility engine, multi-branch stock sync, and ordering workflows. If the staging build fails to satisfy the agreed technical specifications, you may request a 100% full refund of your commencement deposit, keep the complete database architecture blueprint for free, and receive a $250 USD courtesy credit for your time.'}
+              </p>
+            </div>
             <p>
               {isUrdu
                 ? 'Agar der hamari taraf se ho, to har mukammal hafte ki der par aap ko ek mahana Care Plan muft milta hai. Agar der aap ke content, feedback, ya kisi third party service ki wajah se ho, to timeline accordingly barh jati hai.'
-                : 'If the delay is on our side, every full week late earns you one free month of the Care Plan. If the delay comes from your content, your feedback, or a third party service, the timeline extends by the same amount.'}
+                : 'If delay occurs on our side beyond the agreed delivery window, every full week late earns you one free month of the Care Plan. If delay comes from your content, feedback, or third-party credentials, the timeline extends accordingly.'}
             </p>
           </section>
 
@@ -212,8 +230,8 @@ export default function TechRetailTerms() {
             </h2>
             <p>
               {isUrdu
-                ? 'Har milestone par 2 revision rounds shamil hain. Is ke baad, ya jo cheez agreed scope se bahar ho, woh PKR 6,000 fi ghanta bill hoti hai aur kaam shuru karne se pehle estimate de diya jata hai.'
-                : 'Two revision rounds are included per milestone. Anything beyond that, or anything outside the agreed scope, is billed at PKR 6,000 per hour with an estimate given before we start.'}
+                ? `Har milestone par 2 revision rounds shamil hain. Is ke baad, ya jo cheez agreed scope se bahar ho, woh ${currency === 'USD' ? '$45 USD fi ghanta' : 'PKR 6,000 fi ghanta'} bill hoti hai aur kaam shuru karne se pehle estimate de diya jata hai.`
+                : `Two revision rounds are included per milestone. Anything beyond that, or anything outside the agreed scope, is billed at ${currency === 'USD' ? '$45 USD per hour' : 'PKR 6,000 per hour'} with an estimate given before we start.`}
             </p>
             <p>
               {isUrdu
@@ -235,8 +253,8 @@ export default function TechRetailTerms() {
             </p>
             <p>
               {isUrdu
-                ? 'Jab project aap ke content ya approval ka intezar kar raha ho, delivery clock ruk jati hai. Agar 30 din se zyada koi jawab na aaye, project dormant ho jata hai. Pehli qist wapas nahi hoti aur dubara shuru karne ke liye hum naye slot par kaam karte hain.'
-                : 'When a project waits on your content or approval, the delivery clock pauses. If we hear nothing for more than 30 days, the project goes dormant. The deposit is non refundable and a restart is scheduled at the next available slot.'}
+                ? 'Jab project aap ke content ya approval ka intezar kar raha ho, delivery clock ruk jati hai. Agar 30 din se zyada koi jawab na aaye, project dormant ho jata hai aur dubara shuru karne ke liye hum naye slot par kaam karte hain.'
+                : 'When a project waits on your content or approval, the delivery clock pauses. If we hear nothing for more than 30 days, the project goes dormant and a restart is scheduled at the next available slot.'}
             </p>
           </section>
 
@@ -244,22 +262,26 @@ export default function TechRetailTerms() {
           <section className="space-y-3">
             <h2 className="text-xl font-display uppercase text-[#0F0F0F] dark:text-[#EDECE6] tracking-wide flex items-center gap-2">
               <span className="text-[#059669] dark:text-[#10B981] font-mono">08.</span>{' '}
-              {isUrdu ? 'Payment, Currency aur Ordering' : 'Payment, Currency and Ordering'}
+              {isUrdu ? 'Payment, Currency aur Invoicing' : 'Payment, Currency and Invoicing'}
             </h2>
             <p>
               {isUrdu
-                ? 'Raqam 40 / 40 / 20 mein banti hai: peshgi, approved demo, aur launch handover. Har qist par formal sign off ke baad hi release hoti hai.'
-                : 'Payment splits 40 / 40 / 20 across deposit, approved demo, and launch handover. Each release happens only after a formal sign off.'}
+                ? 'Raqam 40 / 40 / 20 mein banti hai: peshgi commencement deposit, approved staging demo walkthrough, aur launch handover. Har qist par formal sign off ke baad hi release hoti hai.'
+                : 'Payment splits 40 / 40 / 20 across commencement deposit, approved staging demo walkthrough, and launch handover. Each release happens only after a formal sign off.'}
             </p>
             <p>
               {isUrdu
-                ? 'Order WhatsApp par hota hai. Default payment bank transfer ya cash on delivery hai. Chahein to online card aur wallet gateway ek paid add on ke tor par lag jata hai.'
-                : 'Orders are placed over WhatsApp. The default payment method is bank transfer or cash on delivery. An online card and wallet gateway can be added as a paid add on.'}
+                ? 'Order WhatsApp par ya direct agreement ke zariye hota hai. Default payment bank transfer ya online gateway hai.'
+                : 'Orders are placed over WhatsApp or verified agreement. The default checkout integration includes bank transfer, card gateway, or WhatsApp ordering.'}
             </p>
             <p>
               {isUrdu
-                ? 'Qeematein PKR mein hain. Overseas clients ke liye invoice us tareekh ke exchange rate par banta hai aur wire fees client uthata hai.'
-                : 'Prices are in PKR. Overseas clients are invoiced at the exchange rate on the invoice date and cover the wire fees.'}
+                ? currency === 'USD'
+                  ? 'International clients ke liye invoices direct USD mein jari hoti hain aur payment international wire transfer (SWIFT), Stripe, ya Wise ke zariye qubool ki jati hai.'
+                  : 'Pakistan ke muqami clients ke liye invoices PKR mein jari hoti hain aur payment direct local bank transfer (IBFT) ya online wallet ke zariye hoti hai.'
+                : currency === 'USD'
+                ? 'Invoices for international clients are denominated natively in USD and payable via international wire (SWIFT), Stripe, or Wise with zero currency conversion fees.'
+                : 'Invoices for domestic Pakistani clients are denominated in PKR and payable via local online bank transfer (IBFT) or direct corporate account deposit.'}
             </p>
           </section>
 
@@ -267,17 +289,17 @@ export default function TechRetailTerms() {
           <section className="space-y-3">
             <h2 className="text-xl font-display uppercase text-[#0F0F0F] dark:text-[#EDECE6] tracking-wide flex items-center gap-2">
               <span className="text-[#059669] dark:text-[#10B981] font-mono">09.</span>{' '}
-              {isUrdu ? 'Cancellation, Abandonment aur Kill Fee' : 'Cancellation, Abandonment and Kill Fee'}
+              {isUrdu ? 'Cancellation, Refund aur Staging Assurance' : 'Cancellation, Refund and Staging Assurance'}
             </h2>
             <p>
               {isUrdu
-                ? 'Aap kisi bhi waqt cancel kar sakte hain. Jo kaam ho chuka hai us ka bill banta hai aur peshgi wapas nahi hoti. Agar cancel tab ho jab demo approve ho chuka ho, to 20% kill fee launch handover par lagti hai.'
-                : 'You may cancel at any time. Work already completed is billed and the deposit is non refundable. If you cancel after the demo is approved, a 20% kill fee applies at the launch handover stage.'}
+                ? 'Hamari 100% Milestone-Protected Staging Guarantee ke tehat, agar delivered staging build demo marhale par agreed functional specifications fulfill na kare, to peshgi deposit 100% fori wapas ki jati hai. Agar client demo approval ke baad bila kisi technical waja ke project terminate karna chahe, to us marhale tak ka kaam bill hota hai aur 20% slot cancellation fee lagti hai.'
+                : 'Under our 100% Milestone-Protected Staging Guarantee, if the delivered staging build fails to meet the agreed functional specifications at the milestone demonstration stage, the commencement deposit is 100% refundable upon request. If the client terminates for reasons unrelated to non-performance after staging approval, completed milestone phases are billed and a 20% cancellation fee applies.'}
             </p>
             <p>
               {isUrdu
-                ? 'Agar client 30 din tak ghaib rahe aur koi notice na de, project abandoned mana jata hai. Code aur data us point tak safe rakha jata hai jab tak client wapas na aaye ya formally close na kare.'
-                : 'If the client goes silent for 30 days without notice, the project is treated as abandoned. Code and data are kept safe up to that point until the client returns or formally closes the engagement.'}
+                ? 'Agar client 30 din tak ghaib rahe aur koi notice na de, project dormant mana jata hai. Code aur data us point tak safe rakha jata hai jab tak client wapas na aaye ya formally close na kare.'
+                : 'If the client goes silent for 30 days without notice, the project is treated as dormant. Code and data are kept safe up to that point until the client returns or formally closes the engagement.'}
             </p>
           </section>
 
@@ -297,24 +319,24 @@ export default function TechRetailTerms() {
                 <CheckCircle2 size={15} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                 <span>
                   {isUrdu
-                    ? 'Basic Care Plan PKR 14,000 mahana: hosting, backups, updates, aur priority support.'
-                    : 'Basic Care Plan at PKR 14,000 per month: hosting, backups, updates, and priority support.'}
+                    ? `Basic Care Plan ${currency === 'USD' ? '$140 USD mahana' : 'PKR 14,000 mahana'}: hosting, backups, updates, aur priority support.`
+                    : `Basic Care Plan at ${currency === 'USD' ? '$140 USD per month' : 'PKR 14,000 per month'}: hosting, backups, updates, and priority support.`}
                 </span>
               </div>
               <div className="flex items-start gap-2">
                 <CheckCircle2 size={15} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                 <span>
                   {isUrdu
-                    ? 'Growth Care Plan PKR 28,000 mahana: sab kuch Basic se, plus multi branch monitoring aur monthly reports.'
-                    : 'Growth Care Plan at PKR 28,000 per month: everything in Basic, plus multi branch monitoring and monthly reports.'}
+                    ? `Growth Care Plan ${currency === 'USD' ? '$280 USD mahana' : 'PKR 28,000 mahana'}: sab kuch Basic se, plus multi branch monitoring aur monthly reports.`
+                    : `Growth Care Plan at ${currency === 'USD' ? '$280 USD per month' : 'PKR 28,000 per month'}: everything in Basic, plus multi branch monitoring and monthly reports.`}
                 </span>
               </div>
               <div className="flex items-start gap-2">
                 <CheckCircle2 size={15} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
                 <span>
                   {isUrdu
-                    ? 'Enterprise Care Plan PKR 55,000 mahana: dedicated engineering hours, uptime monitoring, aur on call support.'
-                    : 'Enterprise Care Plan at PKR 55,000 per month: dedicated engineering hours, uptime monitoring, and on call support.'}
+                    ? `Enterprise Care Plan ${currency === 'USD' ? '$550 USD mahana' : 'PKR 55,000 mahana'}: dedicated engineering hours, uptime monitoring, aur on call support.`
+                    : `Enterprise Care Plan at ${currency === 'USD' ? '$550 USD per month' : 'PKR 55,000 per month'}: dedicated engineering hours, uptime monitoring, and on call support.`}
                 </span>
               </div>
             </div>

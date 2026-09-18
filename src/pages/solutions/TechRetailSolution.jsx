@@ -104,20 +104,83 @@ function detectInitialLanguage() {
   return 'en'
 }
 
+/**
+ * Geo / Timezone auto-selection for Currency:
+ * - Checks localStorage for manual user override ('texcodes_currency')
+ * - Inspects Intl.DateTimeFormat().resolvedOptions().timeZone:
+ *   - Asia/Karachi, Asia/Kolkata, Asia/Calcutta -> 'PKR'
+ *   - All other timezones (America/*, Europe/*, Australia/*, Asia/Dubai, etc.) -> 'USD'
+ * - Default for international outreach -> 'USD'
+ */
+function detectInitialCurrency() {
+  if (typeof window === 'undefined') return 'USD'
+  try {
+    const saved = localStorage.getItem('texcodes_currency')
+    if (saved === 'USD' || saved === 'PKR') {
+      return saved
+    }
+  } catch (e) {}
+
+  try {
+    const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase()
+    if (
+      tz === 'asia/karachi' ||
+      tz === 'asia/kolkata' ||
+      tz === 'asia/calcutta'
+    ) {
+      return 'PKR'
+    }
+  } catch (e) {}
+
+  return 'USD'
+}
+
 const I18N_DATA = {
   en: {
-    hero_badge: 'COMMERCIAL SYSTEM // COMPUTER & CCTV RETAIL OS',
-    hero_title_1: 'Sell Computers, CCTV & Tech Hardware',
-    hero_title_accent: 'Online & Multi-Branch',
-    hero_title_2: 'Without Monthly Platform Commissions',
+    hero_badge: 'COMMERCIAL INFRASTRUCTURE // COMPUTER & TECH HARDWARE OS',
+    hero_title_1: 'Automate Custom PC Sales & Multi-Branch Retail',
+    hero_title_accent: 'With Zero Platform Commissions',
+    hero_title_2: 'And 100% Code Ownership',
     hero_sub:
-      'Ditch slow templates and monthly subscriptions. We build a custom Next.js retail system: PC Builder compatibility engine, multi-branch inventory, automated WhatsApp dispatch.',
+      'Turn your computer showroom into an automated 24/7 retail operation. Custom PC Builder with real-time socket and wattage validation, live multi-branch inventory sync, serial RMA tracking, and AI sales advisory—delivered in 21 days with 100% codebase and database ownership.',
     cta_primary: 'Choose Your Solution Plan',
     cta_secondary: 'Explore Live Store Demo',
-    metrics_code: '100% Client Code Ownership',
-    metrics_tax: 'Zero Platform Sales Commission',
-    metrics_speed: 'Fast Next.js Server Rendering',
-    metrics_rma: 'Serial Number & Warranty Tracking',
+    metrics_code: 'Full GitHub & DB Transfer',
+    metrics_tax: 'Keep 100% Retail Margins',
+    metrics_speed: 'Real-Time Hardware Validation',
+    metrics_rma: 'Supplier-to-Invoice Tracking',
+    metrics_code_top: '100% OWNERSHIP',
+    metrics_tax_top: '0% PLATFORM TAX',
+    metrics_speed_top: '<1% RETURN RATE',
+    metrics_rma_top: 'SERIAL RMA',
+
+    // Ultimatum Decision Matrix
+    ultimatum_badge: 'THE ZERO-RISK DECISION MATRIX',
+    ultimatum_title: 'WHY LEADING TECH RETAILERS MOVE FORWARD',
+    ultimatum_sub:
+      'An offer structured so the retailer wins in both scenarios. We assume the technical execution risk so you can modernize your operation with total certainty.',
+    ultimatum_best_tag: 'BEST-CASE SCENARIO',
+    ultimatum_best_title: 'You launch an automated retail machine',
+    ultimatum_best_p1: 'Deploy a dedicated Next.js storefront and interactive PC Builder in 21 days.',
+    ultimatum_best_p2: 'Component returns drop to zero with automated socket, RAM, and wattage checks.',
+    ultimatum_best_p3: 'Physical counters and online orders share one real-time multi-branch inventory.',
+    ultimatum_best_p4: 'Save thousands every year with zero recurring platform commissions or order fees.',
+    ultimatum_best_p5: 'Full GitHub repository and PostgreSQL database ownership transferred to your accounts.',
+    ultimatum_best_footer: 'Outcome: You scale your operation, protect your margins, and own your software.',
+
+    ultimatum_worst_tag: 'WORST-CASE SCENARIO',
+    ultimatum_worst_title: 'If we fail to fulfill agreed specifications',
+    ultimatum_worst_p1: '100% full refund of your commencement deposit processed immediately without dispute.',
+    ultimatum_worst_p2: 'Keep our custom hardware catalog schema and architecture blueprint for free.',
+    ultimatum_worst_p3: '$250 USD courtesy credit paid directly to your business as an apology for your time.',
+    ultimatum_worst_p4: 'Zero contract lock-in, zero ongoing financial obligations, and zero risk.',
+    ultimatum_worst_footer: 'Outcome: You risk zero capital, lose nothing, and keep an enterprise tech audit.',
+
+    // Staging Guarantee Banner
+    guarantee_badge: 'SAFETY NET // 100% MILESTONE-PROTECTED STAGING GUARANTEE',
+    guarantee_title: 'Test Your System On A Live Staging URL Before Final Settlement',
+    guarantee_sub:
+      'You only pay the remaining balance after testing your fully functional custom storefront, PC Builder, and multi-branch stock sync on a private staging URL with your own products. If it does not perform to agreed specifications, your deposit is refunded in full.',
 
     arch_badge: 'SYSTEM ARCHITECTURE',
     arch_title: 'ONE UNIFIED SYSTEM FOR THE RETAIL OPERATION',
@@ -141,6 +204,9 @@ const I18N_DATA = {
     arch_06_title: '06. 100% CODE & DATA TRANSFER',
     arch_06_desc:
       'Full GitHub repository and PostgreSQL database ownership transferred directly to your business account.',
+    arch_07_title: '07. AI SALES & HARDWARE ADVISOR CHATBOT',
+    arch_07_desc:
+      'LLM-powered hardware compatibility & automated 24/7 retail sales agent embedded into storefront. Recommends parts by budget, checks socket/wattage compatibility, and converts visitors into WhatsApp and web orders.',
 
     demo_badge: 'VERIFIABLE SYSTEM DEMONSTRATION',
     demo_title: 'TEST THE LIVE PRODUCTION INTERFACE',
@@ -169,9 +235,10 @@ const I18N_DATA = {
     starter_desc:
       'For single location computer stores & CCTV shops starting online sales with direct WhatsApp dispatch.',
     starter_price_pkr: 'PKR 280,000',
-    starter_price_usd: '~$1,000 USD',
+    starter_price_usd: '$2,450 USD',
     starter_delivery: '⚡ Delivered in 10 days, guaranteed',
-    starter_support: 'Optional Care Plan: PKR 14,000 / mo',
+    starter_support_pkr: 'Optional Care Plan: PKR 14,000 / mo',
+    starter_support_usd: 'Optional Care Plan: $140 / mo',
     starter_callout_label: 'CORE CAPABILITY:',
     starter_callout_text:
       'Essential single-store online storefront with direct WhatsApp checkout and basic stock management.',
@@ -185,51 +252,89 @@ const I18N_DATA = {
     growth_desc:
       'For established electronics and hardware retailers selling across physical shops and online with custom PC builds.',
     growth_price_pkr: 'PKR 550,000',
-    growth_price_usd: '~$2,000 USD',
+    growth_price_usd: '$4,850 USD',
     growth_delivery: '⚡ Delivered in 21 days, guaranteed',
-    growth_support: 'Optional Care Plan: PKR 28,000 / mo',
+    growth_support_pkr: 'Optional Care Plan: PKR 28,000 / mo',
+    growth_support_usd: 'Optional Care Plan: $280 / mo',
     growth_callout_label: 'MAJOR UPGRADE OVER STARTER:',
     growth_callout_text:
-      'Adds the real-time PC Builder compatibility engine, 3-branch stock sync, and serial number warranty RMA tracking.',
+      'Adds the real-time PC Builder compatibility engine, 3-branch stock sync, serial warranty tracking, and AI Hardware Advisor Chatbot.',
     growth_f1: 'Interactive PC Builder Compatibility Matrix',
     growth_f2: '3-Branch Inventory Synchronization',
     growth_f3: 'Hardware Serial Number & RMA Warranty Tracking',
     growth_f4: 'Promotional Sliders, Flash Sales & Coupons',
-    growth_f5: 'Online Card & Wallet Payment Gateway (Included — No +50K Fee)',
+    growth_f5_pkr: 'Online Card & Wallet Payment Gateway (Included — Save PKR 50,000)',
+    growth_f5_usd: 'Online Card & Wallet Payment Gateway (Included — Save $400 USD)',
+    growth_f6_pkr: 'AI Retail Sales & Hardware Advisor Chatbot (Included — Save PKR 65,000)',
+    growth_f6_usd: 'AI Retail Sales & Hardware Advisor Chatbot (Included — Save $650 USD)',
 
     enterprise_name: 'Chain and Distribution OS',
     enterprise_badge: '★ COMPLETE RETAIL OS',
     enterprise_desc:
       'For multi branch retail chains, wholesale hardware distributors, and computer importers operating high volume.',
     enterprise_price_pkr: 'From PKR 950,000',
-    enterprise_price_usd: '~$3,400 USD',
+    enterprise_price_usd: 'From $8,500 USD',
     enterprise_delivery: '⚡ Delivered in 30 days, guaranteed',
-    enterprise_support: 'Dedicated Care Plan: PKR 55,000 / mo',
+    enterprise_support_pkr: 'Dedicated Care Plan: PKR 55,000 / mo',
+    enterprise_support_usd: 'Dedicated Care Plan: $550 / mo',
     enterprise_callout_label: 'MAJOR UPGRADE OVER GROWTH:',
     enterprise_callout_text:
-      'Adds unlimited branches, full theme content CMS, multi-guard staff RBAC, and bespoke POS/Courier API sync.',
+      'Adds unlimited branches, full theme content CMS, multi-guard staff RBAC, bespoke POS/Courier API sync, and Enterprise AI Sales Agent.',
     enterprise_f1: 'Unlimited Branches & Warehouse Sync',
     enterprise_f2: 'Granular Staff RBAC (Super Admin, Manager, Cashier)',
     enterprise_f3: 'Complete Theme & Navigation Content CMS',
     enterprise_f4: 'Custom POS Hardware & Courier API Sync',
     enterprise_f5: 'Multi-Gateway Card & Wallet Prepay Integration (Included)',
+    enterprise_f6: 'Enterprise AI Retail Sales & Knowledge Agent (Included)',
 
     whatsapp_cta: 'Claim This Solution on WhatsApp',
     view_terms: 'Review Contract Scope & Warranty Terms →',
   },
   'ur-en': {
-    hero_badge: 'COMMERCIAL SYSTEM // COMPUTER & CCTV RETAIL OS',
-    hero_title_1: 'Computer, CCTV aur Tech Hardware Sell Karein',
-    hero_title_accent: 'Online aur Multi-Branch',
-    hero_title_2: 'Baghair Kisi Mahana Platform Commission Ke',
+    hero_badge: 'COMMERCIAL INFRASTRUCTURE // COMPUTER AUR HARDWARE OS',
+    hero_title_1: 'Custom PC Sales Aur Multi-Branch Dukanon Ko',
+    hero_title_accent: 'Baghair Kisi Platform Commission Ke',
+    hero_title_2: 'Automate Karein',
     hero_sub:
-      'Slow templates aur monthly subscriptions khatam. Hum banate hain custom Next.js retail system: PC Builder compatibility engine, multi-branch stock sync, automated WhatsApp dispatch.',
+      'Apni computer dukan ko 24/7 chalne wale automated retail operation mein badlein. Real-time socket aur wattage compatibility engine, live multi-branch stock sync, serial warranty tracking, aur AI sales advisor—21 dinon mein mukammal code malkiat ke sath.',
     cta_primary: 'Apna Retail Plan Select Karein',
     cta_secondary: 'Live Demo Test Karein',
-    metrics_code: '100% Code aur Data Ka Mukammal Ikhtiyar',
-    metrics_tax: 'Baghair Kisi Sales Commission Ke',
-    metrics_speed: 'Tez Tareen Next.js Server Rendering',
-    metrics_rma: 'Serial Number aur Warranty Tracking',
+    metrics_code: 'Mukammal GitHub Code Transfer',
+    metrics_tax: 'Apna Pura Profit Khud Rakhein',
+    metrics_speed: 'Real-Time Hardware Validation',
+    metrics_rma: 'Supplier Se Invoice Tak Tracking',
+    metrics_code_top: '100% MALKIAT',
+    metrics_tax_top: '0% COMMISSION',
+    metrics_speed_top: '<1% RETURNS',
+    metrics_rma_top: 'SERIAL RMA',
+
+    // Ultimatum Decision Matrix
+    ultimatum_badge: 'ZERO-RISK DECISION MATRIX',
+    ultimatum_title: 'RETAILERS HUMARE SATH KYUN KAAM KARTE HAIN',
+    ultimatum_sub:
+      'Aisa offer jisme dono surton mein retailer ka faida hai. Technical risk hum uthate hain taake aap baghair kisi dar ke scale karein.',
+    ultimatum_best_tag: 'BEST-CASE SCENARIO',
+    ultimatum_best_title: 'Aapka 24/7 automated retail system launch hota hai',
+    ultimatum_best_p1: '21 dinon mein dedicated Next.js storefront aur PC Builder live.',
+    ultimatum_best_p2: 'Automated compatibility checking se return rate taqreeban sifar.',
+    ultimatum_best_p3: 'Physical counters aur online orders ka live multi-branch stock sync.',
+    ultimatum_best_p4: 'Zero platform fee aur zero sales commission se lakhoon ki salana bachat.',
+    ultimatum_best_p5: 'GitHub source code aur PostgreSQL database ki 100% mukammal malkiat.',
+    ultimatum_best_footer: 'Nateeja: Aapka business scale hota hai aur har rupay ka profit aapka rehta hai.',
+
+    ultimatum_worst_tag: 'WORST-CASE SCENARIO',
+    ultimatum_worst_title: 'Agar hum agreed specs fulfill na kar sakein',
+    ultimatum_worst_p1: 'Aapki deposit raqam 100% fori wapas bila kisi behas.',
+    ultimatum_worst_p2: 'Hamara tayyar kardah hardware database schema blueprint bilkul muft aapka.',
+    ultimatum_worst_p3: 'Aapke waqt ke azaale ke tor par courtesy credit ada kiya jata hai.',
+    ultimatum_worst_p4: 'Zero vendor lock-in aur koi chhupe huay ikhrajat nahi.',
+    ultimatum_worst_footer: 'Nateeja: Aapka zero financial risk hai, kuch nahi kho te, aur technical audit muft milta hai.',
+
+    // Staging Guarantee Banner
+    guarantee_badge: 'SAFETY NET // 100% MILESTONE-PROTECTED STAGING GUARANTEE',
+    guarantee_title: 'Final Payment Se Pehle Live Staging URL Par System Test Karein',
+    guarantee_sub:
+      'Baqi raqam aap tab ada karte hain jab aap apni private staging URL par products, PC Builder aur stock sync ko mukammal chala kar verify kar lein. Agar spec ke mutabiq na ho, to deposit fori wapas.',
 
     arch_badge: 'SYSTEM ARCHITECTURE',
     arch_title: 'ONLINE AUR DUKAN DONO KE LIYE COMBINED SYSTEM',
@@ -253,6 +358,9 @@ const I18N_DATA = {
     arch_06_title: '06. 100% CODE AUR DATA TRANSFER',
     arch_06_desc:
       'Mukammal GitHub source code aur PostgreSQL database ki ownership aapke company account ko transfer hoti hai.',
+    arch_07_title: '07. AI SALES AUR HARDWARE ADVISOR CHATBOT',
+    arch_07_desc:
+      'Website par 24/7 mojud AI assistant jo customer ko budget ke mutabiq compatible parts recommend karta hai, socket aur wattage match karta hai, aur orders seedha WhatsApp ya cart mein bhejta hai.',
 
     demo_badge: 'VERIFIABLE SYSTEM DEMONSTRATION',
     demo_title: 'LIVE PRODUCTION INTERFACE TEST KAREIN',
@@ -281,9 +389,10 @@ const I18N_DATA = {
     starter_desc:
       'Single location computer shops aur CCTV vendors ke liye jo direct WhatsApp dispatch ke sath online sales shuru kar rahe hain.',
     starter_price_pkr: 'PKR 280,000',
-    starter_price_usd: '~$1,000 USD',
+    starter_price_usd: '$2,450 USD',
     starter_delivery: '⚡ 10 dinon mein delivery, guaranteed',
-    starter_support: 'Optional Care Plan: PKR 14,000 / month',
+    starter_support_pkr: 'Optional Care Plan: PKR 14,000 / month',
+    starter_support_usd: 'Optional Care Plan: $140 / month',
     starter_callout_label: 'MAIN CAPABILITY:',
     starter_callout_text:
       'Single dukan ke liye online storefront jisme direct WhatsApp order checkout aur basic stock manager shamil hai.',
@@ -297,34 +406,40 @@ const I18N_DATA = {
     growth_desc:
       'Bari electronics aur hardware dukanon ke liye jahan custom gaming PC builds aur physical store sync zaroori hai.',
     growth_price_pkr: 'PKR 550,000',
-    growth_price_usd: '~$2,000 USD',
+    growth_price_usd: '$4,850 USD',
     growth_delivery: '⚡ 21 dinon mein delivery, guaranteed',
-    growth_support: 'Optional Care Plan: PKR 28,000 / month',
+    growth_support_pkr: 'Optional Care Plan: PKR 28,000 / month',
+    growth_support_usd: 'Optional Care Plan: $280 / month',
     growth_callout_label: 'STARTER SE BARI UPGRADES:',
     growth_callout_text:
-      'Isme real-time PC Builder compatibility engine, 3-branch stock sync, aur serial number warranty tracking shamil hai.',
+      'Isme real-time PC Builder compatibility engine, 3-branch stock sync, serial warranty tracking, aur AI Hardware Advisor Chatbot shamil hai.',
     growth_f1: 'Interactive PC Builder Compatibility Matrix',
     growth_f2: '3 Physical Branches Ki Stock Synchronization',
     growth_f3: 'Hardware Serial Number aur RMA Warranty Tracker',
     growth_f4: 'Promotional Sliders, Flash Sales aur Coupons',
-    growth_f5: 'Card Prepay Online Payment Gateway (Shamil Hai — Baghair Kisi 50K Fee Ke)',
+    growth_f5_pkr: 'Card Prepay Online Payment Gateway (Shamil Hai — Baghair Kisi 50K Fee Ke)',
+    growth_f5_usd: 'Card Prepay Online Payment Gateway (Shamil Hai — Baghair Kisi $400 Fee Ke)',
+    growth_f6_pkr: 'AI Hardware Advisor aur Sales Chatbot (Shamil Hai — Baghair Kisi 65K Fee Ke)',
+    growth_f6_usd: 'AI Hardware Advisor aur Sales Chatbot (Shamil Hai — Baghair Kisi $650 Fee Ke)',
 
     enterprise_name: 'Chain and Distribution OS',
     enterprise_badge: '★ MUKAMMAL RETAIL OS',
     enterprise_desc:
       'Multi branch retail chains, wholesale distributors aur computer importers ke liye jo bara volume operate karte hain.',
     enterprise_price_pkr: 'PKR 950,000 se shuru',
-    enterprise_price_usd: '~$3,400 USD',
+    enterprise_price_usd: '$8,500 USD se shuru',
     enterprise_delivery: '⚡ 30 dinon mein delivery, guaranteed',
-    enterprise_support: 'Dedicated Care Plan: PKR 55,000 / mahana',
+    enterprise_support_pkr: 'Dedicated Care Plan: PKR 55,000 / mahana',
+    enterprise_support_usd: 'Dedicated Care Plan: $550 / mahana',
     enterprise_callout_label: 'GROWTH SE BARI UPGRADES:',
     enterprise_callout_text:
-      'La-mehdood branches, mukammal dynamic theme CMS, granular staff RBAC, aur courier/POS API integration.',
+      'La-mehdood branches, mukammal dynamic theme CMS, granular staff RBAC, courier/POS API integration, aur Enterprise AI Sales Agent.',
     enterprise_f1: 'La-Mehdood Branches aur Godam Sync',
     enterprise_f2: 'Staff Permissions (Super Admin, Manager, Cashier)',
     enterprise_f3: 'Mukammal Storefront Theme aur Content CMS',
     enterprise_f4: 'Custom POS Hardware aur Courier API Sync',
     enterprise_f5: 'Online Payment Gateways aur Custom Financial APIs Shamil',
+    enterprise_f6: 'Dedicated AI Sales Agent aur Custom Inventory Knowledge Engine (Shamil Hai)',
 
     whatsapp_cta: 'Yeh Plan WhatsApp Par Book Karein',
     view_terms: 'Mukammal Sharaait aur Guarantees Dekhein →',
@@ -338,7 +453,7 @@ const PLANS_DETAIL = {
       code: 'TXS-STARTER',
       badge: 'ENTRY LEVEL // SINGLE OUTLET',
       pricePkr: 'PKR 280,000',
-      priceUsd: '~$1,000 USD',
+      priceUsd: '$2,450 USD',
       delivery: '10 days, guaranteed',
       idealFor:
         'Single-location computer shops, CCTV vendors, and electronics retail counters beginning online sales with direct WhatsApp dispatch without ongoing platform taxes.',
@@ -399,7 +514,8 @@ const PLANS_DETAIL = {
         'Multi branch stock synchronization (Single outlet stock only).',
         'Hardware serial number and RMA warranty lifecycle tracking.',
         'Product photos, descriptions, and data entry beyond the first 50 SKUs. You supply the content and we set it up.',
-        'Online card prepay payment gateway (Available as +PKR 50,000 add-on; included free in Growth & Chain plans).',
+        'Online card prepay payment gateway (Available as +PKR 50,000 / $400 add-on; included free in Growth & Chain plans).',
+        'AI Retail Sales & Hardware Advisor Chatbot (Available as +PKR 65,000 / $650 add-on; included free in Growth & Chain plans).',
       ],
     },
     growth: {
@@ -407,7 +523,7 @@ const PLANS_DETAIL = {
       code: 'TXS-GROWTH',
       badge: '★ MOST POPULAR // BEST VALUE',
       pricePkr: 'PKR 550,000',
-      priceUsd: '~$2,000 USD',
+      priceUsd: '$4,850 USD',
       delivery: '21 days, guaranteed',
       idealFor:
         'Established computer hardware and gaming PC retailers selling high-ticket rigs, components, and managing stock across shop counters and online simultaneously.',
@@ -481,6 +597,16 @@ const PLANS_DETAIL = {
             'Zero add-on fee (PKR 50,000 extra fee waived for Growth plan)',
           ],
         },
+        {
+          title: 'AI Retail Sales & Hardware Advisor Chatbot (Included — Save $650 / PKR 65,000)',
+          desc: '24/7 automated sales consultant directly inside the storefront.',
+          items: [
+            'Pre-trained on PC hardware specs, socket rules, PSU wattages, and monitor pairings',
+            'Natural language customer budget inquiries ("Best gaming PC under $1,200")',
+            'Direct 1-click cart and PC Builder prefill from chat recommendations',
+            'Instant customer handoff to sales desk WhatsApp with full conversation context',
+          ],
+        },
       ],
       exclusions: [
         'Limited to 3 branch nodes (Unlimited branches supported in Enterprise).',
@@ -495,7 +621,7 @@ const PLANS_DETAIL = {
       code: 'TXS-ENTERPRISE',
       badge: '★ COMPLETE RETAIL OS',
       pricePkr: 'From PKR 950,000',
-      priceUsd: '~$3,400 USD',
+      priceUsd: 'From $8,500 USD',
       delivery: '30 days, guaranteed',
       idealFor:
         'High-volume computer retail chains, nationwide hardware distributors, and tech importers with multi-branch networks requiring a custom enterprise ERP.',
@@ -569,6 +695,16 @@ const PLANS_DETAIL = {
             'Zero add-on fee (included standard in Chain and Distribution OS)',
           ],
         },
+        {
+          title: 'Enterprise AI Retail Sales & Knowledge Agent (Included)',
+          desc: 'Dedicated multi-branch intelligent sales agent trained on your inventory.',
+          items: [
+            'Real-time multi-branch inventory lookup directly inside chat replies',
+            'B2B & wholesale quote guidance for bulk corporate hardware orders',
+            'Full conversation analytics and lead capture in admin matrix',
+            'Custom prompt engineering and brand voice customization',
+          ],
+        },
       ],
       exclusions: [
         'Bespoke custom hardware firmware modifications (quoted separately on request).',
@@ -583,7 +719,7 @@ const PLANS_DETAIL = {
       code: 'TXS-STARTER',
       badge: 'ENTRY LEVEL // SINGLE DUKAN',
       pricePkr: 'PKR 280,000',
-      priceUsd: '~$1,000 USD',
+      priceUsd: '$2,450 USD',
       delivery: '10 dinon mein, guaranteed',
       idealFor:
         'Single-location computer dukanon, CCTV vendors, aur retail counters ke liye jo direct WhatsApp order dispatch ke sath online sales shuru karna chahte hain — baghair kisi mahana platform tax ke.',
@@ -644,7 +780,8 @@ const PLANS_DETAIL = {
         'Multi branch stock synchronization (Sirf single outlet inventory support karta hai).',
         'Hardware serial number aur RMA warranty lifecycle tracking.',
         'Product photos, descriptions aur pehle 50 SKUs se zyada data entry. Content aap dein ge, hum setup karein ge.',
-        'Online card prepay payment gateway (Sirf +PKR 50,000 add-on ke tor par dastiyab hai; Growth aur Enterprise mein shamil hai).',
+        'Online card prepay payment gateway (Sirf +PKR 50,000 / $400 add-on ke tor par dastiyab hai; Growth aur Enterprise mein shamil hai).',
+        'AI Retail Sales aur Hardware Advisor Chatbot (+PKR 65,000 / $650 add-on ke tor par dastiyab hai; Growth aur Enterprise mein muft shamil hai).',
       ],
     },
     growth: {
@@ -652,7 +789,7 @@ const PLANS_DETAIL = {
       code: 'TXS-GROWTH',
       badge: '★ SAB SE ZYADA PASANDIDAH // BEHTAREEN VALUE',
       pricePkr: 'PKR 550,000',
-      priceUsd: '~$2,000 USD',
+      priceUsd: '$4,850 USD',
       delivery: '21 dinon mein, guaranteed',
       idealFor:
         'Established computer hardware aur gaming PC retailers ke liye jo high-ticket custom rigs aur components bechte hain, aur dukan counter aur online stock ko ek sath chalate hain.',
@@ -726,6 +863,16 @@ const PLANS_DETAIL = {
             'PKR 50,000 ki izafi fee bilkul FREE (Growth plan mein pehle se shamil hai)',
           ],
         },
+        {
+          title: 'AI Retail Sales & Hardware Advisor Chatbot (Shamil Hai — $650 / PKR 65,000 Bachat)',
+          desc: 'Storefront par 24/7 customer sales consultant aur hardware expert.',
+          items: [
+            'PC hardware specs, CPU sockets, PSU wattage requirements par trained AI',
+            'Customer ke budget ke mutabiq behtareen components ki instant recommendations',
+            'Chat se direct 1-click shopping cart aur PC Builder configuration prefill',
+            'Full chat history ke sath WhatsApp sales counter par instant lead handoff',
+          ],
+        },
       ],
       exclusions: [
         'Sirf 3 branches tak mehdood (La-mehdood branches Enterprise tier mein shamil hain).',
@@ -740,7 +887,7 @@ const PLANS_DETAIL = {
       code: 'TXS-ENTERPRISE',
       badge: '★ MUKAMMAL RETAIL OS',
       pricePkr: 'PKR 950,000 se shuru',
-      priceUsd: '~$3,400 USD',
+      priceUsd: '$8,500 USD se shuru',
       delivery: '30 dinon mein, guaranteed',
       idealFor:
         'Bari computer retail chains, nationwide hardware distributors, aur tech importers ke liye jinko multi-branch network aur custom enterprise ERP ki zaroorat hoti hai.',
@@ -814,6 +961,16 @@ const PLANS_DETAIL = {
             'Koi izafi charges nahi (Chain and Distribution OS mein standard shamil hai)',
           ],
         },
+        {
+          title: 'Enterprise AI Retail Sales & Knowledge Agent (Shamil Hai)',
+          desc: 'Aapke inventory data aur branches ke mutabiq trained custom AI agent.',
+          items: [
+            'Live branch inventory lookup seedha chat ke andar customer ko batata hai',
+            'B2B aur wholesale bulk orders ke liye dynamic quote generation',
+            'Admin panel mein complete lead capture aur chat analytics',
+            'Aapke retail brand ke mutabiq custom prompt engineering aur tone',
+          ],
+        },
       ],
       exclusions: [
         'Custom hardware firmware modifications (zaroorat ke mutabiq alag quote ki jayegi).',
@@ -828,7 +985,8 @@ const EXTRAS_DATA = [
   {
     en: 'Extra branch or warehouse node',
     ur: 'Extra branch ya godam node',
-    price: '+ PKR 60,000',
+    pricePkr: '+ PKR 60,000',
+    priceUsd: '+ $450 USD',
     descEn:
       'Adds another physical shop (e.g. Hafeez Centre, Techno City) or godown to your system. Monitor live stock counts separately, make counter sales per branch, and track stock transfers between shops.',
     descUr:
@@ -837,7 +995,8 @@ const EXTRAS_DATA = [
   {
     en: 'Wholesale and B2B pricing module',
     ur: 'Wholesale aur B2B pricing module',
-    price: '+ PKR 90,000',
+    pricePkr: '+ PKR 90,000',
+    priceUsd: '+ $750 USD',
     descEn:
       'Allows verified bulk buyers and dealers to log in and order at special discounted dealer rates, with minimum quantity rules (e.g. 5+ pieces) and separate customer account ledgers (Khata).',
     descUr:
@@ -846,7 +1005,8 @@ const EXTRAS_DATA = [
   {
     en: 'Loyalty, wallet and gift cards',
     ur: 'Loyalty, wallet aur gift cards',
-    price: '+ PKR 70,000',
+    pricePkr: '+ PKR 70,000',
+    priceUsd: '+ $550 USD',
     descEn:
       'Rewards customers with cashback points in their digital store wallet on every purchase, and lets you issue digital gift vouchers so customers keep coming back to your shop.',
     descUr:
@@ -855,7 +1015,8 @@ const EXTRAS_DATA = [
   {
     en: 'Multi vendor marketplace',
     ur: 'Multi vendor marketplace',
-    price: '+ PKR 150,000',
+    pricePkr: '+ PKR 150,000',
+    priceUsd: '+ $1,200 USD',
     descEn:
       'Turns your site into an open platform like Daraz or Amazon where other third-party computer sellers and shops can list their own products, while you automatically collect a percentage commission on every sale.',
     descUr:
@@ -864,7 +1025,8 @@ const EXTRAS_DATA = [
   {
     en: 'Advanced staff roles and permissions',
     ur: 'Advanced staff roles aur permissions',
-    price: '+ PKR 40,000',
+    pricePkr: '+ PKR 40,000',
+    priceUsd: '+ $350 USD',
     descEn:
       'Protects sensitive store data. Lets cashiers only make sales receipts, technicians view RMA repairs, and stock staff scan inventory — while purchase costs and profit margins remain strictly visible to the owner only.',
     descUr:
@@ -873,7 +1035,8 @@ const EXTRAS_DATA = [
   {
     en: 'Product data entry beyond 50 SKUs',
     ur: '50 SKUs se zyada product data entry',
-    price: '+ PKR 15,000 / 50',
+    pricePkr: '+ PKR 15,000 / 50',
+    priceUsd: '+ $120 USD / 50',
     descEn:
       "Don't have time to enter products? Our team cleans high-res photos, writes full technical specs (RAM generation, CPU socket, wattage), and uploads inventory in batches of 50 items.",
     descUr:
@@ -882,7 +1045,8 @@ const EXTRAS_DATA = [
   {
     en: 'Courier tracking integration',
     ur: 'Courier tracking integration',
-    price: '+ PKR 50,000',
+    pricePkr: '+ PKR 50,000',
+    priceUsd: '+ $400 USD',
     descEn:
       "Generates courier booking slips (Trax, PostEx, Leopards, TCS) with 1 click directly from your admin panel, and automatically sends the live tracking link to your customer's WhatsApp.",
     descUr:
@@ -891,17 +1055,30 @@ const EXTRAS_DATA = [
   {
     en: 'Online payment gateway for card prepay',
     ur: 'Card prepay ke liye online payment gateway',
-    price: '+ PKR 50,000',
+    pricePkr: '+ PKR 50,000',
+    priceUsd: '+ $400 USD',
     starterOnly: true,
     descEn:
-      'Accepts Visa, Mastercard, PayPak, EasyPaisa, and JazzCash directly on your site for upfront prepaid orders. (Note: Multi Branch Growth and Chain plans already INCLUDE this at zero extra cost — no 50K fee).',
+      'Accepts Visa, Mastercard, PayPak, EasyPaisa, and JazzCash directly on your site for upfront prepaid orders. (Note: Multi Branch Growth and Chain plans already INCLUDE this at zero extra cost — no $400 / 50K fee).',
     descUr:
       'Website par hi Visa, Mastercard, EasyPaisa aur JazzCash se peshgi online payment receive karein. (Note: Multi-Branch Growth aur Chain plans mein yeh pehle se bilkul SHAMIL hai — baghair kisi 50K fee ke).',
   },
   {
+    en: 'AI Retail Sales & Hardware Advisor Chatbot',
+    ur: 'AI Retail Sales aur Hardware Advisor Chatbot',
+    pricePkr: '+ PKR 65,000',
+    priceUsd: '+ $650 USD',
+    starterOnly: true,
+    descEn:
+      'Deploys an automated 24/7 AI Hardware Advisor directly on your storefront. Recommends parts by budget, checks socket/wattage compatibility, and converts visitors into WhatsApp and web orders. (Note: Multi Branch Growth and Chain plans already INCLUDE this at zero extra cost — no $650 / 65K fee).',
+    descUr:
+      'Website par 24/7 mojud AI assistant jo customer ke budget ke mutabiq compatible parts recommend karta hai, socket aur wattage match karta hai, aur orders seedha WhatsApp ya cart mein bhejta hai. (Note: Multi-Branch Growth aur Chain plans mein yeh pehle se bilkul SHAMIL hai).',
+  },
+  {
     en: 'FBR or accounting API integration',
     ur: 'FBR ya accounting API integration',
-    price: '+ PKR 80,000',
+    pricePkr: '+ PKR 80,000',
+    priceUsd: '+ $650 USD',
     descEn:
       "Connects your sales counter directly with FBR's POS digital invoice system for tax compliance, or syncs your daily books with QuickBooks, Zoho, or Xero automatically.",
     descUr:
@@ -911,6 +1088,7 @@ const EXTRAS_DATA = [
 
 export default function TechRetailSolution() {
   const { lang, setLang, isUrdu } = useLanguage()
+  const [currency, setCurrency] = useState(detectInitialCurrency)
   const [activeModalKey, setActiveModalKey] = useState(null)
   const [expandedExtra, setExpandedExtra] = useState(null)
   const t = I18N_DATA[lang] || I18N_DATA.en
@@ -918,12 +1096,20 @@ export default function TechRetailSolution() {
     ? (PLANS_DETAIL[lang] || PLANS_DETAIL.en)[activeModalKey]
     : null
 
+  const handleCurrencyChange = (newCurr) => {
+    setCurrency(newCurr)
+    try {
+      localStorage.setItem('texcodes_currency', newCurr)
+    } catch (e) {}
+  }
+
   const toggleExtra = (index) => {
     setExpandedExtra((prev) => (prev === index ? null : index))
   }
 
   const renderExtraCard = (a, i) => {
     const isOpen = expandedExtra === i
+    const displayPrice = currency === 'USD' ? a.priceUsd : a.pricePkr
     return (
       <motion.div
         layout
@@ -943,14 +1129,16 @@ export default function TechRetailSolution() {
             </span>
             {a.starterOnly && (
               <span className="inline-block px-1.5 py-0.5 rounded offer-ui font-bold bg-[#ECFDF5] dark:bg-[#10B981]/20 text-[#059669] dark:text-[#10B981] border border-[#059669]/30">
-                {isUrdu ? 'Growth & Chain mein SHAMIL (Bina 50K Fee)' : 'INCLUDED in Growth & Chain (Save 50K)'}
+                {isUrdu
+                  ? 'Growth & Chain mein SHAMIL (Bina Izafi Fee)'
+                  : 'INCLUDED in Growth & Chain (Zero Fee)'}
               </span>
             )}
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
             <div className="text-right">
               <span className="offer-ui text-[#059669] dark:text-[#10B981] whitespace-nowrap font-bold block">
-                {a.price}
+                {displayPrice}
               </span>
               {a.starterOnly && (
                 <span className="offer-ui text-[#8E8D88] dark:text-[#6A6965] block">
@@ -989,8 +1177,8 @@ export default function TechRetailSolution() {
                 {a.starterOnly && (
                   <div className="p-2 bg-[#ECFDF5] dark:bg-[#10B981]/15 border border-[#059669]/30 offer-ui text-[#059669] dark:text-[#10B981] font-medium rounded-sm">
                     {isUrdu
-                      ? '✓ Multi Branch Growth (PKR 550,000) aur Chain OS (PKR 950,000) plans mein online payment gateway pehle se mukammal shamil hai — koi +50,000 fee nahi deni parti.'
-                      : '✓ Online payment gateway is already included standard in Multi Branch Growth (PKR 550,000) & Chain OS (PKR 950,000) plans at NO extra charge.'}
+                      ? `✓ Multi Branch Growth (${currency === 'USD' ? '$4,850 USD' : 'PKR 550,000'}) aur Chain OS (${currency === 'USD' ? '$8,500+ USD' : 'PKR 950,000'}) plans mein yeh pehle se mukammal shamil hai — koi izafi fee nahi deni parti.`
+                      : `✓ Included standard in Multi Branch Growth (${currency === 'USD' ? '$4,850 USD' : 'PKR 550,000'}) & Chain OS (${currency === 'USD' ? 'From $8,500 USD' : 'From PKR 950,000'}) plans at NO extra charge.`}
                   </div>
                 )}
               </div>
@@ -1026,13 +1214,14 @@ export default function TechRetailSolution() {
       <PlanDetailModal
         plan={activePlan}
         lang={lang}
+        currency={currency}
         onClose={() => setActiveModalKey(null)}
         onOpenWhatsApp={(name, price) => openWhatsApp(name, price)}
       />
 
-      {/* ─── Top Language Toggle Bar ─── */}
-      {/* <div className="border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#161619] px-4 sm:px-8 py-2.5">
-        <div className="max-w-7xl mx-auto flex items-center justify-between offer-ui">
+      {/* ─── Top Language & Currency Bar ─── */}
+      <div className="border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#161619] px-4 sm:px-8 py-2.5">
+        <div className="max-w-7xl mx-auto flex items-center justify-between offer-ui flex-wrap gap-2">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#059669] dark:bg-[#10B981] animate-pulse shadow-[0_0_8px_#10B981]" />
             <span className="text-[#0F0F0F] dark:text-[#EDECE6] font-bold uppercase tracking-wider hidden sm:inline">
@@ -1043,36 +1232,68 @@ export default function TechRetailSolution() {
             </span>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3">
-            <div className="flex items-center gap-1.5">
-              <Globe size={13} className="text-[#575652] dark:text-[#9B9A95]" />
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+            {/* Currency Selector */}
+            <div className="inline-flex items-center border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#1A1A1E] p-0.5">
               <button
-                onClick={() => handleLanguageChange('en')}
-                className={`px-2.5 py-1 offer-ui font-bold transition-colors cursor-pointer border${
-                  lang === 'en'
-                    ? 'bg-[#059669] text-white border-[#059669] dark:bg-[#10B981] dark:border-[#10B981]'
-                    : 'bg-white text-[#575652] border-[rgba(15,15,15,0.14)] hover:text-[#0F0F0F] dark:bg-[#161619] dark:text-[#9B9A95] dark:border-[rgba(255,255,255,0.12)]'
+                onClick={() => handleCurrencyChange('USD')}
+                className={`px-2.5 py-0.5 offer-ui font-bold transition-colors cursor-pointer ${
+                  currency === 'USD'
+                    ? 'bg-[#059669] text-white dark:bg-[#10B981]'
+                    : 'text-[#575652] dark:text-[#9B9A95] hover:text-[#0F0F0F] dark:hover:text-[#EDECE6]'
                 }`}
+                title="International Rates in USD"
               >
-                ENGLISH
+                $ USD
               </button>
               <button
-                onClick={() => handleLanguageChange('ur-en')}
-                className={`px-2.5 py-1 offer-ui font-bold transition-colors cursor-pointer border${
-                  lang === 'ur-en'
-                    ? 'bg-[#059669] text-white border-[#059669] dark:bg-[#10B981] dark:border-[#10B981]'
-                    : 'bg-white text-[#575652] border-[rgba(15,15,15,0.14)] hover:text-[#0F0F0F] dark:bg-[#161619] dark:text-[#9B9A95] dark:border-[rgba(255,255,255,0.12)]'
+                onClick={() => handleCurrencyChange('PKR')}
+                className={`px-2.5 py-0.5 offer-ui font-bold transition-colors cursor-pointer ${
+                  currency === 'PKR'
+                    ? 'bg-[#059669] text-white dark:bg-[#10B981]'
+                    : 'text-[#575652] dark:text-[#9B9A95] hover:text-[#0F0F0F] dark:hover:text-[#EDECE6]'
                 }`}
+                title="Pakistan Rates in PKR"
               >
-                ROMAN URDU
+                ₨ PKR
               </button>
             </div>
+
+            <span className="text-[rgba(15,15,15,0.2)] dark:text-[rgba(255,255,255,0.2)]">|</span>
+
+            {/* Language Selector */}
+            <div className="flex items-center gap-1">
+              <Globe size={13} className="text-[#575652] dark:text-[#9B9A95]" />
+              <div className="inline-flex items-center border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#1A1A1E] p-0.5">
+                <button
+                  onClick={() => handleLanguageChange('en')}
+                  className={`px-2 py-0.5 offer-ui font-bold transition-colors cursor-pointer ${
+                    lang === 'en'
+                      ? 'bg-[#059669] text-white dark:bg-[#10B981]'
+                      : 'text-[#575652] dark:text-[#9B9A95] hover:text-[#0F0F0F] dark:hover:text-[#EDECE6]'
+                  }`}
+                >
+                  EN
+                </button>
+                <button
+                  onClick={() => handleLanguageChange('ur-en')}
+                  className={`px-2 py-0.5 offer-ui font-bold transition-colors cursor-pointer ${
+                    lang === 'ur-en'
+                      ? 'bg-[#059669] text-white dark:bg-[#10B981]'
+                      : 'text-[#575652] dark:text-[#9B9A95] hover:text-[#0F0F0F] dark:hover:text-[#EDECE6]'
+                  }`}
+                >
+                  UR
+                </button>
+              </div>
+            </div>
+
             <span className="text-[rgba(15,15,15,0.2)] dark:text-[rgba(255,255,255,0.2)] hidden sm:inline">|</span>
             <ThemeToggle className="hidden sm:inline-flex" />
             <ThemeToggle variant="icon" className="sm:hidden" />
           </div>
         </div>
-      </div> */}
+      </div>
 
       {/* ─── Hero Section ─── */}
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] relative overflow-hidden">
@@ -1096,19 +1317,19 @@ export default function TechRetailSolution() {
           {/* Key Metrics Row */}
           <StaggerContainer staggerDelay={0.08} className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-4 offer-ui">
             <StaggerItem className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 card-hover-guided">
-              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">100% OWNERSHIP</div>
+              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{t.metrics_code_top || '100% OWNERSHIP'}</div>
               <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t.metrics_code}</div>
             </StaggerItem>
             <StaggerItem className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 card-hover-guided">
-              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">0% COMMISSION</div>
+              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{t.metrics_tax_top || '0% PLATFORM TAX'}</div>
               <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t.metrics_tax}</div>
             </StaggerItem>
             <StaggerItem className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 card-hover-guided">
-              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">NEXT.JS SPEED</div>
+              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{t.metrics_speed_top || '<1% RETURN RATE'}</div>
               <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t.metrics_speed}</div>
             </StaggerItem>
             <StaggerItem className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 card-hover-guided">
-              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">SERIAL RMA</div>
+              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{t.metrics_rma_top || 'SERIAL RMA'}</div>
               <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t.metrics_rma}</div>
             </StaggerItem>
           </StaggerContainer>
@@ -1189,6 +1410,18 @@ export default function TechRetailSolution() {
               <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui">{t.arch_06_title}</div>
               <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
                 {t.arch_06_desc}
+              </p>
+            </StaggerItem>
+
+            <StaggerItem className="p-6 bg-[#ECFDF5] dark:bg-[#10B981]/10 border-2 border-[#059669] dark:border-[#10B981] space-y-3 card-hover-guided sm:col-span-2 lg:col-span-3">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="font-bold text-[#059669] dark:text-[#10B981] offer-ui">{t.arch_07_title}</span>
+                <span className="offer-eyebrow bg-[#059669] dark:bg-[#10B981] text-white px-2 py-0.5 font-bold">
+                  {isUrdu ? 'NAYA // 24/7 AI SALES ENGINE' : 'NEW // 24/7 AI SALES ENGINE'}
+                </span>
+              </div>
+              <p className="offer-ui text-[#0F0F0F] dark:text-[#EDECE6] font-medium">
+                {t.arch_07_desc}
               </p>
             </StaggerItem>
           </StaggerContainer>
@@ -1281,6 +1514,122 @@ export default function TechRetailSolution() {
             </p>
           </FadeIn>
 
+          {/* ─── The Zero-Risk Decision Matrix (Best-Case vs Worst-Case) ─── */}
+          <FadeIn direction="up" className="bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] p-6 sm:p-10 space-y-8 shadow-xs">
+            <div className="text-center space-y-2 max-w-3xl mx-auto">
+              <div className="inline-flex items-center gap-1.5 offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold bg-[#ECFDF5] dark:bg-[rgba(16,185,129,0.15)] px-3 py-0.5 border border-[#059669]/25 dark:border-[#10B981]/30">
+                <ShieldCheck size={14} />
+                <span>{t.ultimatum_badge}</span>
+              </div>
+              <h3 className="offer-h2 text-[#0F0F0F] dark:text-[#EDECE6]">
+                {t.ultimatum_title}
+              </h3>
+              <p className="offer-body text-[#575652] dark:text-[#9B9A95]">
+                {t.ultimatum_sub}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+              {/* Best Case Card */}
+              <div className="p-6 sm:p-7 bg-[#FAF9F5] dark:bg-[#1A1A1F] border border-[#059669]/30 dark:border-[#10B981]/30 flex flex-col justify-between space-y-5 rounded-xs relative overflow-hidden">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between gap-2 border-b border-[#059669]/20 dark:border-[#10B981]/20 pb-3">
+                    <span className="offer-eyebrow font-bold text-[#059669] dark:text-[#10B981] bg-[#ECFDF5] dark:bg-[#10B981]/20 px-2.5 py-1 rounded">
+                      {t.ultimatum_best_tag}
+                    </span>
+                    <span className="offer-ui text-[#059669] dark:text-[#10B981] font-bold">WIN #1</span>
+                  </div>
+                  <div className="offer-ui-strong text-[#0F0F0F] dark:text-[#EDECE6]">
+                    {t.ultimatum_best_title}
+                  </div>
+                  <ul className="space-y-2.5 offer-ui text-[#575652] dark:text-[#9B9A95]">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 size={16} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span>{t.ultimatum_best_p1}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 size={16} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span>{t.ultimatum_best_p2}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 size={16} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span>{t.ultimatum_best_p3}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 size={16} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span>{t.ultimatum_best_p4}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 size={16} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span>{t.ultimatum_best_p5}</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="pt-4 border-t border-[#059669]/20 dark:border-[#10B981]/20 offer-eyebrow text-[#059669] dark:text-[#10B981] font-bold">
+                  {t.ultimatum_best_footer}
+                </div>
+              </div>
+
+              {/* Worst Case Card */}
+              <div className="p-6 sm:p-7 bg-[#FAF9F5] dark:bg-[#1A1A1F] border border-[rgba(15,15,15,0.16)] dark:border-[rgba(255,255,255,0.14)] flex flex-col justify-between space-y-5 rounded-xs relative overflow-hidden">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between gap-2 border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] pb-3">
+                    <span className="offer-eyebrow font-bold text-[#8E8D88] dark:text-[#6A6965] bg-neutral-200/60 dark:bg-neutral-800/60 px-2.5 py-1 rounded">
+                      {t.ultimatum_worst_tag}
+                    </span>
+                    <span className="offer-ui text-[#8E8D88] dark:text-[#6A6965] font-bold">WIN #2</span>
+                  </div>
+                  <div className="offer-ui-strong text-[#0F0F0F] dark:text-[#EDECE6]">
+                    {t.ultimatum_worst_title}
+                  </div>
+                  <ul className="space-y-2.5 offer-ui text-[#575652] dark:text-[#9B9A95]">
+                    <li className="flex items-start gap-2">
+                      <ShieldCheck size={16} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span>{t.ultimatum_worst_p1}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <ShieldCheck size={16} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span>{t.ultimatum_worst_p2}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <ShieldCheck size={16} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span>{t.ultimatum_worst_p3}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <ShieldCheck size={16} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span>{t.ultimatum_worst_p4}</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="pt-4 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] offer-eyebrow text-[#575652] dark:text-[#9B9A95] font-bold">
+                  {t.ultimatum_worst_footer}
+                </div>
+              </div>
+            </div>
+
+            {/* Staging Guarantee Banner Callout */}
+            <div className="p-4 sm:p-5 bg-[#ECFDF5] dark:bg-[#10B981]/15 border border-[#059669]/30 dark:border-[#10B981]/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="space-y-1 max-w-4xl">
+                <div className="offer-eyebrow font-bold text-[#059669] dark:text-[#10B981] flex items-center gap-1.5">
+                  <ShieldCheck size={15} />
+                  <span>{t.guarantee_badge}</span>
+                </div>
+                <div className="offer-ui-strong text-[#0F0F0F] dark:text-[#EDECE6]">
+                  {t.guarantee_title}
+                </div>
+                <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
+                  {t.guarantee_sub}
+                </p>
+              </div>
+              <Link
+                to="/solutions/tech-retail/terms"
+                className="btn-outline offer-btn offer-btn-sm shrink-0 whitespace-nowrap"
+              >
+                <span>{t.view_terms}</span>
+              </Link>
+            </div>
+          </FadeIn>
+
           {/* Guided Conversion Flow Ribbon */}
           <FadeIn direction="up" delay={0.1} className="flex items-center justify-center gap-2 sm:gap-4 offer-eyebrow text-[#575652] dark:text-[#9B9A95] pb-2 flex-wrap">
             <span className="flex items-center gap-1.5 text-[#059669] dark:text-[#10B981] font-bold">
@@ -1299,6 +1648,43 @@ export default function TechRetailSolution() {
             </span>
           </FadeIn>
 
+          {/* Currency Toggle Ribbon directly above plan tiers */}
+          <FadeIn direction="up" delay={0.05} className="flex flex-col items-center justify-center gap-2 pt-2 pb-2">
+            <div className="inline-flex items-center p-1 rounded-md border border-[rgba(15,15,15,0.15)] dark:border-[rgba(255,255,255,0.15)] bg-white dark:bg-[#161619] shadow-sm">
+              <button
+                onClick={() => handleCurrencyChange('USD')}
+                className={`flex items-center gap-1.5 px-4 py-1.5 rounded text-xs font-bold offer-ui transition-all cursor-pointer ${
+                  currency === 'USD'
+                    ? 'bg-[#059669] dark:bg-[#10B981] text-white shadow-xs'
+                    : 'text-[#575652] dark:text-[#9B9A95] hover:text-[#0F0F0F] dark:hover:text-[#EDECE6]'
+                }`}
+              >
+                <span>$ USD</span>
+                <span className="text-[10px] opacity-80 font-normal">(International)</span>
+              </button>
+              <button
+                onClick={() => handleCurrencyChange('PKR')}
+                className={`flex items-center gap-1.5 px-4 py-1.5 rounded text-xs font-bold offer-ui transition-all cursor-pointer ${
+                  currency === 'PKR'
+                    ? 'bg-[#059669] dark:bg-[#10B981] text-white shadow-xs'
+                    : 'text-[#575652] dark:text-[#9B9A95] hover:text-[#0F0F0F] dark:hover:text-[#EDECE6]'
+                }`}
+              >
+                <span>₨ PKR</span>
+                <span className="text-[10px] opacity-80 font-normal">(Pakistan)</span>
+              </button>
+            </div>
+            <div className="offer-eyebrow text-[#8E8D88] dark:text-[#6A6965] text-center">
+              {currency === 'USD'
+                ? isUrdu
+                  ? '🌍 International USD rates active (Bahar ke mulkon ke clients ke liye)'
+                  : '🌍 International USD rates active (Auto-selected for overseas clients)'
+                : isUrdu
+                ? '🇵🇰 Pakistan domestic rates active (PKR)'
+                : '🇵🇰 Pakistan domestic rates active (PKR)'}
+            </div>
+          </FadeIn>
+
           <StaggerContainer staggerDelay={0.12} className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start offer-ui">
             {/* 1. Single Store Launch */}
             <StaggerItem className="h-full">
@@ -1313,8 +1699,9 @@ export default function TechRetailSolution() {
                 </p>
 
                 <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
-                  <div className="offer-h3 text-[#0F0F0F] dark:text-[#EDECE6]">{t.starter_price_pkr}</div>
-                  <div className="offer-ui text-[#8E8D88] dark:text-[#6A6965]">{t.starter_price_usd}</div>
+                  <div className="offer-h3 text-[#0F0F0F] dark:text-[#EDECE6]">
+                    {currency === 'USD' ? t.starter_price_usd : t.starter_price_pkr}
+                  </div>
                   <div className="offer-ui text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.starter_delivery}</div>
                 </div>
 
@@ -1366,14 +1753,16 @@ export default function TechRetailSolution() {
 
               <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] space-y-3">
                 <button
-                  onClick={() => openWhatsApp(t.starter_name, t.starter_price_pkr)}
+                  onClick={() => openWhatsApp(t.starter_name, currency === 'USD' ? t.starter_price_usd : t.starter_price_pkr)}
                   className="btn-outline w-full justify-center offer-btn offer-btn-lg animate-claim-outline group relative overflow-hidden transition-all duration-300"
                 >
                   <MessageSquare size={14} className="animate-icon-wiggle group-hover:scale-125 transition-transform text-[#059669] dark:text-[#10B981]" />
                   <span>{t.whatsapp_cta}</span>
                   <div className="absolute inset-0 w-1/3 h-full bg-gradient-to-r from-transparent via-[#059669]/10 to-transparent pointer-events-none animate-shimmer-sweep" />
                 </button>
-                <div className="offer-ui text-[#8E8D88] dark:text-[#6A6965] text-center">{t.starter_support}</div>
+                <div className="offer-ui text-[#8E8D88] dark:text-[#6A6965] text-center">
+                  {currency === 'USD' ? t.starter_support_usd : t.starter_support_pkr}
+                </div>
               </div>
             </div>
           </StaggerItem>
@@ -1392,8 +1781,9 @@ export default function TechRetailSolution() {
                   </p>
 
                   <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
-                    <div className="offer-h3 text-[#059669] dark:text-[#10B981]">{t.growth_price_pkr}</div>
-                    <div className="offer-ui text-[#8E8D88] dark:text-[#6A6965]">{t.growth_price_usd}</div>
+                    <div className="offer-h3 text-[#059669] dark:text-[#10B981]">
+                      {currency === 'USD' ? t.growth_price_usd : t.growth_price_pkr}
+                    </div>
                     <div className="offer-ui text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.growth_delivery}</div>
                   </div>
 
@@ -1426,7 +1816,11 @@ export default function TechRetailSolution() {
                     </div>
                     <div className="flex items-start gap-2 text-[#059669] dark:text-[#10B981] font-semibold">
                       <Check size={14} className="shrink-0 mt-0.5" />
-                      <span>{t.growth_f5}</span>
+                      <span>{currency === 'USD' ? t.growth_f5_usd : t.growth_f5_pkr}</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-[#059669] dark:text-[#10B981] font-semibold">
+                      <Check size={14} className="shrink-0 mt-0.5" />
+                      <span>{currency === 'USD' ? t.growth_f6_usd : t.growth_f6_pkr}</span>
                     </div>
                   </div>
 
@@ -1449,14 +1843,16 @@ export default function TechRetailSolution() {
 
                 <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] space-y-3">
                   <button
-                    onClick={() => openWhatsApp(t.growth_name, t.growth_price_pkr)}
+                    onClick={() => openWhatsApp(t.growth_name, currency === 'USD' ? t.growth_price_usd : t.growth_price_pkr)}
                     className="btn-blue w-full justify-center offer-btn offer-btn-xl shadow-md animate-claim-solid group relative overflow-hidden transition-all duration-300"
                   >
                     <MessageSquare size={15} className="animate-icon-wiggle group-hover:scale-125 transition-transform" />
                     <span className="tracking-wider">{t.whatsapp_cta}</span>
                     <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none animate-shimmer-sweep" />
                   </button>
-                  <div className="offer-ui text-[#8E8D88] dark:text-[#6A6965] text-center">{t.growth_support}</div>
+                  <div className="offer-ui text-[#8E8D88] dark:text-[#6A6965] text-center">
+                    {currency === 'USD' ? t.growth_support_usd : t.growth_support_pkr}
+                  </div>
                 </div>
               </div>
             </StaggerItem>
@@ -1471,8 +1867,9 @@ export default function TechRetailSolution() {
                   </p>
 
                   <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
-                    <div className="offer-h3 text-[#0F0F0F] dark:text-[#EDECE6]">{t.enterprise_price_pkr}</div>
-                    <div className="offer-ui text-[#8E8D88] dark:text-[#6A6965]">{t.enterprise_price_usd}</div>
+                    <div className="offer-h3 text-[#0F0F0F] dark:text-[#EDECE6]">
+                      {currency === 'USD' ? t.enterprise_price_usd : t.enterprise_price_pkr}
+                    </div>
                     <div className="offer-ui text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.enterprise_delivery}</div>
                   </div>
 
@@ -1507,6 +1904,10 @@ export default function TechRetailSolution() {
                       <Check size={14} className="shrink-0 mt-0.5" />
                       <span>{t.enterprise_f5}</span>
                     </div>
+                    <div className="flex items-start gap-2 text-[#059669] dark:text-[#10B981] font-semibold">
+                      <Check size={14} className="shrink-0 mt-0.5" />
+                      <span>{t.enterprise_f6}</span>
+                    </div>
                   </div>
 
                   {/* Prominent Modal Trigger Button */}
@@ -1528,14 +1929,16 @@ export default function TechRetailSolution() {
 
                 <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] space-y-3">
                   <button
-                    onClick={() => openWhatsApp(t.enterprise_name, t.enterprise_price_pkr)}
+                    onClick={() => openWhatsApp(t.enterprise_name, currency === 'USD' ? t.enterprise_price_usd : t.enterprise_price_pkr)}
                     className="btn-outline w-full justify-center offer-btn offer-btn-lg animate-claim-outline group relative overflow-hidden transition-all duration-300"
                   >
                     <MessageSquare size={14} className="animate-icon-wiggle group-hover:scale-125 transition-transform text-[#059669] dark:text-[#10B981]" />
                     <span>{t.whatsapp_cta}</span>
                     <div className="absolute inset-0 w-1/3 h-full bg-gradient-to-r from-transparent via-[#059669]/10 to-transparent pointer-events-none animate-shimmer-sweep" />
                   </button>
-                  <div className="offer-ui text-[#8E8D88] dark:text-[#6A6965] text-center">{t.enterprise_support}</div>
+                  <div className="offer-ui text-[#8E8D88] dark:text-[#6A6965] text-center">
+                    {currency === 'USD' ? t.enterprise_support_usd : t.enterprise_support_pkr}
+                  </div>
                 </div>
               </div>
             </StaggerItem>
@@ -1572,7 +1975,7 @@ export default function TechRetailSolution() {
             {/* Desktop 3-Column Layout: when an item in one column opens, only that column moves down; other columns are completely unaffected */}
             <div className="hidden lg:grid lg:grid-cols-3 gap-3 items-start">
               {[
-                [0, 3, 6],
+                [0, 3, 6, 9],
                 [1, 4, 7],
                 [2, 5, 8],
               ].map((colIndices, colIdx) => (
@@ -1586,7 +1989,7 @@ export default function TechRetailSolution() {
             <div className="hidden sm:grid lg:hidden sm:grid-cols-2 gap-3 items-start">
               {[
                 [0, 2, 4, 6, 8],
-                [1, 3, 5, 7],
+                [1, 3, 5, 7, 9],
               ].map((colIndices, colIdx) => (
                 <div key={colIdx} className="flex flex-col gap-3">
                   {colIndices.map((idx) => renderExtraCard(EXTRAS_DATA[idx], idx))}
@@ -1622,13 +2025,15 @@ export default function TechRetailSolution() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
-                { name: 'Basic Care', price: 'PKR 14,000 / mo', en: ['Managed hosting and SSL', 'Daily backups', 'Uptime monitoring', 'Small text and image edits', 'Email support'], ur: ['Managed hosting aur SSL', 'Rozana backups', 'Uptime monitoring', 'Chhoti text aur image edits', 'Email support'] },
-                { name: 'Growth Care', price: 'PKR 28,000 / mo', en: ['Everything in Basic Care', 'Priority support within 4 business hours', 'Monthly feature tweaks', 'Multi branch hosting', 'WhatsApp support'], ur: ['Basic Care ki sab cheezein', '4 business hours ke andar priority support', 'Mahana feature tweaks', 'Multi branch hosting', 'WhatsApp support'] },
-                { name: 'Enterprise Care', price: 'PKR 55,000 / mo', en: ['Everything in Growth Care', 'Dedicated engineer hours each month', 'Integration and API support', '99.5% uptime target', 'Phone support'], ur: ['Growth Care ki sab cheezein', 'Har mahine dedicated engineer hours', 'Integration aur API support', '99.5% uptime target', 'Phone support'] },
+                { name: 'Basic Care', pricePkr: 'PKR 14,000 / mo', priceUsd: '$140 / mo', en: ['Managed hosting and SSL', 'Daily backups', 'Uptime monitoring', 'Small text and image edits', 'Email support'], ur: ['Managed hosting aur SSL', 'Rozana backups', 'Uptime monitoring', 'Chhoti text aur image edits', 'Email support'] },
+                { name: 'Growth Care', pricePkr: 'PKR 28,000 / mo', priceUsd: '$280 / mo', en: ['Everything in Basic Care', 'Priority support within 4 business hours', 'Monthly feature tweaks', 'Multi branch hosting', 'WhatsApp support'], ur: ['Basic Care ki sab cheezein', '4 business hours ke andar priority support', 'Mahana feature tweaks', 'Multi branch hosting', 'WhatsApp support'] },
+                { name: 'Enterprise Care', pricePkr: 'PKR 55,000 / mo', priceUsd: '$550 / mo', en: ['Everything in Growth Care', 'Dedicated engineer hours each month', 'Integration and API support', '99.5% uptime target', 'Phone support'], ur: ['Growth Care ki sab cheezein', 'Har mahine dedicated engineer hours', 'Integration aur API support', '99.5% uptime target', 'Phone support'] },
               ].map((c, i) => (
                 <div key={i} className="bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] p-5 space-y-3">
                   <div className="offer-ui-strong text-[#0F0F0F] dark:text-[#EDECE6]">{c.name}</div>
-                  <div className="offer-h3 text-[#059669] dark:text-[#10B981]">{c.price}</div>
+                  <div className="offer-h3 text-[#059669] dark:text-[#10B981]">
+                    {currency === 'USD' ? c.priceUsd : c.pricePkr}
+                  </div>
                   <ul className="space-y-1.5">
                     {(isUrdu ? c.ur : c.en).map((li, j) => (
                       <li key={j} className="flex items-start gap-2 offer-ui text-[#575652] dark:text-[#9B9A95]">
@@ -1669,7 +2074,7 @@ export default function TechRetailSolution() {
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
             {[
-              { big: 'PKR 0', en: 'monthly platform fee after launch', ur: 'launch ke baad mahana platform fee' },
+              { big: currency === 'USD' ? '$0' : 'PKR 0', en: 'monthly platform fee after launch', ur: 'launch ke baad mahana platform fee' },
               { big: '0%', en: 'commission on your orders, ever', ur: 'aapke orders par commission, kabhi nahi' },
               { big: '100%', en: 'of the code and data is yours', ur: 'code aur data par aapka mukammal haq' },
             ].map((s, i) => (

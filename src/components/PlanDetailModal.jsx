@@ -43,9 +43,9 @@ const MODAL_I18N = {
     preview_tag: 'SYSTEM PREVIEW',
     preview_counter: 'PREVIEW',
     guarantee_note:
-      'The delivery date in this plan is written into the contract, not a rough estimate. If we miss it and the delay is on our side, every full week late earns you one free month of the Care Plan. Support replies land within 4 business hours and we hold 99.5% uptime.',
+      '100% Milestone-Protected Staging Guarantee: Test your custom Next.js storefront, PC Builder, and inventory on a live private staging URL with your own products before secondary settlement. If the staging demo fails to satisfy the signed technical specification, your deposit is refunded 100% in full, you keep the architectural blueprint for free, and receive a $250 USD courtesy credit for your time. The delivery date in this plan is written into the contract, not a rough estimate.',
     payment_note:
-      'Payment is split 40 / 40 / 20 across deposit, approved demo, and launch handover. You order on WhatsApp and pay by bank transfer or COD by default. Add a payment gateway later if you want cards and wallets. Prices are in PKR and, for overseas clients, invoiced at the exchange rate on the invoice date.',
+      'Payment is split 40 / 40 / 20 across commencement deposit, approved staging demo, and launch handover. Invoices are denominated in your preferred currency (USD for international via wire/Stripe/Wise, PKR for domestic). All deliverables are covered under our fixed-price guarantee with 100% intellectual property transfer.',
   },
   'ur-en': {
     badge_default: 'TASDEEQ SHUDA SCOPE SPECIFICATION',
@@ -74,13 +74,45 @@ const MODAL_I18N = {
     preview_tag: 'SYSTEM PREVIEW',
     preview_counter: 'PREVIEW',
     guarantee_note:
-      'Is plan ki delivery date contract mein likhi jati hai, andaza nahi. Agar hum se delay ho jaye, to har mukammal hafte ki der par aapko ek mahana Care Plan muft milta hai. Support ka jawab 4 business ghanton ke andar aata hai aur hum 99.5% uptime barqarar rakhte hain.',
+      '100% Milestone-Protected Staging Guarantee: Doosri payment aur final launch se pehle apni private staging URL par custom storefront, PC Builder aur inventory ko test karein. Agar staging demo mutafiqa specs fulfill na kare, to aapki deposit 100% fori wapas, architecture blueprint muft aapka, aur waqt ke azaale ke tor par courtesy credit diya jata hai. Delivery date contract mein likhi hoti hai, andaza nahi.',
     payment_note:
-      'Raqam 40 / 40 / 20 mein banti hai: peshgi, approved demo, aur launch handover. Order WhatsApp par hota hai aur payment bank transfer ya COD se, default ke tor par. Baad mein chahein to payment gateway add karwa lein. Qeematein PKR mein hain aur overseas clients ke liye invoice ki tareekh ke rate par lagai jati hain.',
+      'Raqam 40 / 40 / 20 mein banti hai: peshgi deposit, approved staging demo, aur launch handover. International clients ke liye direct USD invoicing aur muqami clients ke liye PKR. Tamam deliverables fixed-price guarantee aur 100% intellectual property transfer ke tehat mukammal kiye jate hain.',
   },
 }
 
-export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhatsApp }) {
+function formatScopeCurrency(text, currency) {
+  if (!text) return text
+  if (currency === 'USD') {
+    return text
+      .replace(/\+PKR\s*50,000\s*\/\s*\$400/gi, '+$400 USD')
+      .replace(/\$400\s*\/\s*PKR\s*50K/gi, '$400 USD')
+      .replace(/Save\s*\$400\s*\/\s*PKR\s*50K/gi, 'Save $400 USD')
+      .replace(/PKR\s*50,000\s*(extra\s*fee\s*waived|ki\s*izafi\s*fee|Bachat)/gi, '$400 USD $1')
+      .replace(/\+PKR\s*65,000\s*\/\s*\$650/gi, '+$650 USD')
+      .replace(/\$650\s*\/\s*PKR\s*65K/gi, '$650 USD')
+      .replace(/\$650\s*\/\s*PKR\s*65,000/gi, '$650 USD')
+      .replace(/Save\s*\$650\s*\/\s*PKR\s*65K/gi, 'Save $650 USD')
+      .replace(/PKR\s*65,000/gi, '$650 USD')
+      .replace(/PKR\s*65K/gi, '$650 USD')
+      .replace(/PKR\s*50K/gi, '$400 USD')
+      .replace(/PKR\s*50,000/gi, '$400 USD')
+  } else {
+    return text
+      .replace(/\+PKR\s*50,000\s*\/\s*\$400/gi, '+PKR 50,000')
+      .replace(/\$400\s*\/\s*PKR\s*50K/gi, 'PKR 50,000')
+      .replace(/Save\s*\$400\s*\/\s*PKR\s*50K/gi, 'Save PKR 50,000')
+      .replace(/\$400\s*USD/gi, 'PKR 50,000')
+      .replace(/\$400/gi, 'PKR 50,000')
+      .replace(/\+PKR\s*65,000\s*\/\s*\$650/gi, '+PKR 65,000')
+      .replace(/\$650\s*\/\s*PKR\s*65K/gi, 'PKR 65,000')
+      .replace(/\$650\s*\/\s*PKR\s*65,000/gi, 'PKR 65,000')
+      .replace(/Save\s*\$650\s*\/\s*PKR\s*65K/gi, 'Save PKR 65,000')
+      .replace(/\$650\s*USD/gi, 'PKR 65,000')
+      .replace(/\$650/gi, 'PKR 65,000')
+  }
+}
+
+export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', onClose, onOpenWhatsApp }) {
   const bodyRef = useRef(null)
   const galleryRef = useRef(null)
   const [expandedImageIndex, setExpandedImageIndex] = useState(null)
@@ -91,7 +123,6 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
   useEffect(() => {
     setExpandedImageIndex(null)
     setActiveArtifact(0)
-    if (galleryRef.current) galleryRef.current.scrollLeft = 0
   }, [plan])
 
   // Track which artifact card is centered while swiping on mobile
@@ -189,8 +220,16 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
 
   const modalContent = (
     <>
+      {/* ─── Backdrop ─── */}
       <div
-        className="fixed inset-0 z-[9999] bg-[#0F0F0F]/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 offer-ui overflow-hidden overscroll-contain"
+        className="fixed inset-0 z-[9998] bg-[#0F0F0F]/80 dark:bg-black/85 backdrop-blur-sm transition-opacity duration-200"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+
+      {/* ─── Modal Shell Container ─── */}
+      <div
+        className="fixed inset-0 z-[9999] flex items-center justify-center p-2 sm:p-4 md:p-6 pointer-events-auto"
         onClick={onClose}
         data-lenis-prevent="true"
         onWheel={(e) => e.stopPropagation()}
@@ -216,8 +255,9 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
                 {plan.name} — {t.spec_suffix}
               </h2>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[#575652] dark:text-[#9B9A95] offer-ui">
-                <span className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{plan.pricePkr}</span>
-                <span>({plan.priceUsd})</span>
+                <span className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">
+                  {currency === 'USD' ? plan.priceUsd : plan.pricePkr}
+                </span>
                 <span className="text-[rgba(15,15,15,0.2)] dark:text-[rgba(255,255,255,0.2)]">|</span>
                 <span className="flex items-center gap-1 font-semibold text-[#0F0F0F] dark:text-[#EDECE6]">
                   <Clock size={12} className="text-[#059669] dark:text-[#10B981]" /> {plan.delivery}
@@ -330,17 +370,17 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
                   >
                     <div className="offer-ui font-bold text-[#0F0F0F] dark:text-[#EDECE6] flex items-center gap-2">
                       <CheckCircle2 size={15} className="text-[#059669] dark:text-[#10B981] shrink-0" />
-                      <span>{mod.title}</span>
+                      <span>{formatScopeCurrency(mod.title, currency)}</span>
                     </div>
                     <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
-                      {mod.desc}
+                      {formatScopeCurrency(mod.desc, currency)}
                     </p>
                     {mod.items && (
                       <ul className="offer-ui text-[#0F0F0F] dark:text-[#EDECE6] space-y-1 pt-1 border-t border-[rgba(15,15,15,0.06)] dark:border-[rgba(255,255,255,0.08)]">
                         {mod.items.map((item, j) => (
                           <li key={j} className="flex items-start gap-1.5 text-[#575652] dark:text-[#9B9A95]">
                             <span className="text-[#059669] dark:text-[#10B981]">•</span>
-                            <span>{item}</span>
+                            <span>{formatScopeCurrency(item, currency)}</span>
                           </li>
                         ))}
                       </ul>
@@ -360,7 +400,7 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
                 {plan.exclusions.map((exc, idx) => (
                   <li key={idx} className="flex items-start gap-2">
                     <span className="text-red-500 font-bold shrink-0">✕</span>
-                    <span>{exc}</span>
+                    <span>{formatScopeCurrency(exc, currency)}</span>
                   </li>
                 ))}
               </ul>
@@ -443,7 +483,7 @@ export default function PlanDetailModal({ plan, lang = 'en', onClose, onOpenWhat
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
               <button
-                onClick={() => onOpenWhatsApp(plan.name, plan.pricePkr)}
+                onClick={() => onOpenWhatsApp(plan.name, currency === 'USD' ? plan.priceUsd : plan.pricePkr)}
                 className="btn-blue offer-btn offer-btn-xl w-full sm:w-auto sm:flex-none justify-center cursor-pointer animate-claim-solid group relative overflow-hidden shadow-md"
               >
                 <MessageSquare size={20} className="animate-icon-wiggle group-hover:scale-125 transition-transform" />

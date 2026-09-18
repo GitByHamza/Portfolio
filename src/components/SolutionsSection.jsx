@@ -14,6 +14,11 @@ import {
 } from "lucide-react";
 
 export default function SolutionsSection() {
+  const currency = typeof window !== 'undefined'
+    ? localStorage.getItem('tex_pref_currency') ||
+      (['Asia/Karachi', 'Asia/Kolkata'].includes(Intl.DateTimeFormat().resolvedOptions().timeZone) ? 'PKR' : 'USD')
+    : 'USD'
+
   return (
     <section id="solutions" className="py-24 px-4 sm:px-6 lg:px-8 border-t border-zinc-800/80 bg-zinc-950/80 relative">
       {/* Background cyber accent */}
@@ -78,7 +83,7 @@ export default function SolutionsSection() {
               </div>
 
               <div className="pt-2 text-xs font-mono text-amber-400 font-bold">
-                Investment: PKR 280,000 – 950,000+ (~$1,000 – $3,400)
+                Investment: {currency === 'USD' ? '$2,450 – $8,500+ USD' : 'PKR 280,000 – 950,000+'}
               </div>
             </div>
 
