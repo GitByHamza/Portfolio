@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, ArrowUpRight, Cpu, Layers, ShoppingBag } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Cpu, Layers, ShoppingBag, Laptop } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { FadeIn, StaggerContainer, StaggerItem } from './motion/MotionReveal'
 
@@ -18,20 +18,20 @@ const SolutionsBridgeSection = () => {
       linkText: isUrdu ? 'Retail Solution Offer Inspect Karein' : 'Inspect Retail Solution Offer',
     },
     {
-      icon: ShoppingBag,
-      title: isUrdu ? 'CUSTOM HIGH-PERFORMANCE COMMERCE' : 'CUSTOM HIGH-PERFORMANCE COMMERCE',
+      icon: Laptop,
+      title: isUrdu ? 'LAPTOP & ACCESSORIES RETAIL OS' : 'LAPTOP & ACCESSORIES RETAIL OS',
       desc: isUrdu
-        ? 'Bari hardware product catalogs, direct WhatsApp order routing aur 100% source code aur database malkiat ke sath tailored storefronts.'
-        : 'Engineered storefronts tailored to complex product catalogs, direct WhatsApp order routing, and 100% code and database ownership.',
-      link: '/solutions',
-      linkText: isUrdu ? 'Commerce Architecture Dekhein' : 'Explore Commerce Architecture',
+        ? 'Instant RAM/SSD upgrade configurator, battery health verification, multi-branch condition grading aur WhatsApp checkout.'
+        : 'Automated RAM & SSD upgrade calculator, transparent battery health verification badges, condition grading, and WhatsApp checkout.',
+      link: '/solutions/laptop-retail',
+      linkText: isUrdu ? 'Laptop OS Offer Inspect Karein' : 'Inspect Laptop Retail Offer',
     },
     {
       icon: Layers,
-      title: isUrdu ? 'INTERNAL SYSTEMS & AUTOMATION' : 'INTERNAL SYSTEMS & AUTOMATION',
+      title: isUrdu ? 'CUSTOM COMMERCE & INTERNAL SYSTEMS' : 'CUSTOM COMMERCE & INTERNAL SYSTEMS',
       desc: isUrdu
         ? 'Custom administrative operating panels, Spatie-style multi-guard staff RBAC permissions aur operational efficiency ke liye automated workflows.'
-        : 'Custom administrative operating systems, Spatie-style multi-guard role permissions, and WhatsApp AI agents for operational efficiency.',
+        : 'Custom headless Next.js storefronts, multi-guard staff role permissions, and bespoke operational automation with 100% source code ownership.',
       link: '/solutions',
       linkText: isUrdu ? 'Systems Architecture Dekhein' : 'View Systems Architecture',
     },

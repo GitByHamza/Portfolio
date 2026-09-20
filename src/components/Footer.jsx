@@ -57,6 +57,11 @@ export const Footer = () => {
               </Link>
             </li>
             <li>
+              <Link to="/solutions/laptop-retail" className="text-[#059669] dark:text-[#10B981] hover:underline font-semibold flex items-center gap-1">
+                {t('footer', 'laptop_retail_os_offer')} <ArrowUpRight size={12} />
+              </Link>
+            </li>
+            <li>
               <Link to="/contact" className="hover:text-[#059669] dark:hover:text-[#10B981] transition-colors">
                 {t('footer', 'direct_contact')}
               </Link>

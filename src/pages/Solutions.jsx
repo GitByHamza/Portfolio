@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, ArrowUpRight, Cpu, ShoppingBag, Layers, CheckCircle2, XCircle, ShieldCheck, Terminal } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Cpu, ShoppingBag, Layers, CheckCircle2, XCircle, ShieldCheck, Terminal, Laptop } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/motion/MotionReveal'
 
@@ -158,7 +158,7 @@ export default function Solutions() {
                     <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none animate-shimmer-sweep" />
                   </Link>
                   <a
-                    href="https://store-demo-eight.vercel.app/"
+                    href="https://store-demo-eight.vercel.app/?mode=pc"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-outline offer-btn offer-btn-lg group relative overflow-hidden"
@@ -197,6 +197,117 @@ export default function Solutions() {
                     <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'tier3_title')}</div>
                     <div className="text-[#059669] dark:text-[#10B981] font-semibold offer-ui">{t('solutionsPage', 'tier3_price')}</div>
                     <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'tier3_sub')}</div>
+                  </div>
+                </div>
+
+                <div className="pt-2 offer-ui text-[#8E8D88] dark:text-[#6A6965]">
+                  {isUrdu
+                    ? 'Tamam packages mein 100% source code aur database ownership transfer shamil hai.'
+                    : 'All tiers include 100% source code & database ownership transfer upon final settlement.'}
+                </div>
+              </div>
+            </div>
+          </div>
+        </FadeIn>
+      </section>
+
+      {/* ─── Featured Flagship Solution 02: Laptop & Accessories Retail OS ─── */}
+      <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#121215]">
+        <FadeIn className="max-w-7xl mx-auto">
+          <div className="card-hover-guided border-t-4 border-t-[#059669] dark:border-t-[#10B981] border-x border-b border-[#08966a] bg-white dark:bg-[#161619] p-6 sm:p-12 shadow-md space-y-8">
+            <div className="flex flex-wrap items-center justify-between gap-4 offer-ui">
+              <span className="tag-green">{t('solutionsPage', 'flagship2_badge')}</span>
+              <span className="text-[#059669] dark:text-[#10B981] font-semibold bg-[#ECFDF5] dark:bg-[#10B981]/15 px-2.5 py-0.5 border border-[#08966a]/30">
+                {t('solutionsPage', 'flagship2_code')}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              <div className="lg:col-span-7 space-y-5">
+                <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-[#059669] dark:text-[#10B981] uppercase">
+                  <Laptop size={14} />
+                  <span>VERTICAL 02 // LAPTOP SHOPS & ACCESSORIES MERCHANTS</span>
+                </div>
+                <h2 className="offer-h2 text-[#0F0F0F] dark:text-[#EDECE6]">
+                  {t('solutionsPage', 'flagship2_title')}
+                </h2>
+                <p className="offer-body text-[#575652] dark:text-[#9B9A95]">
+                  {t('solutionsPage', 'flagship2_sub')}
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 offer-ui text-[#0F0F0F] dark:text-[#EDECE6]">
+                  <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[#08966a]/30 flex items-center gap-2.5">
+                    <span className="p-1 rounded-full bg-[#ECFDF5] dark:bg-[#10B981]/20 text-[#059669] dark:text-[#10B981]">
+                      <CheckCircle2 size={15} className="shrink-0" />
+                    </span>
+                    <span className="font-medium">{t('solutionsPage', 'flagship2_f1')}</span>
+                  </div>
+                  <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[#08966a]/30 flex items-center gap-2.5">
+                    <span className="p-1 rounded-full bg-[#ECFDF5] dark:bg-[#10B981]/20 text-[#059669] dark:text-[#10B981]">
+                      <CheckCircle2 size={15} className="shrink-0" />
+                    </span>
+                    <span className="font-medium">{t('solutionsPage', 'flagship2_f2')}</span>
+                  </div>
+                  <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[#08966a]/30 flex items-center gap-2.5">
+                    <span className="p-1 rounded-full bg-[#ECFDF5] dark:bg-[#10B981]/20 text-[#059669] dark:text-[#10B981]">
+                      <CheckCircle2 size={15} className="shrink-0" />
+                    </span>
+                    <span className="font-medium">{t('solutionsPage', 'flagship2_f3')}</span>
+                  </div>
+                  <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[#08966a]/30 flex items-center gap-2.5">
+                    <span className="p-1 rounded-full bg-[#ECFDF5] dark:bg-[#10B981]/20 text-[#059669] dark:text-[#10B981]">
+                      <CheckCircle2 size={15} className="shrink-0" />
+                    </span>
+                    <span className="font-medium">{t('solutionsPage', 'flagship2_f4')}</span>
+                  </div>
+                </div>
+
+                <div className="pt-3 flex flex-wrap items-center gap-4">
+                  <Link to="/solutions/laptop-retail" className="btn-blue offer-btn offer-btn-xl shadow-sm group relative overflow-hidden">
+                    <span className="relative z-10">{t('solutionsPage', 'flagship2_cta')}</span>
+                    <ArrowRight size={14} className="relative z-10 group-hover:translate-x-1.5 transition-transform" />
+                    <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none animate-shimmer-sweep" />
+                  </Link>
+                  <a
+                    href="https://store-demo-eight.vercel.app/?mode=laptop"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-outline offer-btn offer-btn-lg group relative overflow-hidden"
+                  >
+                    <span className="relative z-10">{isUrdu ? 'LIVE STORE DEMO' : 'EXPLORE LAPTOP DEMO'}</span>
+                    <ArrowUpRight size={14} className="relative z-10 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    <div className="absolute inset-0 w-1/3 h-full bg-gradient-to-r from-transparent via-[#10B981]/15 to-transparent pointer-events-none animate-shimmer-sweep" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Right Tier Summary Box */}
+              <div className="lg:col-span-5 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[#08966a]/30 p-6 space-y-4 offer-ui">
+                <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] pb-2 font-bold flex items-center justify-between">
+                  <span>{t('solutionsPage', 'tiers_title')}</span>
+                  <span className="offer-ui text-[#8E8D88] dark:text-[#6A6965]">FIXED INVESTMENT</span>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="card-hover-guided p-3 bg-white dark:bg-[#161619] border border-[#08966a]">
+                    <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'flagship2_tier1_title')}</div>
+                    <div className="text-[#059669] dark:text-[#10B981] font-semibold offer-ui">{t('solutionsPage', 'flagship2_tier1_price')}</div>
+                    <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'flagship2_tier1_sub')}</div>
+                  </div>
+
+                  <div className="card-hover-guided p-3 bg-[#ECFDF5]/60 dark:bg-[#10B981]/10 border-2 border-[#08966a] dark:border-[#10B981] shadow-xs">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'flagship2_tier2_title')}</span>
+                      <span className="offer-eyebrow font-bold text-white bg-[#059669] dark:bg-[#10B981] px-2 py-0.5">{t('solutionsPage', 'tier2_popular')}</span>
+                    </div>
+                    <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui mt-0.5">{t('solutionsPage', 'flagship2_tier2_price')}</div>
+                    <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'flagship2_tier2_sub')}</div>
+                  </div>
+
+                  <div className="card-hover-guided p-3 bg-white dark:bg-[#161619] border border-[#08966a]">
+                    <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'flagship2_tier3_title')}</div>
+                    <div className="text-[#059669] dark:text-[#10B981] font-semibold offer-ui">{t('solutionsPage', 'flagship2_tier3_price')}</div>
+                    <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'flagship2_tier3_sub')}</div>
                   </div>
                 </div>
 

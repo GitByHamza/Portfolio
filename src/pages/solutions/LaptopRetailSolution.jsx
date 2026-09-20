@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {
   ShieldCheck,
-  Cpu,
+  Laptop,
   Zap,
   Check,
   X as XIcon,
@@ -23,48 +23,32 @@ import {
   Maximize2,
   Info,
   ChevronDown,
+  BatteryCharging,
+  HardDrive,
+  Cpu,
+  Sparkles,
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FadeIn, StaggerContainer, StaggerItem } from '../../components/motion/MotionReveal'
 import PlanDetailModal from '../../components/PlanDetailModal'
 import ThemeToggle from '../../components/ThemeToggle'
 import { useLanguage } from '../../context/LanguageContext'
-import { projectsData, getLocalizedProject } from '../../data/projects'
 
-/**
- * Geo / Country / Timezone auto-selection helper:
- * - Checks localStorage for any manual user override first.
- * - Inspects Intl.DateTimeFormat().resolvedOptions().timeZone (synchronous, 0 latency).
- *   - Asia/Karachi (Pakistan), Asia/Kolkata / Asia/Calcutta (India) -> 'ur-en' (Roman Urdu)
- *   - America/*, Europe/*, Atlantic/* (USA, UK, EU countries) -> 'en' (English)
- * - Inspects navigator.languages for pk/in locales.
- * - Defaults to 'en' if undetermined.
- */
+// Geo / Timezone auto-selection for Language
 function detectInitialLanguage() {
   if (typeof window === 'undefined') return 'en'
-
-  // 1. User manual override priority
   try {
-    const saved = localStorage.getItem('texcodes_retail_lang')
+    const saved = localStorage.getItem('texcodes_laptop_lang') || localStorage.getItem('texcodes_retail_lang')
     if (saved === 'en' || saved === 'ur-en') {
       return saved
     }
   } catch (e) {}
 
-  // 2. Immediate synchronous timezone detection
   try {
     const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase()
-
-    // Pakistan & India timezones -> Roman Urdu
-    if (
-      tz === 'asia/karachi' ||
-      tz === 'asia/kolkata' ||
-      tz === 'asia/calcutta'
-    ) {
+    if (tz === 'asia/karachi' || tz === 'asia/kolkata' || tz === 'asia/calcutta') {
       return 'ur-en'
     }
-
-    // USA, UK, Canada, Australia, EU timezones -> English
     if (
       tz.startsWith('america/') ||
       tz.startsWith('europe/') ||
@@ -73,32 +57,13 @@ function detectInitialLanguage() {
     ) {
       return 'en'
     }
-  } catch (e) {}
-
-  // 3. Immediate browser locale inspection
-  try {
-    const navLangs = (navigator.languages || [navigator.language || '']).map((l) =>
-      l.toLowerCase()
-    )
-    const isDesiLocale = navLangs.some(
-      (l) =>
-        l.includes('-pk') ||
-        l.includes('-in') ||
-        l.startsWith('ur') ||
-        l.startsWith('hi') ||
-        l.startsWith('pa')
-    )
-    if (isDesiLocale) return 'ur-en'
-
-    const isWesternLocale = navLangs.some(
-      (l) =>
-        l.startsWith('en') ||
-        l.startsWith('de') ||
-        l.startsWith('fr') ||
-        l.startsWith('es') ||
-        l.startsWith('it')
-    )
-    if (isWesternLocale) return 'en'
+    const navLangs = (navigator.languages || [navigator.language || '']).map((l) => l.toLowerCase())
+    if (navLangs.some((l) => l.includes('-pk') || l.includes('-in') || l.startsWith('ur') || l.startsWith('hi'))) {
+      return 'ur-en'
+    }
+    if (navLangs.some((l) => l.startsWith('en') || l.startsWith('de') || l.startsWith('fr') || l.startsWith('es'))) {
+      return 'en'
+    }
   } catch (e) {}
 
   return 'en'
@@ -106,11 +71,6 @@ function detectInitialLanguage() {
 
 /**
  * Geo / Timezone auto-selection for Currency:
- * - Checks localStorage for manual user override ('texcodes_currency')
- * - Inspects Intl.DateTimeFormat().resolvedOptions().timeZone:
- *   - Asia/Karachi, Asia/Kolkata, Asia/Calcutta -> 'PKR'
- *   - All other timezones (America/*, Europe/*, Australia/*, Asia/Dubai, etc.) -> 'USD'
- * - Default for international outreach -> 'USD'
  */
 function detectInitialCurrency() {
   if (typeof window === 'undefined') return 'USD'
@@ -123,11 +83,7 @@ function detectInitialCurrency() {
 
   try {
     const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase()
-    if (
-      tz === 'asia/karachi' ||
-      tz === 'asia/kolkata' ||
-      tz === 'asia/calcutta'
-    ) {
+    if (tz === 'asia/karachi' || tz === 'asia/kolkata' || tz === 'asia/calcutta') {
       return 'PKR'
     }
   } catch (e) {}
@@ -137,41 +93,41 @@ function detectInitialCurrency() {
 
 const I18N_DATA = {
   en: {
-    hero_badge: 'COMMERCIAL INFRASTRUCTURE // COMPUTER & TECH HARDWARE OS',
-    hero_title_1: 'Automate Custom PC Sales & Multi-Branch Retail',
+    hero_badge: 'COMMERCIAL INFRASTRUCTURE // LAPTOP & ACCESSORIES RETAIL OS',
+    hero_title_1: 'Automate Laptop Sales, Battery Verification & RAM Upgrades',
     hero_title_accent: 'With Zero Platform Commissions',
     hero_title_2: 'And 100% Code Ownership',
     hero_sub:
-      'Turn your computer showroom into an automated 24/7 retail operation. Custom PC Builder with real-time socket and wattage validation, live multi-branch inventory sync, serial RMA tracking, and AI sales advisory—delivered in 21 days with 100% codebase and database ownership.',
-    cta_primary: 'Choose Your Solution Plan',
+      'Turn your computer showroom into a 24/7 automated retail operation. Custom laptop storefront with dynamic RAM & SSD configurator, verified battery health badges, multi-branch stock sync, and 24/7 AI sales matchmaker—delivered in 21 days with 100% codebase and database ownership.',
+    cta_primary: 'Choose Your Laptop Solution Plan',
     cta_secondary: 'Explore Live Store Demo',
     metrics_code: 'Full GitHub & DB Transfer',
     metrics_tax: 'Keep 100% Retail Margins',
-    metrics_speed: 'Real-Time Hardware Validation',
-    metrics_rma: 'Supplier-to-Invoice Tracking',
+    metrics_speed: 'Tested Battery & Grade Badges',
+    metrics_rma: 'Motherboard Serial Tracking',
     metrics_code_top: '100% OWNERSHIP',
     metrics_tax_top: '0% PLATFORM TAX',
     metrics_speed_top: '<1% RETURN RATE',
-    metrics_rma_top: 'SERIAL RMA',
+    metrics_rma_top: 'BATTERY & SERIAL RMA',
 
     // Ultimatum Decision Matrix
     ultimatum_badge: 'THE ZERO-RISK DECISION MATRIX',
-    ultimatum_title: 'WHY LEADING TECH RETAILERS MOVE FORWARD',
+    ultimatum_title: 'WHY LEADING LAPTOP RETAILERS MOVE FORWARD',
     ultimatum_sub:
-      'An offer structured so the retailer wins in both scenarios. We assume the technical execution risk so you can modernize your operation with total certainty.',
+      'An offer structured so the laptop dealer wins in both scenarios. We assume the technical execution risk so you can modernize your operation with complete certainty.',
     ultimatum_best_tag: 'BEST-CASE SCENARIO',
-    ultimatum_best_title: 'You launch an automated retail machine',
-    ultimatum_best_p1: 'Deploy a dedicated Next.js storefront and interactive PC Builder in 21 days.',
-    ultimatum_best_p2: 'Component returns drop to zero with automated socket, RAM, and wattage checks.',
-    ultimatum_best_p3: 'Physical counters and online orders share one real-time multi-branch inventory.',
-    ultimatum_best_p4: 'Save thousands every year with zero recurring platform commissions or order fees.',
-    ultimatum_best_p5: 'Full GitHub repository and PostgreSQL database ownership transferred to your accounts.',
+    ultimatum_best_title: 'You launch an automated laptop sales machine',
+    ultimatum_best_p1: 'Deploy a dedicated Next.js laptop catalog with RAM & SSD upgrades in 21 days.',
+    ultimatum_best_p2: 'Repetitive WhatsApp inquiries drop by 80% with transparent condition and battery badges.',
+    ultimatum_best_p3: 'Shop counters, testing labs, and warehouses share one real-time multi-branch stock matrix.',
+    ultimatum_best_p4: 'Save thousands every year with zero recurring platform commissions or order cuts.',
+    ultimatum_best_p5: 'Full GitHub repository and PostgreSQL database ownership transferred to your business.',
     ultimatum_best_footer: 'Outcome: You scale your operation, protect your margins, and own your software.',
 
     ultimatum_worst_tag: 'WORST-CASE SCENARIO',
     ultimatum_worst_title: 'If we fail to fulfill agreed specifications',
     ultimatum_worst_p1: '100% full refund of your commencement deposit processed immediately without dispute.',
-    ultimatum_worst_p2: 'Keep our custom hardware catalog schema and architecture blueprint for free.',
+    ultimatum_worst_p2: 'Keep our custom laptop catalog schema and architecture blueprint for free.',
     ultimatum_worst_p3: '$250 USD courtesy credit paid directly to your business as an apology for your time.',
     ultimatum_worst_p4: 'Zero contract lock-in, zero ongoing financial obligations, and zero risk.',
     ultimatum_worst_footer: 'Outcome: You risk zero capital, lose nothing, and keep an enterprise tech audit.',
@@ -180,144 +136,145 @@ const I18N_DATA = {
     guarantee_badge: 'SAFETY NET // 100% MILESTONE-PROTECTED STAGING GUARANTEE',
     guarantee_title: 'Test Your System On A Live Staging URL Before Final Settlement',
     guarantee_sub:
-      'You only pay the remaining balance after testing your fully functional custom storefront, PC Builder, and multi-branch stock sync on a private staging URL with your own products. If it does not perform to agreed specifications, your deposit is refunded in full.',
+      'You only pay the remaining balance after testing your fully functional custom laptop storefront, RAM/SSD configurator, and stock sync on a private staging URL with your own products. If it does not perform to agreed specifications, your deposit is refunded in full.',
 
     arch_badge: 'SYSTEM ARCHITECTURE',
-    arch_title: 'ONE UNIFIED SYSTEM FOR THE RETAIL OPERATION',
+    arch_title: 'ONE UNIFIED SYSTEM FOR THE LAPTOP RETAIL OPERATION',
     arch_sub:
-      'Not just an online catalog. An integrated retail operating environment connecting storefront, warehouse, physical counters, and customer notifications.',
-    arch_01_title: '01. CUSTOM WEB STOREFRONT',
+      'Not just an online gallery. An integrated retail operating environment connecting storefront, testing lab, physical counters, and WhatsApp notifications.',
+    arch_01_title: '01. GRADE & CONDITION TRANSPARENCY',
     arch_01_desc:
-      'Fast Next.js storefront designed for PC hardware, CCTV kits, and electronics with rich spec sheets and instant filtering.',
-    arch_02_title: '02. PC BUILDER ENGINE',
+      'Showcase Brand New, Open-Box 10/10, and Grade A+ Renewed units with verified high-res photo carousels and testing certificates.',
+    arch_02_title: '02. ON-THE-FLY RAM & SSD CONFIGURATOR',
     arch_02_desc:
-      'Validates CPU socket (AM5/LGA1700), DDR4/DDR5 RAM, and wattage limits automatically before checkout.',
-    arch_03_title: '03. MULTI-BRANCH STOCK SYNC',
+      'Allow customers to select any base laptop and click +16GB RAM or +1TB NVMe SSD with live automatic price and stock updates.',
+    arch_03_title: '03. TESTED BATTERY HEALTH BADGES',
     arch_03_desc:
-      'Connect physical shops (Hafeez Centre, Techno City, Dubai Plaza) and warehouses in one live inventory panel.',
-    arch_04_title: '04. SERIAL NUMBER & RMA',
+      'Display tested battery backup hours and health percentage on every laptop card, eliminating repetitive customer questions.',
+    arch_04_title: '04. MULTI-BRANCH STOCK SYNC',
     arch_04_desc:
-      'Track individual GPU, motherboard, and DVR serial numbers from supplier intake to customer invoice and warranty return.',
-    arch_05_title: '05. WHATSAPP AUTO DISPATCH',
+      'Connect retail shops (Hafeez Centre, Techno City, Dubai Plaza), testing labs, and central warehouse in one live inventory panel.',
+    arch_05_title: '05. MOTHERBOARD SERIAL & WARRANTY RMA',
     arch_05_desc:
-      'Pre-formatted customer order summaries and custom PC build spec sheets sent directly to your sales WhatsApp desk.',
-    arch_06_title: '06. 100% CODE & DATA TRANSFER',
+      'Track individual laptop serial numbers and tested battery capacity on invoices to eliminate customer return and warranty fraud.',
+    arch_06_title: '06. WHATSAPP AUTO DISPATCH',
     arch_06_desc:
-      'Full GitHub repository and PostgreSQL database ownership transferred directly to your business account.',
-    arch_07_title: '07. AI SALES & HARDWARE ADVISOR CHATBOT',
+      'Pre-formatted customer orders with exact processor specs, RAM/SSD configuration, and video link sent directly to sales counters.',
+    arch_07_title: '07. AI LAPTOP MATCHMAKER CHATBOT',
     arch_07_desc:
-      'LLM-powered hardware compatibility & automated 24/7 retail sales agent embedded into storefront. Recommends parts by budget, checks socket/wattage compatibility, and converts visitors into WhatsApp and web orders.',
-
-    demo_badge: 'VERIFIABLE SYSTEM DEMONSTRATION',
-    demo_title: 'TEST THE LIVE PRODUCTION INTERFACE',
-    demo_sub:
-      'Test actual customer workflows and administrative controls on our hosted sandbox environment.',
-    demo_store_title: '01. STOREFRONT DEMO',
-    demo_store_desc:
-      'Explore product catalogs, spec filtering, cart logic, and dark aesthetic storefront.',
-    demo_pc_title: '02. PC BUILDER ENGINE',
-    demo_pc_desc:
-      'Test socket matching, wattage calculation, and custom build WhatsApp sharing.',
-    demo_admin_title: '03. ADMIN PANEL MATRIX',
-    demo_admin_desc:
-      'Inspect 1-click admin demo mode, stock updates, orders, and warranty logs.',
+      '24/7 automated sales assistant that matches customer budgets and use cases (Coding, Graphic Design, University, Gaming) to available stock.',
 
     plans_badge: 'COMMERCIAL INVESTMENT TIERS',
-    plans_title: 'Plans.',
+    plans_title: 'Laptop Solution Plans.',
     plans_sub:
       'Zero monthly sales commissions. 100% client code and database ownership upon completion.',
     plans_sub_suffix:
       'Click any plan below to inspect the complete deliverable breakdown, architecture specs, and visual previews.',
     detail_btn: 'CLICK ME FOR FULL DETAIL & PREVIEWS →',
 
-    starter_name: 'Single Store Launch',
+    starter_name: 'Single Outlet Laptop Launch',
     starter_badge: 'SINGLE OUTLET',
     starter_desc:
-      'For single location computer stores & CCTV shops starting online sales with direct WhatsApp dispatch.',
-    starter_price_pkr: 'PKR 280,000',
-    starter_price_usd: '$2,450 USD',
+      'For independent laptop dealers and accessories shops starting online sales with direct WhatsApp dispatch and RAM/SSD upgrades.',
+    starter_price_pkr: 'PKR 250,000',
+    starter_price_usd: '$2,250 USD',
     starter_delivery: '⚡ Delivered in 10 days, guaranteed',
     starter_support_pkr: 'Optional Care Plan: PKR 14,000 / mo',
     starter_support_usd: 'Optional Care Plan: $140 / mo',
     starter_callout_label: 'CORE CAPABILITY:',
     starter_callout_text:
-      'Essential single-store online storefront with direct WhatsApp checkout and basic stock management.',
-    starter_f1: 'Next.js Storefront (Up to 50 SKUs)',
-    starter_f2: 'WhatsApp Order Dispatch',
-    starter_f3: 'Basic Stock Updates & Orders',
+      'Dedicated single-outlet laptop storefront with RAM/SSD upgrade configurator, battery badges, and WhatsApp dispatch.',
+    starter_f1: 'Next.js Laptop Storefront (Up to 100 SKUs)',
+    starter_f2: 'Dynamic RAM & SSD Upgrade Configurator',
+    starter_f3: 'Condition Grade & Battery Health Badges',
     starter_f4: '100% Client Code & DB Ownership',
 
-    growth_name: 'Multi Branch Growth',
+    growth_name: 'Multi-Branch Laptop Growth',
     growth_badge: '★ MOST POPULAR // BEST VALUE',
     growth_desc:
-      'For established electronics and hardware retailers selling across physical shops and online with custom PC builds.',
-    growth_price_pkr: 'PKR 550,000',
-    growth_price_usd: '$4,850 USD',
+      'For established laptop retailers, imported notebook dealers, and gaming laptop stores selling across shop counters and online.',
+    growth_price_pkr: 'PKR 490,000',
+    growth_price_usd: '$4,450 USD',
     growth_delivery: '⚡ Delivered in 21 days, guaranteed',
     growth_support_pkr: 'Optional Care Plan: PKR 28,000 / mo',
     growth_support_usd: 'Optional Care Plan: $280 / mo',
     growth_callout_label: 'MAJOR UPGRADE OVER STARTER:',
     growth_callout_text:
-      'Adds the real-time PC Builder compatibility engine, 3-branch stock sync, serial warranty tracking, and AI Hardware Advisor Chatbot.',
-    growth_f1: 'Interactive PC Builder Compatibility Matrix',
-    growth_f2: '3-Branch Inventory Synchronization',
-    growth_f3: 'Hardware Serial Number & RMA Warranty Tracking',
-    growth_f4: 'Promotional Sliders, Flash Sales & Coupons',
+      'Adds 3-branch inventory sync, motherboard serial RMA tracking, AI Laptop Matchmaker Chatbot, and online card payment gateway.',
+    growth_f1: '3-Branch Inventory Sync (Counter, Lab, Warehouse)',
+    growth_f2: 'Motherboard Serial Number & Battery RMA Tracker',
+    growth_f3: 'Automated Accessories Cross-Sell & Upsell Engine',
+    growth_f4: 'Promotional Hero Sliders & Flash Sale Banners',
     growth_f5_pkr: 'Online Card & Wallet Payment Gateway (Included — Save PKR 50,000)',
     growth_f5_usd: 'Online Card & Wallet Payment Gateway (Included — Save $400 USD)',
-    growth_f6_pkr: 'AI Retail Sales & Hardware Advisor Chatbot (Included — Save PKR 65,000)',
-    growth_f6_usd: 'AI Retail Sales & Hardware Advisor Chatbot (Included — Save $650 USD)',
+    growth_f6_pkr: 'AI Laptop Matchmaker Sales Chatbot (Included — Save PKR 65,000)',
+    growth_f6_usd: 'AI Laptop Matchmaker Sales Chatbot (Included — Save $650 USD)',
 
-    enterprise_name: 'Chain and Distribution OS',
+    enterprise_name: 'Enterprise Wholesale & Chain OS',
     enterprise_badge: '★ COMPLETE RETAIL OS',
     enterprise_desc:
-      'For multi branch retail chains, wholesale hardware distributors, and computer importers operating high volume.',
-    enterprise_price_pkr: 'From PKR 950,000',
-    enterprise_price_usd: 'From $8,500 USD',
+      'For high-volume laptop importers, nationwide distributors, and multi-branch retail chains needing enterprise ERP synchronization.',
+    enterprise_price_pkr: 'From PKR 850,000',
+    enterprise_price_usd: 'From $7,900 USD',
     enterprise_delivery: '⚡ Delivered in 30 days, guaranteed',
     enterprise_support_pkr: 'Dedicated Care Plan: PKR 55,000 / mo',
     enterprise_support_usd: 'Dedicated Care Plan: $550 / mo',
     enterprise_callout_label: 'MAJOR UPGRADE OVER GROWTH:',
     enterprise_callout_text:
-      'Adds unlimited branches, full theme content CMS, multi-guard staff RBAC, bespoke POS/Courier API sync, and Enterprise AI Sales Agent.',
-    enterprise_f1: 'Unlimited Branches & Warehouse Sync',
-    enterprise_f2: 'Granular Staff RBAC (Super Admin, Manager, Cashier)',
-    enterprise_f3: 'Complete Theme & Navigation Content CMS',
-    enterprise_f4: 'Custom POS Hardware & Courier API Sync',
+      'Adds unlimited branches, B2B corporate fleet invoicing, bulk import manifest CSV sync, granular staff RBAC, and bespoke ERP/POS integration.',
+    enterprise_f1: 'Unlimited Branches & Warehouse Outlets',
+    enterprise_f2: 'B2B Corporate Fleet Invoicing (Bulk Office Quotes)',
+    enterprise_f3: 'Bulk Manifest Import (Direct Container Intake)',
+    enterprise_f4: 'Granular Staff RBAC (Tester, Sales, Cashier, Owner)',
     enterprise_f5: 'Multi-Gateway Card & Wallet Prepay Integration (Included)',
-    enterprise_f6: 'Enterprise AI Retail Sales & Knowledge Agent (Included)',
+    enterprise_f6: 'Enterprise AI Laptop Sales & Knowledge Agent (Included)',
 
-    whatsapp_cta: 'Claim This Solution on WhatsApp',
+    whatsapp_cta: 'Claim This Plan on WhatsApp',
     view_terms: 'Review Contract Scope & Warranty Terms →',
+
+    // Live Demo Grid
+    demo_badge: 'LIVE PROOF // TEST THE ENGINE BEFORE YOU COMMIT',
+    demo_title: 'Nothing is hidden. Click into the working demo systems below.',
+    demo_sub:
+      'Review how buyers browse Grade-A+ laptops with verified battery health, filter specs, and how shop staff manage stock across Hafeez Centre and Technocity branches.',
+    demo_store_title: '1. Laptop & Accessories Storefront',
+    demo_store_desc:
+      'Explore verified business laptops, gaming machines, original chargers, and RAM upgrades with real-time branch availability in Lahore, Karachi, and Rawalpindi.',
+    demo_filter_title: '2. Live Spec & Battery Health Filter',
+    demo_filter_desc:
+      'Test how buyers filter laptops by battery health, processor generation, screen size, and RAM/SSD upgrade options.',
+    demo_admin_title: '3. Multi-Branch & Serial RMA Backoffice',
+    demo_admin_desc:
+      'Inspect how branch managers record container manifests, track warranty serial numbers, and view gross profit margins.',
   },
   'ur-en': {
-    hero_badge: 'COMMERCIAL INFRASTRUCTURE // COMPUTER AUR HARDWARE OS',
-    hero_title_1: 'Custom PC Sales Aur Multi-Branch Dukanon Ko',
+    hero_badge: 'COMMERCIAL INFRASTRUCTURE // LAPTOP AUR ACCESSORIES RETAIL OS',
+    hero_title_1: 'Laptop Sales, Battery Verification Aur RAM Upgrades Ko',
     hero_title_accent: 'Baghair Kisi Platform Commission Ke',
     hero_title_2: 'Automate Karein',
     hero_sub:
-      'Apni computer dukan ko 24/7 chalne wale automated retail operation mein badlein. Real-time socket aur wattage compatibility engine, live multi-branch stock sync, serial warranty tracking, aur AI sales advisor—21 dinon mein mukammal code malkiat ke sath.',
-    cta_primary: 'Apna Retail Plan Select Karein',
+      'Apni laptop dukan ko 24/7 chalne wale automated retail store mein badlein. Live RAM aur SSD upgrade configurator, tasdeeq shuda battery health badges, multi-branch stock sync, aur 24/7 AI sales advisor—21 dinon mein 100% code aur database malkiat ke sath.',
+    cta_primary: 'Apna Laptop Plan Select Karein',
     cta_secondary: 'Live Demo Test Karein',
     metrics_code: 'Mukammal GitHub Code Transfer',
     metrics_tax: 'Apna Pura Profit Khud Rakhein',
-    metrics_speed: 'Real-Time Hardware Validation',
-    metrics_rma: 'Supplier Se Invoice Tak Tracking',
+    metrics_speed: 'Battery Health aur Condition Badges',
+    metrics_rma: 'Motherboard Serial Tracking',
     metrics_code_top: '100% MALKIAT',
     metrics_tax_top: '0% COMMISSION',
     metrics_speed_top: '<1% RETURNS',
-    metrics_rma_top: 'SERIAL RMA',
+    metrics_rma_top: 'BATTERY & SERIAL RMA',
 
     // Ultimatum Decision Matrix
     ultimatum_badge: 'ZERO-RISK DECISION MATRIX',
-    ultimatum_title: 'RETAILERS HUMARE SATH KYUN KAAM KARTE HAIN',
+    ultimatum_title: 'LAPTOP DEALERS HUMARE SATH KYUN KAAM KARTE HAIN',
     ultimatum_sub:
-      'Aisa offer jisme dono surton mein retailer ka faida hai. Technical risk hum uthate hain taake aap baghair kisi dar ke scale karein.',
+      'Aisa offer jisme dono surton mein dealer ka faida hai. Technical risk hum uthate hain taake aap baghair kisi dar ke scale karein.',
     ultimatum_best_tag: 'BEST-CASE SCENARIO',
-    ultimatum_best_title: 'Aapka 24/7 automated retail system launch hota hai',
-    ultimatum_best_p1: '21 dinon mein dedicated Next.js storefront aur PC Builder live.',
-    ultimatum_best_p2: 'Automated compatibility checking se return rate taqreeban sifar.',
-    ultimatum_best_p3: 'Physical counters aur online orders ka live multi-branch stock sync.',
+    ultimatum_best_title: 'Aapka 24/7 automated laptop sales system live hota hai',
+    ultimatum_best_p1: '21 dinon mein dedicated Next.js storefront aur RAM/SSD upgrade configurator live.',
+    ultimatum_best_p2: 'Condition aur battery health badges ki wajah se WhatsApp ke fazool sawalat 80% khatam.',
+    ultimatum_best_p3: 'Dukan, testing lab aur godam ka combined real-time multi-branch stock sync.',
     ultimatum_best_p4: 'Zero platform fee aur zero sales commission se lakhoon ki salana bachat.',
     ultimatum_best_p5: 'GitHub source code aur PostgreSQL database ki 100% mukammal malkiat.',
     ultimatum_best_footer: 'Nateeja: Aapka business scale hota hai aur har rupay ka profit aapka rehta hai.',
@@ -325,7 +282,7 @@ const I18N_DATA = {
     ultimatum_worst_tag: 'WORST-CASE SCENARIO',
     ultimatum_worst_title: 'Agar hum agreed specs fulfill na kar sakein',
     ultimatum_worst_p1: 'Aapki deposit raqam 100% fori wapas bila kisi behas.',
-    ultimatum_worst_p2: 'Hamara tayyar kardah hardware database schema blueprint bilkul muft aapka.',
+    ultimatum_worst_p2: 'Hamara tayyar kardah laptop database schema blueprint bilkul muft aapka.',
     ultimatum_worst_p3: 'Aapke waqt ke azaale ke tor par courtesy credit ada kiya jata hai.',
     ultimatum_worst_p4: 'Zero vendor lock-in aur koi chhupe huay ikhrajat nahi.',
     ultimatum_worst_footer: 'Nateeja: Aapka zero financial risk hai, kuch nahi kho te, aur technical audit muft milta hai.',
@@ -334,214 +291,218 @@ const I18N_DATA = {
     guarantee_badge: 'SAFETY NET // 100% MILESTONE-PROTECTED STAGING GUARANTEE',
     guarantee_title: 'Final Payment Se Pehle Live Staging URL Par System Test Karein',
     guarantee_sub:
-      'Baqi raqam aap tab ada karte hain jab aap apni private staging URL par products, PC Builder aur stock sync ko mukammal chala kar verify kar lein. Agar spec ke mutabiq na ho, to deposit fori wapas.',
+      'Baqi raqam aap tab ada karte hain jab aap apni private staging URL par laptops, RAM/SSD upgrades aur stock sync ko mukammal chala kar verify kar lein. Agar spec ke mutabiq na ho, to deposit fori wapas.',
 
     arch_badge: 'SYSTEM ARCHITECTURE',
-    arch_title: 'ONLINE AUR DUKAN DONO KE LIYE COMBINED SYSTEM',
+    arch_title: 'LAPTOP BUSINESS KE LIYE COMPLETE OPERATING ENVIRONMENT',
     arch_sub:
-      'Sirf ek aam website nahi. Storefront, godam, physical dukan aur customer orders ko jorne wala complete system.',
-    arch_01_title: '01. CUSTOM WEB STOREFRONT',
+      'Sirf aam online catalog nahi. Storefront, testing lab, physical counter aur WhatsApp dispatch ko jorne wala complete system.',
+    arch_01_title: '01. CONDITION AUR GRADE TRANSPARENCY',
     arch_01_desc:
-      'PC hardware, CCTV packages aur electronics ke liye tayyar shuda tez tareen Next.js web store.',
-    arch_02_title: '02. PC BUILDER ENGINE',
+      'Brand New, Open-Box 10/10 aur Grade A+ Renewed laptops ko verified photo gallery aur testing checklist ke sath dikhayein.',
+    arch_02_title: '02. ON-THE-FLY RAM AUR SSD CONFIGURATOR',
     arch_02_desc:
-      'CPU socket (AM5/LGA1700), DDR4/DDR5 RAM aur power supply wattage compatibility auto-check karta hai.',
-    arch_03_title: '03. MULTI-BRANCH STOCK SYNC',
+      'Customer kisi bhi base laptop ko select kar ke 1-click mein RAM (16GB/32GB) aur SSD (512GB/1TB) upgrade kar sakta hai.',
+    arch_03_title: '03. TESTED BATTERY HEALTH BADGES',
     arch_03_desc:
-      'Physical dukanon (Hafeez Centre, Techno City, Dubai Plaza) aur godam ka stock ek live panel par dekhein.',
-    arch_04_title: '04. SERIAL NUMBER AUR RMA',
+      'Har laptop card par tested battery backup aur health percentage saaf nazar aati hai jisse customer ka aitmad barhta hai.',
+    arch_04_title: '04. MULTI-BRANCH STOCK SYNC',
     arch_04_desc:
-      'Har GPU, motherboard aur DVR ka serial number supplier intake se customer warranty claim tak track karein.',
-    arch_05_title: '05. WHATSAPP AUTO DISPATCH',
+      'Dukanon (Hafeez Centre, Techno City, Dubai Plaza), testing counter aur godam ka stock ek live panel par synchronize rehta hai.',
+    arch_05_title: '05. MOTHERBOARD SERIAL AUR WARRANTY RMA',
     arch_05_desc:
-      'Pre-formatted order details aur custom PC build sheets seedha aapke sales counter WhatsApp par pohanchti hain.',
-    arch_06_title: '06. 100% CODE AUR DATA TRANSFER',
+      'Invoice par laptop ka motherboard serial aur battery health record hoti hai taake customer return fraud se bacha ja sake.',
+    arch_06_title: '06. WHATSAPP AUTO DISPATCH',
     arch_06_desc:
-      'Mukammal GitHub source code aur PostgreSQL database ki ownership aapke company account ko transfer hoti hai.',
-    arch_07_title: '07. AI SALES AUR HARDWARE ADVISOR CHATBOT',
+      'Customer order ki mukammal specs, upgraded RAM/SSD aur unit ki video verification seedha counter sales desk ko dispatch hoti hai.',
+    arch_07_title: '07. AI LAPTOP MATCHMAKER CHATBOT',
     arch_07_desc:
-      'Website par 24/7 mojud AI assistant jo customer ko budget ke mutabiq compatible parts recommend karta hai, socket aur wattage match karta hai, aur orders seedha WhatsApp ya cart mein bhejta hai.',
-
-    demo_badge: 'VERIFIABLE SYSTEM DEMONSTRATION',
-    demo_title: 'LIVE PRODUCTION INTERFACE TEST KAREIN',
-    demo_sub:
-      'Humare hosted sandbox environment par live customer shopping aur admin management controls khud chala kar dekhein.',
-    demo_store_title: '01. STOREFRONT DEMO',
-    demo_store_desc:
-      'Live product catalog, hardware filters, shopping cart aur modern dark layout test karein.',
-    demo_pc_title: '02. PC BUILDER ENGINE',
-    demo_pc_desc:
-      'Socket compatibility check, wattage calculator aur WhatsApp custom build share kar ke dekhein.',
-    demo_admin_title: '03. ADMIN PANEL MATRIX',
-    demo_admin_desc:
-      '1-click admin demo login, live stock updates, orders tracker aur warranty serial numbers inspect karein.',
+      'Website par 24/7 mojud AI assistant jo customer ko budget aur kaam (Coding, Graphics, Office, Gaming) ke mutabiq laptop recommend karta hai.',
 
     plans_badge: 'COMMERCIAL INVESTMENT TIERS',
-    plans_title: 'Plans.',
+    plans_title: 'Laptop Solution Plans.',
     plans_sub:
       'Baghair kisi mahana sales commission ke. Mukammal source code ownership. Apni dukan ke mutabiq plan chunein.',
     plans_sub_suffix:
       'Mukammal architecture specs, modules aur visual previews dekhne ke liye kisi bhi plan par click karein.',
     detail_btn: 'MUKAMMAL DETAILS AUR PREVIEWS DEKHEIN →',
 
-    starter_name: 'Single Store Launch',
+    starter_name: 'Single Outlet Laptop Launch',
     starter_badge: 'SINGLE DUKAN',
     starter_desc:
-      'Single location computer shops aur CCTV vendors ke liye jo direct WhatsApp dispatch ke sath online sales shuru kar rahe hain.',
-    starter_price_pkr: 'PKR 280,000',
-    starter_price_usd: '$2,450 USD',
+      'Single location laptop shops aur accessories vendors ke liye jo direct WhatsApp dispatch ke sath online sales shuru kar rahe hain.',
+    starter_price_pkr: 'PKR 250,000',
+    starter_price_usd: '$2,250 USD',
     starter_delivery: '⚡ 10 dinon mein delivery, guaranteed',
     starter_support_pkr: 'Optional Care Plan: PKR 14,000 / month',
     starter_support_usd: 'Optional Care Plan: $140 / month',
     starter_callout_label: 'MAIN CAPABILITY:',
     starter_callout_text:
-      'Single dukan ke liye online storefront jisme direct WhatsApp order checkout aur basic stock manager shamil hai.',
-    starter_f1: 'Next.js Storefront (50 Products Tak)',
-    starter_f2: 'Direct WhatsApp Order Dispatch',
-    starter_f3: 'Live Stock Updates aur Orders Tracker',
+      'Single dukan ke liye laptop storefront jisme RAM/SSD upgrade configurator, battery health badges aur WhatsApp checkout shamil hai.',
+    starter_f1: 'Next.js Laptop Storefront (100 SKUs Tak)',
+    starter_f2: 'Dynamic RAM aur SSD Upgrade Configurator',
+    starter_f3: 'Condition Grade aur Battery Health Badges',
     starter_f4: '100% Client Code aur Database Ownership',
 
-    growth_name: 'Multi Branch Growth',
+    growth_name: 'Multi-Branch Laptop Growth',
     growth_badge: '★ SAB SE ZYADA PASANDIDAH // BEHTAREEN VALUE',
     growth_desc:
-      'Bari electronics aur hardware dukanon ke liye jahan custom gaming PC builds aur physical store sync zaroori hai.',
-    growth_price_pkr: 'PKR 550,000',
-    growth_price_usd: '$4,850 USD',
+      'Bari laptop dukanon aur imported notebook dealers ke liye jahan testing lab, physical counters aur accessories cross-sell zaroori hai.',
+    growth_price_pkr: 'PKR 490,000',
+    growth_price_usd: '$4,450 USD',
     growth_delivery: '⚡ 21 dinon mein delivery, guaranteed',
     growth_support_pkr: 'Optional Care Plan: PKR 28,000 / month',
     growth_support_usd: 'Optional Care Plan: $280 / month',
     growth_callout_label: 'STARTER SE BARI UPGRADES:',
     growth_callout_text:
-      'Isme real-time PC Builder compatibility engine, 3-branch stock sync, serial warranty tracking, aur AI Hardware Advisor Chatbot shamil hai.',
-    growth_f1: 'Interactive PC Builder Compatibility Matrix',
-    growth_f2: '3 Physical Branches Ki Stock Synchronization',
-    growth_f3: 'Hardware Serial Number aur RMA Warranty Tracker',
-    growth_f4: 'Promotional Sliders, Flash Sales aur Coupons',
+      'Isme 3-branch inventory sync, serial RMA warranty tracking, AI Laptop Matchmaker Chatbot, aur payment gateway shamil hai.',
+    growth_f1: '3 Branches Ki Stock Sync (Dukan, Testing Lab, Godam)',
+    growth_f2: 'Motherboard Serial aur Battery Health RMA Tracker',
+    growth_f3: 'Automated Accessories Upsell (Bags, Docks, Chargers)',
+    growth_f4: 'Promotional Sliders aur Flash Sale Banners',
     growth_f5_pkr: 'Card Prepay Online Payment Gateway (Shamil Hai — Baghair Kisi 50K Fee Ke)',
     growth_f5_usd: 'Card Prepay Online Payment Gateway (Shamil Hai — Baghair Kisi $400 Fee Ke)',
-    growth_f6_pkr: 'AI Hardware Advisor aur Sales Chatbot (Shamil Hai — Baghair Kisi 65K Fee Ke)',
-    growth_f6_usd: 'AI Hardware Advisor aur Sales Chatbot (Shamil Hai — Baghair Kisi $650 Fee Ke)',
+    growth_f6_pkr: 'AI Laptop Matchmaker Sales Chatbot (Shamil Hai — Baghair Kisi 65K Fee Ke)',
+    growth_f6_usd: 'AI Laptop Matchmaker Sales Chatbot (Shamil Hai — Baghair Kisi $650 Fee Ke)',
 
-    enterprise_name: 'Chain and Distribution OS',
+    enterprise_name: 'Enterprise Wholesale & Chain OS',
     enterprise_badge: '★ MUKAMMAL RETAIL OS',
     enterprise_desc:
-      'Multi branch retail chains, wholesale distributors aur computer importers ke liye jo bara volume operate karte hain.',
-    enterprise_price_pkr: 'PKR 950,000 se shuru',
-    enterprise_price_usd: '$8,500 USD se shuru',
+      'Multi-branch retail chains, wholesale laptop importers aur corporate suppliers ke liye jo bara volume operate karte hain.',
+    enterprise_price_pkr: 'PKR 850,000 se shuru',
+    enterprise_price_usd: '$7,900 USD se shuru',
     enterprise_delivery: '⚡ 30 dinon mein delivery, guaranteed',
     enterprise_support_pkr: 'Dedicated Care Plan: PKR 55,000 / mahana',
     enterprise_support_usd: 'Dedicated Care Plan: $550 / mahana',
     enterprise_callout_label: 'GROWTH SE BARI UPGRADES:',
     enterprise_callout_text:
-      'La-mehdood branches, mukammal dynamic theme CMS, granular staff RBAC, courier/POS API integration, aur Enterprise AI Sales Agent.',
-    enterprise_f1: 'La-Mehdood Branches aur Godam Sync',
-    enterprise_f2: 'Staff Permissions (Super Admin, Manager, Cashier)',
-    enterprise_f3: 'Mukammal Storefront Theme aur Content CMS',
-    enterprise_f4: 'Custom POS Hardware aur Courier API Sync',
-    enterprise_f5: 'Online Payment Gateways aur Custom Financial APIs Shamil',
-    enterprise_f6: 'Dedicated AI Sales Agent aur Custom Inventory Knowledge Engine (Shamil Hai)',
+      'La-mehdood branches, B2B corporate fleet invoicing, bulk container CSV import, granular staff RBAC, aur custom ERP sync.',
+    enterprise_f1: 'La-Mehdood Branches aur Central Warehouse Sync',
+    enterprise_f2: 'B2B Corporate Fleet Invoicing (Bulk Office Deals)',
+    enterprise_f3: 'Container Manifest Bulk CSV Import System',
+    enterprise_f4: 'Staff Permissions (Tester, Cashier, Manager, Owner)',
+    enterprise_f5: 'Online Payment Gateways aur Financial Reconciliation',
+    enterprise_f6: 'Dedicated AI Laptop Sales Agent (Shamil Hai)',
 
     whatsapp_cta: 'Yeh Plan WhatsApp Par Book Karein',
     view_terms: 'Mukammal Sharaait aur Guarantees Dekhein →',
+
+    // Live Demo Grid
+    demo_badge: 'LIVE SABOOT // KAAM DEKH KAR FAISLA KAREIN',
+    demo_title: 'Kuch chhupa hua nahi. Neeche live systems khud chala kar check karein.',
+    demo_sub:
+      'Dekhein customer battery health aur specs ke sath laptop kaise select karta hai, aur staff Hafeez Centre ya Technocity branches ka stock kaise manage karta hai.',
+    demo_store_title: '1. Laptop aur Accessories Storefront Demo',
+    demo_store_desc:
+      'Business laptops, gaming machines, original chargers aur upgrades ka live storefront check karein.',
+    demo_filter_title: '2. Battery Health aur Specs Filter Demo',
+    demo_filter_desc:
+      'Customer battery health, processor generation aur RAM/SSD upgrade kaise filter karta hai, live test karein.',
+    demo_admin_title: '3. Multi-Branch aur Serial Number Backoffice',
+    demo_admin_desc:
+      'Container manifest bulk upload, serial number warranty tracking aur staff permissions ka live admin panel dekhein.',
   },
 }
 
-const PLANS_DETAIL = {
+const LAPTOP_PLANS_DETAIL = {
   en: {
     starter: {
-      name: 'Single Store Launch',
-      code: 'TXS-STARTER',
+      name: 'Single Outlet Laptop Launch',
+      code: 'LT-STARTER',
       badge: 'ENTRY LEVEL // SINGLE OUTLET',
-      pricePkr: 'PKR 280,000',
-      priceUsd: '$2,450 USD',
+      pricePkr: 'PKR 250,000',
+      priceUsd: '$2,250 USD',
       delivery: '10 days, guaranteed',
       idealFor:
-        'Single-location computer shops, CCTV vendors, and electronics retail counters beginning online sales with direct WhatsApp dispatch without ongoing platform taxes.',
+        'Single-location laptop dealers and tech accessories shops starting direct online sales with automated WhatsApp dispatch and RAM/SSD upgrade configurator.',
       artifacts: [
         {
-          title: 'Next.js Public Storefront',
+          title: 'Next.js Laptop Storefront',
           image: '/txs/home.png',
           tag: 'Storefront',
         },
         {
-          title: 'Product Stock & Order Manager',
-          image: '/txs/dashboard products.png',
-          tag: 'Admin Panel',
+          title: 'Condition & Battery Health Badges',
+          image: '/txs/products.png',
+          tag: 'Battery Badges',
+        },
+        {
+          title: 'RAM & SSD Upgrade Selector',
+          image: '/txs/RIG BUILDER.png',
+          tag: 'Upgrades Engine',
         },
       ],
       modules: [
         {
-          title: 'Custom Next.js Web Storefront',
-          desc: 'Fast, responsive storefront tailored for computer & electronics products.',
+          title: 'Custom Next.js Laptop Storefront (Up to 100 SKUs)',
+          desc: 'High-speed modern storefront tailored specifically for business notebooks, gaming laptops, and accessories.',
           items: [
-            'Up to 50 SKUs initial setup and categorization',
-            'Rich technical specifications display (CPU, GPU, RAM, Storage)',
-            'Category & price filtering for desktop and mobile',
-            'Fast search and shopping cart functionality',
+            'Filter by processor (Core i5/i7/i9 8th-14th Gen, Ryzen 5/7/9, Apple M1-M3)',
+            'Dedicated condition filters (Brand New Sealed, Open-Box 10/10, Grade A+ Renewed)',
+            'Instant search with specs, screen sizes (13.3", 14", 15.6", 16"), and graphic cards',
+            'Mobile-responsive layout optimized for fast WhatsApp order placement',
           ],
         },
         {
-          title: 'WhatsApp Order Dispatch Integration',
-          desc: 'Instant direct checkout routing to your sales desk.',
+          title: 'Dynamic RAM & SSD Upgrade Configurator',
+          desc: 'Customers customize memory and storage on any model with instant price calculations.',
           items: [
-            'Pre-formatted WhatsApp message with items, specs, and total PKR price',
-            'Customer contact details and delivery address auto-captured',
-            'Zero platform transaction fee taken from your gross revenue',
+            '1-click RAM selector (e.g. 8GB -> 16GB -> 32GB)',
+            '1-click Storage upgrade (256GB -> 512GB -> 1TB NVMe)',
+            'Auto price recalculation and pre-formatted order summary generation',
           ],
         },
         {
-          title: 'Essential Admin Control Panel',
-          desc: 'Straightforward management interface designed for shop floor staff.',
+          title: 'Condition Grade & Battery Health Badges',
+          desc: 'Displays verified battery backup hours and physical grade directly on product cards.',
           items: [
-            'Product Add / Edit / Delete interface',
-            'Real-time stock count updates (In Stock / Out of Stock status)',
-            'Order status tracker (Pending → Dispatched → Completed)',
-            'Customer details archive (Name, phone, delivery history)',
+            'Prominent battery backup hours (e.g. "Tested 4-5 Hours Backup")',
+            'Clear condition grading scale eliminating endless WhatsApp photo requests',
+            'Included original charger and warranty terms displayed on product sheet',
           ],
         },
         {
-          title: 'SEO & Search Engine Indexing',
-          desc: 'Foundational search configuration to rank for local keywords.',
+          title: '100% Client Code & Database Ownership',
+          desc: 'Full repository and database transfer directly to your accounts upon completion.',
           items: [
-            'Google Search Console setup and verification',
-            'Automated XML sitemap generation',
-            'Google Analytics 4 (GA4) visitor & event tracking setup',
+            'Private GitHub repository transfer on final milestone',
+            'Dedicated PostgreSQL database with direct administrative access',
+            '0% platform sales tax — you keep 100% of your retail profit',
           ],
         },
       ],
       exclusions: [
-        'Interactive PC Builder compatibility engine (Available in Growth & Enterprise).',
-        'Multi branch stock synchronization (Single outlet stock only).',
-        'Hardware serial number and RMA warranty lifecycle tracking.',
-        'Product photos, descriptions, and data entry beyond the first 50 SKUs. You supply the content and we set it up.',
-        'Online card prepay payment gateway (Available as +PKR 50,000 / $400 add-on; included free in Growth & Chain plans).',
-        'AI Retail Sales & Hardware Advisor Chatbot (Available as +PKR 65,000 / $650 add-on; included free in Growth & Chain plans).',
+        'Multi-branch inventory sync (Single retail outlet stock only; available in Growth plan).',
+        'Hardware serial number and battery cycle warranty RMA tracking.',
+        'Online card prepay gateway (Included free in Growth & Enterprise plans).',
+        'AI Laptop Matchmaker Chatbot (Included free in Growth & Enterprise plans).',
+        'Product photos and specs data entry beyond the included 100 SKUs setup.',
       ],
     },
     growth: {
-      name: 'Multi Branch Growth',
-      code: 'TXS-GROWTH',
+      name: 'Multi-Branch Laptop Growth',
+      code: 'LT-GROWTH',
       badge: '★ MOST POPULAR // BEST VALUE',
-      pricePkr: 'PKR 550,000',
-      priceUsd: '$4,850 USD',
+      pricePkr: 'PKR 490,000',
+      priceUsd: '$4,450 USD',
       delivery: '21 days, guaranteed',
       idealFor:
-        'Established computer hardware and gaming PC retailers selling high-ticket rigs, components, and managing stock across shop counters and online simultaneously.',
+        'Established laptop dealers, renewed ThinkPad/MacBook specialists, and gaming laptop retailers managing inventory across shop counters, testing labs, and online.',
       artifacts: [
         {
-          title: 'Interactive PC Builder Configurator',
+          title: 'RAM & SSD Upgrade Configurator',
           image: '/txs/RIG BUILDER.png',
-          tag: 'Compatibility Engine',
+          tag: 'Upgrade Matrix',
         },
         {
-          title: 'Hardware Serial & RMA Warranty',
+          title: 'Motherboard Serial & Battery RMA',
           image: '/txs/admin warranty.png',
           tag: 'Serial Tracking',
         },
         {
-          title: 'Storefront Hardware Catalog',
-          image: '/txs/products.png',
-          tag: 'Hardware Catalog',
+          title: 'Multi-Branch Laptop Inventory',
+          image: '/txs/dashboard products.png',
+          tag: 'Branch Matrix',
         },
         {
           title: 'Central Revenue & Order Dashboard',
@@ -551,263 +512,223 @@ const PLANS_DETAIL = {
       ],
       modules: [
         {
-          title: 'Interactive PC Builder Compatibility Engine',
-          desc: 'Real-time hardware validation preventing mismatched customer orders.',
+          title: 'Multi-Branch Inventory Sync (Up to 3 Nodes)',
+          desc: 'Unified stock management across retail counters, testing bench, and warehouse.',
           items: [
-            'CPU Socket Matching (AM4/AM5 vs LGA1700/LGA1851)',
-            'RAM Generation Validation (DDR4 vs DDR5)',
-            'Power supply wattage overhead & GPU clearance calculation',
-            'One-click WhatsApp build sharing with pre-formatted specs and PKR total',
+            'Connect up to 3 physical nodes (e.g. Hafeez Centre Shop, Testing Counter, Central Warehouse)',
+            'Branch-level stock matrix showing quantity of each laptop model in real time',
+            'Automatic deduction upon in-store counter sale or online dispatch',
           ],
         },
         {
-          title: 'Multi-Branch Inventory Synchronization (Up to 3 Nodes)',
-          desc: 'Unified stock management across multiple physical counters.',
+          title: 'Motherboard Serial Number & Battery RMA Tracking',
+          desc: 'Track individual laptop serials and battery cycle count from intake to customer invoice.',
           items: [
-            'Connect up to 3 physical branches (e.g. Hafeez Centre, Techno City) + central warehouse',
-            'Branch-level stock counts visible in the admin matrix',
-            'Real-time deduction upon store sales and online orders',
+            'Serial status: IN_STOCK -> SOLD (linked to invoice) -> RMA_PENDING -> REPLACED',
+            'Logs tested battery health percentage at time of sale to eliminate customer return fraud',
+            '1-click warranty verification by serial number',
           ],
         },
         {
-          title: 'Hardware Serial Number & RMA Lifecycle',
-          desc: 'Track individual GPUs, motherboards, and power supplies from intake to warranty.',
+          title: 'Accessories Upsell & Cross-Sell Engine',
+          desc: 'Automatically recommends high-margin peripherals during laptop checkout.',
           items: [
-            'Serial status: IN_STOCK → SOLD (linked to invoice) → RMA_PENDING → REPLACED',
-            'Eliminates customer return fraud and distributor disputes',
-            'Search warranty status by serial number in seconds',
+            '1-click cross-sells: Laptop bags, wireless mice, Type-C multiport docks, extra chargers',
+            'Increases Average Order Value (AOV) by 15% to 25% on every laptop sale',
           ],
         },
         {
-          title: 'Marketing, Discounts & Automated PDF Invoices',
-          desc: 'Promotions engine to drive repeat commercial purchases.',
+          title: 'Online Payment Gateway Integration (Included — Save $400 / PKR 50,000)',
+          desc: 'Direct card and wallet checkout for prepaid orders at zero extra integration fee.',
           items: [
-            'Self-managed promotional hero sliders and flash sale banners',
-            'Coupon code engine (percentage discounts, flat PKR, minimum order rules)',
-            'Automated professional PDF receipts and invoice generation',
-          ],
-        },
-        {
-          title: 'Online Payment Gateway Integration (Included — Save PKR 50,000)',
-          desc: 'Direct card and mobile wallet checkout for prepaid orders at zero extra integration fee.',
-          items: [
-            'Paymob, Bank Alfalah Alfa, Keenu, or PayFast payment gateway integration',
             'Accept Visa, MasterCard, and UnionPay debit/credit cards directly on checkout',
-            'JazzCash & EasyPaisa direct mobile wallet payments',
-            'Zero add-on fee (PKR 50,000 extra fee waived for Growth plan)',
+            'JazzCash, EasyPaisa, and bank transfer support',
+            'Zero add-on fee (fee waived for Growth plan)',
           ],
         },
         {
-          title: 'AI Retail Sales & Hardware Advisor Chatbot (Included — Save $650 / PKR 65,000)',
-          desc: '24/7 automated sales consultant directly inside the storefront.',
+          title: 'AI Laptop Matchmaker Chatbot (Included — Save $650 / PKR 65,000)',
+          desc: '24/7 automated laptop consultant directly inside the storefront.',
           items: [
-            'Pre-trained on PC hardware specs, socket rules, PSU wattages, and monitor pairings',
-            'Natural language customer budget inquiries ("Best gaming PC under $1,200")',
-            'Direct 1-click cart and PC Builder prefill from chat recommendations',
-            'Instant customer handoff to sales desk WhatsApp with full conversation context',
+            'Trained on laptop processors, RAM configurations, battery life, and gaming GPUs',
+            'Answers natural language budget inquiries ("Best business laptop under $500")',
+            'Direct 1-click cart prefill and WhatsApp handoff with full conversation context',
           ],
         },
       ],
       exclusions: [
-        'Limited to 3 branch nodes (Unlimited branches supported in Enterprise).',
-        'Does not include custom external accounting ERP/FBR direct API integrations.',
-        'Super Admin vs Cashier granular permission matrices (Single admin level).',
-        'Product photos, descriptions, and catalog migration beyond the included setup. You supply the content.',
-        'Unlimited revisions. Two revision rounds are included per milestone and further changes are billed hourly.',
+        'Limited to 3 branch nodes (Unlimited branches supported in Enterprise plan).',
+        'B2B Corporate Fleet Invoicing and Bulk Container CSV intake.',
+        'Custom POS/ERP direct API integrations (Available in Enterprise plan).',
+        'Granular Staff RBAC permission matrices (Single admin level).',
       ],
     },
     enterprise: {
-      name: 'Chain and Distribution OS',
-      code: 'TXS-ENTERPRISE',
+      name: 'Enterprise Wholesale & Chain OS',
+      code: 'LT-ENTERPRISE',
       badge: '★ COMPLETE RETAIL OS',
-      pricePkr: 'From PKR 950,000',
-      priceUsd: 'From $8,500 USD',
+      pricePkr: 'From PKR 850,000',
+      priceUsd: 'From $7,900 USD',
       delivery: '30 days, guaranteed',
       idealFor:
-        'High-volume computer retail chains, nationwide hardware distributors, and tech importers with multi-branch networks requiring a custom enterprise ERP.',
+        'High-volume laptop importers, nationwide refurbished distributors, and multi-branch retail chains needing enterprise fleet management.',
       artifacts: [
         {
-          title: 'Site CMS & Banner Control Matrix',
+          title: 'B2B Fleet & Corporate Matrix',
           image: '/txs/admin site control.png',
-          tag: 'CMS Panel',
+          tag: 'Fleet Control',
         },
         {
-          title: 'Multi-Branch Inventory Management',
+          title: 'Multi-Branch Inventory Network',
           image: '/txs/dashboard products.png',
-          tag: 'Branch Matrix',
+          tag: 'Branch Network',
         },
         {
-          title: 'PC Builder Rig Configurator',
-          image: '/txs/RIG BUILDER.png',
-          tag: 'Rig Builder',
-        },
-        {
-          title: 'Serial Number Warranty & RMA',
+          title: 'Serial Number & Battery Center',
           image: '/txs/admin warranty.png',
           tag: 'RMA Center',
         },
       ],
       modules: [
         {
-          title: 'Unlimited Multi-Branch & Warehouse Network',
-          desc: 'Enterprise inventory distribution across all outlets.',
+          title: 'Unlimited Multi-Branch & Distribution Network',
+          desc: 'Enterprise inventory distribution across all retail outlets and storage hubs.',
           items: [
-            'Unlimited physical retail shops, distribution hubs, and warehouses',
-            'Inter-branch stock transfer requests with dispatch and receipt sign-off',
+            'Unlimited physical shops, testing benches, and regional distribution warehouses',
+            'Inter-branch stock transfer requests with dispatch and receipt verification',
             'Unified warehouse dispatch and counter pickup routing',
           ],
         },
         {
-          title: 'Granular Multi-Guard Role-Based Access Control (RBAC)',
+          title: 'B2B Corporate Fleet Invoicing & Bulk Quotes',
+          desc: 'Dedicated quote generator for corporate offices and institutions buying 5 to 50 laptops.',
+          items: [
+            'Tiered bulk volume pricing (e.g. 5+ units, 10+ units, 20+ units)',
+            'Corporate PDF quotations with tax NTN details and formal bank payment terms',
+            'Separate customer account ledgers (Khata) for corporate business clients',
+          ],
+        },
+        {
+          title: 'Container Manifest Bulk CSV Import System',
+          desc: 'Upload hundreds of incoming imported laptops directly from supplier spreadsheets.',
+          items: [
+            '1-click CSV import for container shipments from US, UK, or UAE auctions',
+            'Automatic model generation, spec assignment, and stock distribution to branches',
+          ],
+        },
+        {
+          title: 'Granular Multi-Guard Staff RBAC',
           desc: 'Spatie-style permissions restricting staff access according to job title.',
           items: [
-            'Super Admin: Financial P&L, gross margins, branch revenue rankings, master settings',
-            'Branch Manager: Local counter sales, staff rosters, local stock adjustments',
-            'Counter Cashier: Fast point-of-sale checkout and receipt printing',
-            'Warehouse Barcode Manager: Inbound shipment intake and bulk serial scanning',
-          ],
-        },
-        {
-          title: 'Dynamic Theme & Content Management CMS',
-          desc: 'Complete control over your storefront without writing code.',
-          items: [
-            'Navigation menu editor, custom landing page builder, announcement bars',
-            'Dynamic branding colors and hero promotional sliders',
-            'Customizable receipt and email template editor',
-          ],
-        },
-        {
-          title: 'Bespoke Third-Party API Integrations',
-          desc: 'Seamless connections to physical retail hardware and logistics.',
-          items: [
-            'Thermal receipt printer and barcode scanner compatibility',
-            'Courier tracking API integration (TCS, Trax, Leopards, CallCourier)',
-            'FBR digital invoice compliance (optional integration)',
-          ],
-        },
-        {
-          title: 'Multi-Gateway Online Prepay & Financial Engine (Included)',
-          desc: 'Enterprise-grade payment routing and automated settlement reconciliation.',
-          items: [
-            'Multiple simultaneous payment gateways for high-volume failover',
-            'Direct credit/debit card, Raast P2M QR, JazzCash, and EasyPaisa integrations',
-            'Automated payment reconciliation reports with bank statements',
-            'Zero add-on fee (included standard in Chain and Distribution OS)',
-          ],
-        },
-        {
-          title: 'Enterprise AI Retail Sales & Knowledge Agent (Included)',
-          desc: 'Dedicated multi-branch intelligent sales agent trained on your inventory.',
-          items: [
-            'Real-time multi-branch inventory lookup directly inside chat replies',
-            'B2B & wholesale quote guidance for bulk corporate hardware orders',
-            'Full conversation analytics and lead capture in admin matrix',
-            'Custom prompt engineering and brand voice customization',
+            'Super Admin: Full P&L, gross margins, purchase costs, master settings',
+            'Testing Lab Technician: Can only test specs, log battery health, and issue RMA status',
+            'Counter Cashier: Can only process customer invoices and WhatsApp dispatch',
           ],
         },
       ],
       exclusions: [
-        'Bespoke custom hardware firmware modifications (quoted separately on request).',
-        'Bulk product photography and catalog data entry. You supply the content or we add it as a paid add-on.',
-        'Unlimited revisions. Two revision rounds are included per milestone and further changes are billed hourly.',
+        'Hardware component physical repairs (Software architecture only).',
+        'Product photography beyond initial setup. Content supplied by client or added as extra.',
       ],
     },
   },
   'ur-en': {
     starter: {
-      name: 'Single Store Launch',
-      code: 'TXS-STARTER',
+      name: 'Single Outlet Laptop Launch',
+      code: 'LT-STARTER',
       badge: 'ENTRY LEVEL // SINGLE DUKAN',
-      pricePkr: 'PKR 280,000',
-      priceUsd: '$2,450 USD',
-      delivery: '10 dinon mein, guaranteed',
+      pricePkr: 'PKR 250,000',
+      priceUsd: '$2,250 USD',
+      delivery: '10 dinon mein delivery, guaranteed',
       idealFor:
-        'Single-location computer dukanon, CCTV vendors, aur retail counters ke liye jo direct WhatsApp order dispatch ke sath online sales shuru karna chahte hain — baghair kisi mahana platform tax ke.',
+        'Single location laptop shops aur accessories vendors ke liye jo direct WhatsApp dispatch aur RAM/SSD upgrades ke sath online sales shuru kar rahe hain.',
       artifacts: [
         {
-          title: 'Next.js Public Online Storefront',
+          title: 'Next.js Laptop Storefront',
           image: '/txs/home.png',
-          tag: 'Web Storefront',
+          tag: 'Storefront',
         },
         {
-          title: 'Product Stock aur Order Manager',
-          image: '/txs/dashboard products.png',
-          tag: 'Admin Panel',
+          title: 'Condition aur Battery Badges',
+          image: '/txs/products.png',
+          tag: 'Battery Badges',
+        },
+        {
+          title: 'RAM aur SSD Upgrade Selector',
+          image: '/txs/RIG BUILDER.png',
+          tag: 'Upgrades Engine',
         },
       ],
       modules: [
         {
-          title: 'Custom Next.js Web Storefront',
-          desc: 'Computer aur electronics products ke liye fast aur responsive web store.',
+          title: 'Custom Next.js Laptop Storefront (100 SKUs Tak)',
+          desc: 'Business laptops, gaming notebooks aur accessories ke liye fast aur modern web store.',
           items: [
-            '50 SKUs tak ki initial setup aur product categories',
-            'Mukammal technical specifications display (CPU, GPU, RAM, Storage)',
-            'Category aur price filters (Desktop aur Mobile dono par)',
-            'Tez search bar aur direct shopping cart functionality',
+            'Processor filters (Core i5/i7/i9 8th-14th Gen, Ryzen 5/7/9, Apple M1-M3)',
+            'Condition filters (Brand New Sealed, Open-Box 10/10, Grade A+ Renewed)',
+            'Screen sizes aur graphics card ke mutabiq instant hardware search',
+            'Direct WhatsApp checkout button jo order details counter par bhejta hai',
           ],
         },
         {
-          title: 'WhatsApp Direct Order Dispatch Integration',
-          desc: 'Har order seedha aapke sales counter WhatsApp par dispatch hota hai.',
+          title: 'Dynamic RAM aur SSD Upgrade Configurator',
+          desc: 'Customer kisi bhi model ki memory aur storage 1-click mein upgrade kar sakta hai.',
           items: [
-            'Pre-formatted WhatsApp message jisme items, specs aur total PKR price shamil ho',
-            'Customer ka naam, phone number aur delivery address auto-capture',
-            'Aapki kul amdani par 0% platform sales commission',
+            'RAM selector (8GB -> 16GB -> 32GB)',
+            'SSD upgrade selector (256GB -> 512GB -> 1TB NVMe)',
+            'Live price recalculation aur WhatsApp summary sheet',
           ],
         },
         {
-          title: 'Bunyadi Admin Control Panel',
-          desc: 'Dukan ke staff ke liye aasan aur seedha management panel.',
+          title: 'Condition Grade aur Battery Health Badges',
+          desc: 'Product card par tested battery backup aur physical condition saaf nazar aati hai.',
           items: [
-            'Naya product add / edit / delete karne ka aasan panel',
-            'Live stock update status (In Stock / Out of Stock)',
-            'Order status tracker (Pending → Dispatched → Completed)',
-            'Customer details archive (Naam, mobile number, delivery history)',
+            'Battery backup hours (maslan "Tested 4-5 Hours Backup")',
+            'Condition grading scale jo WhatsApp par bar bar photo maangne ka jhanjhat khatam kare',
+            'Original charger aur warranty sharaait product sheet par darj',
           ],
         },
         {
-          title: 'SEO aur Search Engine Indexing',
-          desc: 'Google par aapki dukan ko local keywords ke liye rank karne ki bunyad.',
+          title: '100% Client Code aur Database Ownership',
+          desc: 'Project mukammal hone par full GitHub source code aur database aapke hawale.',
           items: [
-            'Google Search Console setup aur site verification',
-            'Automated XML sitemap generation',
-            'Google Analytics 4 (GA4) visitor aur events tracking setup',
+            'Final payment par private GitHub repository transfer',
+            'PostgreSQL database ka direct administrative access',
+            '0% platform commission — apna pura profit khud rakhein',
           ],
         },
       ],
       exclusions: [
-        'Interactive PC Builder compatibility engine (Growth aur Enterprise mein dastiyab hai).',
-        'Multi branch stock synchronization (Sirf single outlet inventory support karta hai).',
-        'Hardware serial number aur RMA warranty lifecycle tracking.',
-        'Product photos, descriptions aur pehle 50 SKUs se zyada data entry. Content aap dein ge, hum setup karein ge.',
-        'Online card prepay payment gateway (Sirf +PKR 50,000 / $400 add-on ke tor par dastiyab hai; Growth aur Enterprise mein shamil hai).',
-        'AI Retail Sales aur Hardware Advisor Chatbot (+PKR 65,000 / $650 add-on ke tor par dastiyab hai; Growth aur Enterprise mein muft shamil hai).',
+        'Multi-branch stock sync (Single dukan ka stock shamil hai; Growth plan mein mojud).',
+        'Motherboard serial number aur battery health RMA tracking.',
+        'Online card payment gateway (Growth aur Enterprise plan mein muft shamil hai).',
+        'AI Laptop Matchmaker Chatbot (Growth aur Enterprise plan mein muft shamil hai).',
       ],
     },
     growth: {
-      name: 'Multi Branch Growth',
-      code: 'TXS-GROWTH',
+      name: 'Multi-Branch Laptop Growth',
+      code: 'LT-GROWTH',
       badge: '★ SAB SE ZYADA PASANDIDAH // BEHTAREEN VALUE',
-      pricePkr: 'PKR 550,000',
-      priceUsd: '$4,850 USD',
-      delivery: '21 dinon mein, guaranteed',
+      pricePkr: 'PKR 490,000',
+      priceUsd: '$4,450 USD',
+      delivery: '21 dinon mein delivery, guaranteed',
       idealFor:
-        'Established computer hardware aur gaming PC retailers ke liye jo high-ticket custom rigs aur components bechte hain, aur dukan counter aur online stock ko ek sath chalate hain.',
+        'Bari laptop dukanon aur imported notebook dealers ke liye jahan testing lab, physical counters aur accessories cross-sell zaroori hai.',
       artifacts: [
         {
-          title: 'Interactive PC Builder Configurator',
+          title: 'RAM aur SSD Upgrade Configurator',
           image: '/txs/RIG BUILDER.png',
-          tag: 'Compatibility Engine',
+          tag: 'Upgrade Matrix',
         },
         {
-          title: 'Hardware Serial Number aur RMA Warranty',
+          title: 'Motherboard Serial aur Battery RMA',
           image: '/txs/admin warranty.png',
           tag: 'Serial Tracking',
         },
         {
-          title: 'Storefront Hardware Catalog',
-          image: '/txs/products.png',
-          tag: 'Hardware Catalog',
+          title: 'Multi-Branch Laptop Inventory',
+          image: '/txs/dashboard products.png',
+          tag: 'Branch Matrix',
         },
         {
           title: 'Central Revenue aur Order Dashboard',
@@ -817,171 +738,126 @@ const PLANS_DETAIL = {
       ],
       modules: [
         {
-          title: 'Interactive PC Builder Compatibility Engine',
-          desc: 'Real-time hardware validation jo galat component orders ko mukammal rokta hai.',
+          title: 'Multi-Branch Inventory Sync (3 Branches Tak)',
+          desc: 'Dukan, testing lab aur godam ke darmiyan live stock synchronization.',
           items: [
-            'CPU Socket Matching (AM4/AM5 vs LGA1700/LGA1851)',
-            'RAM Generation Check (DDR4 vs DDR5 compatibility)',
-            'Power supply wattage overhead aur GPU clearance auto calculation',
-            'One-click WhatsApp build sharing pre-formatted specs aur PKR total ke sath',
+            '3 branches tak connect karein (maslan Hafeez Centre Shop, Testing Lab, Central Godam)',
+            'Har branch mein har laptop model ka stock alag live nazar aata hai',
+            'Counter sale ya online dispatch par real-time stock deduction',
           ],
         },
         {
-          title: 'Multi-Branch Inventory Synchronization (3 Branches Tak)',
-          desc: 'Mukhtalif physical dukanon ke darmiyan combined stock management.',
+          title: 'Motherboard Serial Number aur Battery RMA Tracker',
+          desc: 'Har laptop ka serial aur battery health invoice banne ke waqt record hoti hai.',
           items: [
-            '3 physical branches tak connect karein (maslan Hafeez Centre, Techno City) + central warehouse',
-            'Branch-level stock matrix admin panel mein live nazar aayegi',
-            'Counter sale ya online order par real-time stock deduction',
+            'Serial status flow: IN_STOCK -> SOLD (invoice linked) -> RMA_PENDING -> REPLACED',
+            'Sale ke waqt ki battery health record hone se customer fraud ka mukammal khatma',
+            'Serial number daal kar chand seconds mein warranty claim check karein',
           ],
         },
         {
-          title: 'Hardware Serial Number aur RMA Lifecycle',
-          desc: 'Har GPU, motherboard aur PSU ko intake se warranty claim tak track karein.',
+          title: 'Automated Accessories Cross-Sell Engine',
+          desc: 'Laptop khareedte waqt high-margin accessories khud ba khud recommend karta hai.',
           items: [
-            'Serial status flow: IN_STOCK → SOLD (invoice linked) → RMA_PENDING → REPLACED',
-            'Customer fraud aur distributor disputes ka mukammal khatma',
-            'Serial number daal kar chand seconds mein warranty status check karein',
+            '1-click recommendations: Laptop bags, wireless mice, Type-C docks, extra chargers',
+            'Har laptop sale par Average Order Value (AOV) 15% se 25% barhata hai',
           ],
         },
         {
-          title: 'Marketing, Discounts aur Automated PDF Invoices',
-          desc: 'Dobara khareedari barhane ke liye promotions aur professional billing engine.',
+          title: 'Online Payment Gateway Integration (Shamil Hai — Baghair Kisi 50K Fee Ke)',
+          desc: 'Prepaid orders ke liye debit/credit card aur mobile wallet checkout.',
           items: [
-            'Promotional hero sliders aur flash sale banners khud manage karein',
-            'Coupon code engine (percentage discounts, flat PKR chhoot, minimum order rules)',
-            'Automated professional PDF receipts aur printable customer invoices',
+            'Visa, MasterCard aur UnionPay cards support',
+            'JazzCash, EasyPaisa aur direct bank transfer support',
+            'Growth plan mein zero add-on fee',
           ],
         },
         {
-          title: 'Online Payment Gateway Integration (Shamil Hai — PKR 50,000 Bachat)',
-          desc: 'Baghair kisi izafi fee ke online card aur wallet payments receive karein.',
+          title: 'AI Laptop Matchmaker Sales Chatbot (Shamil Hai — Baghair Kisi 65K Fee Ke)',
+          desc: 'Website par 24/7 mojud AI assistant jo customer ko compatible laptop recommend karta hai.',
           items: [
-            'Paymob, Bank Alfalah Alfa, Keenu ya PayFast payment gateway integration',
-            'Visa, MasterCard aur UnionPay cards se peshgi payment direct account mein',
-            'JazzCash aur EasyPaisa mobile wallets se aasan checkout',
-            'PKR 50,000 ki izafi fee bilkul FREE (Growth plan mein pehle se shamil hai)',
-          ],
-        },
-        {
-          title: 'AI Retail Sales & Hardware Advisor Chatbot (Shamil Hai — $650 / PKR 65,000 Bachat)',
-          desc: 'Storefront par 24/7 customer sales consultant aur hardware expert.',
-          items: [
-            'PC hardware specs, CPU sockets, PSU wattage requirements par trained AI',
-            'Customer ke budget ke mutabiq behtareen components ki instant recommendations',
-            'Chat se direct 1-click shopping cart aur PC Builder configuration prefill',
-            'Full chat history ke sath WhatsApp sales counter par instant lead handoff',
+            'Processors, RAM, battery life aur gaming GPUs par pre-trained',
+            'Customer ke budget aur zaroorat ke mutabiq best laptop suggest karta hai',
+            'Direct 1-click cart aur WhatsApp order handoff',
           ],
         },
       ],
       exclusions: [
-        'Sirf 3 branches tak mehdood (La-mehdood branches Enterprise tier mein shamil hain).',
-        'Custom external accounting ERP ya FBR direct API integration shamil nahi.',
-        'Super Admin vs Cashier granular staff permission matrix (Single admin level access).',
-        'Product photos, descriptions aur included setup se zyada catalog migration. Content aap dein ge.',
-        'La-mehdood revisions nahi. Har milestone par 2 revision rounds shamil hain, uske baad changes hourly charge honge.',
+        '3 branches tak mehdood (La-mehdood branches Enterprise plan mein shamil hain).',
+        'B2B Corporate Fleet Invoicing aur container CSV import.',
+        'Granular staff RBAC permission matrices (Single admin level).',
       ],
     },
     enterprise: {
-      name: 'Chain and Distribution OS',
-      code: 'TXS-ENTERPRISE',
+      name: 'Enterprise Wholesale & Chain OS',
+      code: 'LT-ENTERPRISE',
       badge: '★ MUKAMMAL RETAIL OS',
-      pricePkr: 'PKR 950,000 se shuru',
-      priceUsd: '$8,500 USD se shuru',
-      delivery: '30 dinon mein, guaranteed',
+      pricePkr: 'PKR 850,000 se shuru',
+      priceUsd: '$7,900 USD se shuru',
+      delivery: '30 dinon mein delivery, guaranteed',
       idealFor:
-        'Bari computer retail chains, nationwide hardware distributors, aur tech importers ke liye jinko multi-branch network aur custom enterprise ERP ki zaroorat hoti hai.',
+        'Bari laptop chains, wholesale importers aur corporate suppliers ke liye jo bara volume operate karte hain.',
       artifacts: [
         {
-          title: 'Site CMS aur Banner Control Matrix',
+          title: 'B2B Fleet aur Corporate Matrix',
           image: '/txs/admin site control.png',
-          tag: 'CMS Panel',
+          tag: 'Fleet Control',
         },
         {
-          title: 'Multi-Branch Inventory Management',
+          title: 'Multi-Branch Inventory Network',
           image: '/txs/dashboard products.png',
-          tag: 'Branch Matrix',
+          tag: 'Branch Network',
         },
         {
-          title: 'PC Builder Rig Configurator',
-          image: '/txs/RIG BUILDER.png',
-          tag: 'Rig Builder',
-        },
-        {
-          title: 'Serial Number Warranty aur RMA Center',
+          title: 'Serial Number aur Battery Center',
           image: '/txs/admin warranty.png',
           tag: 'RMA Center',
         },
       ],
       modules: [
         {
-          title: 'La-Mehdood Multi-Branch aur Warehouse Network',
-          desc: 'Tamam outlets aur godam ke darmiyan enterprise inventory distribution.',
+          title: 'La-Mehdood Multi-Branch aur Godam Sync',
+          desc: 'Tamam dukanon aur distribution hubs ke darmiyan centralized inventory sync.',
           items: [
-            'La-mehdood physical shops, distribution hubs aur central warehouses',
-            'Inter-branch stock transfer requests dispatch aur receipt sign-off ke sath',
-            'Unified warehouse dispatch aur counter pickup routing',
+            'La-mehdood physical dukanon aur testing counters ka live stock',
+            'Inter-branch stock transfer requests dispatch aur sign-off ke sath',
           ],
         },
         {
-          title: 'Granular Multi-Guard Role-Based Access Control (RBAC)',
-          desc: 'Spatie-style staff permissions jo designation ke mutabiq ikhtiyarat deti hain.',
+          title: 'B2B Corporate Fleet Invoicing aur Bulk Quotes',
+          desc: 'Offices aur institutions ke liye 5 se 50 laptops ke bulk order quotation engine.',
           items: [
-            'Super Admin: Mukammal P&L, gross margins, branch revenue reports aur master settings',
-            'Branch Manager: Local counter sales, staff shifts, aur local stock adjustments',
-            'Counter Cashier: Fast point-of-sale billing aur instant receipt printing',
-            'Warehouse Barcode Manager: Inbound shipments intake aur bulk serial scanning',
+            'Bulk quantity tiered discounts (maslan 5+ units, 10+ units)',
+            'Official corporate PDF invoices NTN aur bank details ke sath',
+            'Corporate clients ke liye alag khata management',
           ],
         },
         {
-          title: 'Dynamic Theme aur Content Management CMS',
-          desc: 'Baghair kisi code ke apna storefront mukammal control karein.',
+          title: 'Container Manifest Bulk CSV Import System',
+          desc: 'Import shuda container manifests ko 1-click mein system mein upload karein.',
           items: [
-            'Navigation menu editor, custom landing pages, aur announcement bars',
-            'Dynamic branding colors aur hero promotional sliders',
-            'Customizable invoice receipts aur email template editor',
+            'US, UK ya UAE auctions ki Excel/CSV sheets seedha import karein',
+            'Automatic model creation, specs assignment aur branches ko distribution',
           ],
         },
         {
-          title: 'Bespoke Third-Party API Integrations',
-          desc: 'Hardware POS devices aur delivery logistics ke sath seamless connection.',
+          title: 'Staff Permissions (Tester, Cashier, Manager, Owner)',
+          desc: 'Mulazimeen ke ikhtiyarat unke designation ke mutabiq restrict karein.',
           items: [
-            'Thermal receipt printer aur barcode scanner compatibility',
-            'Courier tracking API integration (TCS, Trax, Leopards, CallCourier)',
-            'FBR digital invoice tax compliance (ikhtiyari integration)',
-          ],
-        },
-        {
-          title: 'Enterprise Multi-Gateway Prepay aur Financial Engine (Shamil Hai)',
-          desc: 'High-volume transactions ke liye payment routing aur auto bank reconciliation.',
-          items: [
-            'Ek se zyada payment gateways tak seamlessly connect karein',
-            'Credit/Debit card, Raast QR, JazzCash aur EasyPaisa support',
-            'Bank statements aur daily sales ki auto reconciliation reports',
-            'Koi izafi charges nahi (Chain and Distribution OS mein standard shamil hai)',
-          ],
-        },
-        {
-          title: 'Enterprise AI Retail Sales & Knowledge Agent (Shamil Hai)',
-          desc: 'Aapke inventory data aur branches ke mutabiq trained custom AI agent.',
-          items: [
-            'Live branch inventory lookup seedha chat ke andar customer ko batata hai',
-            'B2B aur wholesale bulk orders ke liye dynamic quote generation',
-            'Admin panel mein complete lead capture aur chat analytics',
-            'Aapke retail brand ke mutabiq custom prompt engineering aur tone',
+            'Owner: Mukammal munafa, purchase costs aur branch rankings dekhe ga',
+            'Testing Lab Technician: Sirf specs check, battery health aur RMA update kare ga',
+            'Counter Cashier: Sirf customer sales receipt aur WhatsApp dispatch manage kare ga',
           ],
         },
       ],
       exclusions: [
-        'Custom hardware firmware modifications (zaroorat ke mutabiq alag quote ki jayegi).',
-        'Bulk product photography aur catalog data entry. Content aap dein ge ya hum paid add-on ke tor par add karein ge.',
-        'La-mehdood revisions nahi. Har milestone par 2 revision rounds shamil hain, uske baad changes hourly charge honge.',
+        'Hardware physical component repairs (Software architecture shamil hai).',
       ],
     },
   },
 }
 
-const EXTRAS_DATA = [
+const LAPTOP_EXTRAS_DATA = [
   {
     en: 'Extra branch or warehouse node',
     ur: 'Extra branch ya godam node',
@@ -1075,37 +951,58 @@ const EXTRAS_DATA = [
       'Website par 24/7 mojud AI assistant jo customer ke budget ke mutabiq compatible parts recommend karta hai, socket aur wattage match karta hai, aur orders seedha WhatsApp ya cart mein bhejta hai. (Note: Multi-Branch Growth aur Chain plans mein yeh pehle se bilkul SHAMIL hai).',
   },
   {
-    en: 'FBR or accounting API integration',
-    ur: 'FBR ya accounting API integration',
-    pricePkr: '+ PKR 80,000',
-    priceUsd: '+ $650 USD',
+    en: 'Container manifest bulk CSV import tool',
+    ur: 'Container manifest bulk CSV import tool',
+    pricePkr: '+ PKR 60,000',
+    priceUsd: '+ $450 USD',
     descEn:
-      "Connects your sales counter directly with FBR's POS digital invoice system for tax compliance, or syncs your daily books with QuickBooks, Zoho, or Xero automatically.",
+      'Upload hundreds of incoming imported laptops directly from your supplier manifest spreadsheet in seconds, mapping specs, RAM, and grades automatically.',
     descUr:
-      'Dukan ki sales ko FBR digital invoicing system se direct jodta hai, ya aapke rozana khate ko QuickBooks aur Xero se auto-sync karta hai.',
+      'Imported containers ki Excel/CSV sheet se sainkaron laptops chand seconds mein specs, RAM aur grades ke sath upload ho jate hain.',
   },
 ]
 
-export default function TechRetailSolution() {
-  const { lang, setLang, isUrdu } = useLanguage()
+export default function LaptopRetailSolution() {
+  const [lang, setLang] = useState(detectInitialLanguage)
   const [currency, setCurrency] = useState(detectInitialCurrency)
   const [activeModalKey, setActiveModalKey] = useState(null)
   const [expandedExtra, setExpandedExtra] = useState(null)
+
   const t = I18N_DATA[lang] || I18N_DATA.en
-  const activePlan = activeModalKey
-    ? (PLANS_DETAIL[lang] || PLANS_DETAIL.en)[activeModalKey]
-    : null
+  const plans = LAPTOP_PLANS_DETAIL[lang] || LAPTOP_PLANS_DETAIL.en
+  const isUrdu = lang === 'ur-en'
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  const handleLanguageChange = (newLang) => {
+    setLang(newLang)
+    try {
+      localStorage.setItem('texcodes_laptop_lang', newLang)
+    } catch (e) {}
+  }
 
   const handleCurrencyChange = (newCurr) => {
     setCurrency(newCurr)
     try {
       localStorage.setItem('texcodes_currency', newCurr)
+      localStorage.setItem('tex_pref_currency', newCurr)
     } catch (e) {}
   }
 
   const toggleExtra = (index) => {
     setExpandedExtra((prev) => (prev === index ? null : index))
   }
+
+  const openWhatsApp = (planName, price) => {
+    const text = isUrdu
+      ? `Assalam-o-Alaikum TeXCodes, main ${planName} (${price}) Laptop Retail OS solution book karna chahta hoon.`
+      : `Hello TeXCodes, I would like to schedule a consultation for the ${planName} (${price}) Laptop & Accessories Retail OS.`
+    window.open(`https://wa.me/923091824000?text=${encodeURIComponent(text)}`, '_blank')
+  }
+
+  const activePlan = activeModalKey ? plans[activeModalKey] : null
 
   const renderExtraCard = (a, i) => {
     const isOpen = expandedExtra === i
@@ -1177,8 +1074,8 @@ export default function TechRetailSolution() {
                 {a.starterOnly && (
                   <div className="p-2 bg-[#ECFDF5] dark:bg-[#10B981]/15 border border-[#059669]/30 offer-ui text-[#059669] dark:text-[#10B981] font-medium rounded-sm">
                     {isUrdu
-                      ? `✓ Multi Branch Growth (${currency === 'USD' ? '$4,850 USD' : 'PKR 550,000'}) aur Chain OS (${currency === 'USD' ? '$8,500+ USD' : 'PKR 950,000'}) plans mein yeh pehle se mukammal shamil hai — koi izafi fee nahi deni parti.`
-                      : `✓ Included standard in Multi Branch Growth (${currency === 'USD' ? '$4,850 USD' : 'PKR 550,000'}) & Chain OS (${currency === 'USD' ? 'From $8,500 USD' : 'From PKR 950,000'}) plans at NO extra charge.`}
+                      ? `✓ Multi Branch Growth (${currency === 'USD' ? '$4,450 USD' : 'PKR 490,000'}) aur Chain OS (${currency === 'USD' ? '$7,900+ USD' : 'PKR 850,000'}) plans mein yeh pehle se mukammal shamil hai — koi izafi fee nahi deni parti.`
+                      : `✓ Included standard in Multi Branch Growth (${currency === 'USD' ? '$4,450 USD' : 'PKR 490,000'}) & Chain OS (${currency === 'USD' ? 'From $7,900 USD' : 'From PKR 850,000'}) plans at NO extra charge.`}
                   </div>
                 )}
               </div>
@@ -1189,28 +1086,9 @@ export default function TechRetailSolution() {
     )
   }
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
-
-  const handleLanguageChange = (newLang) => {
-    setLang(newLang)
-  }
-
-  const openWhatsApp = (planName, price) => {
-    const text = isUrdu
-      ? encodeURIComponent(
-          `Assalam o Alaikum TeXCodes team, main apne Computer / CCTV retail business ke liye [${planName} - ${price}] plan mein interested hoon. Barah-e-karam demo schedule karein aur agle marahil discuss karein.`
-        )
-      : encodeURIComponent(
-          `Hello TeXCodes team, I am interested in the [${planName} - ${price}] for my Computer / CCTV retail business. I would like to schedule a demonstration and discuss deployment.`
-        )
-    window.open(`https://wa.me/923091824000?text=${text}`, '_blank')
-  }
-
   return (
-    <div className="w-full bg-[#F6F5F0] dark:bg-[#0F0F11] min-h-screen text-[#0F0F0F] dark:text-[#EDECE6] transition-colors duration-200">
-      {/* ─── Plan Detail Modal (Bilingual: English & Roman Urdu) ─── */}
+    <div className="w-full bg-[#F6F5F0] dark:bg-[#0F0F11] text-[#0F0F0F] dark:text-[#EDECE6] min-h-screen transition-colors duration-200">
+      {/* Plan Detail Modal */}
       <PlanDetailModal
         plan={activePlan}
         lang={lang}
@@ -1219,16 +1097,16 @@ export default function TechRetailSolution() {
         onOpenWhatsApp={(name, price) => openWhatsApp(name, price)}
       />
 
-      {/* ─── Top Language & Currency Bar ─── */}
+      {/* ─── Top Bar: Currency & Language Controls ─── */}
       <div className="border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#161619] px-4 sm:px-8 py-2.5">
         <div className="max-w-7xl mx-auto flex items-center justify-between offer-ui flex-wrap gap-2">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#059669] dark:bg-[#10B981] animate-pulse shadow-[0_0_8px_#10B981]" />
             <span className="text-[#0F0F0F] dark:text-[#EDECE6] font-bold uppercase tracking-wider hidden sm:inline">
-              TEXCODES RETAIL OS // COMMERCIAL SOLUTION
+              TEXCODES LAPTOP RETAIL OS // COMMERCIAL SOLUTION
             </span>
             <span className="text-[#0F0F0F] dark:text-[#EDECE6] font-bold uppercase tracking-wider sm:hidden">
-              RETAIL OS
+              LAPTOP OS
             </span>
           </div>
 
@@ -1297,10 +1175,14 @@ export default function TechRetailSolution() {
 
       {/* ─── Hero Section ─── */}
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] relative overflow-hidden">
-        {/* Subtle decorative emerald blur */}
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#10B981]/10 rounded-full blur-3xl pointer-events-none" />
 
         <FadeIn direction="up" className="max-w-7xl mx-auto space-y-6 relative z-10">
+          <div className="inline-flex items-center gap-2 offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold bg-[#ECFDF5] dark:bg-[rgba(16,185,129,0.15)] px-3 py-1 border border-[#059669]/25 dark:border-[#10B981]/30">
+            <Laptop size={14} />
+            <span>{t.hero_badge}</span>
+          </div>
+
           <h1 className="offer-h1 text-[#0F0F0F] dark:text-[#EDECE6]">
             {t.hero_title_1}{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#059669] via-[#10B981] to-[#34D399] block sm:inline drop-shadow-xs">
@@ -1317,32 +1199,32 @@ export default function TechRetailSolution() {
           {/* Key Metrics Row */}
           <StaggerContainer staggerDelay={0.08} className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-4 offer-ui">
             <StaggerItem className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 card-hover-guided">
-              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{t.metrics_code_top || '100% OWNERSHIP'}</div>
+              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{t.metrics_code_top}</div>
               <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t.metrics_code}</div>
             </StaggerItem>
             <StaggerItem className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 card-hover-guided">
-              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{t.metrics_tax_top || '0% PLATFORM TAX'}</div>
+              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{t.metrics_tax_top}</div>
               <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t.metrics_tax}</div>
             </StaggerItem>
             <StaggerItem className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 card-hover-guided">
-              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{t.metrics_speed_top || '<1% RETURN RATE'}</div>
+              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{t.metrics_speed_top}</div>
               <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t.metrics_speed}</div>
             </StaggerItem>
             <StaggerItem className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 card-hover-guided">
-              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{t.metrics_rma_top || 'SERIAL RMA'}</div>
+              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{t.metrics_rma_top}</div>
               <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t.metrics_rma}</div>
             </StaggerItem>
           </StaggerContainer>
 
           {/* Actions */}
           <div className="pt-4 flex flex-wrap items-center gap-4 offer-ui">
-            <a href="#plans" className="btn-blue offer-btn offer-btn-xl shadow-sm group relative overflow-hidden">
+            <a href="#laptop-plans" className="btn-blue offer-btn offer-btn-xl shadow-sm group relative overflow-hidden">
               <span className="relative z-10">{t.cta_primary}</span>
               <ArrowRight size={14} className="relative z-10 arrow-slide" />
               <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none animate-shimmer-sweep" />
             </a>
             <a
-              href="https://store-demo-eight.vercel.app/?mode=pc"
+              href="https://store-demo-eight.vercel.app/?mode=laptop"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-outline offer-btn offer-btn-lg group relative overflow-hidden"
@@ -1355,76 +1237,52 @@ export default function TechRetailSolution() {
         </FadeIn>
       </section>
 
-      {/* ─── Core System Concept: One System For The Business ─── */}
+      {/* ─── Core Architecture Breakdown ─── */}
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#121215]">
         <div className="max-w-7xl mx-auto space-y-12">
           <div>
             <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold mb-2">
               {t.arch_badge}
             </div>
-            <h2 className="offer-h1 text-[#0F0F0F] dark:text-[#EDECE6]">
+            <h2 className="offer-h1 text-[#0F0F0F] dark:text-[#EDECE6] max-w-4xl">
               {t.arch_title}
             </h2>
-            <p className="offer-body text-[#575652] dark:text-[#9B9A95] max-w-2xl mt-3">
+            <p className="offer-body text-[#575652] dark:text-[#9B9A95] max-w-3xl mt-3">
               {t.arch_sub}
             </p>
           </div>
 
-          <StaggerContainer staggerDelay={0.08} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 offer-ui">
-            <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
-              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui">{t.arch_01_title}</div>
-              <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
-                {t.arch_01_desc}
-              </p>
-            </StaggerItem>
-
-            <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
-              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui">{t.arch_02_title}</div>
-              <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
-                {t.arch_02_desc}
-              </p>
-            </StaggerItem>
-
-            <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
-              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui">{t.arch_03_title}</div>
-              <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
-                {t.arch_03_desc}
-              </p>
-            </StaggerItem>
-
-            <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
-              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui">{t.arch_04_title}</div>
-              <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
-                {t.arch_04_desc}
-              </p>
-            </StaggerItem>
-
-            <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
-              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui">{t.arch_05_title}</div>
-              <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
-                {t.arch_05_desc}
-              </p>
-            </StaggerItem>
-
-            <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
-              <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui">{t.arch_06_title}</div>
-              <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
-                {t.arch_06_desc}
-              </p>
-            </StaggerItem>
-
-            <StaggerItem className="p-6 bg-[#ECFDF5] dark:bg-[#10B981]/10 border-2 border-[#059669] dark:border-[#10B981] space-y-3 card-hover-guided sm:col-span-2 lg:col-span-3">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-bold text-[#059669] dark:text-[#10B981] offer-ui">{t.arch_07_title}</span>
-                <span className="offer-eyebrow bg-[#059669] dark:bg-[#10B981] text-white px-2 py-0.5 font-bold">
-                  {isUrdu ? 'NAYA // 24/7 AI SALES ENGINE' : 'NEW // 24/7 AI SALES ENGINE'}
-                </span>
-              </div>
-              <p className="offer-ui text-[#0F0F0F] dark:text-[#EDECE6] font-medium">
-                {t.arch_07_desc}
-              </p>
-            </StaggerItem>
-          </StaggerContainer>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[
+              { title: t.arch_01_title, desc: t.arch_01_desc, icon: Sparkles },
+              { title: t.arch_02_title, desc: t.arch_02_desc, icon: HardDrive },
+              { title: t.arch_03_title, desc: t.arch_03_desc, icon: BatteryCharging },
+              { title: t.arch_04_title, desc: t.arch_04_desc, icon: Boxes },
+              { title: t.arch_05_title, desc: t.arch_05_desc, icon: ShieldCheck },
+              { title: t.arch_06_title, desc: t.arch_06_desc, icon: MessageSquare },
+              { title: t.arch_07_title, desc: t.arch_07_desc, icon: Zap },
+            ].map((item, idx) => {
+              const IconComp = item.icon
+              return (
+                <div
+                  key={idx}
+                  className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided flex flex-col justify-between"
+                >
+                  <div className="space-y-3">
+                    <div className="w-9 h-9 rounded-sm bg-[#ECFDF5] dark:bg-[#10B981]/20 border border-[#059669]/30 flex items-center justify-center text-[#059669] dark:text-[#10B981]">
+                      <IconComp size={18} />
+                    </div>
+                    <div className="offer-ui-strong text-[#0F0F0F] dark:text-[#EDECE6]">
+                      {item.title}
+                    </div>
+                    <p className="offer-ui text-[#575652] dark:text-[#9B9A95] leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </section>
 
@@ -1446,7 +1304,7 @@ export default function TechRetailSolution() {
           <StaggerContainer staggerDelay={0.1} className="grid grid-cols-1 sm:grid-cols-3 gap-6 offer-ui">
             <StaggerItem>
               <a
-                href="https://store-demo-eight.vercel.app/?mode=pc"
+                href="https://store-demo-eight.vercel.app/?mode=laptop"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] card-hover-guided group block space-y-3 shadow-xs h-full"
@@ -1463,17 +1321,17 @@ export default function TechRetailSolution() {
 
             <StaggerItem>
               <a
-                href="https://store-demo-eight.vercel.app/pc-builder?mode=pc"
+                href="https://store-demo-eight.vercel.app/category/all?mode=laptop"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] card-hover-guided group block space-y-3 shadow-xs h-full"
               >
                 <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui flex items-center justify-between">
-                  <span>{t.demo_pc_title}</span>
+                  <span>{t.demo_filter_title}</span>
                   <ArrowUpRight size={14} className="text-[#059669] dark:text-[#10B981] arrow-slide" />
                 </div>
                 <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
-                  {t.demo_pc_desc}
+                  {t.demo_filter_desc}
                 </p>
               </a>
             </StaggerItem>
@@ -1499,7 +1357,7 @@ export default function TechRetailSolution() {
       </section>
 
       {/* ─── Pricing & Packages Tiers ─── */}
-      <section id="plans" className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#121215]">
+      <section id="laptop-plans" className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#0F0F11]">
         <div className="max-w-7xl mx-auto space-y-12">
           <FadeIn direction="up" className="text-center max-w-3xl mx-auto space-y-3">
             <div className="inline-flex items-center gap-1.5 offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold bg-[#ECFDF5] dark:bg-[rgba(16,185,129,0.15)] px-3 py-0.5 border border-[#059669]/25 dark:border-[#10B981]/30">
@@ -1685,89 +1543,89 @@ export default function TechRetailSolution() {
             </div>
           </FadeIn>
 
+          {/* Plans Grid */}
           <StaggerContainer staggerDelay={0.12} className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start offer-ui">
-            {/* 1. Single Store Launch */}
+            {/* 1. Single Outlet Launch */}
             <StaggerItem className="h-full">
               <div className="p-8 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-6 flex flex-col justify-between hover:border-[#059669] dark:hover:border-[#10B981] transition-colors h-full card-hover-guided">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui">{t.starter_name}</div>
-                  <span className="offer-eyebrow text-[#8E8D88] dark:text-[#6A6965]">{t.starter_badge}</span>
-                </div>
-                <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
-                  {t.starter_desc}
-                </p>
-
-                <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
-                  <div className="offer-h3 text-[#0F0F0F] dark:text-[#EDECE6]">
-                    {currency === 'USD' ? t.starter_price_usd : t.starter_price_pkr}
-                  </div>
-                  <div className="offer-ui text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.starter_delivery}</div>
-                </div>
-
-                {/* Clear Plan Differentiation Callout */}
-                <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] offer-ui text-[#0F0F0F] dark:text-[#EDECE6] space-y-1">
-                  <div className="font-bold text-[#059669] dark:text-[#10B981] offer-eyebrow">
-                    {t.starter_callout_label}
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui">{t.starter_name}</div>
+                    <span className="offer-eyebrow text-[#8E8D88] dark:text-[#6A6965]">{t.starter_badge}</span>
                   </div>
                   <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
-                    {t.starter_callout_text}
+                    {t.starter_desc}
                   </p>
+
+                  <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
+                    <div className="offer-h3 text-[#0F0F0F] dark:text-[#EDECE6]">
+                      {currency === 'USD' ? t.starter_price_usd : t.starter_price_pkr}
+                    </div>
+                    <div className="offer-ui text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.starter_delivery}</div>
+                  </div>
+
+                  <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] offer-ui text-[#0F0F0F] dark:text-[#EDECE6] space-y-1">
+                    <div className="font-bold text-[#059669] dark:text-[#10B981] offer-eyebrow">
+                      {t.starter_callout_label}
+                    </div>
+                    <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
+                      {t.starter_callout_text}
+                    </p>
+                  </div>
+
+                  <div className="pt-2 space-y-2 offer-ui text-[#0F0F0F] dark:text-[#EDECE6]">
+                    <div className="flex items-start gap-2">
+                      <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span>{t.starter_f1}</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span>{t.starter_f2}</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span>{t.starter_f3}</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                      <span>{t.starter_f4}</span>
+                    </div>
+                  </div>
+
+                  {/* Prominent Modal Trigger Button */}
+                  <div className="pt-3">
+                    <button
+                      onClick={() => setActiveModalKey('starter')}
+                      className="relative overflow-hidden w-full bg-[#ECFDF5] dark:bg-[#10B981]/15 text-[#059669] dark:text-[#10B981] border-2 border-[#059669]/50 dark:border-[#10B981]/60 offer-btn offer-btn-sm font-extrabold hover:bg-[#059669] dark:hover:bg-[#10B981] hover:text-white transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-sm animate-click-me group"
+                    >
+                      <span className="relative flex h-2 w-2 shrink-0">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#059669] dark:bg-[#10B981] opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#059669] dark:bg-[#10B981]"></span>
+                      </span>
+                      <Info size={18} className="shrink-0 group-hover:rotate-12 transition-transform" />
+                      <span>{t.detail_btn}</span>
+                      <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 dark:via-white/20 to-transparent pointer-events-none animate-shimmer-sweep" />
+                    </button>
+                  </div>
                 </div>
 
-                <div className="pt-2 space-y-2 offer-ui text-[#0F0F0F] dark:text-[#EDECE6]">
-                  <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                    <span>{t.starter_f1}</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                    <span>{t.starter_f2}</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                    <span>{t.starter_f3}</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                    <span>{t.starter_f4}</span>
-                  </div>
-                </div>
-
-                {/* Prominent Modal Trigger Button */}
-                <div className="pt-3">
+                <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] space-y-3">
                   <button
-                    onClick={() => setActiveModalKey('starter')}
-                    className="relative overflow-hidden w-full bg-[#ECFDF5] dark:bg-[#10B981]/15 text-[#059669] dark:text-[#10B981] border-2 border-[#059669]/50 dark:border-[#10B981]/60 offer-btn offer-btn-sm font-extrabold hover:bg-[#059669] dark:hover:bg-[#10B981] hover:text-white transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-sm animate-click-me group"
+                    onClick={() => openWhatsApp(t.starter_name, currency === 'USD' ? t.starter_price_usd : t.starter_price_pkr)}
+                    className="btn-outline w-full justify-center offer-btn offer-btn-lg animate-claim-outline group relative overflow-hidden transition-all duration-300"
                   >
-                    <span className="relative flex h-2 w-2 shrink-0">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#059669] dark:bg-[#10B981] opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-[#059669] dark:bg-[#10B981]"></span>
-                    </span>
-                    <Info size={18} className="shrink-0 group-hover:rotate-12 transition-transform" />
-                    <span>{t.detail_btn}</span>
-                    <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 dark:via-white/20 to-transparent pointer-events-none animate-shimmer-sweep" />
+                    <MessageSquare size={14} className="animate-icon-wiggle group-hover:scale-125 transition-transform text-[#059669] dark:text-[#10B981]" />
+                    <span>{t.whatsapp_cta}</span>
+                    <div className="absolute inset-0 w-1/3 h-full bg-gradient-to-r from-transparent via-[#059669]/10 to-transparent pointer-events-none animate-shimmer-sweep" />
                   </button>
+                  <div className="offer-ui text-[#8E8D88] dark:text-[#6A6965] text-center">
+                    {currency === 'USD' ? t.starter_support_usd : t.starter_support_pkr}
+                  </div>
                 </div>
               </div>
+            </StaggerItem>
 
-              <div className="pt-6 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] space-y-3">
-                <button
-                  onClick={() => openWhatsApp(t.starter_name, currency === 'USD' ? t.starter_price_usd : t.starter_price_pkr)}
-                  className="btn-outline w-full justify-center offer-btn offer-btn-lg animate-claim-outline group relative overflow-hidden transition-all duration-300"
-                >
-                  <MessageSquare size={14} className="animate-icon-wiggle group-hover:scale-125 transition-transform text-[#059669] dark:text-[#10B981]" />
-                  <span>{t.whatsapp_cta}</span>
-                  <div className="absolute inset-0 w-1/3 h-full bg-gradient-to-r from-transparent via-[#059669]/10 to-transparent pointer-events-none animate-shimmer-sweep" />
-                </button>
-                <div className="offer-ui text-[#8E8D88] dark:text-[#6A6965] text-center">
-                  {currency === 'USD' ? t.starter_support_usd : t.starter_support_pkr}
-                </div>
-              </div>
-            </div>
-          </StaggerItem>
-
-            {/* 2. Multi Branch Growth (Most Popular) */}
+            {/* 2. Multi-Branch Laptop Growth (Featured) */}
             <StaggerItem className="h-full">
               <div className="p-8 bg-white dark:bg-[#161619] border-2 border-[#059669] dark:border-[#10B981] space-y-6 flex flex-col justify-between shadow-lg relative hover:shadow-xl transition-shadow h-full card-hover-guided">
                 <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#059669] dark:bg-[#10B981] text-white offer-eyebrow font-bold px-3 py-1 shadow-sm">
@@ -1787,7 +1645,6 @@ export default function TechRetailSolution() {
                     <div className="offer-ui text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.growth_delivery}</div>
                   </div>
 
-                  {/* Clear Plan Differentiation Callout */}
                   <div className="p-3 bg-[#ECFDF5] dark:bg-[#10B981]/15 border border-[#059669]/25 dark:border-[#10B981]/30 offer-ui text-[#0F0F0F] dark:text-[#EDECE6] space-y-1">
                     <div className="font-bold text-[#059669] dark:text-[#10B981] offer-eyebrow">
                       {t.growth_callout_label}
@@ -1857,11 +1714,14 @@ export default function TechRetailSolution() {
               </div>
             </StaggerItem>
 
-            {/* 3. Chain and Distribution OS */}
+            {/* 3. Enterprise Wholesale & Chain OS */}
             <StaggerItem className="h-full">
               <div className="p-8 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-6 flex flex-col justify-between hover:border-[#059669] dark:hover:border-[#10B981] transition-colors h-full card-hover-guided">
                 <div className="space-y-4">
-                  <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui">{t.enterprise_name}</div>
+                  <div className="flex items-center justify-between">
+                    <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] offer-ui">{t.enterprise_name}</div>
+                    <span className="offer-eyebrow text-[#8E8D88] dark:text-[#6A6965]">{t.enterprise_badge}</span>
+                  </div>
                   <p className="offer-ui text-[#575652] dark:text-[#9B9A95]">
                     {t.enterprise_desc}
                   </p>
@@ -1873,7 +1733,6 @@ export default function TechRetailSolution() {
                     <div className="offer-ui text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.enterprise_delivery}</div>
                   </div>
 
-                  {/* Clear Plan Differentiation Callout */}
                   <div className="p-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] offer-ui text-[#0F0F0F] dark:text-[#EDECE6] space-y-1">
                     <div className="font-bold text-[#059669] dark:text-[#10B981] offer-eyebrow">
                       {t.enterprise_callout_label}
@@ -1886,7 +1745,7 @@ export default function TechRetailSolution() {
                   <div className="pt-2 space-y-2 offer-ui text-[#0F0F0F] dark:text-[#EDECE6]">
                     <div className="flex items-start gap-2">
                       <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                      <span className="font-bold">{t.enterprise_f1}</span>
+                      <span>{t.enterprise_f1}</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <Check size={14} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
@@ -1944,13 +1803,6 @@ export default function TechRetailSolution() {
             </StaggerItem>
           </StaggerContainer>
 
-          {/* Limited build slots */}
-          <FadeIn direction="up" className="text-center offer-body text-[#575652] dark:text-[#9B9A95] max-w-2xl mx-auto">
-            {isUrdu
-              ? 'Hum har mahine sirf 3 retail builds lete hain taake har project ko pura waqt mile. Agli available start date ke liye WhatsApp par rabta karein.'
-              : 'We take on only 3 retail builds each month so every project gets full attention. Message us on WhatsApp to confirm the next available start date.'}
-          </FadeIn>
-
           {/* Extras menu */}
           <FadeIn direction="up" className="bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] p-6 sm:p-8 space-y-5">
             <div className="space-y-2">
@@ -1980,7 +1832,7 @@ export default function TechRetailSolution() {
                 [2, 5, 8],
               ].map((colIndices, colIdx) => (
                 <div key={colIdx} className="flex flex-col gap-3">
-                  {colIndices.map((idx) => renderExtraCard(EXTRAS_DATA[idx], idx))}
+                  {colIndices.map((idx) => renderExtraCard(LAPTOP_EXTRAS_DATA[idx], idx))}
                 </div>
               ))}
             </div>
@@ -1992,14 +1844,14 @@ export default function TechRetailSolution() {
                 [1, 3, 5, 7, 9],
               ].map((colIndices, colIdx) => (
                 <div key={colIdx} className="flex flex-col gap-3">
-                  {colIndices.map((idx) => renderExtraCard(EXTRAS_DATA[idx], idx))}
+                  {colIndices.map((idx) => renderExtraCard(LAPTOP_EXTRAS_DATA[idx], idx))}
                 </div>
               ))}
             </div>
 
             {/* Mobile 1-Column Layout */}
             <div className="flex sm:hidden flex-col gap-3">
-              {EXTRAS_DATA.map((item, idx) => renderExtraCard(item, idx))}
+              {LAPTOP_EXTRAS_DATA.map((item, idx) => renderExtraCard(item, idx))}
             </div>
             <p className="offer-ui text-[#8E8D88] dark:text-[#6A6965]">
               {isUrdu
@@ -2008,7 +1860,7 @@ export default function TechRetailSolution() {
             </p>
           </FadeIn>
 
-          {/* Care Plan */}
+          {/* Care Plans */}
           <FadeIn direction="up" className="space-y-5">
             <div className="text-center space-y-2">
               <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold">
@@ -2020,12 +1872,12 @@ export default function TechRetailSolution() {
               <p className="offer-body text-[#575652] dark:text-[#9B9A95] max-w-2xl mx-auto">
                 {isUrdu
                   ? '30 din ki warranty ke baad, Care Plan aapke system ko online, secure aur updated rakhta hai. Code aapka hai, hosting hum par chhod dein ya khud manage karein.'
-                  : 'After the 30 day warranty, a Care Plan keeps your system online, secure and updated. You own the code, so let us host it or run it yourself.'}
+                  : 'After the 30 day warranty, a Care Plan keeps your laptop store online, secure and updated. You own the code, so let us host it or run it yourself.'}
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
-                { name: 'Basic Care', pricePkr: 'PKR 14,000 / mo', priceUsd: '$140 / mo', en: ['Managed hosting and SSL', 'Daily backups', 'Uptime monitoring', 'Small text and image edits', 'Email support'], ur: ['Managed hosting aur SSL', 'Rozana backups', 'Uptime monitoring', 'Chhoti text aur image edits', 'Email support'] },
+                { name: 'Basic Care', pricePkr: 'PKR 14,000 / mo', priceUsd: '$140 / mo', en: ['Managed hosting and SSL', 'Daily automated backups', 'Uptime monitoring', 'Small text and image edits', 'Email support'], ur: ['Managed hosting aur SSL', 'Rozana backups', 'Uptime monitoring', 'Chhoti text aur image edits', 'Email support'] },
                 { name: 'Growth Care', pricePkr: 'PKR 28,000 / mo', priceUsd: '$280 / mo', en: ['Everything in Basic Care', 'Priority support within 4 business hours', 'Monthly feature tweaks', 'Multi branch hosting', 'WhatsApp support'], ur: ['Basic Care ki sab cheezein', '4 business hours ke andar priority support', 'Mahana feature tweaks', 'Multi branch hosting', 'WhatsApp support'] },
                 { name: 'Enterprise Care', pricePkr: 'PKR 55,000 / mo', priceUsd: '$550 / mo', en: ['Everything in Growth Care', 'Dedicated engineer hours each month', 'Integration and API support', '99.5% uptime target', 'Phone support'], ur: ['Growth Care ki sab cheezein', 'Har mahine dedicated engineer hours', 'Integration aur API support', '99.5% uptime target', 'Phone support'] },
               ].map((c, i) => (
@@ -2058,8 +1910,8 @@ export default function TechRetailSolution() {
         </div>
       </section>
 
-      {/* ─── Payback / ROI ─── */}
-      <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#0F0F11]">
+      {/* ─── Payback / ROI Section ─── */}
+      <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#121215]">
         <div className="max-w-4xl mx-auto space-y-6 text-center">
           <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold">
             {isUrdu ? 'WAPSI // YEH KHUD KO KAISE PAY KARTA HAI' : 'PAYBACK // HOW THIS PAYS FOR ITSELF'}
@@ -2069,8 +1921,8 @@ export default function TechRetailSolution() {
           </h2>
           <p className="offer-body text-[#575652] dark:text-[#9B9A95]">
             {isUrdu
-              ? 'Rented platform par aap har mahine subscription dete hain aur har order par ek cut kat ta hai. Yeh kharcha kabhi khatam nahi hota. Yahan aap system ke mukammal malik bante hain. Jo paisa aap har mahine platform ko dete, wahi bachat is build ko kuch hi arsay mein pura kar deti hai.'
-              : 'On a rented platform you pay a subscription every month plus a cut on every order, and that bill never ends. Here you own the system outright. The money you would have handed a platform every month stays in your business, and that saving is what pays the build back.'}
+              ? 'Rented platform par aap har mahine subscription dete hain aur har order par ek cut kat ta hai. Yahan aap system ke mukammal malik bante hain. Har laptop sale par aapka munafa 100% aapke business mein rehta hai.'
+              : 'On a rented platform you pay a subscription every month plus a cut on every order. Here you own the system outright. The money you save on recurring commissions pays for the entire build in just a few months.'}
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
             {[
@@ -2078,76 +1930,11 @@ export default function TechRetailSolution() {
               { big: '0%', en: 'commission on your orders, ever', ur: 'aapke orders par commission, kabhi nahi' },
               { big: '100%', en: 'of the code and data is yours', ur: 'code aur data par aapka mukammal haq' },
             ].map((s, i) => (
-              <div key={i} className="bg-[#FAF9F5] dark:bg-[#161619] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] p-5 space-y-1">
+              <div key={i} className="bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] p-5 space-y-1">
                 <div className="offer-h2 text-[#059669] dark:text-[#10B981]">{s.big}</div>
                 <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{isUrdu ? s.ur : s.en}</div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Real builds / proof ─── */}
-      <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#121215]">
-        <div className="max-w-7xl mx-auto space-y-8">
-          <div className="text-center space-y-3 max-w-3xl mx-auto">
-            <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold">
-              {isUrdu ? 'ASLI KAAM // KHUD KHOL KAR DEKHEIN' : 'REAL WORK // OPEN IT YOURSELF'}
-            </div>
-            <h2 className="offer-h2 text-[#0F0F0F] dark:text-[#EDECE6]">
-              {isUrdu ? 'Yeh asli builds hain, aap abhi khol kar dekh sakte hain' : 'These are real builds you can open right now'}
-            </h2>
-            <p className="offer-body text-[#575652] dark:text-[#9B9A95]">
-              {isUrdu
-                ? 'Hum nakli testimonials nahi dikhate. Neeche diye gaye systems asli aur live hain. Click karein, khud test karein, phir faisla karein.'
-                : 'We will not pad this page with fake quotes. The systems below are real and live. Click them, test them yourself, then decide.'}
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {projectsData
-              .filter((p) => [7, 1, 4].includes(p.id))
-              .map((p) => {
-                const lp = getLocalizedProject(p, lang)
-                return (
-                  <div key={p.id} className="bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] overflow-hidden flex flex-col group">
-                    <div className="relative aspect-[16/10] overflow-hidden bg-[#0F0F0F]">
-                      <img
-                        src={p.mainImage}
-                        alt={p.title}
-                        loading="lazy"
-                        className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-                      />
-                    </div>
-                    <div className="p-5 space-y-2 flex-1 flex flex-col">
-                      <div className="offer-eyebrow text-[#059669] dark:text-[#10B981]">{lp.impact}</div>
-                      <h3 className="offer-h3 text-[#0F0F0F] dark:text-[#EDECE6]">{p.title}</h3>
-                      <div className="mt-auto pt-3 flex items-center gap-3 flex-wrap">
-                        {p.demoUrl ? (
-                          <a href={p.demoUrl} target="_blank" rel="noopener noreferrer" className="btn-outline offer-btn offer-btn-sm">
-                            <ExternalLink size={18} />
-                            <span>{isUrdu ? 'Live Demo Kholein' : 'Open Live Demo'}</span>
-                          </a>
-                        ) : null}
-                        {p.githubUrl && p.githubUrl !== '#' ? (
-                          <a
-                            href={p.githubUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="offer-ui text-[#575652] dark:text-[#9B9A95] hover:text-[#059669] dark:hover:text-[#10B981]"
-                          >
-                            {isUrdu ? 'Code dekhein' : 'View code'}
-                          </a>
-                        ) : null}
-                      </div>
-                    </div>
-                  </div>
-                )
-              })}
-          </div>
-          <div className="text-center pt-2">
-            <Link to="/projects" className="offer-ui font-semibold text-[#059669] dark:text-[#10B981] hover:underline">
-              {isUrdu ? 'Tamam projects dekhein →' : 'See all projects →'}
-            </Link>
           </div>
         </div>
       </section>

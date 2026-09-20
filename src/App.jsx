@@ -9,6 +9,7 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Solutions from './pages/Solutions'
 import TechRetailSolution from './pages/solutions/TechRetailSolution'
+import LaptopRetailSolution from './pages/solutions/LaptopRetailSolution'
 import TechRetailTerms from './pages/solutions/TechRetailTerms'
 import ProjectDetails from './pages/ProjectDetails'
 import AdminDashboard from './pages/AdminDashboard'
@@ -117,10 +118,13 @@ function App() {
             <Route path="/solutions" element={<Solutions />} />
             <Route path="/solutions/tech-retail" element={<TechRetailSolution />} />
             <Route path="/solutions/tech-retail/terms" element={<TechRetailTerms />} />
+            <Route path="/solutions/laptop-retail" element={<LaptopRetailSolution />} />
             
             {/* Quick Shareable Redirects for WhatsApp / Marketing */}
             <Route path="/offer" element={<Navigate to="/solutions/tech-retail" replace />} />
             <Route path="/offer/tech-retail" element={<Navigate to="/solutions/tech-retail" replace />} />
+            <Route path="/offer/laptop" element={<Navigate to="/solutions/laptop-retail" replace />} />
+            <Route path="/offer/laptop-retail" element={<Navigate to="/solutions/laptop-retail" replace />} />
 
             {/* Legal */}
             <Route path="/terms" element={<TermsOfService />} />
