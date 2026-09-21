@@ -117,6 +117,58 @@ export const projectsData = [
     },
 
     {
+        id: 9,
+        title: "Nexus Gaming — Console & Disc Retail OS",
+        overview: "A specialized video game and console retail commerce platform featuring an instant trade-in buyback engine, laser optical disc condition verification, motherboard serial RMA tracking, and an enterprise counter POS.",
+        overview_ur: "Gaming consoles, game discs aur trade-in retailers ke liye bespoke retail commerce OS — instant trade-in valuation engine, scratch-free disc condition grading, motherboard serial RMA tracking, aur backoffice POS ke sath.",
+        description: "Nexus Gaming OS is an end-to-end retail operating system built specifically for console boutiques, physical disc retailers, and trade-in shops across the UK and international markets. It features a real-time trade-in valuation engine calculating instant cash vs store credit (+18% bonus), multi-branch stock sync (Central Hub, City Showroom, Express Warehouse), motherboard serial number verification to combat part-swapping fraud, optical disc laser condition grading, and a full administrative counter POS with order dispatch workflows.",
+        description_ur: "Nexus Gaming OS video game consoles, physical disc retailers aur trade-in dukandaroon ke liye tayyar shuda mukammal retail operating system hai. Isme real-time trade-in valuation calculator (cash vs store credit bonus), multi-branch inventory sync, console motherboard serial verification, disc optical condition grading, aur complete admin counter POS dashboard shamil hain.",
+        features: [
+            "CEX-Style Instant Console & Game Disc Trade-In Valuation Engine",
+            "Cash Payout vs Store Credit (+18% bonus) Automated Calculation",
+            "Multi-Branch Stock Synchronization (Hub, Showroom, Warehouse)",
+            "Motherboard Serial Number & Anti-Tamper Security Seal Tracking",
+            "Optical Disc Laser Condition Grading (Mint, Very Good, Fair)",
+            "Multi-Step Checkout with Tracked Courier & Showroom Pickup",
+            "Tri-Currency Real-Time Switching (GBP £, USD $, PKR Rs)",
+            "Digital Retail Warranty Certificate & Order Receipt Generation",
+            "Automated WhatsApp Order & Trade-In Booking Dispatch",
+            "Full Multi-Page Admin Backoffice (Dashboard, Inventory, Serials, Orders, Trade-In)"
+        ],
+        features_ur: [
+            "CEX-Style Instant Console & Game Disc Trade-In Valuation Engine",
+            "Cash Payout vs Store Credit (+18% bonus) Automated Calculation",
+            "Multi-Branch Stock Synchronization (Hub, Showroom, Warehouse)",
+            "Motherboard Serial Number & Anti-Tamper Security Seal Tracking",
+            "Optical Disc Laser Condition Grading (Mint, Very Good, Fair)",
+            "Multi-Step Checkout with Tracked Courier & Showroom Pickup",
+            "Tri-Currency Real-Time Switching (GBP £, USD $, PKR Rs)",
+            "Digital Retail Warranty Certificate & Order Receipt Generation",
+            "Automated WhatsApp Order & Trade-In Booking Dispatch",
+            "Full Multi-Page Admin Backoffice (Dashboard, Inventory, Serials, Orders, Trade-In)"
+        ],
+        techStack: [
+            { category: "Frontend", tech: "React 19, React Router v7, Tailwind CSS, Lucide Icons" },
+            { category: "Architecture", tech: "Client-Side Reactive State (StoreContext), Multi-Route SPA" },
+            { category: "Internationalization", tech: "Tri-Currency Engine (GBP, USD, PKR) with Live Normalization" },
+            { category: "Admin Suite", tech: "Multi-Node Inventory, Tamper RMA Registry, Trade-In Appraisals" },
+            { category: "Deployment", tech: "Vercel Edge Network" },
+        ],
+        impact: "Console & Game Retail OS",
+        impact_ur: "Console & Game Retail OS",
+        mainImage: "/console/home.png",
+        images: [
+            "/console/home.png",
+            "/console/product.png",
+            "/console/admin.png",
+            "/console/trade-in.png"
+        ],
+        demoUrl: "https://console-store-demo.vercel.app/",
+        offerUrl: "/solutions/console-retail",
+        tags: ["React", "JavaScript", "Tailwind CSS", "Retail OS", "E-Commerce", "Trade-In"],
+    },
+
+    {
         id: 6,
         title: "Toolkito — Micro SaaS Toolkit",
         overview: "A live production Micro SaaS platform offering 10+ professional-grade AI-powered tools for images, PDFs, and videos — completely free, no signup required, no watermarks.",

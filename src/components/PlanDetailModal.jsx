@@ -463,7 +463,12 @@ export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', o
           <div className="p-4 sm:p-6 border-t border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#1A1A1E] flex flex-col sm:flex-row items-center justify-between gap-4 offer-ui shrink-0">
             <div className="flex items-center gap-3">
               <a
-                href="https://store-demo-eight.vercel.app/"
+                href={
+                  plan?.storefrontDemoUrl ||
+                  (plan?.name?.toLowerCase()?.includes('console')
+                    ? 'https://console-store-demo.vercel.app/'
+                    : 'https://store-demo-eight.vercel.app/')
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#059669] dark:text-[#10B981] hover:underline font-semibold flex items-center gap-1"
@@ -472,7 +477,12 @@ export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', o
               </a>
               <span className="text-[rgba(15,15,15,0.2)] dark:text-[rgba(255,255,255,0.2)]">|</span>
               <a
-                href="https://store-demo-eight.vercel.app/admin"
+                href={
+                  plan?.adminDemoUrl ||
+                  (plan?.name?.toLowerCase()?.includes('console')
+                    ? 'https://console-store-demo.vercel.app/admin'
+                    : 'https://store-demo-eight.vercel.app/admin')
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#059669] dark:text-[#10B981] hover:underline font-semibold flex items-center gap-1"

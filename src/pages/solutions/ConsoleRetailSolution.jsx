@@ -532,6 +532,8 @@ export default function ConsoleRetailSolution() {
     starter: {
       planCode: 'TXS-CONSOLE-STARTER',
       tierName: t.starter_name,
+      storefrontDemoUrl: 'https://console-store-demo.vercel.app/',
+      adminDemoUrl: 'https://console-store-demo.vercel.app/admin',
       price: currency === 'USD' ? t.starter_price_usd : currency === 'GBP' ? t.starter_price_gbp : t.starter_price_pkr,
       deliveryTime: t.starter_delivery,
       supportPlan: currency === 'USD' ? t.starter_support_usd : currency === 'GBP' ? t.starter_support_gbp : t.starter_support_pkr,
@@ -581,6 +583,8 @@ export default function ConsoleRetailSolution() {
     growth: {
       planCode: 'TXS-CONSOLE-GROWTH',
       tierName: t.growth_name,
+      storefrontDemoUrl: 'https://console-store-demo.vercel.app/',
+      adminDemoUrl: 'https://console-store-demo.vercel.app/admin',
       price: currency === 'USD' ? t.growth_price_usd : currency === 'GBP' ? t.growth_price_gbp : t.growth_price_pkr,
       deliveryTime: t.growth_delivery,
       supportPlan: currency === 'USD' ? t.growth_support_usd : currency === 'GBP' ? t.growth_support_gbp : t.growth_support_pkr,
@@ -653,6 +657,8 @@ export default function ConsoleRetailSolution() {
     enterprise: {
       planCode: 'TXS-CONSOLE-ENTERPRISE',
       tierName: t.enterprise_name,
+      storefrontDemoUrl: 'https://console-store-demo.vercel.app/',
+      adminDemoUrl: 'https://console-store-demo.vercel.app/admin',
       price: currency === 'USD' ? t.enterprise_price_usd : currency === 'GBP' ? t.enterprise_price_gbp : t.enterprise_price_pkr,
       deliveryTime: t.enterprise_delivery,
       supportPlan: currency === 'USD' ? t.enterprise_support_usd : currency === 'GBP' ? t.enterprise_support_gbp : t.enterprise_support_pkr,
@@ -1067,7 +1073,7 @@ export default function ConsoleRetailSolution() {
           <StaggerContainer staggerDelay={0.1} className="grid grid-cols-1 sm:grid-cols-3 gap-6 offer-ui">
             <StaggerItem>
               <a
-                href="http://localhost:5174"
+                href="https://console-store-demo.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] card-hover-guided group block space-y-3 shadow-xs h-full"
@@ -1087,7 +1093,7 @@ export default function ConsoleRetailSolution() {
 
             <StaggerItem>
               <a
-                href="http://localhost:5174#trade-in"
+                href="https://console-store-demo.vercel.app/trade-in"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] card-hover-guided group block space-y-3 shadow-xs h-full"
@@ -1107,7 +1113,7 @@ export default function ConsoleRetailSolution() {
 
             <StaggerItem>
               <a
-                href="http://localhost:5174#admin"
+                href="https://console-store-demo.vercel.app/admin"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] card-hover-guided group block space-y-3 shadow-xs h-full"

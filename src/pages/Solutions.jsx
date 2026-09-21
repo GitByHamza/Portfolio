@@ -380,7 +380,7 @@ export default function Solutions() {
                     <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none animate-shimmer-sweep" />
                   </Link>
                   <a
-                    href="http://localhost:5174"
+                    href="https://console-store-demo.vercel.app/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-outline offer-btn offer-btn-lg group relative overflow-hidden"

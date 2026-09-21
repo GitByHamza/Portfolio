@@ -217,7 +217,7 @@ const ProjectsSection = () => {
       {/* ─── Footer CTA to Full Work Archive ─── */}
       <FadeIn direction="up" delay={0.1} className="p-8 sm:p-12 text-center bg-[#FAF9F5] dark:bg-[#161619] border-t border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)]">
         <Link to="/work" className="btn-blue text-xs sm:text-sm px-8 py-4 group">
-          <span>{t('projectsSection', 'view_all')} (8+ SYSTEMS)</span>
+          <span>{t('projectsSection', 'view_all')} (9+ SYSTEMS)</span>
           <ArrowRight size={16} className="arrow-slide" />
         </Link>
       </FadeIn>
