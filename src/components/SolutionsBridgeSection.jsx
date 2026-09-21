@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, ArrowUpRight, Cpu, Layers, ShoppingBag, Laptop } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Cpu, Layers, ShoppingBag, Laptop, Gamepad2 } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { FadeIn, StaggerContainer, StaggerItem } from './motion/MotionReveal'
 
@@ -25,6 +25,15 @@ const SolutionsBridgeSection = () => {
         : 'Automated RAM & SSD upgrade calculator, transparent battery health verification badges, condition grading, and WhatsApp checkout.',
       link: '/solutions/laptop-retail',
       linkText: isUrdu ? 'Laptop OS Offer Inspect Karein' : 'Inspect Laptop Retail Offer',
+    },
+    {
+      icon: Gamepad2,
+      title: isUrdu ? 'GAMING CONSOLES & DISCS RETAIL OS' : 'GAMING CONSOLES & DISCS RETAIL OS',
+      desc: isUrdu
+        ? 'Instant console aur game disc trade-in buyback calculator, scratch-free disc condition grading, aur motherboard serial RMA.'
+        : 'Automated console & disc trade-in buyback calculator, scratch-free disc condition grading, and motherboard serial warranty tracking.',
+      link: '/solutions/console-retail',
+      linkText: isUrdu ? 'Console OS Offer Inspect Karein' : 'Inspect Console Retail Offer',
     },
     {
       icon: Layers,
@@ -67,8 +76,8 @@ const SolutionsBridgeSection = () => {
           </div>
         </FadeIn>
 
-        {/* 3 Offerings Grid */}
-        <StaggerContainer staggerDelay={0.12} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* 4 Offerings Grid */}
+        <StaggerContainer staggerDelay={0.12} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {offerings.map((item, idx) => (
             <StaggerItem
               key={idx}

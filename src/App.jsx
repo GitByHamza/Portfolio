@@ -10,6 +10,7 @@ import Contact from './pages/Contact'
 import Solutions from './pages/Solutions'
 import TechRetailSolution from './pages/solutions/TechRetailSolution'
 import LaptopRetailSolution from './pages/solutions/LaptopRetailSolution'
+import ConsoleRetailSolution from './pages/solutions/ConsoleRetailSolution'
 import TechRetailTerms from './pages/solutions/TechRetailTerms'
 import ProjectDetails from './pages/ProjectDetails'
 import AdminDashboard from './pages/AdminDashboard'
@@ -119,12 +120,16 @@ function App() {
             <Route path="/solutions/tech-retail" element={<TechRetailSolution />} />
             <Route path="/solutions/tech-retail/terms" element={<TechRetailTerms />} />
             <Route path="/solutions/laptop-retail" element={<LaptopRetailSolution />} />
+            <Route path="/solutions/console-retail" element={<ConsoleRetailSolution />} />
             
             {/* Quick Shareable Redirects for WhatsApp / Marketing */}
             <Route path="/offer" element={<Navigate to="/solutions/tech-retail" replace />} />
             <Route path="/offer/tech-retail" element={<Navigate to="/solutions/tech-retail" replace />} />
             <Route path="/offer/laptop" element={<Navigate to="/solutions/laptop-retail" replace />} />
             <Route path="/offer/laptop-retail" element={<Navigate to="/solutions/laptop-retail" replace />} />
+            <Route path="/offer/console" element={<Navigate to="/solutions/console-retail" replace />} />
+            <Route path="/offer/console-retail" element={<Navigate to="/solutions/console-retail" replace />} />
+            <Route path="/offer/gaming" element={<Navigate to="/solutions/console-retail" replace />} />
 
             {/* Legal */}
             <Route path="/terms" element={<TermsOfService />} />
