@@ -493,12 +493,11 @@ const CONSOLE_EXTRAS_DATA = [
 ]
 
 export default function ConsoleRetailSolution() {
-  const [lang, setLang] = useState(detectInitialLanguage)
+  const { lang, setLang, isUrdu } = useLanguage()
   const [currency, setCurrency] = useState(detectInitialCurrency)
   const [activeModalKey, setActiveModalKey] = useState(null)
   const [expandedExtras, setExpandedExtras] = useState({})
 
-  const isUrdu = lang === 'ur-en'
   const t = I18N_DATA[lang] || I18N_DATA.en
 
   useEffect(() => {
@@ -507,9 +506,6 @@ export default function ConsoleRetailSolution() {
 
   const handleLangChange = (newLang) => {
     setLang(newLang)
-    try {
-      localStorage.setItem('texcodes_console_lang', newLang)
-    } catch (e) {}
   }
 
   const handleCurrencyChange = (newCurrency) => {

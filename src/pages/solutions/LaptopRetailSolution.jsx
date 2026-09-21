@@ -963,14 +963,13 @@ const LAPTOP_EXTRAS_DATA = [
 ]
 
 export default function LaptopRetailSolution() {
-  const [lang, setLang] = useState(detectInitialLanguage)
+  const { lang, setLang, isUrdu } = useLanguage()
   const [currency, setCurrency] = useState(detectInitialCurrency)
   const [activeModalKey, setActiveModalKey] = useState(null)
   const [expandedExtra, setExpandedExtra] = useState(null)
 
   const t = I18N_DATA[lang] || I18N_DATA.en
   const plans = LAPTOP_PLANS_DETAIL[lang] || LAPTOP_PLANS_DETAIL.en
-  const isUrdu = lang === 'ur-en'
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -978,9 +977,6 @@ export default function LaptopRetailSolution() {
 
   const handleLanguageChange = (newLang) => {
     setLang(newLang)
-    try {
-      localStorage.setItem('texcodes_laptop_lang', newLang)
-    } catch (e) {}
   }
 
   const handleCurrencyChange = (newCurr) => {
