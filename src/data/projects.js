@@ -97,6 +97,7 @@ export const projectsData = [
         ],
         impact: "Enterprise Tech Retail OS",
         impact_ur: "Enterprise Tech Retail OS",
+        icon: "/txs/icon.svg",
         mainImage: "/txs/home.png",
         images: [
             "/txs/home.png",
@@ -156,6 +157,7 @@ export const projectsData = [
         ],
         impact: "Console & Game Retail OS",
         impact_ur: "Console & Game Retail OS",
+        icon: "/console/icon.svg",
         mainImage: "/console/home.png",
         images: [
             "/console/home.png",

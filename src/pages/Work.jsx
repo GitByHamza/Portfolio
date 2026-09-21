@@ -127,6 +127,13 @@ export default function Work() {
                   {/* Content (8 cols) */}
                   <div className="lg:col-span-8 space-y-4">
                     <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-[#8E8D88]">
+                      {project.icon && (
+                        <img
+                          src={project.icon}
+                          alt={`${project.title} logo`}
+                          className="w-6 h-6 rounded-md object-contain border border-[rgba(15,15,15,0.12)] dark:border-[rgba(255,255,255,0.12)] shadow-xs"
+                        />
+                      )}
                       <span className="font-display text-2xl text-[#059669] dark:text-[#10B981]">
                         0{idx + 1}
                       </span>

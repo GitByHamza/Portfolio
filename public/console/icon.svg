@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="nexus-border" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6" />
+      <stop offset="50%" stop-color="#60A5FA" />
+      <stop offset="100%" stop-color="#10B981" />
+    </linearGradient>
+    <linearGradient id="nexus-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B0F19" />
+      <stop offset="100%" stop-color="#04060A" />
+    </linearGradient>
+    <linearGradient id="disc-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />
+      <stop offset="30%" stop-color="#0F172A" />
+      <stop offset="70%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+    <linearGradient id="laser-glow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.2" />
+      <stop offset="50%" stop-color="#10B981" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.2" />
+    </linearGradient>
+    <linearGradient id="blue-neon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60A5FA" />
+      <stop offset="100%" stop-color="#2563EB" />
+    </linearGradient>
+    <linearGradient id="emerald-neon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <filter id="laser-filter" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Outer Rounded Squircle Base -->
+  <rect x="16" y="16" width="480" height="480" rx="108" fill="url(#nexus-bg)" stroke="url(#nexus-border)" stroke-width="12" />
+
+  <!-- Background Optical Disc Ring (Physical Game Disc Motif) -->
+  <g opacity="0.6">
+    <circle cx="256" cy="240" r="176" fill="url(#disc-grad)" stroke="#3B82F6" stroke-width="3" stroke-dasharray="16 8" stroke-opacity="0.4" />
+    <circle cx="256" cy="240" r="144" fill="none" stroke="#60A5FA" stroke-width="2" stroke-opacity="0.25" />
+    <circle cx="256" cy="240" r="112" fill="none" stroke="#10B981" stroke-width="2" stroke-dasharray="8 4" stroke-opacity="0.3" />
+  </g>
+
+  <!-- Optical Laser Disc Scan Beam -->
+  <line x1="80" y1="240" x2="432" y2="240" stroke="url(#laser-glow)" stroke-width="6" filter="url(#laser-filter)" />
+  <circle cx="256" cy="240" r="8" fill="#10B981" filter="url(#laser-filter)" />
+
+  <!-- Console Gamepad Controller Silhouette Frame -->
+  <g filter="url(#laser-filter)">
+    <!-- Controller Body Wings -->
+    <path d="M 136 210 C 136 170 170 150 216 150 L 296 150 C 342 150 376 170 376 210 C 376 250 366 310 338 334 C 316 352 284 330 274 300 L 238 300 C 228 330 196 352 174 334 C 146 310 136 250 136 210 Z"
+          fill="#111827" stroke="url(#blue-neon)" stroke-width="8" stroke-linejoin="round" />
+
+    <!-- Left D-Pad Cross -->
+    <g fill="#3B82F6">
+      <rect x="180" y="210" width="12" height="36" rx="3" />
+      <rect x="168" y="222" width="36" height="12" rx="3" />
+      <circle cx="186" cy="228" r="3" fill="#0B0F19" />
+    </g>
+
+    <!-- Right Action Diamond (4 Buttons: Triangle, Circle, Cross, Square) -->
+    <g fill="#10B981">
+      <circle cx="326" cy="214" r="5" fill="#60A5FA" />
+      <circle cx="340" cy="228" r="5" fill="#EF4444" />
+      <circle cx="326" cy="242" r="5" fill="#3B82F6" />
+      <circle cx="312" cy="228" r="5" fill="#10B981" />
+    </g>
+
+    <!-- Center Console Touchpad / Laser Matrix -->
+    <rect x="232" y="174" width="48" height="32" rx="6" fill="#1E293B" stroke="#60A5FA" stroke-width="2" />
+    <circle cx="244" cy="190" r="2" fill="#38BDF8" />
+    <circle cx="256" cy="190" r="2" fill="#38BDF8" />
+    <circle cx="268" cy="190" r="2" fill="#38BDF8" />
+
+    <!-- Dual Thumbsticks -->
+    <circle cx="216" cy="268" r="16" fill="#1E293B" stroke="#3B82F6" stroke-width="3" />
+    <circle cx="216" cy="268" r="6" fill="#3B82F6" />
+    <circle cx="296" cy="268" r="16" fill="#1E293B" stroke="#10B981" stroke-width="3" />
+    <circle cx="296" cy="268" r="6" fill="#10B981" />
+  </g>
+
+  <!-- Central "NX" Monogram Badge Overlay -->
+  <g>
+    <!-- Stylized 'N' -->
+    <path d="M 218 360 L 218 396 L 228 396 L 244 370 L 244 396 L 254 396 L 254 360 L 244 360 L 228 386 L 228 360 Z" fill="#FFFFFF" />
+    <!-- Stylized 'X' with Neon Split -->
+    <path d="M 260 360 L 270 360 L 279 374 L 288 360 L 298 360 L 284 378 L 298 396 L 288 396 L 279 382 L 270 396 L 260 396 L 274 378 Z" fill="url(#blue-neon)" />
+  </g>
+
+  <!-- Subtitle Pill Badge -->
+  <rect x="176" y="416" width="160" height="22" rx="6" fill="#0B0F19" stroke="#10B981" stroke-width="2" stroke-opacity="0.8" />
+  <text x="256" y="431" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="11" font-weight="900" fill="#10B981" letter-spacing="3" text-anchor="middle">CONSOLE OS</text>
+
+  <!-- Top Security Seal Micro-Dot -->
+  <circle cx="256" cy="48" r="4" fill="#3B82F6" filter="url(#laser-filter)" />
+</svg>
