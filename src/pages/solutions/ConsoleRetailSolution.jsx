@@ -34,6 +34,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FadeIn, StaggerContainer, StaggerItem } from '../../components/motion/MotionReveal'
 import PlanDetailModal from '../../components/PlanDetailModal'
 import OfferFAQ from '../../components/OfferFAQ'
+import ComparePrice from '../../components/ComparePrice'
 import ThemeToggle from '../../components/ThemeToggle'
 import { useLanguage } from '../../context/LanguageContext'
 
@@ -478,6 +479,15 @@ const CONSOLE_EXTRAS_DATA = [
       'Bharosemand sellers aur collectors aapki site par consoles aur rare discs list karein, aur har sale par aapka commission.',
   },
 ]
+
+// Regular prices, shown struck through next to each plan price (keep in sync with /solutions)
+const COMPARE_PRICES = {
+  starter: { usd: '$2,700', gbp: '£2,200', pkr: 'PKR 310,000' },
+  growth: { usd: '$5,350', gbp: '£4,400', pkr: 'PKR 590,000' },
+  enterprise: { usd: '$9,500', gbp: '£7,800', pkr: 'PKR 1,020,000' },
+}
+const compareFor = (key, currency) =>
+  key ? (currency === 'USD' ? COMPARE_PRICES[key].usd : currency === 'GBP' ? COMPARE_PRICES[key].gbp : COMPARE_PRICES[key].pkr) : null
 
 export default function ConsoleRetailSolution() {
   const { lang, setLang, isUrdu } = useLanguage()
@@ -1140,6 +1150,7 @@ export default function ConsoleRetailSolution() {
 
                   <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
                     <div className="offer-h3 text-[#059669] dark:text-[#10B981]">
+                      <ComparePrice value={compareFor('starter', currency)} isUrdu={isUrdu} />
                       {currency === 'USD' ? t.starter_price_usd : currency === 'GBP' ? t.starter_price_gbp : t.starter_price_pkr}
                     </div>
                     <div className="offer-ui text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.starter_delivery}</div>
@@ -1215,6 +1226,7 @@ export default function ConsoleRetailSolution() {
 
                   <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
                     <div className="offer-h3 text-[#059669] dark:text-[#10B981]">
+                      <ComparePrice value={compareFor('growth', currency)} isUrdu={isUrdu} />
                       {currency === 'USD' ? t.growth_price_usd : currency === 'GBP' ? t.growth_price_gbp : t.growth_price_pkr}
                     </div>
                     <div className="offer-ui text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.growth_delivery}</div>
@@ -1295,6 +1307,7 @@ export default function ConsoleRetailSolution() {
 
                   <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
                     <div className="offer-h3 text-[#059669] dark:text-[#10B981]">
+                      <ComparePrice value={compareFor('enterprise', currency)} isUrdu={isUrdu} />
                       {currency === 'USD' ? t.enterprise_price_usd : currency === 'GBP' ? t.enterprise_price_gbp : t.enterprise_price_pkr}
                     </div>
                     <div className="offer-ui text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.enterprise_delivery}</div>
@@ -1486,6 +1499,7 @@ export default function ConsoleRetailSolution() {
           plan={modalData[activeModalKey]}
           lang={lang}
           currency={currency}
+          compare={compareFor(activeModalKey, currency)}
           onOpenWhatsApp={(name, price) => openWhatsApp(name, price)}
         />
       )}

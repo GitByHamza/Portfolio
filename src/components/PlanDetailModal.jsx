@@ -112,7 +112,7 @@ function formatScopeCurrency(text, currency) {
   }
 }
 
-export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', onClose, onOpenWhatsApp }) {
+export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', compare = null, onClose, onOpenWhatsApp }) {
   const bodyRef = useRef(null)
   const galleryRef = useRef(null)
   const [expandedImageIndex, setExpandedImageIndex] = useState(null)
@@ -220,6 +220,7 @@ export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', o
 
   // Pages may pass a ready-made `price` (e.g. GBP on the console page); otherwise pick USD/PKR.
   const displayPrice = plan.price || (currency === 'USD' ? plan.priceUsd : plan.pricePkr)
+  const displayCompare = compare || plan.compare || null
 
   const modalContent = (
     <>
@@ -260,6 +261,12 @@ export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', o
                 {plan.name} — {t.spec_suffix}
               </h2>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[#575652] dark:text-[#9B9A95] offer-ui">
+                {displayCompare && (
+                  <del className="line-through decoration-[1.5px] text-[#B91C1C] dark:text-[#FCA5A5] font-medium offer-ui">
+                    <span className="sr-only">{lang === 'ur-en' ? 'Pehle ' : 'Was '}</span>
+                    {displayCompare}
+                  </del>
+                )}
                 <span className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">
                   {displayPrice}
                 </span>

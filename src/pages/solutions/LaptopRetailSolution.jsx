@@ -32,6 +32,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FadeIn, StaggerContainer, StaggerItem } from '../../components/motion/MotionReveal'
 import PlanDetailModal from '../../components/PlanDetailModal'
 import OfferFAQ from '../../components/OfferFAQ'
+import ComparePrice from '../../components/ComparePrice'
 import ThemeToggle from '../../components/ThemeToggle'
 import { useLanguage } from '../../context/LanguageContext'
 
@@ -873,6 +874,13 @@ const LAPTOP_EXTRAS_DATA = [
   },
 ]
 
+// Regular prices, shown struck through next to each plan price (keep in sync with /solutions)
+const COMPARE_PRICES = {
+  starter: { usd: '$2,700', pkr: 'PKR 300,000' },
+  growth: { usd: '$5,350', pkr: 'PKR 590,000' },
+  enterprise: { usd: '$9,500', pkr: 'PKR 1,020,000' },
+}
+
 export default function LaptopRetailSolution() {
   const { lang, setLang, isUrdu } = useLanguage()
   const [currency, setCurrency] = useState(detectInitialCurrency)
@@ -1000,6 +1008,7 @@ export default function LaptopRetailSolution() {
         plan={activePlan}
         lang={lang}
         currency={currency}
+        compare={activeModalKey ? (currency === 'USD' ? COMPARE_PRICES[activeModalKey].usd : COMPARE_PRICES[activeModalKey].pkr) : null}
         onClose={() => setActiveModalKey(null)}
         onOpenWhatsApp={(name, price) => openWhatsApp(name, price)}
       />
@@ -1464,6 +1473,7 @@ export default function LaptopRetailSolution() {
 
                   <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
                     <div className="offer-h3 text-[#0F0F0F] dark:text-[#EDECE6]">
+                      <ComparePrice value={currency === 'USD' ? COMPARE_PRICES.starter.usd : COMPARE_PRICES.starter.pkr} isUrdu={isUrdu} />
                       {currency === 'USD' ? t.starter_price_usd : t.starter_price_pkr}
                     </div>
                     <div className="offer-ui text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.starter_delivery}</div>
@@ -1545,6 +1555,7 @@ export default function LaptopRetailSolution() {
 
                   <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
                     <div className="offer-h3 text-[#059669] dark:text-[#10B981]">
+                      <ComparePrice value={currency === 'USD' ? COMPARE_PRICES.growth.usd : COMPARE_PRICES.growth.pkr} isUrdu={isUrdu} />
                       {currency === 'USD' ? t.growth_price_usd : t.growth_price_pkr}
                     </div>
                     <div className="offer-ui text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.growth_delivery}</div>
@@ -1633,6 +1644,7 @@ export default function LaptopRetailSolution() {
 
                   <div className="pt-2 border-t border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)]">
                     <div className="offer-h3 text-[#0F0F0F] dark:text-[#EDECE6]">
+                      <ComparePrice value={currency === 'USD' ? COMPARE_PRICES.enterprise.usd : COMPARE_PRICES.enterprise.pkr} isUrdu={isUrdu} />
                       {currency === 'USD' ? t.enterprise_price_usd : t.enterprise_price_pkr}
                     </div>
                     <div className="offer-ui text-[#059669] dark:text-[#10B981] font-semibold mt-1">{t.enterprise_delivery}</div>
