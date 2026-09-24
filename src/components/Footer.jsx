@@ -110,7 +110,7 @@ export const Footer = () => {
             </li>
             <li>
               <a
-                href="https://linkedin.com/in/hamza-texcodes"
+                href="https://linkedin.com/in/texcodes"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-[#059669] dark:hover:text-[#10B981] transition-colors flex items-center gap-1"

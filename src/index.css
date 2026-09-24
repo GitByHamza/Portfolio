@@ -507,6 +507,32 @@ body::before {
   animation: icon-attention-wiggle 3s ease-in-out infinite;
 }
 
+/* ─── "Discounted price" badge glow (solutions page plan boxes) ─── */
+@keyframes discount-glow {
+  0%, 100% {
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.25), 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(16, 185, 129, 0.55), 0 0 0 3px rgba(16, 185, 129, 0.12);
+  }
+}
+
+.discount-glow {
+  animation: discount-glow 2.4s ease-in-out infinite;
+  text-shadow: 0 0 10px rgba(5, 150, 105, 0.25);
+}
+
+.dark .discount-glow {
+  text-shadow: 0 0 12px rgba(52, 211, 153, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .discount-glow {
+    animation: none;
+    box-shadow: 0 0 14px rgba(16, 185, 129, 0.45);
+  }
+}
+
 /* ─── Guided Card & Micro-Interaction Enhancements ─── */
 .card-hover-guided {
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),

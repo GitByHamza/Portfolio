@@ -65,9 +65,9 @@ const MODAL_I18N = {
     demo_desc: 'Private staging link approve karne ke baad',
     handover_label: '20% launch par',
     handover_desc: 'Live + poora code aur database handover',
-    storefront_demo: 'STORE DEMO KHOLEIN',
-    admin_demo: 'ADMIN DEMO KHOLEIN',
-    claim_whatsapp: 'IS PLAN PAR WHATSAPP PAR BAAT KAREIN',
+    storefront_demo: 'STORE DEMO',
+    admin_demo: 'ADMIN DEMO',
+    claim_whatsapp: 'WHATSAPP PAR BAAT KAREIN',
     close: 'BAND KAREIN',
     expand: 'BARA KAREIN',
     lightbox_return: 'Band karne ke liye bahar click karein ya Esc dabayein',
@@ -238,7 +238,7 @@ export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', o
         onWheel={(e) => e.stopPropagation()}
       >
         <div
-          className="relative max-w-4xl w-full bg-[#F6F5F0] dark:bg-[#161619] border border-[rgba(15,15,15,0.25)] dark:border-[rgba(255,255,255,0.15)] shadow-2xl h-[90vh] max-h-[90vh] flex flex-col overflow-hidden text-[#0F0F0F] dark:text-[#EDECE6] overscroll-contain transition-colors duration-200"
+          className="relative max-w-6xl w-full bg-[#F6F5F0] dark:bg-[#161619] border border-[rgba(15,15,15,0.25)] dark:border-[rgba(255,255,255,0.15)] shadow-2xl h-[90vh] max-h-[90vh] flex flex-col overflow-hidden text-[#0F0F0F] dark:text-[#EDECE6] overscroll-contain transition-colors duration-200"
           onClick={(e) => e.stopPropagation()}
           data-lenis-prevent="true"
           onWheel={(e) => e.stopPropagation()}
@@ -465,8 +465,8 @@ export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', o
           </div>
 
           {/* ─── Modal Footer Actions (Fixed / Non-scrolling) ─── */}
-          <div className="p-4 sm:p-6 border-t border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#1A1A1E] flex flex-col sm:flex-row items-center justify-between gap-4 offer-ui shrink-0">
-            <div className="flex items-center gap-3">
+          <div className="p-4 sm:p-6 border-t border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#1A1A1E] flex flex-col lg:flex-row lg:items-center justify-between gap-4 lg:gap-8 offer-ui shrink-0">
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-2">
               <a
                 href={
                   plan?.storefrontDemoUrl ||
@@ -476,11 +476,11 @@ export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', o
                 }
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#059669] dark:text-[#10B981] hover:underline font-semibold flex items-center gap-1"
+                className="text-[#059669] dark:text-[#10B981] hover:underline font-semibold inline-flex items-center gap-1 whitespace-nowrap"
               >
                 {t.storefront_demo} <ArrowUpRight size={13} />
               </a>
-              <span className="text-[rgba(15,15,15,0.2)] dark:text-[rgba(255,255,255,0.2)]">|</span>
+              <span className="text-[rgba(15,15,15,0.2)] dark:text-[rgba(255,255,255,0.2)]" aria-hidden="true">|</span>
               <a
                 href={
                   plan?.adminDemoUrl ||
@@ -490,16 +490,16 @@ export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', o
                 }
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#059669] dark:text-[#10B981] hover:underline font-semibold flex items-center gap-1"
+                className="text-[#059669] dark:text-[#10B981] hover:underline font-semibold inline-flex items-center gap-1 whitespace-nowrap"
               >
                 {t.admin_demo} <ArrowUpRight size={13} />
               </a>
             </div>
 
-            <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full lg:w-auto">
               <button
                 onClick={() => onOpenWhatsApp(plan.name, displayPrice)}
-                className="btn-blue offer-btn offer-btn-xl w-full sm:w-auto sm:flex-none justify-center cursor-pointer animate-claim-solid group relative overflow-hidden shadow-md"
+                className="btn-blue offer-btn offer-btn-xl w-full sm:w-auto sm:flex-1 lg:flex-none whitespace-nowrap justify-center cursor-pointer animate-claim-solid group relative overflow-hidden shadow-md"
               >
                 <MessageSquare size={20} className="animate-icon-wiggle group-hover:scale-125 transition-transform" />
                 <span>{t.claim_whatsapp}</span>
@@ -507,7 +507,7 @@ export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', o
               </button>
               <button
                 onClick={onClose}
-                className="btn-outline offer-btn cursor-pointer"
+                className="btn-outline offer-btn shrink-0 whitespace-nowrap cursor-pointer"
               >
                 {t.close}
               </button>

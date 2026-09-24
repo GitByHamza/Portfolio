@@ -64,7 +64,7 @@ const ClosingSection = () => {
           </a>
 
           <a
-            href="https://linkedin.com/in/hamza-p-v"
+            href="https://linkedin.com/in/texcodes"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-outline text-xs"

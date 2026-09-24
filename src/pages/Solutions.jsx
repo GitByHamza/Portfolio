@@ -4,6 +4,37 @@ import { ArrowRight, ArrowUpRight, Cpu, ShoppingBag, Layers, CheckCircle2, XCirc
 import { useLanguage } from '../context/LanguageContext'
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/motion/MotionReveal'
 
+// Glowing "discounted price" label shown above each plan list
+function DiscountBadge() {
+  return (
+    <span className="discount-glow inline-flex items-center gap-1.5 whitespace-nowrap px-2.5 py-1 border border-[#059669]/40 dark:border-[#10B981]/50 bg-[#ECFDF5] dark:bg-[#10B981]/15 text-[#047857] dark:text-[#34D399] font-bold">
+      <span className="relative flex h-1.5 w-1.5 shrink-0">
+        <span className="absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75 motion-safe:animate-ping" />
+        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#10B981]" />
+      </span>
+      DISCOUNTED PRICE
+    </span>
+  )
+}
+
+// Plan price with the regular price struck through (dark red in light mode, light red in dark mode)
+function PriceLine({ compare, price, strong = false, isUrdu = false }) {
+  return (
+    <div className={`flex flex-wrap items-baseline gap-x-2 offer-ui ${strong ? 'mt-0.5' : ''}`}>
+      {compare && (
+        <del className="line-through decoration-[1.5px] text-[#B91C1C] dark:text-[#FCA5A5] font-medium">
+          <span className="sr-only">{isUrdu ? 'Pehle ' : 'Was '}</span>
+          {compare}
+        </del>
+      )}
+      <span className={`text-[#059669] dark:text-[#10B981] ${strong ? 'font-bold' : 'font-semibold'}`}>
+        {compare && <span className="sr-only">{isUrdu ? 'Ab ' : 'Now '}</span>}
+        {price}
+      </span>
+    </div>
+  )
+}
+
 export default function Solutions() {
   const { t, isUrdu } = useLanguage()
 
@@ -171,13 +202,13 @@ export default function Solutions() {
               <div className="lg:col-span-5 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[#08966a]/30 p-6 space-y-4 offer-ui">
                 <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] pb-2 font-bold flex items-center justify-between">
                   <span>{t('solutionsPage', 'tiers_title')}</span>
-                  <span className="offer-ui text-[#8E8D88] dark:text-[#6A6965]">{isUrdu ? 'FIXED PRICE' : 'FIXED PRICE'}</span>
+                  <DiscountBadge />
                 </div>
 
                 <div className="space-y-3">
                   <div className="card-hover-guided p-3 bg-white dark:bg-[#161619] border border-[#08966a]">
                     <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'tier1_title')}</div>
-                    <div className="text-[#059669] dark:text-[#10B981] font-semibold offer-ui">{t('solutionsPage', 'tier1_price')}</div>
+                    <PriceLine compare={t('solutionsPage', 'tier1_compare')} price={t('solutionsPage', 'tier1_price')} isUrdu={isUrdu} />
                     <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'tier1_sub')}</div>
                   </div>
 
@@ -186,13 +217,13 @@ export default function Solutions() {
                       <span className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'tier2_title')}</span>
                       <span className="offer-eyebrow font-bold text-white bg-[#059669] dark:bg-[#10B981] px-2 py-0.5">{t('solutionsPage', 'tier2_popular')}</span>
                     </div>
-                    <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui mt-0.5">{t('solutionsPage', 'tier2_price')}</div>
+                    <PriceLine strong compare={t('solutionsPage', 'tier2_compare')} price={t('solutionsPage', 'tier2_price')} isUrdu={isUrdu} />
                     <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'tier2_sub')}</div>
                   </div>
 
                   <div className="card-hover-guided p-3 bg-white dark:bg-[#161619] border border-[#08966a]">
                     <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'tier3_title')}</div>
-                    <div className="text-[#059669] dark:text-[#10B981] font-semibold offer-ui">{t('solutionsPage', 'tier3_price')}</div>
+                    <PriceLine compare={t('solutionsPage', 'tier3_compare')} price={t('solutionsPage', 'tier3_price')} isUrdu={isUrdu} />
                     <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'tier3_sub')}</div>
                   </div>
                 </div>
@@ -276,13 +307,13 @@ export default function Solutions() {
               <div className="lg:col-span-5 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[#08966a]/30 p-6 space-y-4 offer-ui">
                 <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] pb-2 font-bold flex items-center justify-between">
                   <span>{t('solutionsPage', 'tiers_title')}</span>
-                  <span className="offer-ui text-[#8E8D88] dark:text-[#6A6965]">{isUrdu ? 'FIXED PRICE' : 'FIXED PRICE'}</span>
+                  <DiscountBadge />
                 </div>
 
                 <div className="space-y-3">
                   <div className="card-hover-guided p-3 bg-white dark:bg-[#161619] border border-[#08966a]">
                     <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'flagship2_tier1_title')}</div>
-                    <div className="text-[#059669] dark:text-[#10B981] font-semibold offer-ui">{t('solutionsPage', 'flagship2_tier1_price')}</div>
+                    <PriceLine compare={t('solutionsPage', 'flagship2_tier1_compare')} price={t('solutionsPage', 'flagship2_tier1_price')} isUrdu={isUrdu} />
                     <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'flagship2_tier1_sub')}</div>
                   </div>
 
@@ -291,13 +322,13 @@ export default function Solutions() {
                       <span className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'flagship2_tier2_title')}</span>
                       <span className="offer-eyebrow font-bold text-white bg-[#059669] dark:bg-[#10B981] px-2 py-0.5">{t('solutionsPage', 'tier2_popular')}</span>
                     </div>
-                    <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui mt-0.5">{t('solutionsPage', 'flagship2_tier2_price')}</div>
+                    <PriceLine strong compare={t('solutionsPage', 'flagship2_tier2_compare')} price={t('solutionsPage', 'flagship2_tier2_price')} isUrdu={isUrdu} />
                     <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'flagship2_tier2_sub')}</div>
                   </div>
 
                   <div className="card-hover-guided p-3 bg-white dark:bg-[#161619] border border-[#08966a]">
                     <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'flagship2_tier3_title')}</div>
-                    <div className="text-[#059669] dark:text-[#10B981] font-semibold offer-ui">{t('solutionsPage', 'flagship2_tier3_price')}</div>
+                    <PriceLine compare={t('solutionsPage', 'flagship2_tier3_compare')} price={t('solutionsPage', 'flagship2_tier3_price')} isUrdu={isUrdu} />
                     <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'flagship2_tier3_sub')}</div>
                   </div>
                 </div>
@@ -381,13 +412,13 @@ export default function Solutions() {
               <div className="lg:col-span-5 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[#08966a]/30 p-6 space-y-4 offer-ui">
                 <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] pb-2 font-bold flex items-center justify-between">
                   <span>{t('solutionsPage', 'tiers_title')}</span>
-                  <span className="offer-ui text-[#8E8D88] dark:text-[#6A6965]">{isUrdu ? 'FIXED PRICE' : 'FIXED PRICE'}</span>
+                  <DiscountBadge />
                 </div>
 
                 <div className="space-y-3">
                   <div className="card-hover-guided p-3 bg-white dark:bg-[#161619] border border-[#08966a]">
                     <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'flagship3_tier1_title')}</div>
-                    <div className="text-[#059669] dark:text-[#10B981] font-semibold offer-ui">{t('solutionsPage', 'flagship3_tier1_price')}</div>
+                    <PriceLine compare={t('solutionsPage', 'flagship3_tier1_compare')} price={t('solutionsPage', 'flagship3_tier1_price')} isUrdu={isUrdu} />
                     <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'flagship3_tier1_sub')}</div>
                   </div>
 
@@ -396,13 +427,13 @@ export default function Solutions() {
                       <span className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'flagship3_tier2_title')}</span>
                       <span className="offer-eyebrow font-bold text-white bg-[#059669] dark:bg-[#10B981] px-2 py-0.5">{t('solutionsPage', 'tier2_popular')}</span>
                     </div>
-                    <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui mt-0.5">{t('solutionsPage', 'flagship3_tier2_price')}</div>
+                    <PriceLine strong compare={t('solutionsPage', 'flagship3_tier2_compare')} price={t('solutionsPage', 'flagship3_tier2_price')} isUrdu={isUrdu} />
                     <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'flagship3_tier2_sub')}</div>
                   </div>
 
                   <div className="card-hover-guided p-3 bg-white dark:bg-[#161619] border border-[#08966a]">
                     <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'flagship3_tier3_title')}</div>
-                    <div className="text-[#059669] dark:text-[#10B981] font-semibold offer-ui">{t('solutionsPage', 'flagship3_tier3_price')}</div>
+                    <PriceLine compare={t('solutionsPage', 'flagship3_tier3_compare')} price={t('solutionsPage', 'flagship3_tier3_price')} isUrdu={isUrdu} />
                     <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'flagship3_tier3_sub')}</div>
                   </div>
                 </div>
