@@ -17,66 +17,66 @@ import {
 
 const MODAL_I18N = {
   en: {
-    badge_default: 'VERIFIED SCOPE SPECIFICATION',
-    plan_code: '// PLAN CODE:',
-    spec_suffix: 'FULL ARCHITECTURAL SPECIFICATION',
-    ideal_fit: 'IDEAL CLIENT PROFILE & BUSINESS FIT:',
-    artifacts_title: 'SYSTEM INTERFACE ARTIFACTS INCLUDED IN THIS TIER:',
-    artifacts_hint: 'CLICK ANY IMAGE TO EXPAND',
-    artifacts_hint_mobile: 'SWIPE TO BROWSE • TAP TO EXPAND',
-    modules_title: 'COMPREHENSIVE DELIVERABLE MODULES & ARCHITECTURAL SCOPE:',
-    exclusions_title: 'STRICT SCOPE BOUNDARIES // WHAT IS NOT INCLUDED IN THIS TIER:',
-    exclusions_terms: 'Full scope boundaries, revision policy & warranty terms →',
-    milestones_title: 'ETHICAL MILESTONE PAYMENT & 100% OWNERSHIP PLEDGE',
-    deposit_label: '40% Deposit',
-    deposit_desc: 'Project initiation & repository setup',
-    demo_label: '40% Demo Milestone',
-    demo_desc: 'Approved staging build walkthrough',
-    handover_label: '20% Launch Handover',
-    handover_desc: 'Full GitHub repo & PostgreSQL transfer',
-    storefront_demo: 'TEST STOREFRONT DEMO',
-    admin_demo: 'TEST ADMIN DEMO',
-    claim_whatsapp: 'CLAIM PLAN ON WHATSAPP',
+    badge_default: 'PLAN DETAILS',
+    plan_code: 'PLAN:',
+    spec_suffix: 'full scope',
+    ideal_fit: 'BEST FOR',
+    artifacts_title: 'SCREENSHOTS',
+    artifacts_hint: 'CLICK TO ENLARGE',
+    artifacts_hint_mobile: 'SWIPE · TAP TO ENLARGE',
+    modules_title: "WHAT'S INCLUDED",
+    exclusions_title: 'NOT INCLUDED IN THIS PLAN',
+    exclusions_terms: 'Full scope, revisions and warranty terms →',
+    milestones_title: 'PAYMENT IN 3 MILESTONES',
+    deposit_label: '40% to start',
+    deposit_desc: 'Kickoff and setup',
+    demo_label: '40% at approval',
+    demo_desc: 'After you approve the private staging link',
+    handover_label: '20% at launch',
+    handover_desc: 'Go live + full code and database handover',
+    storefront_demo: 'OPEN STORE DEMO',
+    admin_demo: 'OPEN ADMIN DEMO',
+    claim_whatsapp: 'DISCUSS THIS PLAN ON WHATSAPP',
     close: 'CLOSE',
-    expand: 'EXPAND',
-    lightbox_return: 'Click outside or press ESC to return to plan specification',
-    preview_tag: 'SYSTEM PREVIEW',
-    preview_counter: 'PREVIEW',
+    expand: 'ENLARGE',
+    lightbox_return: 'Click outside or press Esc to close',
+    preview_tag: 'SCREENSHOT',
+    preview_counter: 'SCREENSHOT',
     guarantee_note:
-      '100% Milestone-Protected Staging Guarantee: Test your custom Next.js storefront, PC Builder, and inventory on a live private staging URL with your own products before secondary settlement. If the staging demo fails to satisfy the signed technical specification, your deposit is refunded 100% in full, you keep the architectural blueprint for free, and receive a $250 USD courtesy credit for your time. The delivery date in this plan is written into the contract, not a rough estimate.',
+      "Before launch, your store is set up on a private link with your own products. You test it against a written checklist we both sign. If anything doesn't match, we fix it within 10 working days. If we still can't meet the checklist, your deposit is refunded. Your delivery date is written into the contract.",
     payment_note:
-      'Payment is split 40 / 40 / 20 across commencement deposit, approved staging demo, and launch handover. Invoices are denominated in your preferred currency (USD for international via wire/Stripe/Wise, PKR for domestic). All deliverables are covered under our fixed-price guarantee with 100% intellectual property transfer.',
+      'Payments are split 40 / 40 / 20: to start, at staging approval, and at launch. Businesses in Pakistan are invoiced in PKR and pay by bank transfer. International clients are invoiced in USD or GBP and pay by international bank transfer or another method agreed in writing. Prices are fixed for the agreed scope; any change is quoted before work starts.',
   },
   'ur-en': {
-    badge_default: 'TASDEEQ SHUDA SCOPE SPECIFICATION',
-    plan_code: '// PLAN CODE:',
-    spec_suffix: 'MUKAMMAL ARCHITECTURAL SPECIFICATION',
-    ideal_fit: 'DUKAN KA PROFILE AUR BUSINESS FIT:',
-    artifacts_title: 'IS PLAN MEIN SHAMIL SYSTEM INTERFACES:',
-    artifacts_hint: 'TASVEER BARI DEKHNE KE LIYE CLICK KAREIN',
-    artifacts_hint_mobile: 'SWIPE KAREIN • BARI DEKHNE KE LIYE TAP KAREIN',
-    modules_title: 'MUKAMMAL DELIVERABLE MODULES AUR ARCHITECTURAL SCOPE:',
-    exclusions_title: 'STRICT SCOPE BOUNDARIES // YEH CHEEZAIN IS PLAN MEIN SHAMIL NAHI:',
-    exclusions_terms: 'Mukammal scope boundaries, revision policy & warranty sharaait →',
-    milestones_title: 'ETHICAL MILESTONE PAYMENT AUR 100% MALIKANA HUQOOQ:',
-    deposit_label: '40% Peshgi Raqam',
-    deposit_desc: 'Project initiation aur repository setup',
-    demo_label: '40% Demo Milestone',
-    demo_desc: 'Approved staging demo walkthrough',
-    handover_label: '20% Launch Handover',
-    handover_desc: 'Mukammal GitHub repo aur PostgreSQL database transfer',
-    storefront_demo: 'STOREFRONT DEMO DEKHEIN',
-    admin_demo: 'ADMIN DEMO DEKHEIN',
-    claim_whatsapp: 'YEH PLAN WHATSAPP PAR BOOK KAREIN',
+    badge_default: 'PLAN KI TAFSEEL',
+    plan_code: 'PLAN:',
+    spec_suffix: 'poora scope',
+    ideal_fit: 'KIS KE LIYE BEHTAR',
+    artifacts_title: 'SCREENSHOTS',
+    artifacts_hint: 'BARA DEKHNE KE LIYE CLICK KAREIN',
+    artifacts_hint_mobile: 'SWIPE KAREIN · BARA DEKHNE KE LIYE TAP',
+    modules_title: 'KYA SHAMIL HAI',
+    exclusions_title: 'IS PLAN MEIN SHAMIL NAHI',
+    exclusions_terms: 'Poora scope, revisions aur warranty sharaait →',
+    milestones_title: '3 MARAHIL MEIN PAYMENT',
+    deposit_label: '40% shuru mein',
+    deposit_desc: 'Kickoff aur setup',
+    demo_label: '40% approval par',
+    demo_desc: 'Private staging link approve karne ke baad',
+    handover_label: '20% launch par',
+    handover_desc: 'Live + poora code aur database handover',
+    storefront_demo: 'STORE DEMO KHOLEIN',
+    admin_demo: 'ADMIN DEMO KHOLEIN',
+    claim_whatsapp: 'IS PLAN PAR WHATSAPP PAR BAAT KAREIN',
     close: 'BAND KAREIN',
     expand: 'BARA KAREIN',
-    lightbox_return: 'Wapas aane ke liye bahar click karein ya ESC dabayein',
-    preview_tag: 'SYSTEM PREVIEW',
-    preview_counter: 'PREVIEW',
+    lightbox_return: 'Band karne ke liye bahar click karein ya Esc dabayein',
+    preview_tag: 'SCREENSHOT',
+    preview_counter: 'SCREENSHOT',
     guarantee_note:
-      '100% Milestone-Protected Staging Guarantee: Doosri payment aur final launch se pehle apni private staging URL par custom storefront, PC Builder aur inventory ko test karein. Agar staging demo mutafiqa specs fulfill na kare, to aapki deposit 100% fori wapas, architecture blueprint muft aapka, aur waqt ke azaale ke tor par courtesy credit diya jata hai. Delivery date contract mein likhi hoti hai, andaza nahi.',
+      'Launch se pehle aapka store aapke products ke sath private link par set hota hai. Aap ise ek likhi hui checklist ke mutabiq test karte hain jis par hum dono sign karte hain. Jo cheez match na kare, hum 10 working days mein theek karte hain. Phir bhi checklist poori na ho sake, to aapki deposit wapas. Delivery date contract mein likhi hoti hai.',
     payment_note:
-      'Raqam 40 / 40 / 20 mein banti hai: peshgi deposit, approved staging demo, aur launch handover. International clients ke liye direct USD invoicing aur muqami clients ke liye PKR. Tamam deliverables fixed-price guarantee aur 100% intellectual property transfer ke tehat mukammal kiye jate hain.',
+      'Payment 40 / 40 / 20 mein: shuru mein, staging approval par, aur launch par. Pakistan ke karobar ko PKR mein invoice (bank transfer). International clients ko USD ya GBP mein invoice (international bank transfer ya likh kar tay shuda tareeqa). Tay shuda scope ki price fixed hai; koi bhi tabdeeli kaam se pehle quote hoti hai.',
   },
 }
 
@@ -218,6 +218,9 @@ export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', o
 
   if (!plan) return null
 
+  // Pages may pass a ready-made `price` (e.g. GBP on the console page); otherwise pick USD/PKR.
+  const displayPrice = plan.price || (currency === 'USD' ? plan.priceUsd : plan.pricePkr)
+
   const modalContent = (
     <>
       {/* ─── Backdrop ─── */}
@@ -247,16 +250,18 @@ export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', o
                 <span className="tag-blue offer-badge">
                   {plan.badge || t.badge_default}
                 </span>
-                <span className="offer-eyebrow text-[#8E8D88] dark:text-[#6A6965]">
-                  {t.plan_code} {plan.code}
-                </span>
+                {plan.code && (
+                  <span className="offer-eyebrow text-[#8E8D88] dark:text-[#6A6965]">
+                    {t.plan_code} {plan.code}
+                  </span>
+                )}
               </div>
               <h2 className="offer-h2 text-[#0F0F0F] dark:text-[#EDECE6]">
                 {plan.name} — {t.spec_suffix}
               </h2>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[#575652] dark:text-[#9B9A95] offer-ui">
                 <span className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">
-                  {currency === 'USD' ? plan.priceUsd : plan.pricePkr}
+                  {displayPrice}
                 </span>
                 <span className="text-[rgba(15,15,15,0.2)] dark:text-[rgba(255,255,255,0.2)]">|</span>
                 <span className="flex items-center gap-1 font-semibold text-[#0F0F0F] dark:text-[#EDECE6]">
@@ -405,7 +410,7 @@ export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', o
                 ))}
               </ul>
               <Link
-                to="/solutions/tech-retail/terms"
+                to="/solutions/terms"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="offer-ui inline-flex items-center gap-1.5 font-semibold text-[#059669] dark:text-[#10B981] hover:underline pt-1 border-t border-[rgba(15,15,15,0.08)] dark:border-[rgba(255,255,255,0.08)] mt-1"
@@ -440,7 +445,7 @@ export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', o
             <div className="p-4 bg-[#FAF9F5] dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] offer-ui space-y-2">
               <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] uppercase tracking-wider flex items-center gap-2">
                 <Clock size={15} className="text-[#059669] dark:text-[#10B981]" />
-                <span>{lang === 'ur-en' ? 'DELIVERY AUR SLA ZIMMEDARI' : 'DELIVERY AND SLA COMMITMENT'}</span>
+                <span>{lang === 'ur-en' ? 'DELIVERY AUR APPROVAL' : 'DELIVERY & APPROVAL'}</span>
               </div>
               <p className="offer-body text-[#575652] dark:text-[#9B9A95] normal-case tracking-normal">
                 {t.guarantee_note}
@@ -451,7 +456,7 @@ export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', o
             <div className="p-4 bg-[#FAF9F5] dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] offer-ui space-y-2">
               <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6] uppercase tracking-wider flex items-center gap-2">
                 <MessageSquare size={15} className="text-[#059669] dark:text-[#10B981]" />
-                <span>{lang === 'ur-en' ? 'PAYMENT AUR ORDER KARNE KA TAREEQA' : 'HOW PAYMENT AND ORDERING WORK'}</span>
+                <span>{lang === 'ur-en' ? 'PAYMENT' : 'PAYMENT'}</span>
               </div>
               <p className="offer-body text-[#575652] dark:text-[#9B9A95] normal-case tracking-normal">
                 {t.payment_note}
@@ -481,7 +486,7 @@ export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', o
                   plan?.adminDemoUrl ||
                   (plan?.name?.toLowerCase()?.includes('console')
                     ? 'https://console-store-demo.vercel.app/admin'
-                    : 'https://store-demo-eight.vercel.app/admin')
+                    : 'https://store-demo-eight.vercel.app/admin/dashboard')
                 }
                 target="_blank"
                 rel="noopener noreferrer"
@@ -493,7 +498,7 @@ export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', o
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
               <button
-                onClick={() => onOpenWhatsApp(plan.name, currency === 'USD' ? plan.priceUsd : plan.pricePkr)}
+                onClick={() => onOpenWhatsApp(plan.name, displayPrice)}
                 className="btn-blue offer-btn offer-btn-xl w-full sm:w-auto sm:flex-none justify-center cursor-pointer animate-claim-solid group relative overflow-hidden shadow-md"
               >
                 <MessageSquare size={20} className="animate-icon-wiggle group-hover:scale-125 transition-transform" />
@@ -591,7 +596,8 @@ export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', o
                 </kbd>)
               </span>
               <span className="offer-ui font-semibold text-[#0F0F0F] dark:text-[#EDECE6] hidden sm:inline">
-                {plan.name} // <span className="offer-code">{plan.code}</span>
+                {plan.name}
+                {plan.code ? <>{' // '}<span className="offer-code">{plan.code}</span></> : null}
               </span>
             </div>
           </div>

@@ -118,6 +118,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/solutions" element={<Solutions />} />
             <Route path="/solutions/tech-retail" element={<TechRetailSolution />} />
+            <Route path="/solutions/terms" element={<TechRetailTerms />} />
             <Route path="/solutions/tech-retail/terms" element={<TechRetailTerms />} />
             <Route path="/solutions/laptop-retail" element={<LaptopRetailSolution />} />
             <Route path="/solutions/console-retail" element={<ConsoleRetailSolution />} />

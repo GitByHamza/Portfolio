@@ -33,6 +33,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion'
 import { FadeIn, StaggerContainer, StaggerItem } from '../../components/motion/MotionReveal'
 import PlanDetailModal from '../../components/PlanDetailModal'
+import OfferFAQ from '../../components/OfferFAQ'
 import ThemeToggle from '../../components/ThemeToggle'
 import { useLanguage } from '../../context/LanguageContext'
 
@@ -96,399 +97,385 @@ function detectInitialCurrency() {
 
 const I18N_DATA = {
   en: {
-    hero_badge: 'COMMERCIAL INFRASTRUCTURE // GAMING CONSOLES & DISCS RETAIL OS',
-    hero_title_1: 'Automate Console Sales, Game Disc Trade-Ins & Pre-Orders',
-    hero_title_accent: 'With Zero Platform Commissions',
-    hero_title_2: 'And 100% Codebase Ownership',
+    hero_badge: 'CONSOLE & GAMES RETAIL OS · FOR VIDEO GAME SHOPS',
+    hero_title_1: 'Instant trade-in quotes —',
+    hero_title_accent: 'online and at the counter.',
+    hero_title_2: '',
     hero_sub:
-      'Turn your video game boutique or retail chain into an automated 24/7 gaming commerce hub. Dedicated storefront for PS5, Xbox Series X, Nintendo Switch, physical game discs, and accessories with instant trade-in valuation, serial warranty tracking, and WhatsApp dispatch—delivered in 21 days with 100% code and database ownership.',
-    cta_primary: 'Choose Your Gaming Solution Plan',
-    cta_secondary: 'Explore Live Console Demo',
-    metrics_code: 'Full GitHub & DB Transfer',
-    metrics_tax: 'Keep 100% Retail Margins',
-    metrics_speed: 'Instant Trade-In Calculator',
-    metrics_rma: 'Console Motherboard Serials',
-    metrics_code_top: '100% OWNERSHIP',
-    metrics_tax_top: '0% PLATFORM TAX',
-    metrics_speed_top: 'TRADE-IN ENGINE',
-    metrics_rma_top: 'SERIAL & SEAL RMA',
+      'A store and back office for video game shops. Customers get a cash or store-credit quote for their old console or discs in seconds, every item shows its condition, and every console is logged by serial number. Live in 10–30 days, and the code is yours.',
+    cta_primary: 'See plans & pricing',
+    cta_secondary: 'Try the live demo',
+    metrics_code: 'Code, data and domain handed over',
+    metrics_tax: 'No cut from your sales, ever',
+    metrics_speed: 'Cash or store credit, instantly',
+    metrics_rma: 'Logged on every console invoice',
+    metrics_code_top: 'YOU OWN IT',
+    metrics_tax_top: '0% COMMISSION',
+    metrics_speed_top: 'TRADE-IN QUOTES',
+    metrics_rma_top: 'SERIAL & SEAL',
 
-    // Ultimatum Decision Matrix
-    ultimatum_badge: 'THE ZERO-RISK DECISION MATRIX',
-    ultimatum_title: 'WHY LEADING CONSOLE RETAILERS MOVE FORWARD',
+    // How we work
+    ultimatum_badge: 'HOW WE WORK',
+    ultimatum_title: 'You see it working before you pay in full',
     ultimatum_sub:
-      'An offer structured so the video game merchant wins in both scenarios. We assume the technical execution risk so you can modernize your operation with complete certainty.',
-    ultimatum_best_tag: 'BEST-CASE SCENARIO',
-    ultimatum_best_title: 'You launch an automated gaming retail machine',
-    ultimatum_best_p1: 'Deploy a high-speed Next.js console storefront with live trade-in valuations in 21 days.',
-    ultimatum_best_p2: 'Customer disc questions drop to zero with clear condition grades (Brand New Sealed, Mint Scratch-Free Discs).',
-    ultimatum_best_p3: 'Physical counters and online orders share one real-time multi-branch stock inventory.',
-    ultimatum_best_p4: 'Save thousands every year with zero recurring platform commissions or order fees.',
-    ultimatum_best_p5: 'Full GitHub repository and PostgreSQL database ownership transferred to your accounts.',
-    ultimatum_best_footer: 'Outcome: You scale your gaming business, protect retail margins, and own your software.',
+      'Payments follow milestones. The final balance is due only after you approve your store on a private link, with your own stock.',
+    ultimatum_best_tag: 'WHAT YOU GET',
+    ultimatum_best_title: 'A store built around how you sell',
+    ultimatum_best_p1: 'An online store for consoles, games and accessories.',
+    ultimatum_best_p2: 'A trade-in calculator with cash and store-credit offers.',
+    ultimatum_best_p3: 'Clear condition labels on every disc and console.',
+    ultimatum_best_p4: 'Showroom and online orders share one stock count.',
+    ultimatum_best_p5: 'No platform fee, no commission, full code handover.',
+    ultimatum_best_footer: 'Designed to speed up trade-ins and cut condition disputes.',
 
-    ultimatum_worst_tag: 'WORST-CASE SCENARIO',
-    ultimatum_worst_title: 'If we fail to fulfill agreed specifications',
-    ultimatum_worst_p1: '100% full refund of your commencement deposit processed immediately without dispute.',
-    ultimatum_worst_p2: 'Keep our custom console catalog schema, trade-in rules, and architecture blueprint for free.',
-    ultimatum_worst_p3: '$250 USD courtesy credit paid directly to your business as an apology for your time.',
-    ultimatum_worst_p4: 'Zero contract lock-in, zero ongoing financial obligations, and zero risk.',
-    ultimatum_worst_footer: 'Outcome: You risk zero capital, lose nothing, and keep an enterprise tech audit.',
+    ultimatum_worst_tag: "IF SOMETHING ISN'T RIGHT",
+    ultimatum_worst_title: 'We fix it, or you get your deposit back',
+    ultimatum_worst_p1: 'Before launch, you test everything against a written checklist we both sign.',
+    ultimatum_worst_p2: "Anything that doesn't match the checklist, we fix within 10 working days.",
+    ultimatum_worst_p3: "If we still can't meet it, your deposit is refunded.",
+    ultimatum_worst_p4: 'No lock-in contract and no hidden monthly charges.',
+    ultimatum_worst_footer: 'Your payments are tied to results you can see.',
 
-    // Staging Guarantee Banner
-    guarantee_badge: 'SAFETY NET // 100% MILESTONE-PROTECTED STAGING GUARANTEE',
-    guarantee_title: 'Test Your System On A Live Staging URL Before Final Settlement',
+    // Staging approval banner
+    guarantee_badge: 'STAGING APPROVAL',
+    guarantee_title: 'Test your store on a private link before launch',
     guarantee_sub:
-      'You only pay the remaining balance after testing your fully functional custom storefront, trade-in calculator, and multi-branch stock sync on a private staging URL with your own consoles and games. If it does not perform to agreed specifications, your deposit is refunded in full.',
+      'We set up your store with your real stock on a private staging link. You test the storefront, trade-in calculator and stock sync yourself. The final payment is due only after you approve it.',
 
-    arch_badge: 'SYSTEM ARCHITECTURE',
-    arch_title: 'ONE UNIFIED SYSTEM FOR CONSOLE GAMING RETAIL',
+    arch_badge: "WHAT'S INCLUDED",
+    arch_title: 'One system for your showroom, trade-ins and website',
     arch_sub:
-      'Not just an online shop. An integrated gaming retail operating environment connecting storefront, showroom counters, trade-in intake, and customer order dispatch.',
-    arch_01_title: '01. CUSTOM CONSOLE STOREFRONT',
+      'Your storefront, counter, trade-in desk and WhatsApp orders all run on the same data.',
+    arch_01_title: 'GAME STORE',
     arch_01_desc:
-      'Ultra-fast Next.js gaming storefront for PS5, Xbox Series X/S, Nintendo Switch, Retro Consoles, and physical discs with rich media, trailer embeds, and instant platform filtering.',
-    arch_02_title: '02. CONSOLE & DISC TRADE-IN ENGINE',
+      'A fast store for PS5, Xbox, Switch, retro consoles and discs, with trailers and platform filters.',
+    arch_02_title: 'TRADE-IN CALCULATOR',
     arch_02_desc:
-      'Allow gamers to select their old console or game disc, choose condition (Boxed, Unboxed, Fair), and get instant Cash and Store Credit valuation—just like CEX and GameStop.',
-    arch_03_title: '03. DISC & CONSOLE CONDITION GRADING',
+      'Customers pick their console or disc and its condition (boxed, unboxed, fair) and get a cash or store-credit quote, like the big trade-in chains.',
+    arch_03_title: 'CONDITION LABELS',
     arch_03_desc:
-      'Display verified condition badges on every listing: Brand New Sealed, Grade A Mint Disc (Scratch Guarantee), or Refurbished Console with 90-Day Local Warranty.',
-    arch_04_title: '04. MULTI-BRANCH STOCK SYNC',
+      'Sealed, Mint disc, Grade A or Refurbished, with your warranty terms on each listing.',
+    arch_04_title: 'BRANCH STOCK',
     arch_04_desc:
-      'Connect retail showrooms, repair/testing benches, and central warehouse in one real-time inventory management panel.',
-    arch_05_title: '05. MOTHERBOARD SERIAL & WARRANTY RMA',
+      'Showrooms, testing bench and warehouse in one stock view.',
+    arch_05_title: 'SERIAL & SEAL',
     arch_05_desc:
-      'Print unique console motherboard serial numbers and anti-tamper security sticker IDs on invoices to eliminate customer return fraud and part-swapping.',
-    arch_06_title: '06. WHATSAPP & COURIER AUTO DISPATCH',
+      "Print each console's serial number and warranty-seal ID on the invoice, so swapped parts and false returns are easy to spot.",
+    arch_06_title: 'WHATSAPP ORDERS',
     arch_06_desc:
-      'Pre-formatted customer orders with exact console edition (Disc vs Digital), disc region (PAL/NTSC), and tracking updates sent directly to sales counters.',
-    arch_07_title: '07. AI GAME MATCHMAKER CHATBOT',
+      'Orders arrive with platform, edition (disc/digital), region and delivery details.',
+    arch_07_title: 'AI GAME FINDER',
     arch_07_desc:
-      '24/7 automated gaming sales assistant that recommends games by platform, genre (Action, RPG, Sports, Soulslike), multiplayer mode, and PEGI/ESRB age ratings.',
+      'Suggests games by platform, genre, multiplayer and age rating (PEGI/ESRB).',
 
-    plans_badge: 'COMMERCIAL INVESTMENT TIERS',
-    plans_title: 'Console Solution Plans.',
-    plans_sub:
-      'Zero monthly sales commissions. 100% client code and database ownership upon completion.',
-    plans_sub_suffix:
-      'Click any plan below to inspect the complete deliverable breakdown, architecture specs, and visual previews.',
-    detail_btn: 'CLICK ME FOR FULL DETAIL & PREVIEWS →',
+    plans_badge: 'PLANS & PRICING',
+    plans_title: 'Console Retail plans',
+    plans_sub: 'One fixed price per plan. No commission. Full handover when complete.',
+    plans_sub_suffix: "Open any plan to see the full scope, what's excluded, and screenshots.",
+    detail_btn: 'See full scope & screenshots →',
 
-    starter_name: 'Single Boutique Gaming Launch',
-    starter_badge: 'SINGLE STORE',
-    starter_desc:
-      'For independent console shops, game disc dealers, and retro gaming boutiques starting online sales with WhatsApp dispatch.',
-    starter_price_usd: '$2,250 USD',
-    starter_price_gbp: '£1,850 GBP',
+    starter_name: 'Single Store',
+    starter_badge: '1 SHOP',
+    starter_desc: 'For an independent game or retro shop starting to sell online.',
+    starter_price_usd: '$2,250',
+    starter_price_gbp: '£1,850',
     starter_price_pkr: 'PKR 260,000',
-    starter_delivery: '⚡ Delivered in 10 days, guaranteed',
-    starter_support_usd: 'Optional Care Plan: $140 / mo',
-    starter_support_gbp: 'Optional Care Plan: £115 / mo',
-    starter_support_pkr: 'Optional Care Plan: PKR 14,000 / mo',
-    starter_callout_label: 'CORE CAPABILITY:',
-    starter_callout_text:
-      'Dedicated single-outlet console storefront with platform filters, disc condition tags, and direct WhatsApp checkout.',
-    starter_f1: 'Next.js Console Storefront (Up to 100 SKUs)',
-    starter_f2: 'Platform Filtering (PS5, Xbox, Switch, Retro)',
-    starter_f3: 'Disc & Console Condition Grading Badges',
-    starter_f4: '100% Client Code & DB Ownership',
+    starter_delivery: 'Live in 10 days*',
+    starter_support_usd: 'Optional Care Plan: $140 / month',
+    starter_support_gbp: 'Optional Care Plan: £115 / month',
+    starter_support_pkr: 'Optional Care Plan: PKR 14,000 / month',
+    starter_callout_label: 'BEST FOR',
+    starter_callout_text: 'Getting online fast with platform filters, condition labels and WhatsApp orders.',
+    starter_f1: 'Online store — we load your first 100 items',
+    starter_f2: 'Filters for PS5, Xbox, Switch and retro',
+    starter_f3: 'Condition labels on discs and consoles',
+    starter_f4: 'Orders sent to your WhatsApp',
 
-    growth_name: 'Multi-Branch Gaming Retailer',
-    growth_badge: '★ MOST POPULAR // BEST VALUE',
+    growth_name: 'Multi-Branch',
+    growth_badge: 'MOST POPULAR',
     growth_desc:
-      'For established video game shops, trade-in retailers, and high-volume console merchants selling across physical counters and online.',
-    growth_price_usd: '$4,450 USD',
-    growth_price_gbp: '£3,650 GBP',
+      'For established game shops that buy and sell used consoles at the counter and online.',
+    growth_price_usd: '$4,450',
+    growth_price_gbp: '£3,650',
     growth_price_pkr: 'PKR 490,000',
-    growth_delivery: '⚡ Delivered in 21 days, guaranteed',
-    growth_support_usd: 'Optional Care Plan: $280 / mo',
-    growth_support_gbp: 'Optional Care Plan: £230 / mo',
-    growth_support_pkr: 'Optional Care Plan: PKR 28,000 / mo',
-    growth_callout_label: 'MAJOR UPGRADE OVER STARTER:',
+    growth_delivery: 'Live in 21 days*',
+    growth_support_usd: 'Optional Care Plan: $280 / month',
+    growth_support_gbp: 'Optional Care Plan: £230 / month',
+    growth_support_pkr: 'Optional Care Plan: PKR 28,000 / month',
+    growth_callout_label: 'EVERYTHING IN SINGLE STORE, PLUS',
     growth_callout_text:
-      'Adds automated Console & Disc Trade-In Valuation Calculator, 3-branch stock sync, serial RMA tracking, and AI Game Matchmaker.',
-    growth_f1: 'Console & Disc Trade-In / Buyback Valuation Engine',
-    growth_f2: '3-Branch Inventory Sync (Showroom, Counter, Warehouse)',
-    growth_f3: 'Console Motherboard Serial & Anti-Tamper RMA Tracker',
-    growth_f4: 'Automated Controller & Accessory Cross-Sell Engine',
-    growth_f5_usd: 'Online Card & Wallet Payment Gateway (Included — Save $400 USD)',
-    growth_f5_gbp: 'Online Card & Wallet Payment Gateway (Included — Save £320 GBP)',
-    growth_f5_pkr: 'Online Card & Wallet Payment Gateway (Included — Save PKR 50,000)',
-    growth_f6_usd: 'AI Game Matchmaker Sales Chatbot (Included — Save $650 USD)',
-    growth_f6_gbp: 'AI Game Matchmaker Sales Chatbot (Included — Save £520 GBP)',
-    growth_f6_pkr: 'AI Game Matchmaker Sales Chatbot (Included — Save PKR 65,000)',
+      'The trade-in calculator, stock across 3 locations, serial & seal tracking and an AI game finder.',
+    growth_f1: 'Trade-in calculator (cash or store credit)',
+    growth_f2: 'Stock synced across 3 locations',
+    growth_f3: 'Console serial & seal tracking',
+    growth_f4: 'Controller and accessory suggestions at checkout',
+    growth_f5_usd: 'Card & wallet payments — included ($400 value)',
+    growth_f5_gbp: 'Card & wallet payments — included (£320 value)',
+    growth_f5_pkr: 'Card & wallet payments — included (PKR 50,000 value)',
+    growth_f6_usd: 'AI game finder — included ($650 value)',
+    growth_f6_gbp: 'AI game finder — included (£520 value)',
+    growth_f6_pkr: 'AI game finder — included (PKR 65,000 value)',
 
-    enterprise_name: 'Enterprise Chain & Wholesale OS',
-    enterprise_badge: '★ COMPLETE GAMING OS',
+    enterprise_name: 'Chain & Wholesale',
+    enterprise_badge: 'FOR CHAINS',
     enterprise_desc:
-      'For nationwide video game chains, console distributors, and franchise networks needing enterprise trade-in kiosks and ERP integration.',
-    enterprise_price_usd: 'From $7,900 USD',
-    enterprise_price_gbp: 'From £6,500 GBP',
+      'For chains, franchises and distributors supplying shops and gaming lounges.',
+    enterprise_price_usd: 'From $7,900',
+    enterprise_price_gbp: 'From £6,500',
     enterprise_price_pkr: 'From PKR 850,000',
-    enterprise_delivery: '⚡ Delivered in 30 days, guaranteed',
-    enterprise_support_usd: 'Dedicated Care Plan: $550 / mo',
-    enterprise_support_gbp: 'Dedicated Care Plan: £450 / mo',
-    enterprise_support_pkr: 'Dedicated Care Plan: PKR 55,000 / mo',
-    enterprise_callout_label: 'MAJOR UPGRADE OVER GROWTH:',
+    enterprise_delivery: 'From 30 days — fixed in your scope document',
+    enterprise_support_usd: 'Dedicated Care Plan: $550 / month',
+    enterprise_support_gbp: 'Dedicated Care Plan: £450 / month',
+    enterprise_support_pkr: 'Dedicated Care Plan: PKR 55,000 / month',
+    enterprise_callout_label: 'EVERYTHING IN MULTI-BRANCH, PLUS',
     enterprise_callout_text:
-      'Adds unlimited branch outlets, trade-in kiosk mode, B2B gaming cafe / wholesale distribution invoicing, and staff RBAC.',
-    enterprise_f1: 'Unlimited Branch Outlets & Testing Counters',
-    enterprise_f2: 'In-Store Trade-In Kiosk & Barcode Label Printing',
-    enterprise_f3: 'B2B Wholesale Game Distribution & Lounge Invoicing',
-    enterprise_f4: 'Granular Staff RBAC (Cashier, Technician, Manager, Owner)',
-    enterprise_f5: 'Multi-Gateway Card & Wallet Prepay Integration (Included)',
-    enterprise_f6: 'Enterprise AI Game Recommender & Knowledge Agent (Included)',
+      'Unlimited branches, an in-store trade-in kiosk, barcode labels, wholesale invoicing and staff roles.',
+    enterprise_f1: 'Unlimited branches and testing counters',
+    enterprise_f2: 'In-store trade-in kiosk and barcode labels',
+    enterprise_f3: 'Wholesale and gaming-lounge invoicing',
+    enterprise_f4: 'Staff roles: owner, manager, cashier, technician',
+    enterprise_f5: 'Multiple payment gateways — included',
+    enterprise_f6: 'AI game finder with live stock — included',
 
-    whatsapp_cta: 'Claim This Plan on WhatsApp',
-    view_terms: 'Review Contract Scope & Warranty Terms →',
+    whatsapp_cta: 'Discuss this plan on WhatsApp',
+    view_terms: 'Read the scope, payment and warranty terms →',
 
-    // Live Demo Grid
-    demo_badge: 'LIVE PROOF // TEST THE ENGINE BEFORE YOU COMMIT',
-    demo_title: 'Nothing is hidden. Click into the working demo systems below.',
+    // Live demo
+    demo_badge: 'LIVE DEMO',
+    demo_title: 'Try it yourself',
     demo_sub:
-      'Review how gamers browse PS5 consoles and discs with verified condition grades, calculate trade-in values, and how staff manage serial numbers.',
-    demo_store_title: '1. Gaming Storefront Demo',
-    demo_store_desc:
-      'Explore PS5, Xbox Series X, Nintendo Switch, game discs, and elite controllers with live stock availability.',
-    demo_filter_title: '2. Console & Disc Trade-In Engine',
-    demo_filter_desc:
-      'Test how customers select their console or game disc to get instant cash or store credit valuation.',
-    demo_admin_title: '3. Serial Number & RMA Backoffice',
-    demo_admin_desc:
-      'Inspect how staff log console motherboard serials, anti-tamper seals, and track gross profit margins.',
+      'A working demo with sample stock (it resets when you refresh). Your version uses your products, prices and branches.',
+    demo_store_title: '1. Game store',
+    demo_store_desc: 'Browse consoles, discs and controllers.',
+    demo_filter_title: '2. Trade-in calculator',
+    demo_filter_desc: 'Pick a console or disc and get an instant quote.',
+    demo_admin_title: '3. Admin panel',
+    demo_admin_desc: 'See stock by branch, the trade-in queue and serial records.',
   },
   'ur-en': {
-    hero_badge: 'COMMERCIAL INFRASTRUCTURE // GAMING CONSOLES & DISCS RETAIL OS',
-    hero_title_1: 'Console Sales, Game Disc Trade-Ins Aur Pre-Orders Automate Karein',
-    hero_title_accent: 'Zero Platform Commission Ke Sath',
-    hero_title_2: 'Aur 100% Code Aur Database Malkiat',
+    hero_badge: 'CONSOLE & GAMES RETAIL OS · VIDEO GAME DUKANON KE LIYE',
+    hero_title_1: 'Foran trade-in quotes —',
+    hero_title_accent: 'online bhi, counter par bhi.',
+    hero_title_2: '',
     hero_sub:
-      'Apni video game shop ya gaming chain ko 24/7 automated retail engine mein tabdeel karein. PS5, Xbox Series X, Nintendo Switch, game discs aur accessories ka custom storefront jismein instant trade-in valuation, serial warranty tracking aur WhatsApp dispatch shamil hai—21 dinon mein 100% code aur database malkiat ke sath.',
-    cta_primary: 'Apna Gaming Solution Plan Chunein',
-    cta_secondary: 'Live Console Store Demo Dekhein',
-    metrics_code: 'Mukammal GitHub & DB Transfer',
-    metrics_tax: '100% Retail Munafa Aapka',
-    metrics_speed: 'Instant Trade-In Calculator',
-    metrics_rma: 'Console Motherboard Serials',
-    metrics_code_top: '100% OWNERSHIP',
-    metrics_tax_top: '0% PLATFORM TAX',
-    metrics_speed_top: 'TRADE-IN ENGINE',
-    metrics_rma_top: 'SERIAL & SEAL RMA',
+      'Video game dukanon ke liye store aur back office. Customer ko purane console ya discs ka cash ya store credit quote seconds mein milta hai, har item ki condition nazar aati hai, aur har console serial number ke sath record hota hai. 10–30 din mein live, aur code aapka.',
+    cta_primary: 'Plans aur prices dekhein',
+    cta_secondary: 'Live demo try karein',
+    metrics_code: 'Code, data aur domain aapke hawale',
+    metrics_tax: 'Aapki sales mein se koi hissa nahi',
+    metrics_speed: 'Cash ya store credit, foran',
+    metrics_rma: 'Har console invoice par record',
+    metrics_code_top: 'MALKIAT AAPKI',
+    metrics_tax_top: '0% COMMISSION',
+    metrics_speed_top: 'TRADE-IN QUOTES',
+    metrics_rma_top: 'SERIAL & SEAL',
 
-    // Ultimatum Decision Matrix
-    ultimatum_badge: 'THE ZERO-RISK DECISION MATRIX',
-    ultimatum_title: 'LEADING GAMING RETAILERS HUMAIN KYUN CHUNTAY HAIN',
+    // How we work
+    ultimatum_badge: 'HUM KAISE KAAM KARTE HAIN',
+    ultimatum_title: 'Poori payment se pehle system chalta hua dekhein',
     ultimatum_sub:
-      'Yeh offer is tarah design ki gayi hai ke console retailer har surat mein jeetay. Hum technical execution ka risk apne sar letay hain taake aap baghair kisi khadshay ke business barha sakein.',
-    ultimatum_best_tag: 'BEHTAREEN SURAT-E-HAAL',
-    ultimatum_best_title: 'Aap ek automated gaming sales engine launch karte hain',
-    ultimatum_best_p1: '21 dinon mein dedicated Next.js console storefront aur live trade-in calculator deploy karein.',
-    ultimatum_best_p2: 'Discs ke baray mein sawalat khatam ho jayein ge (Brand New Sealed, Mint Scratch-Free Disc badges).',
-    ultimatum_best_p3: 'Showroom counter aur online orders ek hi real-time stock inventory share karein ge.',
-    ultimatum_best_p4: 'Zero monthly sales commission ke zariye har saal lakhoon rupay bachayein.',
-    ultimatum_best_p5: 'Mukammal GitHub repository aur PostgreSQL database aapke accounts mein transfer ho ga.',
-    ultimatum_best_footer: 'Nateeja: Aapka karobar barhay ga, retail munafa mehfooz rahay ga aur software aapka apna ho ga.',
+      'Payment milestones ke sath hoti hai. Aakhri raqam tab, jab aap private link par apne stock ke sath store approve kar dein.',
+    ultimatum_best_tag: 'AAPKO KYA MILTA HAI',
+    ultimatum_best_title: 'Aapke kaam ke mutabiq bana store',
+    ultimatum_best_p1: 'Consoles, games aur accessories ka online store.',
+    ultimatum_best_p2: 'Cash aur store credit offers wala trade-in calculator.',
+    ultimatum_best_p3: 'Har disc aur console par saaf condition label.',
+    ultimatum_best_p4: 'Showroom aur online orders ka ek hi stock.',
+    ultimatum_best_p5: 'Na platform fee, na commission, poora code aapka.',
+    ultimatum_best_footer: 'Trade-in tez aur condition ke jhagre kam karne ke liye.',
 
-    ultimatum_worst_tag: 'BAD-TAREEN SURAT-E-HAAL',
-    ultimatum_worst_title: 'Agar hum mutafiqa specifications fulfill na kar sakein',
-    ultimatum_worst_p1: 'Aapki jama karwai gayi peshgi deposit 100% fori wapas, baghair kisi jhagray ke.',
-    ultimatum_worst_p2: 'Hamara custom console catalog schema aur architecture blueprint muft aapke paas rahay ga.',
-    ultimatum_worst_p3: 'Aapke waqt ke azaale ke tor par $250 USD courtesy credit seedha aapke business ko ada kiya jaye ga.',
-    ultimatum_worst_p4: 'Koi contract lock-in nahi, koi hidden charges nahi, aur zero financial risk.',
-    ultimatum_worst_footer: 'Nateeja: Aapka zero sarmaya risk par hai, nuqsaan kuch nahi aur enterprise tech audit muft milta hai.',
+    ultimatum_worst_tag: 'AGAR KUCH THEEK NA HO',
+    ultimatum_worst_title: 'Hum theek karenge — warna deposit wapas',
+    ultimatum_worst_p1: 'Launch se pehle aap har cheez ek likhi hui checklist ke mutabiq test karte hain, jis par hum dono sign karte hain.',
+    ultimatum_worst_p2: 'Jo cheez checklist ke mutabiq na ho, hum 10 working days mein theek karte hain.',
+    ultimatum_worst_p3: 'Phir bhi na ho sake, to aapki deposit wapas.',
+    ultimatum_worst_p4: 'Na lock-in contract, na chhupe mahana charges.',
+    ultimatum_worst_footer: 'Aapki payment un nataij se judi hai jo aap khud dekhte hain.',
 
-    // Staging Guarantee Banner
-    guarantee_badge: 'SAFETY NET // 100% MILESTONE-PROTECTED STAGING GUARANTEE',
-    guarantee_title: 'Aakhri Payment Se Pehle Live Staging URL Par Test Karein',
+    // Staging approval banner
+    guarantee_badge: 'STAGING APPROVAL',
+    guarantee_title: 'Launch se pehle private link par apna store test karein',
     guarantee_sub:
-      'Aap baqaya raqam sirf tab ada karte hain jab aap apne consoles aur games ke sath private staging link par mukammal storefront, trade-in calculator aur multi-branch inventory test kar lein. Agar yeh agreed specs par pura na utray, to peshgi raqam 100% wapas kar di jaye gi.',
+      'Hum aapka store aapke asli stock ke sath private staging link par set karte hain. Storefront, trade-in calculator aur stock sync aap khud test karte hain. Aakhri payment sirf aapki approval ke baad.',
 
-    arch_badge: 'SYSTEM ARCHITECTURE',
-    arch_title: 'CONSOLE GAMING RETAIL KE LIYE EK YAKJA OPERATING SYSTEM',
+    arch_badge: 'KYA SHAMIL HAI',
+    arch_title: 'Showroom, trade-ins aur website — ek system',
     arch_sub:
-      'Sirf aam online dukan nahi. Storefront, counter billing, used console trade-in valuation aur WhatsApp dispatch ko aapas mein jorne wala mukammal operating environment.',
-    arch_01_title: '01. CUSTOM CONSOLE STOREFRONT',
+      'Storefront, counter, trade-in desk aur WhatsApp orders sab ek hi data par.',
+    arch_01_title: 'GAME STORE',
     arch_01_desc:
-      'PS5, Xbox Series X/S, Nintendo Switch, Retro Consoles aur game discs ke liye ultra-fast Next.js storefront jismein game trailers aur platform filtering shamil hai.',
-    arch_02_title: '02. CONSOLE & DISC TRADE-IN ENGINE',
+      'PS5, Xbox, Switch, retro consoles aur discs ke liye tez store — trailers aur platform filters ke sath.',
+    arch_02_title: 'TRADE-IN CALCULATOR',
     arch_02_desc:
-      'Gamers ko apna purana console ya game disc select kar ke condition ke mutabiq fori Cash ya Store Credit valuation check karne ki sahulat dein (CEX style).',
-    arch_03_title: '03. DISC & CONSOLE CONDITION GRADING',
+      'Customer apna console ya disc aur us ki condition (boxed, unboxed, fair) chunta hai aur cash ya store credit quote pata hai — bari trade-in chains ki tarah.',
+    arch_03_title: 'CONDITION LABELS',
     arch_03_desc:
-      'Har listing par wazeh badges: Brand New Sealed, Mint Scratch-Free Disc (Checking Guarantee), ya Refurbished Console 90-din warranty ke sath.',
-    arch_04_title: '04. MULTI-BRANCH STOCK SYNC',
+      'Sealed, Mint disc, Grade A ya Refurbished — har listing par aapki warranty sharaait ke sath.',
+    arch_04_title: 'BRANCH STOCK',
     arch_04_desc:
-      'Physical showrooms, repair/testing counter aur godam ke darmiyan centralized real-time stock synchronization.',
-    arch_05_title: '05. MOTHERBOARD SERIAL & WARRANTY RMA',
+      'Showrooms, testing bench aur godam — ek stock view.',
+    arch_05_title: 'SERIAL AUR SEAL',
     arch_05_desc:
-      'Invoice par console ka unique motherboard serial aur anti-tamper security sticker print karein taake wapsi par part-swapping ka fraud khatam ho jaye.',
-    arch_06_title: '06. WHATSAPP & COURIER AUTO DISPATCH',
+      'Har console ka serial number aur warranty seal ID invoice par, taake badle hue parts aur jhoote returns foran pakre jayein.',
+    arch_06_title: 'WHATSAPP ORDERS',
     arch_06_desc:
-      'Customer ka order console edition, disc region (PAL/NTSC) aur delivery tracking ke sath seedha aapke WhatsApp counter par deliver hota hai.',
-    arch_07_title: '07. AI GAME MATCHMAKER CHATBOT',
+      'Orders platform, edition (disc/digital), region aur delivery details ke sath.',
+    arch_07_title: 'AI GAME FINDER',
     arch_07_desc:
-      '24/7 automated sales assistant jo customers ke budget, platform aur pasandeeda genres ke mutabiq best games recommend karta hai.',
+      'Platform, genre, multiplayer aur age rating (PEGI/ESRB) ke mutabiq games suggest karta hai.',
 
-    plans_badge: 'COMMERCIAL INVESTMENT TIERS',
-    plans_title: 'Console Solution Plans.',
-    plans_sub:
-      'Zero monthly sales commissions. Kaam mukammal hone par 100% source code aur database aapka apna.',
-    plans_sub_suffix:
-      'Har plan ki mukammal deliverable details, architecture specs aur visual previews dekhne ke liye neeche click karein.',
-    detail_btn: 'FULL DETAIL & PREVIEWS DEKHNE KE LIYE CLICK KAREIN →',
+    plans_badge: 'PLANS AUR PRICES',
+    plans_title: 'Console Retail plans',
+    plans_sub: 'Har plan ki ek fixed price. Koi commission nahi. Mukammal hone par poora handover.',
+    plans_sub_suffix: 'Poora scope, kya shamil nahi, aur screenshots dekhne ke liye plan kholein.',
+    detail_btn: 'Poora scope aur screenshots dekhein →',
 
-    starter_name: 'Single Boutique Gaming Launch',
-    starter_badge: 'SINGLE STORE',
-    starter_desc:
-      'Console shops aur game disc dealers ke liye jo online sales, WhatsApp dispatch aur platform filtering shuru karna chahte hain.',
-    starter_price_usd: '$2,250 USD',
-    starter_price_gbp: '£1,850 GBP',
+    starter_name: 'Single Store',
+    starter_badge: '1 DUKAN',
+    starter_desc: 'Ek game ya retro dukan ke liye jo online bechna shuru kar rahi hai.',
+    starter_price_usd: '$2,250',
+    starter_price_gbp: '£1,850',
     starter_price_pkr: 'PKR 260,000',
-    starter_delivery: '⚡ 10 dinon mein guaranteed delivery',
-    starter_support_usd: 'Optional Care Plan: $140 / mo',
-    starter_support_gbp: 'Optional Care Plan: £115 / mo',
-    starter_support_pkr: 'Optional Care Plan: PKR 14,000 / mo',
-    starter_callout_label: 'BUNYADI SALAHIYAT:',
-    starter_callout_text:
-      'Dedicated single-outlet console storefront jismein platform filters, disc condition tags aur WhatsApp checkout shamil hai.',
-    starter_f1: 'Next.js Console Storefront (100 SKUs tak)',
-    starter_f2: 'Platform Filtering (PS5, Xbox, Switch, Retro)',
-    starter_f3: 'Disc & Console Condition Grading Badges',
-    starter_f4: '100% Client Code & DB Ownership',
+    starter_delivery: '10 din mein live*',
+    starter_support_usd: 'Ikhtiyari Care Plan: $140 / mahana',
+    starter_support_gbp: 'Ikhtiyari Care Plan: £115 / mahana',
+    starter_support_pkr: 'Ikhtiyari Care Plan: PKR 14,000 / mahana',
+    starter_callout_label: 'KIS KE LIYE BEHTAR',
+    starter_callout_text: 'Jaldi online aana — platform filters, condition labels aur WhatsApp orders ke sath.',
+    starter_f1: 'Online store — pehle 100 items hum daalte hain',
+    starter_f2: 'PS5, Xbox, Switch aur retro filters',
+    starter_f3: 'Discs aur consoles par condition labels',
+    starter_f4: 'Orders aapke WhatsApp par',
 
-    growth_name: 'Multi-Branch Gaming Retailer',
-    growth_badge: '★ MOST POPULAR // BEST VALUE',
+    growth_name: 'Multi-Branch',
+    growth_badge: 'SAB SE MAQBOOL',
     growth_desc:
-      'Established video game retailers, trade-in shops aur high-volume console dealers ke liye jo counter aur online dono par sell karte hain.',
-    growth_price_usd: '$4,450 USD',
-    growth_price_gbp: '£3,650 GBP',
+      'Established game dukanon ke liye jo used consoles counter aur online dono par khareedti-bechti hain.',
+    growth_price_usd: '$4,450',
+    growth_price_gbp: '£3,650',
     growth_price_pkr: 'PKR 490,000',
-    growth_delivery: '⚡ 21 dinon mein guaranteed delivery',
-    growth_support_usd: 'Optional Care Plan: $280 / mo',
-    growth_support_gbp: 'Optional Care Plan: £230 / mo',
-    growth_support_pkr: 'Optional Care Plan: PKR 28,000 / mo',
-    growth_callout_label: 'STARTER SE BARA IZAFA:',
+    growth_delivery: '21 din mein live*',
+    growth_support_usd: 'Ikhtiyari Care Plan: $280 / mahana',
+    growth_support_gbp: 'Ikhtiyari Care Plan: £230 / mahana',
+    growth_support_pkr: 'Ikhtiyari Care Plan: PKR 28,000 / mahana',
+    growth_callout_label: 'SINGLE STORE KA SAB KUCH, AUR',
     growth_callout_text:
-      'Console & Disc Trade-In Valuation Calculator, 3 branches ka live stock, motherboard serial RMA tracking aur AI Game Matchmaker shamil hai.',
-    growth_f1: 'Console & Disc Trade-In / Buyback Valuation Engine',
-    growth_f2: '3 Branches Ka Live Stock Sync (Showroom, Counter, Godam)',
-    growth_f3: 'Console Serial Number & Anti-Tamper RMA Tracker',
-    growth_f4: 'Controllers & Accessories Cross-Sell Engine',
-    growth_f5_usd: 'Online Card & Wallet Payment Gateway (Shamil Hai — $400 USD Bachayein)',
-    growth_f5_gbp: 'Online Card & Wallet Payment Gateway (Shamil Hai — £320 GBP Bachayein)',
-    growth_f5_pkr: 'Online Card & Wallet Payment Gateway (Shamil Hai — PKR 50,000 Bachayein)',
-    growth_f6_usd: 'AI Game Matchmaker Sales Chatbot (Shamil Hai — $650 USD Bachayein)',
-    growth_f6_gbp: 'AI Game Matchmaker Sales Chatbot (Shamil Hai — £520 GBP Bachayein)',
-    growth_f6_pkr: 'AI Game Matchmaker Sales Chatbot (Shamil Hai — PKR 65,000 Bachayein)',
+      'Trade-in calculator, 3 locations ka stock, serial & seal tracking aur AI game finder.',
+    growth_f1: 'Trade-in calculator (cash ya store credit)',
+    growth_f2: '3 locations ka stock sync',
+    growth_f3: 'Console serial aur seal tracking',
+    growth_f4: 'Checkout par controllers aur accessories suggestions',
+    growth_f5_usd: 'Card aur wallet payments — shamil ($400 ki value)',
+    growth_f5_gbp: 'Card aur wallet payments — shamil (£320 ki value)',
+    growth_f5_pkr: 'Card aur wallet payments — shamil (PKR 50,000 ki value)',
+    growth_f6_usd: 'AI game finder — shamil ($650 ki value)',
+    growth_f6_gbp: 'AI game finder — shamil (£520 ki value)',
+    growth_f6_pkr: 'AI game finder — shamil (PKR 65,000 ki value)',
 
-    enterprise_name: 'Enterprise Chain & Wholesale OS',
-    enterprise_badge: '★ COMPLETE GAMING OS',
+    enterprise_name: 'Chain & Wholesale',
+    enterprise_badge: 'CHAINS KE LIYE',
     enterprise_desc:
-      'Nationwide video game chains, console distributors aur franchise networks ke liye jinko trade-in kiosks aur ERP sync ki zaroorat hai.',
-    enterprise_price_usd: 'From $7,900 USD',
-    enterprise_price_gbp: 'From £6,500 GBP',
-    enterprise_price_pkr: 'From PKR 850,000',
-    enterprise_delivery: '⚡ 30 dinon mein guaranteed delivery',
-    enterprise_support_usd: 'Dedicated Care Plan: $550 / mo',
-    enterprise_support_gbp: 'Dedicated Care Plan: £450 / mo',
-    enterprise_support_pkr: 'Dedicated Care Plan: PKR 55,000 / mo',
-    enterprise_callout_label: 'GROWTH SE BARA IZAFA:',
+      'Chains, franchises aur distributors ke liye jo dukanon aur gaming lounges ko maal dete hain.',
+    enterprise_price_usd: '$7,900 se shuru',
+    enterprise_price_gbp: '£6,500 se shuru',
+    enterprise_price_pkr: 'PKR 850,000 se shuru',
+    enterprise_delivery: '30 din se — final date scope document mein',
+    enterprise_support_usd: 'Dedicated Care Plan: $550 / mahana',
+    enterprise_support_gbp: 'Dedicated Care Plan: £450 / mahana',
+    enterprise_support_pkr: 'Dedicated Care Plan: PKR 55,000 / mahana',
+    enterprise_callout_label: 'MULTI-BRANCH KA SAB KUCH, AUR',
     enterprise_callout_text:
-      'La-mehdood branches, in-store trade-in kiosk mode, gaming cafes/lounges ke liye bulk fleet invoicing aur staff RBAC permissions.',
-    enterprise_f1: 'La-Mehdood Branches & Testing Counters',
-    enterprise_f2: 'In-Store Trade-In Kiosk & Barcode Label Printing',
-    enterprise_f3: 'B2B Wholesale Game Distribution & Lounge Invoicing',
-    enterprise_f4: 'Granular Staff RBAC (Cashier, Technician, Manager, Owner)',
-    enterprise_f5: 'Multi-Gateway Card & Wallet Prepay Integration (Shamil Hai)',
-    enterprise_f6: 'Enterprise AI Game Recommender & Knowledge Agent (Shamil Hai)',
+      'La-mehdood branches, dukan mein trade-in kiosk, barcode labels, wholesale invoicing aur staff roles.',
+    enterprise_f1: 'La-mehdood branches aur testing counters',
+    enterprise_f2: 'Dukan mein trade-in kiosk aur barcode labels',
+    enterprise_f3: 'Wholesale aur gaming lounge invoicing',
+    enterprise_f4: 'Staff roles: owner, manager, cashier, technician',
+    enterprise_f5: 'Ek se zyada payment gateways — shamil',
+    enterprise_f6: 'Live stock wala AI game finder — shamil',
 
-    whatsapp_cta: 'Yeh Plan WhatsApp Par Book Karein',
-    view_terms: 'Contract Scope & Warranty Sharaait Dekhein →',
+    whatsapp_cta: 'Is plan par WhatsApp par baat karein',
+    view_terms: 'Scope, payment aur warranty ki sharaait parhein →',
 
-    // Live Demo Grid
-    demo_badge: 'LIVE PROOF // SYSTEM CHECK KAREIN',
-    demo_title: 'Kuch chupa nahi. Live working demo systems khud test karein.',
+    // Live demo
+    demo_badge: 'LIVE DEMO',
+    demo_title: 'Khud chala kar dekhein',
     demo_sub:
-      'Gamers PS5 consoles aur discs ko condition grades ke sath kaise browse karte hain, trade-in calculator kaise kaam karta hai, aur staff serials kaise manage karta hai.',
-    demo_store_title: '1. Gaming Storefront Demo',
-    demo_store_desc:
-      'PS5, Xbox Series X, Nintendo Switch, game discs aur controllers ko real-time branch stock ke sath inspect karein.',
-    demo_filter_title: '2. Console & Disc Trade-In Engine',
-    demo_filter_desc:
-      'Gamers apna purana console ya disc select kar ke fori cash ya store credit value kaise nikalte hain.',
-    demo_admin_title: '3. Serial Number & RMA Backoffice',
-    demo_admin_desc:
-      'Staff console serial numbers, security seal verification aur munafa kaise track karta hai.',
+      'Sample stock ke sath chalta hua demo (refresh par reset hota hai). Aapka version aapke products, prices aur branches ke sath.',
+    demo_store_title: '1. Game store',
+    demo_store_desc: 'Consoles, discs aur controllers dekhein.',
+    demo_filter_title: '2. Trade-in calculator',
+    demo_filter_desc: 'Console ya disc chunein aur foran quote lein.',
+    demo_admin_title: '3. Admin panel',
+    demo_admin_desc: 'Branch-wise stock, trade-in queue aur serial records dekhein.',
   },
 }
 
 const CONSOLE_EXTRAS_DATA = [
   {
-    en: 'Console & Disc Trade-In / Buyback Module',
-    ur: 'Console & Disc Trade-In / Buyback Module',
-    priceUsd: '+ $650 USD',
-    priceGbp: '+ £520 GBP',
+    en: 'Trade-in module (Single Store)',
+    ur: 'Trade-in module (Single Store)',
+    priceUsd: '+ $650',
+    priceGbp: '+ £520',
     pricePkr: '+ PKR 85,000',
     descEn:
-      'Enables customers to value their used consoles (PS5, Xbox, Switch) and game discs online for Cash or Store Credit, with condition checklists (Boxed, Unboxed, Fair) and instant purchase slip generation.',
+      'Customers value used consoles and discs online for cash or store credit, with a condition checklist and a printable trade-in slip. Included in Multi-Branch.',
     descUr:
-      'Customers ko online purana console ya game disc select kar ke fori Cash ya Store Credit valuation nikalne ki sahulat deta hai (CEX style purchase slip ke sath).',
+      'Customer online purane consoles aur discs ki cash ya store credit value nikalta hai — condition checklist aur printable trade-in slip ke sath. Multi-Branch mein shamil.',
   },
   {
-    en: 'Digital Game Keys & Gift Card Instant Delivery',
-    ur: 'Digital Game Keys & Gift Card Delivery',
-    priceUsd: '+ $450 USD',
-    priceGbp: '+ £360 GBP',
+    en: 'Digital code delivery',
+    ur: 'Digital codes delivery',
+    priceUsd: '+ $450',
+    priceGbp: '+ £360',
     pricePkr: '+ PKR 60,000',
     descEn:
-      'Automated SMS & WhatsApp dispatch of digital codes for PlayStation Plus, Xbox Game Pass, Nintendo eShop, and Steam wallet cards immediately after verified online payment.',
+      'Send PlayStation Plus, Game Pass, eShop and Steam codes by WhatsApp or SMS right after payment is confirmed.',
     descUr:
-      'Online payment verify hotay hi PlayStation Plus, Game Pass aur Steam wallet ke digital codes WhatsApp aur SMS par automated send karta hai.',
+      'Payment confirm hote hi PlayStation Plus, Game Pass, eShop aur Steam codes WhatsApp ya SMS par.',
   },
   {
-    en: 'Game Disc Rental & Subscription Engine',
-    ur: 'Game Disc Rental & Subscription Engine',
-    priceUsd: '+ $750 USD',
-    priceGbp: '+ £600 GBP',
+    en: 'Disc rental & membership',
+    ur: 'Disc rental aur membership',
+    priceUsd: '+ $750',
+    priceGbp: '+ £600',
     pricePkr: '+ PKR 95,000',
     descEn:
-      'Allows your store to offer monthly disc rental memberships (e.g. 2 games at a time) with security deposit tracking, automated return due-date reminders, and late fee calculations.',
+      'Monthly rental plans (e.g. 2 games at a time) with deposits, return reminders and late fees.',
     descUr:
-      'Mahana subscription par game discs rent karne ka system, security deposit tracking aur wapsi ke automated WhatsApp reminders ke sath.',
+      'Mahana rental plans (maslan ek waqt mein 2 games) — deposit, wapsi reminders aur late fee ke sath.',
   },
   {
-    en: 'Extra branch or warehouse node',
-    ur: 'Extra branch ya godam node',
-    priceUsd: '+ $450 USD',
-    priceGbp: '+ £360 GBP',
+    en: 'Extra branch or warehouse',
+    ur: 'Extra branch ya godam',
+    priceUsd: '+ $450',
+    priceGbp: '+ £360',
     pricePkr: '+ PKR 60,000',
     descEn:
-      'Adds another physical retail store or warehouse to your system. Monitor live console and game stock separately, execute counter sales per branch, and track inter-shop stock transfers.',
+      'Add another store or warehouse with its own stock, counter sales and transfers.',
     descUr:
-      'Aapki ek aur dukan ya godam ko system se jodta hai. Har branch ka alag stock nazar aayega, counter sale hogi aur stock transfer track hoga.',
+      'Ek aur dukan ya godam — alag stock, counter sale aur transfer ke sath.',
   },
   {
-    en: 'Gamer Loyalty Rewards & Wallet Cashback',
-    ur: 'Gamer Loyalty Rewards & Wallet Cashback',
-    priceUsd: '+ $550 USD',
-    priceGbp: '+ £440 GBP',
+    en: 'Loyalty points & wallet',
+    ur: 'Loyalty points aur wallet',
+    priceUsd: '+ $550',
+    priceGbp: '+ £440',
     pricePkr: '+ PKR 70,000',
     descEn:
-      'Rewards gamers with XP points and store wallet credit on every game purchase and trade-in, driving repeat footfall to your physical counter and website.',
+      'Customers earn points and store credit on purchases and trade-ins.',
     descUr:
-      'Gamers ko har purchase aur trade-in par reward points aur store wallet balance deta hai taake wo bar bar aapki dukan se games khareedein.',
+      'Khareedari aur trade-in par points aur store credit.',
   },
   {
-    en: 'Multi-vendor gaming marketplace',
-    ur: 'Multi-vendor gaming marketplace',
-    priceUsd: '+ $1,200 USD',
-    priceGbp: '+ £980 GBP',
+    en: 'Marketplace for other sellers',
+    ur: 'Doosre sellers ka marketplace',
+    priceUsd: '+ $1,200',
+    priceGbp: '+ £980',
     pricePkr: '+ PKR 150,000',
     descEn:
-      'Allows trusted third-party game sellers and retro collectors to list their consoles and rare discs on your platform while you retain an automated commission on every transaction.',
+      'Let trusted sellers and collectors list consoles and rare discs on your site, and earn a commission on each sale.',
     descUr:
-      'Doosray gaming sellers aur retro collectors ko aapki site par samaan bechne ki ijazat deta hai jahan aap har sale par commission rakhain ge.',
+      'Bharosemand sellers aur collectors aapki site par consoles aur rare discs list karein, aur har sale par aapka commission.',
   },
 ]
 
@@ -523,200 +510,177 @@ export default function ConsoleRetailSolution() {
   }
 
   const openWhatsApp = (planName, price) => {
-    const text = `Hi TeXCodes, I am interested in the ${planName} (${price}) for my Video Game & Console retail store. I would like to inspect the technical scope and discuss deployment.`
+    const text = isUrdu
+      ? `Assalam o Alaikum TeXCodes, mujhe apni video game dukan ke liye ${planName} (${price}) plan mein dilchaspi hai. Kya demo ho sakta hai?`
+      : `Hello TeXCodes, I'm interested in the ${planName} (${price}) plan for my video game shop. Can we schedule a demo?`
+    window.open(`https://wa.me/923091824000?text=${encodeURIComponent(text)}`, '_blank')
+  }
+
+  const openDemoWhatsApp = () => {
+    const text = isUrdu
+      ? 'Assalam o Alaikum TeXCodes, mujhe apni video game dukan ke liye Console & Games Retail OS ka demo chahiye.'
+      : "Hello TeXCodes, I'd like a demo of the Console & Games Retail OS for my video game shop."
     window.open(`https://wa.me/923091824000?text=${encodeURIComponent(text)}`, '_blank')
   }
 
   // Comprehensive Modal Data
+  // Field names match PlanDetailModal: name, badge, price, delivery, idealFor, artifacts, modules, exclusions.
+  const pick = (en, ur) => (isUrdu ? ur : en)
+  const priceFor = (usd, gbp, pkr) => (currency === 'USD' ? usd : currency === 'GBP' ? gbp : pkr)
+  const CONSOLE_DEMO_URL = 'https://console-store-demo.vercel.app/'
+  const CONSOLE_ADMIN_URL = 'https://console-store-demo.vercel.app/admin'
+
   const modalData = {
     starter: {
-      planCode: 'TXS-CONSOLE-STARTER',
-      tierName: t.starter_name,
-      storefrontDemoUrl: 'https://console-store-demo.vercel.app/',
-      adminDemoUrl: 'https://console-store-demo.vercel.app/admin',
-      price: currency === 'USD' ? t.starter_price_usd : currency === 'GBP' ? t.starter_price_gbp : t.starter_price_pkr,
-      deliveryTime: t.starter_delivery,
-      supportPlan: currency === 'USD' ? t.starter_support_usd : currency === 'GBP' ? t.starter_support_gbp : t.starter_support_pkr,
-      idealFit: isUrdu
-        ? 'Single boutique video game stores, retro console sellers, aur game disc dealers jo online sales aur direct WhatsApp checkout shuru karna chahte hain.'
-        : 'Single video game boutique shops, retro console sellers, and physical game disc dealers starting online sales with WhatsApp order routing.',
+      name: t.starter_name,
+      badge: 'SINGLE STORE',
+      price: priceFor(t.starter_price_usd, t.starter_price_gbp, t.starter_price_pkr),
+      delivery: pick('10 days', '10 din'),
+      storefrontDemoUrl: CONSOLE_DEMO_URL,
+      adminDemoUrl: CONSOLE_ADMIN_URL,
+      idealFor: pick(
+        'Independent game shops, retro console sellers and disc dealers starting to sell online, with orders on WhatsApp.',
+        'Independent game dukanein, retro console sellers aur disc dealers jo online bechna shuru kar rahe hain — orders WhatsApp par.'
+      ),
       artifacts: [
-        {
-          title: 'Console Storefront & Platform Filter',
-          image: '/txs/dashboard products.png',
-          tag: 'Storefront',
-        },
-        {
-          title: 'Disc Condition & Verification Badges',
-          image: '/txs/admin site control.png',
-          tag: 'Catalog UI',
-        },
+        { title: 'Game store', image: '/console/home.png', tag: 'Storefront' },
+        { title: 'Product page', image: '/console/product.png', tag: 'Product' },
       ],
       modules: [
         {
-          title: isUrdu ? 'Custom Next.js Gaming Storefront' : 'Custom Next.js Gaming Storefront',
-          desc: isUrdu
-            ? 'PS5, Xbox, Nintendo Switch aur retro games ke liye tezz tareen storefront.'
-            : 'Ultra-fast Next.js gaming storefront with platform filters (PS5, Xbox, Switch, Retro).',
+          title: 'Game store',
+          desc: pick(
+            'A fast store with platform filters (PS5, Xbox, Switch, retro).',
+            'Platform filters (PS5, Xbox, Switch, retro) ke sath tez store.'
+          ),
           items: [
-            isUrdu ? '100 SKUs tak consoles, games aur controllers ka catalog' : 'Up to 100 console, game disc, and controller listings',
-            isUrdu ? 'Brand New Sealed aur Mint Scratch-Free Disc condition tags' : 'Condition grading badges (Brand New Sealed, Mint Scratch-Free)',
-            isUrdu ? 'Direct WhatsApp automated order dispatch' : 'Pre-formatted customer WhatsApp order dispatch',
+            pick('Up to 100 consoles, discs and controllers loaded', '100 tak consoles, discs aur controllers'),
+            pick('Condition labels: Sealed, Mint disc', 'Condition labels: Sealed, Mint disc'),
+            pick('Orders sent to your WhatsApp', 'Orders aapke WhatsApp par'),
           ],
         },
         {
-          title: isUrdu ? '100% Code Aur Database Malkiat' : '100% Code & Database Ownership',
-          desc: isUrdu
-            ? 'Launch par mukammal GitHub repo aur PostgreSQL database transfer.'
-            : 'Full GitHub repository and PostgreSQL database ownership transferred upon final settlement.',
+          title: pick('Full ownership', 'Mukammal malkiat'),
+          desc: pick(
+            'Code and database transferred on final payment.',
+            'Aakhri payment par code aur database aapke naam.'
+          ),
           items: [
-            isUrdu ? 'Zero monthly sales commissions ya platform fees' : 'Zero monthly transaction fees or platform tax',
-            isUrdu ? 'Mukammal source code aur data aapke azad control mein' : 'Independent database control with no third-party lock-in',
+            pick('No platform fee or commission', 'Na platform fee, na commission'),
+            pick('Your own database, no lock-in', 'Aapka apna database, koi lock-in nahi'),
           ],
         },
       ],
       exclusions: [
-        isUrdu ? 'Console & disc trade-in buyback engine (Growth plan mein shamil hai).' : 'Console & disc trade-in buyback engine (Included in Growth tier).',
-        isUrdu ? 'Multi-branch inventory sync (Growth plan mein shamil hai).' : 'Multi-branch stock synchronization (Included in Growth tier).',
+        pick('Trade-in calculator (add-on; included in Multi-Branch)', 'Trade-in calculator (add-on; Multi-Branch mein shamil)'),
+        pick('Stock across more than one location (Multi-Branch)', 'Ek se zyada location ka stock (Multi-Branch)'),
       ],
     },
     growth: {
-      planCode: 'TXS-CONSOLE-GROWTH',
-      tierName: t.growth_name,
-      storefrontDemoUrl: 'https://console-store-demo.vercel.app/',
-      adminDemoUrl: 'https://console-store-demo.vercel.app/admin',
-      price: currency === 'USD' ? t.growth_price_usd : currency === 'GBP' ? t.growth_price_gbp : t.growth_price_pkr,
-      deliveryTime: t.growth_delivery,
-      supportPlan: currency === 'USD' ? t.growth_support_usd : currency === 'GBP' ? t.growth_support_gbp : t.growth_support_pkr,
-      idealFit: isUrdu
-        ? 'Established gaming stores, used console trade-in retailers, aur multi-counter shops jo showroom aur online dono par sell karte hain.'
-        : 'Established video game shops, used console trade-in retailers, and high-volume gaming stores operating physical counters and online sales.',
+      name: t.growth_name,
+      badge: pick('MOST POPULAR', 'SAB SE MAQBOOL'),
+      price: priceFor(t.growth_price_usd, t.growth_price_gbp, t.growth_price_pkr),
+      delivery: pick('21 days', '21 din'),
+      storefrontDemoUrl: CONSOLE_DEMO_URL,
+      adminDemoUrl: CONSOLE_ADMIN_URL,
+      idealFor: pick(
+        'Established game shops, used-console trade-in stores and busy multi-counter shops selling in store and online.',
+        'Established game dukanein, used console trade-in stores aur masroof multi-counter dukanein jo dukan aur online dono par bechti hain.'
+      ),
       artifacts: [
-        {
-          title: 'Trade-In Valuation Calculator',
-          image: '/txs/dashboard orders.png',
-          tag: 'Trade-In Engine',
-        },
-        {
-          title: 'Console Serial & Warranty RMA Tracker',
-          image: '/txs/admin warranty.png',
-          tag: 'Serial RMA',
-        },
-        {
-          title: 'Multi-Branch Inventory Sync',
-          image: '/txs/dashboard inventory.png',
-          tag: 'Stock Matrix',
-        },
+        { title: pick('Trade-in calculator', 'Trade-in calculator'), image: '/console/trade-in.png', tag: 'Trade-in' },
+        { title: pick('Back office', 'Back office'), image: '/console/admin.png', tag: 'Admin' },
+        { title: pick('Product page', 'Product page'), image: '/console/product.png', tag: 'Product' },
       ],
       modules: [
         {
-          title: isUrdu ? 'Console & Disc Trade-In / Buyback Engine' : 'Console & Disc Trade-In / Buyback Engine',
-          desc: isUrdu
-            ? 'Customers ko online used console ya games select kar ke fori Cash ya Store Credit quote lene ki sahulat.'
-            : 'Allows customers to select used consoles or game discs and get instant Cash or Store Credit valuations based on condition.',
+          title: 'Trade-in calculator',
+          desc: pick(
+            'Instant cash or store-credit quotes, based on condition.',
+            'Condition ke mutabiq foran cash ya store credit quote.'
+          ),
           items: [
-            isUrdu ? 'PS5, PS4, Xbox, Switch ke liye condition grading (Boxed, Unboxed, Fair)' : 'Condition grading matrices (Boxed, Unboxed, Fair) with automated valuations',
-            isUrdu ? 'Instant customer trade-in slip generation for shop counter drop-off' : 'Instant customer trade-in vouchers for counter drop-off and courier intake',
+            pick('Condition options: boxed, unboxed, fair', 'Condition: boxed, unboxed, fair'),
+            pick('Trade-in voucher for counter drop-off or courier', 'Counter drop-off ya courier ke liye trade-in voucher'),
           ],
         },
         {
-          title: isUrdu ? 'Console Serial Number & Security Seal RMA' : 'Console Motherboard Serial & Anti-Tamper RMA',
-          desc: isUrdu
-            ? 'Invoices par console motherboard serial aur warranty stickers print kar ke fraud rokain.'
-            : 'Track console motherboard serial numbers and anti-tamper security stickers on invoices to eliminate return fraud.',
+          title: pick('Serial & seal tracking', 'Serial aur seal tracking'),
+          desc: pick('Every console logged on the invoice.', 'Har console invoice par record.'),
           items: [
-            isUrdu ? 'Har console ka unique serial number database mein store ho ga' : 'Unique hardware serial logging on invoice and warranty records',
-            isUrdu ? 'Part-swapping aur counterfeit disc return claims ka fori khatma' : 'Eliminates part-swapping fraud and counterfeit disc returns',
+            pick('Serial number stored on invoice and warranty records', 'Serial number invoice aur warranty record mein'),
+            pick('Makes swapped parts and fake returns easy to spot', 'Badle hue parts aur jhoote returns foran pakre jate hain'),
           ],
         },
         {
-          title: isUrdu ? '3-Branch Inventory Sync' : '3-Branch Real-Time Inventory Sync',
-          desc: isUrdu
-            ? 'Showroom counter, testing lab aur godam ke darmiyan live stock update.'
-            : 'Live stock count synchronization across showroom counters, testing benches, and central warehouse.',
+          title: pick('Stock across 3 locations', '3 locations ka stock'),
+          desc: pick('Showroom, testing bench and warehouse.', 'Showroom, testing bench aur godam.'),
           items: [
-            isUrdu ? 'Counter sale hotay hi online website par stock fori update' : 'Instant online catalog stock update upon in-store counter checkout',
-            isUrdu ? 'Dukanon ke darmiyan internal stock transfer slips' : 'Branch-to-branch transfer logging and sign-off',
+            pick('Counter sales update online stock instantly', 'Counter sale par online stock foran update'),
+            pick('Transfers between locations with sign-off', 'Locations ke darmiyan transfer, sign-off ke sath'),
           ],
         },
         {
-          title: isUrdu ? 'AI Game Matchmaker Sales Chatbot' : 'AI Game Matchmaker Sales Chatbot',
-          desc: isUrdu
-            ? '24/7 automated sales assistant jo customers ko unke budget aur genre ke mutabiq games recommend karta hai.'
-            : '24/7 automated sales assistant that matches customer budgets and preferences to in-stock consoles and games.',
+          title: 'AI game finder',
+          desc: pick('Suggests games customers will like.', 'Customer ki pasand ke games suggest.'),
           items: [
-            isUrdu ? 'Couch Co-op, RPG, Sports, Soulslike filters' : 'Filters by single-player, couch co-op, PEGI/ESRB age ratings, and genres',
-            isUrdu ? 'Visitors ko seedha WhatsApp aur online checkout par convert karta hai' : 'Converts gaming inquiries directly into verified sales',
+            pick('By platform, genre, co-op/single-player and age rating', 'Platform, genre, co-op/single-player aur age rating ke mutabiq'),
+            pick('Sends the customer to checkout or your WhatsApp', 'Customer ko checkout ya aapke WhatsApp par bhejta hai'),
           ],
         },
       ],
       exclusions: [
-        isUrdu ? 'Physical console hardware board repairs (Software architecture shamil hai).' : 'Physical console hardware motherboard repairs (Software and systems included).',
+        pick('Physical console repairs (software only)', 'Console ki physical repair (sirf software)'),
       ],
     },
     enterprise: {
-      planCode: 'TXS-CONSOLE-ENTERPRISE',
-      tierName: t.enterprise_name,
-      storefrontDemoUrl: 'https://console-store-demo.vercel.app/',
-      adminDemoUrl: 'https://console-store-demo.vercel.app/admin',
-      price: currency === 'USD' ? t.enterprise_price_usd : currency === 'GBP' ? t.enterprise_price_gbp : t.enterprise_price_pkr,
-      deliveryTime: t.enterprise_delivery,
-      supportPlan: currency === 'USD' ? t.enterprise_support_usd : currency === 'GBP' ? t.enterprise_support_gbp : t.enterprise_support_pkr,
-      idealFit: isUrdu
-        ? 'Nationwide video game retail chains, console importers, franchise networks, aur gaming lounges ke wholesale suppliers.'
-        : 'Nationwide video game retail chains, console importers, franchise networks, and commercial suppliers to gaming lounges and esports centers.',
+      name: t.enterprise_name,
+      badge: pick('FOR CHAINS', 'CHAINS KE LIYE'),
+      price: priceFor(t.enterprise_price_usd, t.enterprise_price_gbp, t.enterprise_price_pkr),
+      delivery: pick('From 30 days', '30 din se'),
+      storefrontDemoUrl: CONSOLE_DEMO_URL,
+      adminDemoUrl: CONSOLE_ADMIN_URL,
+      idealFor: pick(
+        'Game retail chains, console importers, franchises and suppliers to gaming lounges.',
+        'Game retail chains, console importers, franchises aur gaming lounges ke suppliers.'
+      ),
       artifacts: [
-        {
-          title: 'In-Store Trade-In Kiosk & Barcode System',
-          image: '/txs/admin site control.png',
-          tag: 'Kiosk System',
-        },
-        {
-          title: 'B2B Wholesale & Gaming Lounge Invoicing',
-          image: '/txs/dashboard products.png',
-          tag: 'B2B Fleet',
-        },
-        {
-          title: 'Granular Multi-Staff RBAC Matrix',
-          image: '/txs/admin warranty.png',
-          tag: 'Staff RBAC',
-        },
+        { title: pick('Back office', 'Back office'), image: '/console/admin.png', tag: 'Admin' },
+        { title: pick('Trade-in calculator', 'Trade-in calculator'), image: '/console/trade-in.png', tag: 'Trade-in' },
+        { title: pick('Game store', 'Game store'), image: '/console/home.png', tag: 'Storefront' },
       ],
       modules: [
         {
-          title: isUrdu ? 'La-Mehdood Branches Aur Trade-In Kiosk Mode' : 'Unlimited Branches & In-Store Trade-In Kiosks',
-          desc: isUrdu
-            ? 'Tamam retail outlets aur testing counters ke liye centralized enterprise control.'
-            : 'Centralized enterprise retail operation across unlimited physical store branches and testing counters.',
+          title: pick('Unlimited branches & trade-in kiosk', 'La-mehdood branches aur trade-in kiosk'),
+          desc: pick('Run every branch from one system.', 'Har branch ek system se.'),
           items: [
-            isUrdu ? 'Dukan ke counter par touch-screen trade-in kiosk mode' : 'Touchscreen trade-in kiosk mode for physical counter intake',
-            isUrdu ? 'Thermal barcode label printing used games aur consoles ke liye' : 'Thermal barcode sticker printing for graded used discs and consoles',
+            pick('Touchscreen trade-in kiosk for the counter', 'Counter ke liye touchscreen trade-in kiosk'),
+            pick('Barcode labels for graded used games and consoles', 'Graded used games aur consoles ke liye barcode labels'),
           ],
         },
         {
-          title: isUrdu ? 'B2B Wholesale & Gaming Lounge Fleet Invoicing' : 'B2B Wholesale & Gaming Lounge Fleet Invoicing',
-          desc: isUrdu
-            ? 'Gaming cafes aur wholesale buyers ke liye 5 se 50 consoles ke bulk quotes.'
-            : 'Bulk quotation and invoicing engine for gaming cafes, esports centers, and sub-dealers.',
+          title: pick('Wholesale & lounge invoicing', 'Wholesale aur lounge invoicing'),
+          desc: pick(
+            'Bulk quotes for gaming cafés, esports centres and sub-dealers.',
+            'Gaming cafés, esports centres aur sub-dealers ke liye bulk quotes.'
+          ),
           items: [
-            isUrdu ? 'Bulk tiered discounts aur corporate PDF invoices' : 'Tiered volume discounts and corporate PDF invoices with tax breakdown',
-            isUrdu ? 'Wholesale buyers ke liye alag khata management' : 'Separate ledger and credit line management for trusted sub-dealers',
+            pick('Volume discounts and invoices with tax details', 'Volume discounts aur tax details wali invoices'),
+            pick('Separate ledger and credit limit for trusted dealers', 'Bharosemand dealers ke liye alag khata aur credit limit'),
           ],
         },
         {
-          title: isUrdu ? 'Staff RBAC Permissions (Technician, Cashier, Manager, Owner)' : 'Granular Staff RBAC Permissions',
-          desc: isUrdu
-            ? 'Mulazimeen ke ikhtiyarat unke designation ke mutabiq restrict karein.'
-            : 'Enforce role-based access control across testing technicians, cashiers, store managers, and owners.',
+          title: 'Staff roles',
+          desc: pick('Each person sees only what their job needs.', 'Har shakhs ko sirf apne kaam ki cheez.'),
           items: [
-            isUrdu ? 'Owner: Mukammal munafa, purchase costs aur branch rankings dekhe ga' : 'Owner: Complete profit margin oversight, purchase ledger, and branch metrics',
-            isUrdu ? 'Technician: Sirf console testing, condition grading aur RMA log kare ga' : 'Technician: Restricted to hardware testing, condition grading, and serial logging',
-            isUrdu ? 'Cashier: Sirf customer sale, trade-in voucher redemption aur receipt banaye ga' : 'Cashier: Restricted to sales checkout, trade-in voucher payout, and receipt printing',
+            pick('Owner: margins, purchases and branch performance', 'Owner: margins, purchases aur branch performance'),
+            pick('Technician: testing, grading and serial logging', 'Technician: testing, grading aur serial logging'),
+            pick('Cashier: sales, trade-in payouts and receipts', 'Cashier: sales, trade-in payouts aur receipts'),
           ],
         },
       ],
       exclusions: [
-        isUrdu ? 'Physical store interior signage printing (Software architecture shamil hai).' : 'Physical store interior signage printing (Full software and digital assets included).',
+        pick('Store signage and printing (software and digital assets only)', 'Dukan ke signboards aur printing (sirf software aur digital assets)'),
       ],
     },
   }
@@ -728,7 +692,7 @@ export default function ConsoleRetailSolution() {
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 text-xs font-mono">
           <div className="flex items-center gap-2 text-[#059669] dark:text-[#10B981] font-semibold">
             <span className="w-2 h-2 rounded-full bg-[#059669] dark:bg-[#10B981] animate-pulse" />
-            <span className="uppercase tracking-wider">OFFER CODE: TXS-CONSOLE-OS</span>
+            <span className="uppercase tracking-wider">TEXCODES · CONSOLE & GAMES RETAIL OS</span>
           </div>
 
           <div className="flex items-center gap-3">
@@ -965,7 +929,7 @@ export default function ConsoleRetailSolution() {
             </p>
           </div>
           <Link
-            to="/solutions/tech-retail/terms"
+            to="/solutions/terms"
             className="btn-outline offer-btn offer-btn-md shrink-0 font-mono text-xs flex items-center gap-1.5"
           >
             <span>{t.view_terms}</span>
@@ -991,7 +955,7 @@ export default function ConsoleRetailSolution() {
           <StaggerContainer staggerDelay={0.08} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
               <div className="flex items-center justify-between text-xs font-mono text-[#059669] dark:text-[#10B981]">
-                <span className="font-bold">MOD_01</span>
+                <span className="font-bold">01</span>
                 <Gamepad2 size={16} />
               </div>
               <h4 className="offer-h4 text-[#0F0F0F] dark:text-[#EDECE6]">{t.arch_01_title}</h4>
@@ -1000,7 +964,7 @@ export default function ConsoleRetailSolution() {
 
             <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
               <div className="flex items-center justify-between text-xs font-mono text-[#059669] dark:text-[#10B981]">
-                <span className="font-bold">MOD_02</span>
+                <span className="font-bold">02</span>
                 <RefreshCw size={16} />
               </div>
               <h4 className="offer-h4 text-[#0F0F0F] dark:text-[#EDECE6]">{t.arch_02_title}</h4>
@@ -1009,7 +973,7 @@ export default function ConsoleRetailSolution() {
 
             <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
               <div className="flex items-center justify-between text-xs font-mono text-[#059669] dark:text-[#10B981]">
-                <span className="font-bold">MOD_03</span>
+                <span className="font-bold">03</span>
                 <Disc size={16} />
               </div>
               <h4 className="offer-h4 text-[#0F0F0F] dark:text-[#EDECE6]">{t.arch_03_title}</h4>
@@ -1018,7 +982,7 @@ export default function ConsoleRetailSolution() {
 
             <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
               <div className="flex items-center justify-between text-xs font-mono text-[#059669] dark:text-[#10B981]">
-                <span className="font-bold">MOD_04</span>
+                <span className="font-bold">04</span>
                 <Boxes size={16} />
               </div>
               <h4 className="offer-h4 text-[#0F0F0F] dark:text-[#EDECE6]">{t.arch_04_title}</h4>
@@ -1027,7 +991,7 @@ export default function ConsoleRetailSolution() {
 
             <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
               <div className="flex items-center justify-between text-xs font-mono text-[#059669] dark:text-[#10B981]">
-                <span className="font-bold">MOD_05</span>
+                <span className="font-bold">05</span>
                 <Tag size={16} />
               </div>
               <h4 className="offer-h4 text-[#0F0F0F] dark:text-[#EDECE6]">{t.arch_05_title}</h4>
@@ -1036,7 +1000,7 @@ export default function ConsoleRetailSolution() {
 
             <StaggerItem className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-3 card-hover-guided">
               <div className="flex items-center justify-between text-xs font-mono text-[#059669] dark:text-[#10B981]">
-                <span className="font-bold">MOD_06</span>
+                <span className="font-bold">06</span>
                 <MessageSquare size={16} />
               </div>
               <h4 className="offer-h4 text-[#0F0F0F] dark:text-[#EDECE6]">{t.arch_06_title}</h4>
@@ -1045,7 +1009,7 @@ export default function ConsoleRetailSolution() {
 
             <StaggerItem className="p-6 bg-white dark:bg-[#161619] border-2 border-[#059669] dark:border-[#10B981] space-y-3 card-hover-guided md:col-span-2 lg:col-span-3">
               <div className="flex items-center justify-between text-xs font-mono text-[#059669] dark:text-[#10B981]">
-                <span className="font-bold">MOD_07 // AI SALES AGENT</span>
+                <span className="font-bold">{isUrdu ? '07 · MULTI-BRANCH AUR CHAIN PLANS' : '07 · MULTI-BRANCH & CHAIN PLANS'}</span>
                 <Sparkles size={16} />
               </div>
               <h4 className="offer-h4 text-[#0F0F0F] dark:text-[#EDECE6]">{t.arch_07_title}</h4>
@@ -1153,14 +1117,14 @@ export default function ConsoleRetailSolution() {
           <div className="p-3 bg-[#ECFDF5] dark:bg-[#10B981]/10 border border-[#059669]/30 dark:border-[#10B981]/30 flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-[#059669] dark:text-[#10B981]">
             <div className="flex items-center gap-2 font-bold">
               <span className="w-2 h-2 rounded-full bg-[#059669] dark:bg-[#10B981] animate-ping" />
-              <span>HOW TO PROCEED:</span>
+              <span>{isUrdu ? 'TAREEQA:' : 'HOW IT WORKS:'}</span>
             </div>
             <div className="flex flex-wrap items-center gap-4 text-[#575652] dark:text-[#EDECE6]">
-              <span>1. Choose your plan tier</span>
+              <span>{isUrdu ? '1. Plan chunein' : '1. Choose a plan'}</span>
               <span>→</span>
-              <span>2. Click button to inspect full specs & screenshots</span>
+              <span>{isUrdu ? '2. Poora scope dekhein' : '2. See the full scope'}</span>
               <span>→</span>
-              <span>3. Claim via WhatsApp with 100% money-back staging guarantee</span>
+              <span>{isUrdu ? '3. WhatsApp par call book karein' : '3. Book a call on WhatsApp'}</span>
             </div>
           </div>
 
@@ -1402,14 +1366,28 @@ export default function ConsoleRetailSolution() {
             </StaggerItem>
           </StaggerContainer>
 
+          {/* Delivery footnote & build capacity */}
+          <div className="text-center offer-body text-[#575652] dark:text-[#9B9A95] max-w-2xl mx-auto space-y-2">
+            <p className="offer-ui">
+              {isUrdu
+                ? '*Din us waqt se gine jate hain jab aapka content aur pehli payment humein mil jaye. Delivery date contract mein likhi hoti hai. Agar der hamari taraf se ho, to har hafte ki der par ek mahina Care Plan muft.'
+                : "*Counted from the day we receive your content and first payment. The delivery date is written into your contract. If we're late, you get one free month of Care Plan for each week of delay."}
+            </p>
+            <p>
+              {isUrdu
+                ? 'Hum har mahine mehdood projects lete hain taake har project ko poora waqt mile. Agli start date ke liye message karein.'
+                : 'We take on a limited number of builds each month so every project gets full attention. Message us for the next available start date.'}
+            </p>
+          </div>
+
           {/* ─── Add-ons / Extras Accordion ─── */}
           <div className="pt-12 border-t border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-6">
             <div>
               <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold mb-1">
-                {isUrdu ? 'IKHTIYARI IZAFI MODULES' : 'OPTIONAL EXPANSION MODULES'}
+                ADD-ONS
               </div>
               <h3 className="offer-h3 text-[#0F0F0F] dark:text-[#EDECE6]">
-                {isUrdu ? 'Aapki Gaming Dukan Ke Liye Izafi Capabilities' : 'Custom Capabilities For Your Video Game Retail Operation'}
+                {isUrdu ? 'Sirf zaroorat ki cheez add karein' : 'Add only what you need'}
               </h3>
             </div>
 
@@ -1434,7 +1412,7 @@ export default function ConsoleRetailSolution() {
                       onClick={() => toggleExtra(idx)}
                       className="text-xs font-mono font-bold text-[#059669] dark:text-[#10B981] flex items-center gap-1 hover:underline cursor-pointer"
                     >
-                      <span>{isExpanded ? (isUrdu ? 'Tafseel Chupayein' : 'Hide Details') : (isUrdu ? 'Tafseel Dekhein' : 'Inspect Module Scope')}</span>
+                      <span>{isExpanded ? (isUrdu ? 'Chhupayein' : 'Hide') : (isUrdu ? 'Tafseel' : 'Details')}</span>
                       <ChevronDown
                         size={14}
                         className={`transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
@@ -1462,40 +1440,40 @@ export default function ConsoleRetailSolution() {
         </FadeIn>
       </section>
 
+      <OfferFAQ lang={lang} />
+
       {/* ─── Footer Action & Sticky Banner ─── */}
       <section className="px-4 sm:px-8 py-16 border-t border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#161619] text-center">
         <FadeIn className="max-w-3xl mx-auto space-y-6">
           <div className="inline-flex items-center gap-2 offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold bg-[#ECFDF5] dark:bg-[rgba(16,185,129,0.15)] px-3 py-1">
             <ShieldCheck size={14} />
-            <span>{isUrdu ? '100% FIXED PRICE & CODE TRANSFER' : '100% FIXED PRICE & CODE TRANSFER'}</span>
+            <span>{isUrdu ? 'FIXED PRICE · MUKAMMAL HANDOVER' : 'FIXED PRICE · FULL HANDOVER'}</span>
           </div>
 
           <h2 className="offer-h2 text-[#0F0F0F] dark:text-[#EDECE6]">
-            {isUrdu
-              ? 'Apni Gaming Dukan Ko Aaj Hi Automate Karein.'
-              : 'Modernize Your Gaming Store Operation Today.'}
+            {isUrdu ? 'Apne stock ke sath dekhein' : 'See it with your own stock'}
           </h2>
 
           <p className="offer-body text-[#575652] dark:text-[#9B9A95]">
             {isUrdu
-              ? 'WhatsApp par hamari technical team se rabta karein aur 21 dinon mein mukammal code aur database malkiat ke sath apna bespoke gaming operating system hasil karein.'
-              : 'Connect directly with our engineering team on WhatsApp to review your inventory requirements and launch your bespoke gaming retail OS in 21 days.'}
+              ? 'Apne kuch products bhejein. Hum unhein demo mein daal kar 15 minute ki WhatsApp call par dikhayenge.'
+              : "Send us a few of your products. We'll load them into the demo and walk you through it on a 15-minute WhatsApp call."}
           </p>
 
           <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
             <button
-              onClick={() => openWhatsApp('Console Retail OS Consultation', 'Direct Inquiry')}
+              onClick={openDemoWhatsApp}
               className="btn-blue offer-btn offer-btn-xl shadow-md group relative overflow-hidden cursor-pointer"
             >
               <MessageSquare size={16} className="relative z-10 animate-icon-wiggle" />
-              <span className="relative z-10">{isUrdu ? 'WHATSAPP PAR RABTA KAREIN' : 'SCHEDULE WHATSAPP DEMO'}</span>
+              <span className="relative z-10">{isUrdu ? 'WHATSAPP PAR DEMO BOOK KAREIN' : 'BOOK A DEMO ON WHATSAPP'}</span>
               <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none animate-shimmer-sweep" />
             </button>
             <Link
-              to="/solutions/tech-retail/terms"
+              to="/solutions/terms"
               className="btn-outline offer-btn offer-btn-lg"
             >
-              <span>{isUrdu ? 'CONTRACT SHARAAIT' : 'REVIEW CONTRACT TERMS'}</span>
+              <span>{isUrdu ? 'SHARAAIT PARHEIN' : 'READ THE TERMS'}</span>
             </Link>
           </div>
         </FadeIn>
@@ -1504,13 +1482,11 @@ export default function ConsoleRetailSolution() {
       {/* Plan Detail Modal */}
       {activeModalKey && modalData[activeModalKey] && (
         <PlanDetailModal
-          isOpen={true}
           onClose={() => setActiveModalKey(null)}
           plan={modalData[activeModalKey]}
           lang={lang}
           currency={currency}
-          isUrdu={isUrdu}
-          onClaimWhatsApp={(planCode, price) => openWhatsApp(planCode, price)}
+          onOpenWhatsApp={(name, price) => openWhatsApp(name, price)}
         />
       )}
     </div>

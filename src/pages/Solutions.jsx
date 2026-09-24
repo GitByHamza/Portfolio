@@ -13,68 +13,68 @@ export default function Solutions() {
 
   const comparisonItems = [
     {
-      dimension: isUrdu ? 'Code aur IP ki Malkiat' : 'Code & IP Ownership',
+      dimension: isUrdu ? 'Store ka malik kaun' : 'Who owns the store',
       texcodes: isUrdu
-        ? '100% Client Ownership. Mukammal GitHub repo transfer aur azad PostgreSQL database control.'
-        : '100% Client Ownership. Full GitHub repo transfer and independent PostgreSQL database control.',
-      cms: isUrdu
-        ? 'Vendor lock-in. Agar aap monthly subscription band karein to aapka data aur store band ho jata hai.'
-        : 'Vendor lock-in. If you cancel your monthly store subscription, your store and customer data are inaccessible.',
+        ? 'Aap. Code, data aur domain aapke hawale.'
+        : 'You. Code, data and domain are handed over to you.',
       freelancer: isUrdu
-        ? 'Code aap ka hota hai magar koi formal transfer process ya documentation nahi. Agar woh chale jayein to aap akele reh jate hain.'
-        : 'The code is yours but there is no formal transfer process and rarely any documentation. If they leave, you are on your own.',
+        ? 'Asal store nahi — sirf page aur chats.'
+        : 'No real store — just a page and chats.',
       agency: isUrdu
-        ? 'Agency aksar repo apne paas rakhti hai aur har tabdeeli ka bill banati hai. Malkiat aap ke contract par depend karti hai.'
-        : 'The agency often keeps the repo and bills you for every change. Ownership depends on the contract you sign.',
-      badge: '100% IP TRANSFER',
+        ? 'Listing aur customer marketplace ke hain.'
+        : 'The marketplace owns the listing and the customer.',
+      cms: isUrdu
+        ? 'Kiraye par. Payment band, store band.'
+        : 'You rent it. Stop paying and it goes offline.',
+      badge: isUrdu ? 'MALKIAT AAPKI' : 'YOU OWN IT',
     },
     {
-      dimension: isUrdu ? 'Platform Fees aur Commission' : 'Platform Fees & Revenue Cut',
+      dimension: isUrdu ? 'Har sale ka kharcha' : 'Cost per sale',
       texcodes: isUrdu
-        ? '0% sales commission. Har sale par 100% munafa aapka apna. Zero monthly transaction fees.'
-        : '0% sales commission. 100% of your revenue stays in your business. No monthly transaction cut.',
-      cms: isUrdu
-        ? 'Har order par transaction percentage fees + mehangay plugins ke mahana charges.'
-        : 'Platform transaction fees on every sale + recurring monthly costs for essential third-party plugins.',
+        ? '0% commission. Sirf aapke payment gateway ki standard fee.'
+        : "0% commission. Only your payment gateway's standard fee.",
       freelancer: isUrdu
-        ? 'Koi platform cut nahi, magar har choti tabdeeli ke liye alag se ghante ke hisab se charge.'
-        : 'No platform cut, but every small change is billed again by the hour.',
+        ? 'Fee nahi, magar har sale ke liye lambi chat.'
+        : 'No fees, but every sale takes manual chatting.',
       agency: isUrdu
-        ? 'Bara upfront cost aur mahana retainer, commission ke baghair magar budget ke bhari bojh ke sath.'
-        : 'Large upfront cost plus a monthly retainer, no commission but a heavy ongoing budget.',
-      badge: 'ZERO PLATFORM TAX',
+        ? 'Har order par commission aur fees.'
+        : 'Commission and fees on every order.',
+      cms: isUrdu
+        ? 'Mahana plan, paid apps, aur kuch gateways par izafi fees.'
+        : 'Monthly plan, paid apps, and extra fees with some gateways.',
+      badge: '0% COMMISSION',
     },
     {
-      dimension: isUrdu ? 'Custom Operational Logic' : 'Custom Operational Logic',
+      dimension: isUrdu ? 'Tech products ke liye' : 'Built for tech products',
       texcodes: isUrdu
-        ? 'Bespoke PC Builder compatibility calculation, multi-branch inventory sync, aur WhatsApp automated dispatch.'
-        : 'Custom PC Builder compatibility validation, multi-branch stock sync, and direct WhatsApp dispatch.',
-      cms: isUrdu
-        ? 'Aam theme templates aur plugin restrictions mein qaid.'
-        : 'Locked into generic theme templates and constrained by marketplace plugin limitations.',
+        ? 'PC builder, battery health, trade-in aur serial warranty pehle se shamil.'
+        : 'PC builder, battery health, trade-ins and serial warranty built in.',
       freelancer: isUrdu
-        ? 'Skill par depend karta hai. Custom logic ban sakta hai magar aksar maintenance aur scale par toot jata hai.'
-        : 'Depends on the individual. Custom logic is possible but often breaks under maintenance and scale.',
+        ? 'Specs aur prices DMs mein gum ho jati hain.'
+        : 'Specs and prices get lost in DMs.',
       agency: isUrdu
-        ? 'Custom logic mumkin hai magar har feature ke liye lamba approval cycle aur bara bill.'
-        : 'Custom logic is possible but every feature comes with a long approval cycle and a large bill.',
-      badge: 'TAILORED LOGIC',
+        ? 'Aam listings, competitors ke bilkul sath.'
+        : 'Generic listings, side by side with competitors.',
+      cms: isUrdu
+        ? 'Kai paid apps chahiye — ya mumkin hi nahi.'
+        : "Needs several paid apps — or isn't possible.",
+      badge: isUrdu ? 'TECH KE LIYE' : 'BUILT FOR TECH',
     },
     {
-      dimension: isUrdu ? 'Security aur Architecture' : 'Security & Architecture',
+      dimension: isUrdu ? 'Branches aur stock' : 'Branches & stock',
       texcodes: isUrdu
-        ? 'Modern Next.js SSR, isolated relational database, aur vulnerable third-party plugins se mukammal chhutkara.'
-        : 'Serverless deployment, isolated relational database, and zero vulnerable third-party plugin exploits.',
-      cms: isUrdu
-        ? 'Plugin vulnerabilities ka khatra, spam attacks, aur auto-updates ke baad tootne wale checkouts.'
-        : 'Frequent plugin security vulnerabilities, spam injections, and broken checkouts after auto-updates.',
+        ? 'Dukanon, godam aur website ka ek hi stock.'
+        : 'One stock count across shops, warehouse and website.',
       freelancer: isUrdu
-        ? 'Security ka daromadar ek shakhs ki maloomat par. Koi formal audit ya uptime zimmedari nahi.'
-        : 'Security rests on one person’s knowledge. No formal audit and no uptime accountability.',
+        ? 'Staff phone kar ke stock check karta hai.'
+        : 'Staff check stock by phone.',
       agency: isUrdu
-        ? 'Behtar process magar sust fixes, aur shared infrastructure par aksar doosre clients ke sath.'
-        : 'Better process but slow fixes, and often shared infrastructure used across other clients.',
-      badge: 'ENTERPRISE STABILITY',
+        ? 'Sirf marketplace wala stock.'
+        : 'Covers only your marketplace stock.',
+      cms: isUrdu
+        ? 'Aksar mehnga plan ya izafi apps.'
+        : 'Usually needs higher plans or extra apps.',
+      badge: isUrdu ? 'EK STOCK' : 'ONE STOCK',
     },
   ]
 
@@ -110,9 +110,6 @@ export default function Solutions() {
           <div className="card-hover-guided border-t-4 border-t-[#059669] dark:border-t-[#10B981] border-x border-b border-[#08966a] bg-white dark:bg-[#161619] p-6 sm:p-12 shadow-md space-y-8">
             <div className="flex flex-wrap items-center justify-between gap-4 offer-ui">
               <span className="tag-green">{t('solutionsPage', 'flagship_badge')}</span>
-              <span className="text-[#059669] dark:text-[#10B981] font-semibold bg-[#ECFDF5] dark:bg-[#10B981]/15 px-2.5 py-0.5 border border-[#08966a]/30">
-                OFFER CODE: TXS-RETAIL-OS
-              </span>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -174,7 +171,7 @@ export default function Solutions() {
               <div className="lg:col-span-5 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[#08966a]/30 p-6 space-y-4 offer-ui">
                 <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] pb-2 font-bold flex items-center justify-between">
                   <span>{t('solutionsPage', 'tiers_title')}</span>
-                  <span className="offer-ui text-[#8E8D88] dark:text-[#6A6965]">FIXED INVESTMENT</span>
+                  <span className="offer-ui text-[#8E8D88] dark:text-[#6A6965]">{isUrdu ? 'FIXED PRICE' : 'FIXED PRICE'}</span>
                 </div>
 
                 <div className="space-y-3">
@@ -202,8 +199,8 @@ export default function Solutions() {
 
                 <div className="pt-2 offer-ui text-[#8E8D88] dark:text-[#6A6965]">
                   {isUrdu
-                    ? 'Tamam packages mein 100% source code aur database ownership transfer shamil hai.'
-                    : 'All tiers include 100% source code & database ownership transfer upon final settlement.'}
+                    ? 'Har plan mein aakhri payment par mukammal code aur database handover shamil hai.'
+                    : 'All plans include full code and database handover on final payment.'}
                 </div>
               </div>
             </div>
@@ -217,17 +214,11 @@ export default function Solutions() {
           <div className="card-hover-guided border-t-4 border-t-[#059669] dark:border-t-[#10B981] border-x border-b border-[#08966a] bg-white dark:bg-[#161619] p-6 sm:p-12 shadow-md space-y-8">
             <div className="flex flex-wrap items-center justify-between gap-4 offer-ui">
               <span className="tag-green">{t('solutionsPage', 'flagship2_badge')}</span>
-              <span className="text-[#059669] dark:text-[#10B981] font-semibold bg-[#ECFDF5] dark:bg-[#10B981]/15 px-2.5 py-0.5 border border-[#08966a]/30">
-                {t('solutionsPage', 'flagship2_code')}
-              </span>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               <div className="lg:col-span-7 space-y-5">
-                <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-[#059669] dark:text-[#10B981] uppercase">
-                  <Laptop size={14} />
-                  <span>VERTICAL 02 // LAPTOP SHOPS & ACCESSORIES MERCHANTS</span>
-                </div>
+
                 <h2 className="offer-h2 text-[#0F0F0F] dark:text-[#EDECE6]">
                   {t('solutionsPage', 'flagship2_title')}
                 </h2>
@@ -274,7 +265,7 @@ export default function Solutions() {
                     rel="noopener noreferrer"
                     className="btn-outline offer-btn offer-btn-lg group relative overflow-hidden"
                   >
-                    <span className="relative z-10">{isUrdu ? 'LIVE STORE DEMO' : 'EXPLORE LAPTOP DEMO'}</span>
+                    <span className="relative z-10">{isUrdu ? 'LAPTOP DEMO KHOLEIN' : 'OPEN LAPTOP DEMO'}</span>
                     <ArrowUpRight size={14} className="relative z-10 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     <div className="absolute inset-0 w-1/3 h-full bg-gradient-to-r from-transparent via-[#10B981]/15 to-transparent pointer-events-none animate-shimmer-sweep" />
                   </a>
@@ -285,7 +276,7 @@ export default function Solutions() {
               <div className="lg:col-span-5 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[#08966a]/30 p-6 space-y-4 offer-ui">
                 <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] pb-2 font-bold flex items-center justify-between">
                   <span>{t('solutionsPage', 'tiers_title')}</span>
-                  <span className="offer-ui text-[#8E8D88] dark:text-[#6A6965]">FIXED INVESTMENT</span>
+                  <span className="offer-ui text-[#8E8D88] dark:text-[#6A6965]">{isUrdu ? 'FIXED PRICE' : 'FIXED PRICE'}</span>
                 </div>
 
                 <div className="space-y-3">
@@ -313,8 +304,8 @@ export default function Solutions() {
 
                 <div className="pt-2 offer-ui text-[#8E8D88] dark:text-[#6A6965]">
                   {isUrdu
-                    ? 'Tamam packages mein 100% source code aur database ownership transfer shamil hai.'
-                    : 'All tiers include 100% source code & database ownership transfer upon final settlement.'}
+                    ? 'Har plan mein aakhri payment par mukammal code aur database handover shamil hai.'
+                    : 'All plans include full code and database handover on final payment.'}
                 </div>
               </div>
             </div>
@@ -328,17 +319,11 @@ export default function Solutions() {
           <div className="card-hover-guided border-t-4 border-t-[#059669] dark:border-t-[#10B981] border-x border-b border-[#08966a] bg-white dark:bg-[#161619] p-6 sm:p-12 shadow-md space-y-8">
             <div className="flex flex-wrap items-center justify-between gap-4 offer-ui">
               <span className="tag-green">{t('solutionsPage', 'flagship3_badge')}</span>
-              <span className="text-[#059669] dark:text-[#10B981] font-semibold bg-[#ECFDF5] dark:bg-[#10B981]/15 px-2.5 py-0.5 border border-[#08966a]/30">
-                {t('solutionsPage', 'flagship3_code')}
-              </span>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               <div className="lg:col-span-7 space-y-5">
-                <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-[#059669] dark:text-[#10B981] uppercase">
-                  <Gamepad2 size={14} />
-                  <span>VERTICAL 03 // VIDEO GAME SHOPS, CONSOLES & DISCS</span>
-                </div>
+
                 <h2 className="offer-h2 text-[#0F0F0F] dark:text-[#EDECE6]">
                   {t('solutionsPage', 'flagship3_title')}
                 </h2>
@@ -385,7 +370,7 @@ export default function Solutions() {
                     rel="noopener noreferrer"
                     className="btn-outline offer-btn offer-btn-lg group relative overflow-hidden"
                   >
-                    <span className="relative z-10">{isUrdu ? 'LIVE STORE DEMO' : 'EXPLORE CONSOLE DEMO'}</span>
+                    <span className="relative z-10">{isUrdu ? 'CONSOLE DEMO KHOLEIN' : 'OPEN CONSOLE DEMO'}</span>
                     <ArrowUpRight size={14} className="relative z-10 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     <div className="absolute inset-0 w-1/3 h-full bg-gradient-to-r from-transparent via-[#10B981]/15 to-transparent pointer-events-none animate-shimmer-sweep" />
                   </a>
@@ -396,7 +381,7 @@ export default function Solutions() {
               <div className="lg:col-span-5 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[#08966a]/30 p-6 space-y-4 offer-ui">
                 <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] pb-2 font-bold flex items-center justify-between">
                   <span>{t('solutionsPage', 'tiers_title')}</span>
-                  <span className="offer-ui text-[#8E8D88] dark:text-[#6A6965]">FIXED INVESTMENT</span>
+                  <span className="offer-ui text-[#8E8D88] dark:text-[#6A6965]">{isUrdu ? 'FIXED PRICE' : 'FIXED PRICE'}</span>
                 </div>
 
                 <div className="space-y-3">
@@ -424,8 +409,8 @@ export default function Solutions() {
 
                 <div className="pt-2 offer-ui text-[#8E8D88] dark:text-[#6A6965]">
                   {isUrdu
-                    ? 'Tamam packages mein 100% source code aur database ownership transfer shamil hai.'
-                    : 'All tiers include 100% source code & database ownership transfer upon final settlement.'}
+                    ? 'Har plan mein aakhri payment par mukammal code aur database handover shamil hai.'
+                    : 'All plans include full code and database handover on final payment.'}
                 </div>
               </div>
             </div>
@@ -438,10 +423,10 @@ export default function Solutions() {
         <div className="max-w-7xl mx-auto space-y-12">
           <FadeIn>
             <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold mb-2">
-              {isUrdu ? 'MAZEED COMMERCIAL SALAHIYAT' : 'ADDITIONAL COMMERCIAL CAPABILITIES'}
+              {isUrdu ? 'YEH BHI DASTIYAB' : 'ALSO AVAILABLE'}
             </div>
             <h2 className="offer-h1 text-[#0F0F0F] dark:text-[#EDECE6]">
-              {isUrdu ? 'ENGINEERED DIGITAL SYSTEMS' : 'ENGINEERED DIGITAL SYSTEMS'}
+              {isUrdu ? 'CUSTOM BUILDS' : 'CUSTOM BUILDS'}
             </h2>
           </FadeIn>
 
@@ -453,22 +438,22 @@ export default function Solutions() {
                   <ShoppingBag size={22} />
                 </div>
                 <h3 className="offer-h2 text-[#0F0F0F] dark:text-[#EDECE6]">
-                  {isUrdu ? 'CUSTOM HEADLESS E-COMMERCE' : 'CUSTOM HEADLESS E-COMMERCE'}
+                  {isUrdu ? 'CUSTOM ONLINE STORES' : 'CUSTOM ONLINE STORES'}
                 </h3>
                 <p className="offer-body text-[#575652] dark:text-[#9B9A95]">
                   {isUrdu
-                    ? 'Aise brands ke liye jo slow Shopify themes ya WooCommerce plugin bloat se aagay nikalna chahte hain. Hum fast Next.js stores banate hain bina kisi commission tax ke.'
-                    : 'For brands outgrowing cookie-cutter Shopify themes or suffering from slow WooCommerce plugin bloat. We engineer custom storefronts with instantaneous page navigation, tailored checkout flows, and zero recurring percentage fees taken from your gross revenue.'}
+                    ? 'Un brands ke liye jo template store se aage barh chuke hain. Apna design, tez store, aapke products ke mutabiq checkout, aur sales par koi commission nahi.'
+                    : 'For brands that have outgrown a template store. Your own design, a faster store, a checkout built around your products, and no commission on sales.'}
                 </p>
                 <ul className="offer-ui text-[#575652] dark:text-[#9B9A95] space-y-2 list-disc list-inside">
-                  <li>{isUrdu ? 'Custom Next.js App Router storefronts' : 'Custom Next.js App Router storefronts'}</li>
-                  <li>{isUrdu ? 'Orders par 0% sales commission' : 'Zero platform sales tax on transactions'}</li>
-                  <li>{isUrdu ? 'WhatsApp direct dispatch aur order confirmation' : 'Direct WhatsApp order confirmation & dispatch'}</li>
-                  <li>{isUrdu ? 'Tailored product filteration aur specifications' : 'Tailored product filtering & specification matrices'}</li>
+                  <li>{isUrdu ? 'Custom storefront (Next.js)' : 'Custom storefront (Next.js)'}</li>
+                  <li>{isUrdu ? 'Aapki sales par 0% commission' : '0% commission on your sales'}</li>
+                  <li>{isUrdu ? 'WhatsApp par order confirmation' : 'WhatsApp order confirmation'}</li>
+                  <li>{isUrdu ? 'Aapke product specs ke mutabiq filters' : 'Filters built around your product specs'}</li>
                 </ul>
                 <div className="pt-2">
                   <Link to="/contact" className="btn-outline offer-btn group hover:border-[#08966a]">
-                    <span>{isUrdu ? 'CUSTOM COMMERCE KI INQUIRY KAREIN' : 'INQUIRE ABOUT CUSTOM COMMERCE'}</span>
+                    <span>{isUrdu ? 'CUSTOM STORE PAR BAAT KAREIN' : 'DISCUSS A CUSTOM STORE'}</span>
                     <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform inline-block ml-1" />
                   </Link>
                 </div>
@@ -482,22 +467,22 @@ export default function Solutions() {
                   <Layers size={22} />
                 </div>
                 <h3 className="offer-h2 text-[#0F0F0F] dark:text-[#EDECE6]">
-                  {isUrdu ? 'AI AUTOMATIONS AUR BUSINESS OS' : 'AI AUTOMATIONS & INTERNAL BUSINESS OS'}
+                  {isUrdu ? 'INTERNAL TOOLS AUR AUTOMATION' : 'INTERNAL TOOLS & AUTOMATION'}
                 </h3>
                 <p className="offer-body text-[#575652] dark:text-[#9B9A95]">
                   {isUrdu
-                    ? 'Khas tor par aapke office aur dukan ke liye software jo manual paperwork aur messy spreadsheets ko khatam karta hai. 24/7 AI agents aur multi-branch inventory ERPs.'
-                    : 'Purpose-built operational software replacing manual paperwork, messy spreadsheets, and disconnected tools. From 24/7 WhatsApp AI voice and chat agents to comprehensive hospital and inventory management ERPs.'}
+                    ? 'Excel sheets aur manual kaam ki jagah aapki team ke liye software: inventory aur billing systems, dashboards, staff permissions aur WhatsApp assistants.'
+                    : 'Replace spreadsheets and manual work with software built for your team: inventory and billing systems, dashboards, staff permissions and WhatsApp assistants.'}
                 </p>
                 <ul className="offer-ui text-[#575652] dark:text-[#9B9A95] space-y-2 list-disc list-inside">
-                  <li>{isUrdu ? 'Multi-guard Role-Based Access Control (RBAC)' : 'Multi-guard Role-Based Access Control (RBAC)'}</li>
-                  <li>{isUrdu ? 'WhatsApp Voice & Text conversational agents' : 'WhatsApp Voice & Text conversational agents'}</li>
-                  <li>{isUrdu ? 'Custom administrative analytics aur reporting' : 'Custom administrative analytics & reporting'}</li>
-                  <li>{isUrdu ? 'PostgreSQL strict relational schema integrity' : 'PostgreSQL data modeling with strict relational integrity'}</li>
+                  <li>{isUrdu ? 'Staff roles aur permissions' : 'Staff roles and permissions'}</li>
+                  <li>{isUrdu ? 'WhatsApp chat aur voice assistants' : 'WhatsApp chat & voice assistants'}</li>
+                  <li>{isUrdu ? 'Reports aur dashboards' : 'Reports and dashboards'}</li>
+                  <li>{isUrdu ? 'Mazboot database design' : 'Reliable database design'}</li>
                 </ul>
                 <div className="pt-2">
                   <Link to="/contact" className="btn-outline offer-btn group hover:border-[#08966a]">
-                    <span>{isUrdu ? 'INTERNAL SYSTEMS KI INQUIRY KAREIN' : 'INQUIRE ABOUT INTERNAL SYSTEMS'}</span>
+                    <span>{isUrdu ? 'INTERNAL SYSTEM PAR BAAT KAREIN' : 'DISCUSS AN INTERNAL SYSTEM'}</span>
                     <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform inline-block ml-1" />
                   </Link>
                 </div>
@@ -512,7 +497,7 @@ export default function Solutions() {
         <FadeIn className="max-w-7xl mx-auto space-y-12">
           <div>
             <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold mb-2">
-              THE ARCHITECTURAL BENCHMARK
+              {isUrdu ? 'MUQABLA' : 'COMPARISON'}
             </div>
             <h2 className="offer-h1 text-[#0F0F0F] dark:text-[#EDECE6]">
               {t('solutionsPage', 'matrix_title')}
@@ -581,7 +566,11 @@ export default function Solutions() {
           </p>
           <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
             <a
-              href="https://wa.me/923091824000?text=Hello%20Hamza%2C%20I%20reviewed%20your%20commercial%20solutions%20and%20want%20to%20discuss%20a%20build."
+              href={`https://wa.me/923091824000?text=${encodeURIComponent(
+                isUrdu
+                  ? 'Assalam o Alaikum Hamza, mujhe apni dukan ke liye aapke retail system ka demo chahiye.'
+                  : "Hello Hamza, I'd like a demo of your retail system for my shop."
+              )}`}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-blue offer-btn offer-btn-lg shadow-sm group"

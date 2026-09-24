@@ -1,19 +1,62 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { ShieldCheck, ArrowLeft, CheckCircle2, Lock, Clock, FileText } from 'lucide-react'
+import { ShieldCheck, ArrowLeft, CheckCircle2 } from 'lucide-react'
 import { useLanguage } from '../../context/LanguageContext'
+
+// Shared terms for all three Retail OS offers (Tech, Laptop, Console & Games).
+function detectCurrency() {
+  if (typeof window === 'undefined') return 'USD'
+  try {
+    const saved = localStorage.getItem('texcodes_currency') || localStorage.getItem('tex_pref_currency')
+    if (saved === 'USD' || saved === 'GBP' || saved === 'PKR') return saved
+  } catch {
+    // localStorage can be unavailable (private mode); fall through to timezone
+  }
+  try {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
+    if (tz === 'Asia/Karachi') return 'PKR'
+    if (tz === 'Europe/London') return 'GBP'
+  } catch {
+    // Intl unavailable; default below
+  }
+  return 'USD'
+}
+
+function Section({ num, title, children }) {
+  return (
+    <section className="space-y-3">
+      <h2 className="text-xl font-display uppercase text-[#0F0F0F] dark:text-[#EDECE6] tracking-wide flex items-center gap-2">
+        <span className="text-[#059669] dark:text-[#10B981] font-mono">{num}.</span> {title}
+      </h2>
+      {children}
+    </section>
+  )
+}
+
+function Box({ items }) {
+  return (
+    <div className="p-5 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-2 font-mono text-xs text-[#0F0F0F] dark:text-[#EDECE6]">
+      {items.map((item, i) => (
+        <div key={i} className="flex items-start gap-2">
+          <CheckCircle2 size={15} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+          <span>{item}</span>
+        </div>
+      ))}
+    </div>
+  )
+}
 
 export default function TechRetailTerms() {
   const { isUrdu } = useLanguage()
-  const currency = typeof window !== 'undefined'
-    ? localStorage.getItem('texcodes_currency') ||
-      localStorage.getItem('tex_pref_currency') ||
-      (['Asia/Karachi', 'Asia/Kolkata'].includes(Intl.DateTimeFormat().resolvedOptions().timeZone) ? 'PKR' : 'USD')
-    : 'USD'
+  const currency = detectCurrency()
+  const money = (usd, gbp, pkr) => (currency === 'USD' ? usd : currency === 'GBP' ? gbp : pkr)
+  const ur = (en, urdu) => (isUrdu ? urdu : en)
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
+
+  const hourly = money('$45 USD', '£36 GBP', 'PKR 6,000')
 
   return (
     <div className="w-full bg-[#F6F5F0] dark:bg-[#0F0F11] min-h-screen py-16 px-4 sm:px-8 font-mono text-xs text-[#0F0F0F] dark:text-[#EDECE6] transition-colors duration-200">
@@ -21,13 +64,11 @@ export default function TechRetailTerms() {
         {/* Back Link */}
         <div>
           <Link
-            to="/solutions/tech-retail"
+            to="/solutions"
             className="inline-flex items-center gap-2 text-xs font-bold text-[#059669] dark:text-[#10B981] hover:underline uppercase tracking-wider"
           >
             <ArrowLeft size={14} />
-            <span>
-              {isUrdu ? 'TECH-RETAIL PACKAGES PAR WAPIS JAYEIN' : 'BACK TO TECH-RETAIL SOLUTION & PRICING'}
-            </span>
+            <span>{ur('BACK TO SOLUTIONS', 'SOLUTIONS PAR WAPIS JAYEIN')}</span>
           </Link>
         </div>
 
@@ -35,323 +76,216 @@ export default function TechRetailTerms() {
         <div className="space-y-4 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] pb-8">
           <div className="tag-green">
             <ShieldCheck size={14} />
-            <span>
-              {isUrdu ? 'CONTRACTUAL SCOPE AGREEMENT AUR SLA GUARANTEE' : 'CONTRACTUAL SCOPE AGREEMENT & SLA GUARANTEE'}
-            </span>
+            <span>{ur('SCOPE, OWNERSHIP & WARRANTY', 'SCOPE, MALKIAT AUR WARRANTY')}</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.95]">
-            {isUrdu ? 'SCOPE BOUNDARIES, CODE MALKIAT AUR WARRANTIES' : 'SCOPE BOUNDARIES, CODE OWNERSHIP & WARRANTIES'}
+            {ur('RETAIL OS TERMS', 'RETAIL OS KI SHARAAIT')}
           </h1>
 
           <p className="font-serif text-sm sm:text-base text-[#575652] dark:text-[#9B9A95] leading-relaxed">
-            {isUrdu
-              ? 'TeXCodes custom e-commerce aur retail OS deployments ke liye contractual scope, revision policies, GitHub repository transfer protocol aur technical warranty sharaait.'
-              : 'Written contractual scope definitions, revision policies, GitHub repository ownership transfer protocol, and warranty terms for TeXCodes custom e-commerce and retail OS deployments.'}
+            {ur(
+              'These terms apply to Tech Retail OS, Laptop Retail OS and Console & Games Retail OS builds. The signed agreement for your project takes precedence over this summary.',
+              'Yeh sharaait Tech Retail OS, Laptop Retail OS aur Console & Games Retail OS builds par lagu hoti hain. Aapke project ka signed agreement is summary par muqaddam hai.'
+            )}
           </p>
         </div>
 
-        {/* Content Sections */}
         <div className="space-y-10 font-sans text-sm text-[#575652] dark:text-[#9B9A95] leading-relaxed">
-          {/* Section 1 */}
-          <section className="space-y-3">
-            <h2 className="text-xl font-display uppercase text-[#0F0F0F] dark:text-[#EDECE6] tracking-wide flex items-center gap-2">
-              <span className="text-[#059669] dark:text-[#10B981] font-mono">01.</span>{' '}
-              {isUrdu ? 'Package Scope Boundaries' : 'Package Scope Boundaries'}
-            </h2>
+          <Section num="01" title={ur('Plans and timelines', 'Plans aur timelines')}>
             <p>
-              {isUrdu
-                ? 'Har deployment mutafiqa milestone specifications ke mutabiq execute ki jati hai taake waqt par guaranteed delivery aur fixed pricing barqarar rahe:'
-                : 'Each deployment is executed strictly according to the agreed milestone specifications. To ensure rapid delivery, high performance, and fixed pricing without scope creep:'}
+              {ur(
+                'Each build follows the scope written into your agreement. Prices for each plan are listed on the offer pages:',
+                'Har build aapke agreement mein likhe scope ke mutabiq hoti hai. Har plan ki price offer pages par di gayi hai:'
+              )}{' '}
+              <Link to="/solutions/tech-retail" className="text-[#059669] dark:text-[#10B981] hover:underline">Tech Retail</Link>,{' '}
+              <Link to="/solutions/laptop-retail" className="text-[#059669] dark:text-[#10B981] hover:underline">Laptop Retail</Link>,{' '}
+              <Link to="/solutions/console-retail" className="text-[#059669] dark:text-[#10B981] hover:underline">Console & Games Retail</Link>.
             </p>
-            <div className="bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] p-5 space-y-3 font-mono text-xs text-[#0F0F0F] dark:text-[#EDECE6]">
-              <div>
-                <span className="font-bold text-[#059669] dark:text-[#10B981]">
-                  • Single Store Launch ({currency === 'USD' ? '$2,450 USD' : 'PKR 280,000'} | 10 {isUrdu ? 'Din, guaranteed' : 'Days, guaranteed'}):
-                </span>
-                <p className="text-[#575652] dark:text-[#9B9A95] mt-0.5">
-                  {isUrdu
-                    ? 'Single storefront, 50 SKUs tak initial setup, basic stock manager, direct WhatsApp dispatch. Layout branding managed rehti hai.'
-                    : 'Single storefront, up to 50 SKUs initial setup, basic admin stock updates, direct WhatsApp dispatch. Layout branding remains managed.'}
-                </p>
-              </div>
+            <Box
+              items={[
+                ur(
+                  'Single Store — 10 days: one location, online store, your first products loaded, admin panel and WhatsApp orders.',
+                  'Single Store — 10 din: ek location, online store, pehle products setup, admin panel aur WhatsApp orders.'
+                ),
+                ur(
+                  "Multi-Branch — 21 days: everything in Single Store, plus stock across up to 3 locations, serial-number warranty tracking, online payments, an AI assistant and the offer's specialist feature (PC builder, upgrade options or trade-in calculator).",
+                  'Multi-Branch — 21 din: Single Store ka sab kuch, aur 3 locations tak stock, serial number warranty tracking, online payments, AI assistant aur offer ka khaas feature (PC builder, upgrade options ya trade-in calculator).'
+                ),
+                ur(
+                  'Chain & Wholesale — from 30 days: unlimited branches, staff roles, integrations (POS, couriers, FBR, ERP) and wholesale features. The final timeline is fixed in your scope document.',
+                  'Chain & Wholesale — 30 din se: la-mehdood branches, staff roles, integrations (POS, couriers, FBR, ERP) aur wholesale features. Final timeline scope document mein tay hoti hai.'
+                ),
+              ]}
+            />
+          </Section>
 
-              <div className="pt-2 border-t border-[rgba(15,15,15,0.08)] dark:border-[rgba(255,255,255,0.08)]">
-                <span className="font-bold text-[#059669] dark:text-[#10B981]">
-                  • Multi Branch Growth ({currency === 'USD' ? '$4,850 USD' : 'PKR 550,000'} | 21 {isUrdu ? 'Din, guaranteed' : 'Days, guaranteed'}):
-                </span>
-                <p className="text-[#575652] dark:text-[#9B9A95] mt-0.5">
-                  {isUrdu
-                    ? 'PC Builder compatibility engine, 3 branches tak inventory tracking, serial number RMA warranty logging, aur promotional sales banner manager.'
-                    : 'PC Builder compatibility engine, multi-branch inventory tracking (up to 3 nodes), serial number warranty logging, self-managed promo banners & flash sales.'}
-                </p>
-              </div>
-
-              <div className="pt-2 border-t border-[rgba(15,15,15,0.08)] dark:border-[rgba(255,255,255,0.08)]">
-                <span className="font-bold text-[#059669] dark:text-[#10B981]">
-                  • Chain and Distribution OS ({currency === 'USD' ? (isUrdu ? '$8,500 USD se shuru' : 'From $8,500 USD') : (isUrdu ? 'PKR 950,000 se shuru' : 'From PKR 950,000')} | 30 {isUrdu ? 'Din, guaranteed' : 'Days, guaranteed'}):
-                </span>
-                <p className="text-[#575652] dark:text-[#9B9A95] mt-0.5">
-                  {isUrdu
-                    ? 'La-mehdood branches, custom ERP/POS API integrations, mukammal dynamic theme CMS, granular staff permissions, aur 30-day priority warranty.'
-                    : 'Unlimited branches, custom ERP/POS API integrations, complete theme control CMS, granular staff permissions, 30-day priority engineering warranty.'}
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Section 2 */}
-          <section className="space-y-3">
-            <h2 className="text-xl font-display uppercase text-[#0F0F0F] dark:text-[#EDECE6] tracking-wide flex items-center gap-2">
-              <span className="text-[#059669] dark:text-[#10B981] font-mono">02.</span>{' '}
-              {isUrdu ? '100% Client Code aur Database Malkiat Transfer' : '100% Client Code & Database Ownership Transfer'}
-            </h2>
+          <Section num="02" title={ur('Ownership of code and data', 'Code aur data ki malkiat')}>
             <p>
-              {isUrdu
-                ? 'Band SaaS platforms ke bar-aks jo aapka data qaid kar lete hain, TeXCodes 100% Client Ownership Guarantee par kaam karta hai:'
-                : 'Unlike closed SaaS platforms that hold your storefront and customer data hostage, TeXCodes operates on a 100% Client Ownership Guarantee:'}
+              {ur(
+                'On final payment, you receive your GitHub repository, database and admin accounts, with full rights to use, host, modify and extend your system. Your content, design and custom features are exclusively yours.',
+                'Aakhri payment par aapko GitHub repository, database aur admin accounts milte hain, aur system ko use, host, modify aur extend karne ke mukammal huqooq. Aapka content, design aur custom features sirf aapke hain.'
+              )}
             </p>
-            <div className="p-5 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-2 font-mono text-xs">
-              <div className="flex items-start gap-2">
-                <CheckCircle2 size={15} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                <span>
-                  {isUrdu
-                    ? 'Final milestone payment par mukammal GitHub repository invitation aur transfer.'
-                    : 'Full GitHub repository invitation & transfer upon final milestone settlement.'}
-                </span>
-              </div>
-              <div className="flex items-start gap-2">
-                <CheckCircle2 size={15} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                <span>
-                  {isUrdu
-                    ? 'PostgreSQL database ka direct administrative access raw SQL export ki salahiyat ke sath.'
-                    : 'Direct administrative access to the PostgreSQL database with raw SQL export capability.'}
-                </span>
-              </div>
-              <div className="flex items-start gap-2">
-                <CheckCircle2 size={15} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                <span>
-                  {isUrdu
-                    ? 'Zero vendor lock-in: Aap kisi bhi waqt apne codebase ko aazadana host ya extend kar sakte hain.'
-                    : 'Zero vendor lock-in: You may host, modify, or extend the codebase independently at any time.'}
-                </span>
-              </div>
-            </div>
-          </section>
-
-          {/* Section 3 */}
-          <section className="space-y-3">
-            <h2 className="text-xl font-display uppercase text-[#0F0F0F] dark:text-[#EDECE6] tracking-wide flex items-center gap-2">
-              <span className="text-[#059669] dark:text-[#10B981] font-mono">03.</span>{' '}
-              {isUrdu ? '30 Din Ki Post-Launch Warranty aur Support' : '30-Day Post-Launch Warranty & Support'}
-            </h2>
             <p>
-              {isUrdu
-                ? 'Tamam tiers mein launch ke baad 30 din ki technical warranty shamil hai. Delivered scope se mutaliqa koi bhi bug priority par bila muawza theek kiya jayega.'
-                : 'All tiers include a 30-day technical warranty period post-deployment. Any software bugs, layout discrepancies, or unexpected regressions directly related to the delivered scope will be resolved with priority engineering at zero additional charge.'}
+              {ur(
+                'TeXCodes keeps ownership of its pre-existing core engine and grants you a permanent, royalty-free licence to use it as part of your system, so we can keep improving it for all clients. Market exclusivity can be added by agreement.',
+                'TeXCodes apne pehle se bane core engine ka malik rehta hai aur aapko is ka mustaqil, royalty-free licence deta hai taake aap ise apne system ke hisse ke tor par use kar sakein — is tarah hum ise tamam clients ke liye behtar karte rehte hain. Market exclusivity agreement ke zariye shamil ki ja sakti hai.'
+              )}
             </p>
-          </section>
+          </Section>
 
-          {/* Section 4 */}
-          <section className="space-y-3">
-            <h2 className="text-xl font-display uppercase text-[#0F0F0F] dark:text-[#EDECE6] tracking-wide flex items-center gap-2">
-              <span className="text-[#059669] dark:text-[#10B981] font-mono">04.</span>{' '}
-              {isUrdu ? 'Delivery Timeline, Staging Guarantee aur Late Remedy' : 'Delivery Timeline, Staging Guarantee & Late Remedy'}
-            </h2>
+          <Section num="03" title={ur('30-day warranty', '30 din ki warranty')}>
             <p>
-              {isUrdu
-                ? 'Delivery ka waqt contract mein likha hota hai, andaza nahi. Single Store Launch 10 din, Multi Branch Growth 21 din, aur Chain and Distribution OS 30 din mein deliver hota hai. Yeh din tab se shuru hote hain jab aap ka content aur pehli milestone qist hamare paas pohanch jaye.'
-                : 'The delivery window is written into the contract, not an estimate. Single Store Launch ships in 10 days, Multi Branch Growth in 21 days, and Chain and Distribution OS in 30 days. The clock starts the day your content and commencement milestone deposit reach us.'}
+              {ur(
+                'Every plan includes a 30-day warranty after launch. Bugs and regressions in the delivered scope are fixed at no charge.',
+                'Har plan mein launch ke baad 30 din ki warranty shamil hai. Delivered scope ke bugs aur regressions muft theek kiye jate hain.'
+              )}
             </p>
-            <div className="p-5 bg-white dark:bg-[#161619] border border-[#059669]/30 dark:border-[#10B981]/30 space-y-2 font-mono text-xs">
-              <div className="font-bold text-[#059669] dark:text-[#10B981] uppercase tracking-wider flex items-center gap-2">
+          </Section>
+
+          <Section num="04" title={ur('Delivery and staging approval', 'Delivery aur staging approval')}>
+            <p>
+              {ur(
+                'The delivery date is written into your contract. The clock starts on the day we receive your content and first payment, and pauses while we wait on your content, feedback or third-party approvals (for example payment gateway accounts).',
+                'Delivery date contract mein likhi hoti hai. Waqt us din se shuru hota hai jab humein aapka content aur pehli payment mil jaye, aur aapke content, feedback ya third-party approvals (maslan payment gateway account) ke intezar mein ruk jata hai.'
+              )}
+            </p>
+            <div className="p-5 bg-white dark:bg-[#161619] border border-[#059669]/30 dark:border-[#10B981]/30 space-y-2">
+              <div className="font-mono text-xs font-bold text-[#059669] dark:text-[#10B981] uppercase tracking-wider flex items-center gap-2">
                 <ShieldCheck size={16} />
-                <span>
-                  {isUrdu ? '100% MILESTONE-PROTECTED STAGING GUARANTEE' : '100% MILESTONE-PROTECTED STAGING GUARANTEE'}
-                </span>
+                <span>{ur('STAGING APPROVAL', 'STAGING APPROVAL')}</span>
               </div>
-              <p className="text-[#575652] dark:text-[#9B9A95] font-sans">
-                {isUrdu
-                  ? 'Secondary settlement aur final public launch se pehle, aapka mukammal custom system aapki private staging URL par deploy hota hai. Aap live PC Builder, multi-branch stock sync aur WhatsApp ordering apne actual products ke sath test karte hain. Agar staging demo mutafiqa technical specs fulfill na kare, to aapki deposit 100% fori wapas, database schema blueprint muft aapka, aur waqt ke azaale ke tor par courtesy credit diya jata hai.'
-                  : 'Before secondary settlement and public launch, your fully functional custom system is deployed to a private live staging URL populated with your products. You personally test the PC Builder compatibility engine, multi-branch stock sync, and ordering workflows. If the staging build fails to satisfy the agreed technical specifications, you may request a 100% full refund of your commencement deposit, keep the complete database architecture blueprint for free, and receive a $250 USD courtesy credit for your time.'}
+              <p>
+                {ur(
+                  "Before the second payment, your system is deployed to a private staging link with your products. You test it against the acceptance checklist signed at kickoff. If any item isn't met, we fix it within 10 working days. If we still can't meet the checklist, you may request a refund of your deposit, and the engagement ends.",
+                  'Doosri payment se pehle aapka system aapke products ke sath private staging link par deploy hota hai. Aap ise kickoff par sign hui acceptance checklist ke mutabiq test karte hain. Jo item poora na ho, hum 10 working days mein theek karte hain. Phir bhi checklist poori na ho sake, to aap apni deposit wapas le sakte hain aur engagement khatam ho jata hai.'
+                )}
               </p>
             </div>
             <p>
-              {isUrdu
-                ? 'Agar der hamari taraf se ho, to har mukammal hafte ki der par aap ko ek mahana Care Plan muft milta hai. Agar der aap ke content, feedback, ya kisi third party service ki wajah se ho, to timeline accordingly barh jati hai.'
-                : 'If delay occurs on our side beyond the agreed delivery window, every full week late earns you one free month of the Care Plan. If delay comes from your content, feedback, or third-party credentials, the timeline extends accordingly.'}
+              {ur(
+                "If we're late beyond the agreed date, you get one free month of Care Plan for each full week of delay.",
+                'Agar der hamari taraf se tay shuda date se aage jaye, to har mukammal hafte ki der par ek mahina Care Plan muft.'
+              )}
             </p>
-          </section>
+          </Section>
 
-          {/* Section 5 */}
-          <section className="space-y-3">
-            <h2 className="text-xl font-display uppercase text-[#0F0F0F] dark:text-[#EDECE6] tracking-wide flex items-center gap-2">
-              <span className="text-[#059669] dark:text-[#10B981] font-mono">05.</span>{' '}
-              {isUrdu ? 'Support SLA aur Warranty' : 'Support SLA and Warranty'}
-            </h2>
-            <div className="p-5 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-2 font-mono text-xs">
-              <div className="flex items-start gap-2">
-                <CheckCircle2 size={15} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                <span>
-                  {isUrdu
-                    ? 'Har tier par 30 din ki technical warranty, delivered scope ke andar har bug priority par muft theek hota hai.'
-                    : 'A 30 day technical warranty on every tier. Any bug inside the delivered scope is fixed with priority at no charge.'}
-                </span>
-              </div>
-              <div className="flex items-start gap-2">
-                <CheckCircle2 size={15} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                <span>
-                  {isUrdu
-                    ? 'Support ka jawab 4 business ghanton ke andar. Critical masail, jaise store down ya payment ruk jana, 24 se 48 ghanton mein hal hote hain.'
-                    : 'Support replies within 4 business hours. Critical issues, such as the store going down or payments failing, are resolved within 24 to 48 hours.'}
-                </span>
-              </div>
-              <div className="flex items-start gap-2">
-                <CheckCircle2 size={15} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                <span>
-                  {isUrdu
-                    ? 'Jis infrastructure ko hum manage karte hain us par 99.5% uptime ka target.'
-                    : 'A 99.5% uptime target on the infrastructure we manage.'}
-                </span>
-              </div>
-            </div>
+          <Section num="05" title={ur('Support after launch', 'Launch ke baad support')}>
             <p>
-              {isUrdu
-                ? 'Business hours Monday se Saturday, subah 10 baje se shaam 7 baje Pakistan time. Warranty sirf us kaam par lagti hai jo hum ne banaya. Naye features ya scope se bahar ki cheezein change request kehlati hain.'
-                : 'Business hours run Monday to Saturday, 10 am to 7 pm Pakistan time. The warranty covers the work we delivered. New features or anything outside the agreed scope count as change requests.'}
+              {ur(
+                'After the warranty, response times depend on your Care Plan. Business hours are Monday to Saturday, 10 am to 7 pm Pakistan time. The warranty covers the work we delivered; new features or anything outside the agreed scope are change requests.',
+                'Warranty ke baad jawab ka waqt aapke Care Plan par munhasir hai. Business hours Monday se Saturday, subah 10 se shaam 7 baje (Pakistan time). Warranty sirf delivered kaam par lagti hai; naye features ya scope se bahar ki cheezein change request hain.'
+              )}
             </p>
-          </section>
+          </Section>
 
-          {/* Section 6 */}
-          <section className="space-y-3">
-            <h2 className="text-xl font-display uppercase text-[#0F0F0F] dark:text-[#EDECE6] tracking-wide flex items-center gap-2">
-              <span className="text-[#059669] dark:text-[#10B981] font-mono">06.</span>{' '}
-              {isUrdu ? 'Revisions aur Change Requests' : 'Revisions and Change Requests'}
-            </h2>
+          <Section num="06" title={ur('Revisions and change requests', 'Revisions aur change requests')}>
             <p>
-              {isUrdu
-                ? `Har milestone par 2 revision rounds shamil hain. Is ke baad, ya jo cheez agreed scope se bahar ho, woh ${currency === 'USD' ? '$45 USD fi ghanta' : 'PKR 6,000 fi ghanta'} bill hoti hai aur kaam shuru karne se pehle estimate de diya jata hai.`
-                : `Two revision rounds are included per milestone. Anything beyond that, or anything outside the agreed scope, is billed at ${currency === 'USD' ? '$45 USD per hour' : 'PKR 6,000 per hour'} with an estimate given before we start.`}
+              {ur(
+                `Two revision rounds are included per milestone. Anything beyond that, or outside the agreed scope, is billed at ${hourly} per hour, with an estimate before we start.`,
+                `Har milestone par 2 revision rounds shamil hain. Is ke baad, ya agreed scope se bahar kuch bhi, ${hourly} fi ghanta bill hota hai, aur kaam se pehle estimate diya jata hai.`
+              )}
             </p>
             <p>
-              {isUrdu
-                ? 'Revision ka matlab hai jo spec mein tha us ko theek karna. Change request ka matlab hai kuch naya add karna ya spec se hatana.'
-                : 'A revision means adjusting what was already in the spec. A change request means adding something new or removing something from the spec.'}
+              {ur(
+                'A revision adjusts something already in the scope. A change request adds or removes something.',
+                'Revision ka matlab scope mein mojood cheez ko theek karna. Change request ka matlab kuch naya add ya remove karna.'
+              )}
             </p>
-          </section>
+          </Section>
 
-          {/* Section 7 */}
-          <section className="space-y-3">
-            <h2 className="text-xl font-display uppercase text-[#0F0F0F] dark:text-[#EDECE6] tracking-wide flex items-center gap-2">
-              <span className="text-[#059669] dark:text-[#10B981] font-mono">07.</span>{' '}
-              {isUrdu ? 'Client Zimmedariyan aur Der' : 'Client Responsibilities and Delays'}
-            </h2>
+          <Section num="07" title={ur('Your responsibilities', 'Aapki zimmedariyan')}>
             <p>
-              {isUrdu
-                ? 'Aap product photos, descriptions, pricing, logos, aur included SKU count se zyada data entry faraham karte hain. Aap domain, hosting credentials, aur kisi bhi third party account ka access dete hain. Hum setup karte hain jab content milta hai.'
-                : 'You supply the product photos, descriptions, pricing, logos, and any data entry beyond the included SKU count. You provide the domain, hosting credentials, and access to any third party accounts. We set everything up once the content arrives.'}
+              {ur(
+                'You supply product photos, descriptions, prices and logos, and data entry beyond the included product count (or add it as an add-on). You provide access to your domain, hosting and any third-party accounts.',
+                'Product photos, descriptions, prices aur logo aap dete hain, aur included products se zyada data entry bhi (ya add-on ke tor par). Domain, hosting aur third-party accounts ka access aap dete hain.'
+              )}
             </p>
             <p>
-              {isUrdu
-                ? 'Jab project aap ke content ya approval ka intezar kar raha ho, delivery clock ruk jati hai. Agar 30 din se zyada koi jawab na aaye, project dormant ho jata hai aur dubara shuru karne ke liye hum naye slot par kaam karte hain.'
-                : 'When a project waits on your content or approval, the delivery clock pauses. If we hear nothing for more than 30 days, the project goes dormant and a restart is scheduled at the next available slot.'}
+              {ur(
+                'If we hear nothing for more than 30 days, the project goes dormant and restarts at the next available slot. Your code and data are kept safe in the meantime.',
+                'Agar 30 din se zyada koi jawab na aaye, to project dormant ho jata hai aur agle dastiyab slot par dobara shuru hota hai. Is dauran aapka code aur data mehfooz rehta hai.'
+              )}
             </p>
-          </section>
+          </Section>
 
-          {/* Section 8 */}
-          <section className="space-y-3">
-            <h2 className="text-xl font-display uppercase text-[#0F0F0F] dark:text-[#EDECE6] tracking-wide flex items-center gap-2">
-              <span className="text-[#059669] dark:text-[#10B981] font-mono">08.</span>{' '}
-              {isUrdu ? 'Payment, Currency aur Invoicing' : 'Payment, Currency and Invoicing'}
-            </h2>
+          <Section num="08" title={ur('Payment and invoicing', 'Payment aur invoicing')}>
             <p>
-              {isUrdu
-                ? 'Raqam 40 / 40 / 20 mein banti hai: peshgi commencement deposit, approved staging demo walkthrough, aur launch handover. Har qist par formal sign off ke baad hi release hoti hai.'
-                : 'Payment splits 40 / 40 / 20 across commencement deposit, approved staging demo walkthrough, and launch handover. Each release happens only after a formal sign off.'}
+              {ur(
+                'Payment is split 40 / 40 / 20: to start, at staging approval, and at launch. Each payment follows a written sign-off.',
+                'Payment 40 / 40 / 20 mein: shuru mein, staging approval par, aur launch par. Har payment likhi hui sign-off ke baad.'
+              )}
             </p>
             <p>
-              {isUrdu
-                ? 'Order WhatsApp par ya direct agreement ke zariye hota hai. Default payment bank transfer ya online gateway hai.'
-                : 'Orders are placed over WhatsApp or verified agreement. The default checkout integration includes bank transfer, card gateway, or WhatsApp ordering.'}
+              {ur(
+                'Businesses in Pakistan are invoiced in PKR and pay by bank transfer. International clients are invoiced in USD or GBP and pay by international bank transfer or another method agreed in writing. Prices are fixed for the agreed scope.',
+                'Pakistan ke karobar ko PKR mein invoice hota hai aur payment bank transfer se. International clients ko USD ya GBP mein invoice hota hai aur payment international bank transfer ya likh kar tay shuda tareeqe se. Tay shuda scope ki price fixed hai.'
+              )}
             </p>
             <p>
-              {isUrdu
-                ? currency === 'USD'
-                  ? 'International clients ke liye invoices direct USD mein jari hoti hain aur payment international wire transfer (SWIFT), Stripe, ya Wise ke zariye qubool ki jati hai.'
-                  : 'Pakistan ke muqami clients ke liye invoices PKR mein jari hoti hain aur payment direct local bank transfer (IBFT) ya online wallet ke zariye hoti hai.'
-                : currency === 'USD'
-                ? 'Invoices for international clients are denominated natively in USD and payable via international wire (SWIFT), Stripe, or Wise with zero currency conversion fees.'
-                : 'Invoices for domestic Pakistani clients are denominated in PKR and payable via local online bank transfer (IBFT) or direct corporate account deposit.'}
+              {ur(
+                'Online card and wallet payments on your store are included in Multi-Branch and Chain & Wholesale, and available as an add-on on Single Store.',
+                'Store par online card aur wallet payments Multi-Branch aur Chain & Wholesale mein shamil hain, aur Single Store par add-on ke tor par dastiyab.'
+              )}
             </p>
-          </section>
+          </Section>
 
-          {/* Section 9 */}
-          <section className="space-y-3">
-            <h2 className="text-xl font-display uppercase text-[#0F0F0F] dark:text-[#EDECE6] tracking-wide flex items-center gap-2">
-              <span className="text-[#059669] dark:text-[#10B981] font-mono">09.</span>{' '}
-              {isUrdu ? 'Cancellation, Refund aur Staging Assurance' : 'Cancellation, Refund and Staging Assurance'}
-            </h2>
-            <p>
-              {isUrdu
-                ? 'Hamari 100% Milestone-Protected Staging Guarantee ke tehat, agar delivered staging build demo marhale par agreed functional specifications fulfill na kare, to peshgi deposit 100% fori wapas ki jati hai. Agar client demo approval ke baad bila kisi technical waja ke project terminate karna chahe, to us marhale tak ka kaam bill hota hai aur 20% slot cancellation fee lagti hai.'
-                : 'Under our 100% Milestone-Protected Staging Guarantee, if the delivered staging build fails to meet the agreed functional specifications at the milestone demonstration stage, the commencement deposit is 100% refundable upon request. If the client terminates for reasons unrelated to non-performance after staging approval, completed milestone phases are billed and a 20% cancellation fee applies.'}
-            </p>
-            <p>
-              {isUrdu
-                ? 'Agar client 30 din tak ghaib rahe aur koi notice na de, project dormant mana jata hai. Code aur data us point tak safe rakha jata hai jab tak client wapas na aaye ya formally close na kare.'
-                : 'If the client goes silent for 30 days without notice, the project is treated as dormant. Code and data are kept safe up to that point until the client returns or formally closes the engagement.'}
-            </p>
-          </section>
+          <Section num="09" title={ur('Cancellation and refunds', 'Cancellation aur refunds')}>
+            <Box
+              items={[
+                ur(
+                  'Staging not approved: if we cannot meet the signed checklist after the 10-working-day fix period, your deposit is refunded on request.',
+                  'Staging approve na ho: agar 10 working days ke fix period ke baad bhi signed checklist poori na ho, to request par deposit wapas.'
+                ),
+                ur(
+                  'Cancellation before staging, for reasons unrelated to our performance: the deposit is non-refundable.',
+                  'Staging se pehle cancellation, hamari performance se hat kar kisi wajah se: deposit wapas nahi hoti.'
+                ),
+                ur(
+                  'Cancellation after staging approval: completed milestones are billed and a 20% cancellation fee applies.',
+                  'Staging approval ke baad cancellation: mukammal milestones bill hote hain aur 20% cancellation fee lagti hai.'
+                ),
+              ]}
+            />
+          </Section>
 
-          {/* Section 10 */}
-          <section className="space-y-3">
-            <h2 className="text-xl font-display uppercase text-[#0F0F0F] dark:text-[#EDECE6] tracking-wide flex items-center gap-2">
-              <span className="text-[#059669] dark:text-[#10B981] font-mono">10.</span>{' '}
-              {isUrdu ? 'Hosting aur Care Plan' : 'Hosting and Care Plan'}
-            </h2>
+          <Section num="10" title={ur('Hosting, third-party costs and Care Plans', 'Hosting, third-party kharche aur Care Plans')}>
             <p>
-              {isUrdu
-                ? 'Base build mein ongoing hosting, domain renewal, ya server maintenance shamil nahi. Aap code ke malik hain, to kahin bhi host kar sakte hain, ya hamara managed hosting use kar sakte hain.'
-                : 'The base build does not include ongoing hosting, domain renewal, or server maintenance. You own the code, so you may host it anywhere, or use our managed hosting.'}
+              {ur(
+                'The build price does not include ongoing hosting, domain renewal or third-party fees. Payment gateway fees, SMS/WhatsApp API costs and AI usage are paid by you at cost. You own the code, so you can host it anywhere or use our managed hosting.',
+                'Build ki price mein hosting, domain renewal ya third-party fees shamil nahi. Payment gateway fees, SMS/WhatsApp API aur AI usage ka kharcha at-cost aap dete hain. Code aapka hai, aap kahin bhi host kar sakte hain ya hamari managed hosting le sakte hain.'
+              )}
             </p>
-            <div className="p-5 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-2 font-mono text-xs">
-              <div className="flex items-start gap-2">
-                <CheckCircle2 size={15} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                <span>
-                  {isUrdu
-                    ? `Basic Care Plan ${currency === 'USD' ? '$140 USD mahana' : 'PKR 14,000 mahana'}: hosting, backups, updates, aur priority support.`
-                    : `Basic Care Plan at ${currency === 'USD' ? '$140 USD per month' : 'PKR 14,000 per month'}: hosting, backups, updates, and priority support.`}
-                </span>
-              </div>
-              <div className="flex items-start gap-2">
-                <CheckCircle2 size={15} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                <span>
-                  {isUrdu
-                    ? `Growth Care Plan ${currency === 'USD' ? '$280 USD mahana' : 'PKR 28,000 mahana'}: sab kuch Basic se, plus multi branch monitoring aur monthly reports.`
-                    : `Growth Care Plan at ${currency === 'USD' ? '$280 USD per month' : 'PKR 28,000 per month'}: everything in Basic, plus multi branch monitoring and monthly reports.`}
-                </span>
-              </div>
-              <div className="flex items-start gap-2">
-                <CheckCircle2 size={15} className="text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
-                <span>
-                  {isUrdu
-                    ? `Enterprise Care Plan ${currency === 'USD' ? '$550 USD mahana' : 'PKR 55,000 mahana'}: dedicated engineering hours, uptime monitoring, aur on call support.`
-                    : `Enterprise Care Plan at ${currency === 'USD' ? '$550 USD per month' : 'PKR 55,000 per month'}: dedicated engineering hours, uptime monitoring, and on call support.`}
-                </span>
-              </div>
-            </div>
+            <Box
+              items={[
+                ur(
+                  `Basic Care — ${money('$140', '£115', 'PKR 14,000')} per month: hosting, SSL, daily backups, uptime monitoring, small edits, email support.`,
+                  `Basic Care — ${money('$140', '£115', 'PKR 14,000')} mahana: hosting, SSL, rozana backups, uptime monitoring, chhoti edits, email support.`
+                ),
+                ur(
+                  `Growth Care — ${money('$280', '£230', 'PKR 28,000')} per month: everything in Basic, priority replies within 4 business hours, small monthly changes, WhatsApp support.`,
+                  `Growth Care — ${money('$280', '£230', 'PKR 28,000')} mahana: Basic ka sab kuch, 4 business hours mein priority jawab, mahana chhoti changes, WhatsApp support.`
+                ),
+                ur(
+                  `Enterprise Care — ${money('$550', '£450', 'PKR 55,000')} per month: everything in Growth, dedicated engineer hours, integration support, 99.5% uptime target, phone support.`,
+                  `Enterprise Care — ${money('$550', '£450', 'PKR 55,000')} mahana: Growth ka sab kuch, dedicated engineer hours, integration support, 99.5% uptime target, phone support.`
+                ),
+              ]}
+            />
             <p>
-              {isUrdu
-                ? 'Care Plan mahana hai. Aap kisi bhi mahine ke aakhir mein notice de kar rok ya pause kar sakte hain. Aap ka code aur data aap ka rehta hai, chahe Care Plan jari rahe ya nahi.'
-                : 'The Care Plan is monthly. You may pause or stop it with notice at the end of any month. Your code and data stay yours whether or not the Care Plan continues.'}
+              {ur(
+                'Care Plans are monthly. You can pause or stop at the end of any month; your code and data stay yours either way.',
+                'Care Plans mahana hain. Aap kisi bhi mahine ke aakhir mein rok ya pause kar sakte hain; aapka code aur data har haal mein aapka rehta hai.'
+              )}
             </p>
-          </section>
+          </Section>
         </div>
 
-        {/* Footer Link */}
-        <div className="pt-8 border-t border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] flex items-center justify-between font-mono text-xs">
-          <Link to="/solutions/tech-retail" className="text-[#059669] dark:text-[#10B981] font-bold hover:underline">
-            {isUrdu ? '← Solution Packages Par Wapis Jayein' : '← Return to Solution Packages'}
+        {/* Footer Links */}
+        <div className="pt-8 border-t border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] flex flex-wrap items-center justify-between gap-3 font-mono text-xs">
+          <Link to="/solutions" className="text-[#059669] dark:text-[#10B981] font-bold hover:underline">
+            {ur('← Back to solutions', '← Solutions par wapis jayein')}
           </Link>
           <a
             href="https://wa.me/923091824000"
@@ -359,11 +293,10 @@ export default function TechRetailTerms() {
             rel="noopener noreferrer"
             className="text-[#0F0F0F] dark:text-[#EDECE6] hover:text-[#059669] dark:hover:text-[#10B981]"
           >
-            {isUrdu ? 'WhatsApp Par Direct Rabta' : 'Direct Inquiries via WhatsApp'}
+            {ur('Questions? Message us on WhatsApp', 'Sawal? WhatsApp par message karein')}
           </a>
         </div>
       </div>
     </div>
   )
 }
-

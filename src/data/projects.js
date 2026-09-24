@@ -113,7 +113,8 @@ export const projectsData = [
         ],
         demoUrl: "https://store-demo-eight.vercel.app/",
         offerUrl: "/solutions/tech-retail",
-        githubUrl: "https://github.com/GitByHamza/Enterprise-Tech-Ecom",
+        // Repo is private; '#' hides the "View code" button instead of linking to a GitHub 404.
+        githubUrl: "#",
         tags: ["Next.js", "React", "Prisma", "PostgreSQL", "Tailwind CSS", "TypeScript"],
     },
 

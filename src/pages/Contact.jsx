@@ -14,7 +14,7 @@ export default function Contact() {
     name: '',
     email: '',
     country: '',
-    projectType: 'Tech-Retail Flagship Solution',
+    projectType: 'Tech Retail OS',
     message: '',
   })
 
@@ -49,7 +49,7 @@ export default function Contact() {
         setSubmissionWarning(true)
       }
       setSubmitted(true)
-      setFormData({ name: '', email: '', country: '', projectType: 'Tech-Retail Flagship Solution', message: '' })
+      setFormData({ name: '', email: '', country: '', projectType: 'Tech Retail OS', message: '' })
     } catch (err) {
       console.error('Contact submission error:', err)
       setSubmissionWarning(true)
@@ -202,7 +202,9 @@ export default function Contact() {
                       onChange={handleChange}
                       className="w-full px-4 py-3 bg-[#FAF9F5] dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.18)] dark:border-[rgba(255,255,255,0.12)] text-[#0F0F0F] dark:text-[#EDECE6] focus:border-[#059669] dark:focus:border-[#10B981] focus:outline-none transition-colors"
                     >
-                      <option value="Tech-Retail Flagship Solution">{t('contact', 'cat_retail')}</option>
+                      <option value="Tech Retail OS">{t('contact', 'cat_retail')}</option>
+                      <option value="Laptop Retail OS">{t('contact', 'cat_laptop')}</option>
+                      <option value="Console & Games Retail OS">{t('contact', 'cat_console')}</option>
                       <option value="Custom Enterprise Software / Web App">{t('contact', 'cat_custom')}</option>
                       <option value="SaaS Architecture & Backend Modernization">{t('contact', 'cat_saas')}</option>
                       <option value="Technical Consultation / Feasibility Check">{t('contact', 'cat_consultation')}</option>

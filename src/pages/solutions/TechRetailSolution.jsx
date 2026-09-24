@@ -27,6 +27,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion'
 import { FadeIn, StaggerContainer, StaggerItem } from '../../components/motion/MotionReveal'
 import PlanDetailModal from '../../components/PlanDetailModal'
+import OfferFAQ from '../../components/OfferFAQ'
 import ThemeToggle from '../../components/ThemeToggle'
 import { useLanguage } from '../../context/LanguageContext'
 import { projectsData, getLocalizedProject } from '../../data/projects'
@@ -137,845 +138,739 @@ function detectInitialCurrency() {
 
 const I18N_DATA = {
   en: {
-    hero_badge: 'COMMERCIAL INFRASTRUCTURE // COMPUTER & TECH HARDWARE OS',
-    hero_title_1: 'Automate Custom PC Sales & Multi-Branch Retail',
-    hero_title_accent: 'With Zero Platform Commissions',
-    hero_title_2: 'And 100% Code Ownership',
+    hero_badge: 'TECH RETAIL OS · FOR COMPUTER, GAMING & CCTV SHOPS',
+    hero_title_1: 'Sell custom PCs online —',
+    hero_title_accent: 'every part checked.',
+    hero_title_2: '',
     hero_sub:
-      'Turn your computer showroom into an automated 24/7 retail operation. Custom PC Builder with real-time socket and wattage validation, live multi-branch inventory sync, serial RMA tracking, and AI sales advisory—delivered in 21 days with 100% codebase and database ownership.',
-    cta_primary: 'Choose Your Solution Plan',
-    cta_secondary: 'Explore Live Store Demo',
-    metrics_code: 'Full GitHub & DB Transfer',
-    metrics_tax: 'Keep 100% Retail Margins',
-    metrics_speed: 'Real-Time Hardware Validation',
-    metrics_rma: 'Supplier-to-Invoice Tracking',
-    metrics_code_top: '100% OWNERSHIP',
-    metrics_tax_top: '0% PLATFORM TAX',
-    metrics_speed_top: '<1% RETURN RATE',
-    metrics_rma_top: 'SERIAL RMA',
-
-    // Ultimatum Decision Matrix
-    ultimatum_badge: 'THE ZERO-RISK DECISION MATRIX',
-    ultimatum_title: 'WHY LEADING TECH RETAILERS MOVE FORWARD',
-    ultimatum_sub:
-      'An offer structured so the retailer wins in both scenarios. We assume the technical execution risk so you can modernize your operation with total certainty.',
-    ultimatum_best_tag: 'BEST-CASE SCENARIO',
-    ultimatum_best_title: 'You launch an automated retail machine',
-    ultimatum_best_p1: 'Deploy a dedicated Next.js storefront and interactive PC Builder in 21 days.',
-    ultimatum_best_p2: 'Component returns drop to zero with automated socket, RAM, and wattage checks.',
-    ultimatum_best_p3: 'Physical counters and online orders share one real-time multi-branch inventory.',
-    ultimatum_best_p4: 'Save thousands every year with zero recurring platform commissions or order fees.',
-    ultimatum_best_p5: 'Full GitHub repository and PostgreSQL database ownership transferred to your accounts.',
-    ultimatum_best_footer: 'Outcome: You scale your operation, protect your margins, and own your software.',
-
-    ultimatum_worst_tag: 'WORST-CASE SCENARIO',
-    ultimatum_worst_title: 'If we fail to fulfill agreed specifications',
-    ultimatum_worst_p1: '100% full refund of your commencement deposit processed immediately without dispute.',
-    ultimatum_worst_p2: 'Keep our custom hardware catalog schema and architecture blueprint for free.',
-    ultimatum_worst_p3: '$250 USD courtesy credit paid directly to your business as an apology for your time.',
-    ultimatum_worst_p4: 'Zero contract lock-in, zero ongoing financial obligations, and zero risk.',
-    ultimatum_worst_footer: 'Outcome: You risk zero capital, lose nothing, and keep an enterprise tech audit.',
-
-    // Staging Guarantee Banner
-    guarantee_badge: 'SAFETY NET // 100% MILESTONE-PROTECTED STAGING GUARANTEE',
-    guarantee_title: 'Test Your System On A Live Staging URL Before Final Settlement',
-    guarantee_sub:
-      'You only pay the remaining balance after testing your fully functional custom storefront, PC Builder, and multi-branch stock sync on a private staging URL with your own products. If it does not perform to agreed specifications, your deposit is refunded in full.',
-
-    arch_badge: 'SYSTEM ARCHITECTURE',
-    arch_title: 'ONE UNIFIED SYSTEM FOR THE RETAIL OPERATION',
-    arch_sub:
-      'Not just an online catalog. An integrated retail operating environment connecting storefront, warehouse, physical counters, and customer notifications.',
-    arch_01_title: '01. CUSTOM WEB STOREFRONT',
-    arch_01_desc:
-      'Fast Next.js storefront designed for PC hardware, CCTV kits, and electronics with rich spec sheets and instant filtering.',
-    arch_02_title: '02. PC BUILDER ENGINE',
-    arch_02_desc:
-      'Validates CPU socket (AM5/LGA1700), DDR4/DDR5 RAM, and wattage limits automatically before checkout.',
-    arch_03_title: '03. MULTI-BRANCH STOCK SYNC',
-    arch_03_desc:
-      'Connect physical shops (Hafeez Centre, Techno City, Dubai Plaza) and warehouses in one live inventory panel.',
-    arch_04_title: '04. SERIAL NUMBER & RMA',
-    arch_04_desc:
-      'Track individual GPU, motherboard, and DVR serial numbers from supplier intake to customer invoice and warranty return.',
-    arch_05_title: '05. WHATSAPP AUTO DISPATCH',
-    arch_05_desc:
-      'Pre-formatted customer order summaries and custom PC build spec sheets sent directly to your sales WhatsApp desk.',
-    arch_06_title: '06. 100% CODE & DATA TRANSFER',
-    arch_06_desc:
-      'Full GitHub repository and PostgreSQL database ownership transferred directly to your business account.',
-    arch_07_title: '07. AI SALES & HARDWARE ADVISOR CHATBOT',
-    arch_07_desc:
-      'LLM-powered hardware compatibility & automated 24/7 retail sales agent embedded into storefront. Recommends parts by budget, checks socket/wattage compatibility, and converts visitors into WhatsApp and web orders.',
-
-    demo_badge: 'VERIFIABLE SYSTEM DEMONSTRATION',
-    demo_title: 'TEST THE LIVE PRODUCTION INTERFACE',
-    demo_sub:
-      'Test actual customer workflows and administrative controls on our hosted sandbox environment.',
-    demo_store_title: '01. STOREFRONT DEMO',
-    demo_store_desc:
-      'Explore product catalogs, spec filtering, cart logic, and dark aesthetic storefront.',
-    demo_pc_title: '02. PC BUILDER ENGINE',
-    demo_pc_desc:
-      'Test socket matching, wattage calculation, and custom build WhatsApp sharing.',
-    demo_admin_title: '03. ADMIN PANEL MATRIX',
-    demo_admin_desc:
-      'Inspect 1-click admin demo mode, stock updates, orders, and warranty logs.',
-
-    plans_badge: 'COMMERCIAL INVESTMENT TIERS',
-    plans_title: 'Plans.',
-    plans_sub:
-      'Zero monthly sales commissions. 100% client code and database ownership upon completion.',
-    plans_sub_suffix:
-      'Click any plan below to inspect the complete deliverable breakdown, architecture specs, and visual previews.',
-    detail_btn: 'CLICK ME FOR FULL DETAIL & PREVIEWS →',
-
-    starter_name: 'Single Store Launch',
-    starter_badge: 'SINGLE OUTLET',
-    starter_desc:
-      'For single location computer stores & CCTV shops starting online sales with direct WhatsApp dispatch.',
-    starter_price_pkr: 'PKR 280,000',
-    starter_price_usd: '$2,450 USD',
-    starter_delivery: '⚡ Delivered in 10 days, guaranteed',
-    starter_support_pkr: 'Optional Care Plan: PKR 14,000 / mo',
-    starter_support_usd: 'Optional Care Plan: $140 / mo',
-    starter_callout_label: 'CORE CAPABILITY:',
-    starter_callout_text:
-      'Essential single-store online storefront with direct WhatsApp checkout and basic stock management.',
-    starter_f1: 'Next.js Storefront (Up to 50 SKUs)',
-    starter_f2: 'WhatsApp Order Dispatch',
-    starter_f3: 'Basic Stock Updates & Orders',
-    starter_f4: '100% Client Code & DB Ownership',
-
-    growth_name: 'Multi Branch Growth',
-    growth_badge: '★ MOST POPULAR // BEST VALUE',
-    growth_desc:
-      'For established electronics and hardware retailers selling across physical shops and online with custom PC builds.',
-    growth_price_pkr: 'PKR 550,000',
-    growth_price_usd: '$4,850 USD',
-    growth_delivery: '⚡ Delivered in 21 days, guaranteed',
-    growth_support_pkr: 'Optional Care Plan: PKR 28,000 / mo',
-    growth_support_usd: 'Optional Care Plan: $280 / mo',
-    growth_callout_label: 'MAJOR UPGRADE OVER STARTER:',
-    growth_callout_text:
-      'Adds the real-time PC Builder compatibility engine, 3-branch stock sync, serial warranty tracking, and AI Hardware Advisor Chatbot.',
-    growth_f1: 'Interactive PC Builder Compatibility Matrix',
-    growth_f2: '3-Branch Inventory Synchronization',
-    growth_f3: 'Hardware Serial Number & RMA Warranty Tracking',
-    growth_f4: 'Promotional Sliders, Flash Sales & Coupons',
-    growth_f5_pkr: 'Online Card & Wallet Payment Gateway (Included — Save PKR 50,000)',
-    growth_f5_usd: 'Online Card & Wallet Payment Gateway (Included — Save $400 USD)',
-    growth_f6_pkr: 'AI Retail Sales & Hardware Advisor Chatbot (Included — Save PKR 65,000)',
-    growth_f6_usd: 'AI Retail Sales & Hardware Advisor Chatbot (Included — Save $650 USD)',
-
-    enterprise_name: 'Chain and Distribution OS',
-    enterprise_badge: '★ COMPLETE RETAIL OS',
-    enterprise_desc:
-      'For multi branch retail chains, wholesale hardware distributors, and computer importers operating high volume.',
-    enterprise_price_pkr: 'From PKR 950,000',
-    enterprise_price_usd: 'From $8,500 USD',
-    enterprise_delivery: '⚡ Delivered in 30 days, guaranteed',
-    enterprise_support_pkr: 'Dedicated Care Plan: PKR 55,000 / mo',
-    enterprise_support_usd: 'Dedicated Care Plan: $550 / mo',
-    enterprise_callout_label: 'MAJOR UPGRADE OVER GROWTH:',
-    enterprise_callout_text:
-      'Adds unlimited branches, full theme content CMS, multi-guard staff RBAC, bespoke POS/Courier API sync, and Enterprise AI Sales Agent.',
-    enterprise_f1: 'Unlimited Branches & Warehouse Sync',
-    enterprise_f2: 'Granular Staff RBAC (Super Admin, Manager, Cashier)',
-    enterprise_f3: 'Complete Theme & Navigation Content CMS',
-    enterprise_f4: 'Custom POS Hardware & Courier API Sync',
-    enterprise_f5: 'Multi-Gateway Card & Wallet Prepay Integration (Included)',
-    enterprise_f6: 'Enterprise AI Retail Sales & Knowledge Agent (Included)',
-
-    whatsapp_cta: 'Claim This Solution on WhatsApp',
-    view_terms: 'Review Contract Scope & Warranty Terms →',
-  },
-  'ur-en': {
-    hero_badge: 'COMMERCIAL INFRASTRUCTURE // COMPUTER AUR HARDWARE OS',
-    hero_title_1: 'Custom PC Sales Aur Multi-Branch Dukanon Ko',
-    hero_title_accent: 'Baghair Kisi Platform Commission Ke',
-    hero_title_2: 'Automate Karein',
-    hero_sub:
-      'Apni computer dukan ko 24/7 chalne wale automated retail operation mein badlein. Real-time socket aur wattage compatibility engine, live multi-branch stock sync, serial warranty tracking, aur AI sales advisor—21 dinon mein mukammal code malkiat ke sath.',
-    cta_primary: 'Apna Retail Plan Select Karein',
-    cta_secondary: 'Live Demo Test Karein',
-    metrics_code: 'Mukammal GitHub Code Transfer',
-    metrics_tax: 'Apna Pura Profit Khud Rakhein',
-    metrics_speed: 'Real-Time Hardware Validation',
-    metrics_rma: 'Supplier Se Invoice Tak Tracking',
-    metrics_code_top: '100% MALKIAT',
+      'An online store and back office built for computer shops. Customers build PCs with parts that actually fit, stock stays in sync across your branches, and every serial number is tracked for warranty. Live in 10–30 days, and you own the code.',
+    cta_primary: 'See plans & pricing',
+    cta_secondary: 'Try the live demo',
+    metrics_code: 'Code, data and domain handed over',
+    metrics_tax: 'No cut from your sales, ever',
+    metrics_speed: 'Socket, RAM type and PSU wattage',
+    metrics_rma: 'From supplier intake to customer claim',
+    metrics_code_top: 'YOU OWN IT',
     metrics_tax_top: '0% COMMISSION',
-    metrics_speed_top: '<1% RETURNS',
-    metrics_rma_top: 'SERIAL RMA',
+    metrics_speed_top: 'PARTS CHECKED',
+    metrics_rma_top: 'SERIAL WARRANTY',
 
-    // Ultimatum Decision Matrix
-    ultimatum_badge: 'ZERO-RISK DECISION MATRIX',
-    ultimatum_title: 'RETAILERS HUMARE SATH KYUN KAAM KARTE HAIN',
+    // How we work
+    ultimatum_badge: 'HOW WE WORK',
+    ultimatum_title: 'You see it working before you pay in full',
     ultimatum_sub:
-      'Aisa offer jisme dono surton mein retailer ka faida hai. Technical risk hum uthate hain taake aap baghair kisi dar ke scale karein.',
-    ultimatum_best_tag: 'BEST-CASE SCENARIO',
-    ultimatum_best_title: 'Aapka 24/7 automated retail system launch hota hai',
-    ultimatum_best_p1: '21 dinon mein dedicated Next.js storefront aur PC Builder live.',
-    ultimatum_best_p2: 'Automated compatibility checking se return rate taqreeban sifar.',
-    ultimatum_best_p3: 'Physical counters aur online orders ka live multi-branch stock sync.',
-    ultimatum_best_p4: 'Zero platform fee aur zero sales commission se lakhoon ki salana bachat.',
-    ultimatum_best_p5: 'GitHub source code aur PostgreSQL database ki 100% mukammal malkiat.',
-    ultimatum_best_footer: 'Nateeja: Aapka business scale hota hai aur har rupay ka profit aapka rehta hai.',
+      'Payments follow milestones. The final balance is due only after you approve your store on a private link, with your own products.',
+    ultimatum_best_tag: 'WHAT YOU GET',
+    ultimatum_best_title: 'A store built around how you sell',
+    ultimatum_best_p1: 'An online store with your products, prices and branches.',
+    ultimatum_best_p2: 'A PC builder that flags incompatible parts before checkout.',
+    ultimatum_best_p3: 'Counter sales and online orders use the same stock count.',
+    ultimatum_best_p4: 'No monthly platform fee, and no commission to us.',
+    ultimatum_best_p5: 'Full code and database handover when the project is complete.',
+    ultimatum_best_footer: 'Designed to cut repeat questions and wrong-part orders.',
 
-    ultimatum_worst_tag: 'WORST-CASE SCENARIO',
-    ultimatum_worst_title: 'Agar hum agreed specs fulfill na kar sakein',
-    ultimatum_worst_p1: 'Aapki deposit raqam 100% fori wapas bila kisi behas.',
-    ultimatum_worst_p2: 'Hamara tayyar kardah hardware database schema blueprint bilkul muft aapka.',
-    ultimatum_worst_p3: 'Aapke waqt ke azaale ke tor par courtesy credit ada kiya jata hai.',
-    ultimatum_worst_p4: 'Zero vendor lock-in aur koi chhupe huay ikhrajat nahi.',
-    ultimatum_worst_footer: 'Nateeja: Aapka zero financial risk hai, kuch nahi kho te, aur technical audit muft milta hai.',
+    ultimatum_worst_tag: "IF SOMETHING ISN'T RIGHT",
+    ultimatum_worst_title: 'We fix it, or you get your deposit back',
+    ultimatum_worst_p1: 'Before launch, you test everything against a written checklist we both sign.',
+    ultimatum_worst_p2: "Anything that doesn't match the checklist, we fix within 10 working days.",
+    ultimatum_worst_p3: "If we still can't meet it, your deposit is refunded.",
+    ultimatum_worst_p4: 'No lock-in contract and no hidden monthly charges.',
+    ultimatum_worst_footer: 'Your payments are tied to results you can see.',
 
-    // Staging Guarantee Banner
-    guarantee_badge: 'SAFETY NET // 100% MILESTONE-PROTECTED STAGING GUARANTEE',
-    guarantee_title: 'Final Payment Se Pehle Live Staging URL Par System Test Karein',
+    // Staging approval banner
+    guarantee_badge: 'STAGING APPROVAL',
+    guarantee_title: 'Test your store on a private link before launch',
     guarantee_sub:
-      'Baqi raqam aap tab ada karte hain jab aap apni private staging URL par products, PC Builder aur stock sync ko mukammal chala kar verify kar lein. Agar spec ke mutabiq na ho, to deposit fori wapas.',
+      'We set up your store with your real products on a private staging link. You test the storefront, PC builder and stock sync yourself. The final payment is due only after you approve it.',
 
-    arch_badge: 'SYSTEM ARCHITECTURE',
-    arch_title: 'ONLINE AUR DUKAN DONO KE LIYE COMBINED SYSTEM',
+    arch_badge: "WHAT'S INCLUDED",
+    arch_title: 'One system for your shop, warehouse and website',
     arch_sub:
-      'Sirf ek aam website nahi. Storefront, godam, physical dukan aur customer orders ko jorne wala complete system.',
-    arch_01_title: '01. CUSTOM WEB STOREFRONT',
+      'Not just a catalogue. Your storefront, branches, counter sales and WhatsApp orders all run on the same data.',
+    arch_01_title: '01. ONLINE STORE',
     arch_01_desc:
-      'PC hardware, CCTV packages aur electronics ke liye tayyar shuda tez tareen Next.js web store.',
-    arch_02_title: '02. PC BUILDER ENGINE',
+      'A fast, mobile-friendly store for PC hardware, CCTV and electronics, with full spec sheets and filters.',
+    arch_02_title: '02. PC BUILDER',
     arch_02_desc:
-      'CPU socket (AM5/LGA1700), DDR4/DDR5 RAM aur power supply wattage compatibility auto-check karta hai.',
-    arch_03_title: '03. MULTI-BRANCH STOCK SYNC',
+      'Customers pick parts step by step. The builder checks CPU socket (AM4/AM5, LGA1700/1851), DDR4 vs DDR5 and PSU wattage, and warns before checkout.',
+    arch_03_title: '03. BRANCH STOCK',
     arch_03_desc:
-      'Physical dukanon (Hafeez Centre, Techno City, Dubai Plaza) aur godam ka stock ek live panel par dekhein.',
-    arch_04_title: '04. SERIAL NUMBER AUR RMA',
+      'Every shop and your warehouse (e.g. Hafeez Centre, Techno City) in one stock view. Counter and online sales update it instantly.',
+    arch_04_title: '04. SERIAL & WARRANTY',
     arch_04_desc:
-      'Har GPU, motherboard aur DVR ka serial number supplier intake se customer warranty claim tak track karein.',
-    arch_05_title: '05. WHATSAPP AUTO DISPATCH',
+      'Record every GPU, motherboard or DVR serial at intake, link it to the invoice, and check warranty status in seconds.',
+    arch_05_title: '05. WHATSAPP ORDERS',
     arch_05_desc:
-      'Pre-formatted order details aur custom PC build sheets seedha aapke sales counter WhatsApp par pohanchti hain.',
-    arch_06_title: '06. 100% CODE AUR DATA TRANSFER',
+      'Orders and custom builds arrive on your sales WhatsApp with items, specs, total and delivery details.',
+    arch_06_title: '06. FULL HANDOVER',
     arch_06_desc:
-      'Mukammal GitHub source code aur PostgreSQL database ki ownership aapke company account ko transfer hoti hai.',
-    arch_07_title: '07. AI SALES AUR HARDWARE ADVISOR CHATBOT',
+      'Your GitHub repository, database and admin accounts are transferred to you.',
+    arch_07_title: '07. AI SALES ASSISTANT',
     arch_07_desc:
-      'Website par 24/7 mojud AI assistant jo customer ko budget ke mutabiq compatible parts recommend karta hai, socket aur wattage match karta hai, aur orders seedha WhatsApp ya cart mein bhejta hai.',
+      'A chat assistant on your store that suggests builds by budget, checks compatibility, and passes the customer to your WhatsApp with the full conversation.',
 
-    demo_badge: 'VERIFIABLE SYSTEM DEMONSTRATION',
-    demo_title: 'LIVE PRODUCTION INTERFACE TEST KAREIN',
+    demo_badge: 'LIVE DEMO',
+    demo_title: 'Try it yourself',
     demo_sub:
-      'Humare hosted sandbox environment par live customer shopping aur admin management controls khud chala kar dekhein.',
-    demo_store_title: '01. STOREFRONT DEMO',
-    demo_store_desc:
-      'Live product catalog, hardware filters, shopping cart aur modern dark layout test karein.',
-    demo_pc_title: '02. PC BUILDER ENGINE',
-    demo_pc_desc:
-      'Socket compatibility check, wattage calculator aur WhatsApp custom build share kar ke dekhein.',
-    demo_admin_title: '03. ADMIN PANEL MATRIX',
-    demo_admin_desc:
-      '1-click admin demo login, live stock updates, orders tracker aur warranty serial numbers inspect karein.',
+      'A working demo store with sample products. Your version is set up with your products, branches and branding.',
+    demo_store_title: '01. STOREFRONT',
+    demo_store_desc: 'Browse the catalogue, filter by specs, and add to cart.',
+    demo_pc_title: '02. PC BUILDER',
+    demo_pc_desc: 'Pick parts, see compatibility warnings, and share a build to WhatsApp.',
+    demo_admin_title: '03. ADMIN PANEL',
+    demo_admin_desc: 'One-click demo login. See orders, stock by branch and serial records.',
 
-    plans_badge: 'COMMERCIAL INVESTMENT TIERS',
-    plans_title: 'Plans.',
-    plans_sub:
-      'Baghair kisi mahana sales commission ke. Mukammal source code ownership. Apni dukan ke mutabiq plan chunein.',
-    plans_sub_suffix:
-      'Mukammal architecture specs, modules aur visual previews dekhne ke liye kisi bhi plan par click karein.',
-    detail_btn: 'MUKAMMAL DETAILS AUR PREVIEWS DEKHEIN →',
+    plans_badge: 'PLANS & PRICING',
+    plans_title: 'Tech Retail plans',
+    plans_sub: 'One fixed price per plan. No commission. Full handover when complete.',
+    plans_sub_suffix: "Open any plan to see the full scope, what's excluded, and screenshots.",
+    detail_btn: 'See full scope & screenshots →',
 
-    starter_name: 'Single Store Launch',
-    starter_badge: 'SINGLE DUKAN',
+    starter_name: 'Single Store',
+    starter_badge: '1 SHOP',
     starter_desc:
-      'Single location computer shops aur CCTV vendors ke liye jo direct WhatsApp dispatch ke sath online sales shuru kar rahe hain.',
+      'For a single computer or CCTV shop starting to sell online, with orders coming to WhatsApp.',
     starter_price_pkr: 'PKR 280,000',
-    starter_price_usd: '$2,450 USD',
-    starter_delivery: '⚡ 10 dinon mein delivery, guaranteed',
+    starter_price_usd: '$2,450',
+    starter_delivery: 'Live in 10 days*',
     starter_support_pkr: 'Optional Care Plan: PKR 14,000 / month',
     starter_support_usd: 'Optional Care Plan: $140 / month',
-    starter_callout_label: 'MAIN CAPABILITY:',
-    starter_callout_text:
-      'Single dukan ke liye online storefront jisme direct WhatsApp order checkout aur basic stock manager shamil hai.',
-    starter_f1: 'Next.js Storefront (50 Products Tak)',
-    starter_f2: 'Direct WhatsApp Order Dispatch',
-    starter_f3: 'Live Stock Updates aur Orders Tracker',
-    starter_f4: '100% Client Code aur Database Ownership',
+    starter_callout_label: 'BEST FOR',
+    starter_callout_text: 'Getting your shop online fast, with an admin panel your staff can use.',
+    starter_f1: 'Online store — we load your first 50 products',
+    starter_f2: 'Orders sent to your WhatsApp with full details',
+    starter_f3: 'Admin panel for products, stock and orders',
+    starter_f4: 'Google Search Console, sitemap and Analytics set up',
 
-    growth_name: 'Multi Branch Growth',
-    growth_badge: '★ SAB SE ZYADA PASANDIDAH // BEHTAREEN VALUE',
-    growth_desc:
-      'Bari electronics aur hardware dukanon ke liye jahan custom gaming PC builds aur physical store sync zaroori hai.',
+    growth_name: 'Multi-Branch',
+    growth_badge: 'MOST POPULAR',
+    growth_desc: 'For established hardware and gaming PC shops selling at the counter and online.',
     growth_price_pkr: 'PKR 550,000',
-    growth_price_usd: '$4,850 USD',
-    growth_delivery: '⚡ 21 dinon mein delivery, guaranteed',
+    growth_price_usd: '$4,850',
+    growth_delivery: 'Live in 21 days*',
     growth_support_pkr: 'Optional Care Plan: PKR 28,000 / month',
     growth_support_usd: 'Optional Care Plan: $280 / month',
-    growth_callout_label: 'STARTER SE BARI UPGRADES:',
+    growth_callout_label: 'EVERYTHING IN SINGLE STORE, PLUS',
     growth_callout_text:
-      'Isme real-time PC Builder compatibility engine, 3-branch stock sync, serial warranty tracking, aur AI Hardware Advisor Chatbot shamil hai.',
-    growth_f1: 'Interactive PC Builder Compatibility Matrix',
-    growth_f2: '3 Physical Branches Ki Stock Synchronization',
-    growth_f3: 'Hardware Serial Number aur RMA Warranty Tracker',
-    growth_f4: 'Promotional Sliders, Flash Sales aur Coupons',
-    growth_f5_pkr: 'Card Prepay Online Payment Gateway (Shamil Hai — Baghair Kisi 50K Fee Ke)',
-    growth_f5_usd: 'Card Prepay Online Payment Gateway (Shamil Hai — Baghair Kisi $400 Fee Ke)',
-    growth_f6_pkr: 'AI Hardware Advisor aur Sales Chatbot (Shamil Hai — Baghair Kisi 65K Fee Ke)',
-    growth_f6_usd: 'AI Hardware Advisor aur Sales Chatbot (Shamil Hai — Baghair Kisi $650 Fee Ke)',
+      'PC builder, stock across 3 locations, serial warranty tracking, online payments and an AI sales assistant.',
+    growth_f1: 'PC builder with compatibility checks',
+    growth_f2: 'Stock synced across up to 3 locations',
+    growth_f3: 'Serial-number warranty tracking',
+    growth_f4: 'Coupons, flash sales and banners',
+    growth_f5_pkr: 'Card & wallet payments — included (PKR 50,000 value)',
+    growth_f5_usd: 'Card & wallet payments — included ($400 value)',
+    growth_f6_pkr: 'AI sales assistant — included (PKR 65,000 value)',
+    growth_f6_usd: 'AI sales assistant — included ($650 value)',
 
-    enterprise_name: 'Chain and Distribution OS',
-    enterprise_badge: '★ MUKAMMAL RETAIL OS',
-    enterprise_desc:
-      'Multi branch retail chains, wholesale distributors aur computer importers ke liye jo bara volume operate karte hain.',
+    enterprise_name: 'Chain & Wholesale',
+    enterprise_badge: 'FOR CHAINS',
+    enterprise_desc: 'For multi-branch chains, wholesalers and importers with staff across locations.',
+    enterprise_price_pkr: 'From PKR 950,000',
+    enterprise_price_usd: 'From $8,500',
+    enterprise_delivery: 'From 30 days — fixed in your scope document',
+    enterprise_support_pkr: 'Dedicated Care Plan: PKR 55,000 / month',
+    enterprise_support_usd: 'Dedicated Care Plan: $550 / month',
+    enterprise_callout_label: 'EVERYTHING IN MULTI-BRANCH, PLUS',
+    enterprise_callout_text:
+      'Unlimited branches, staff roles, a CMS, POS and courier integrations, and an AI assistant connected to live stock.',
+    enterprise_f1: 'Unlimited branches and warehouses, with stock transfers',
+    enterprise_f2: 'Staff roles: owner, manager, cashier, warehouse',
+    enterprise_f3: 'Edit pages, menus and banners yourself (CMS)',
+    enterprise_f4: 'POS hardware, courier (TCS, Leopards, Trax) and FBR integration',
+    enterprise_f5: 'Multiple payment gateways — included',
+    enterprise_f6: 'AI assistant with live stock and bulk quotes — included',
+
+    whatsapp_cta: 'Discuss this plan on WhatsApp',
+    view_terms: 'Read the scope, payment and warranty terms →',
+  },
+  'ur-en': {
+    hero_badge: 'TECH RETAIL OS · COMPUTER, GAMING AUR CCTV DUKANON KE LIYE',
+    hero_title_1: 'Custom PCs online bechein —',
+    hero_title_accent: 'har part pehle se check.',
+    hero_title_2: '',
+    hero_sub:
+      'Computer dukanon ke liye online store aur back office. Customer sirf compatible parts se PC banata hai, tamam branches ka stock sync rehta hai, aur har serial number warranty ke liye record hota hai. 10–30 din mein live, aur code aapka.',
+    cta_primary: 'Plans aur prices dekhein',
+    cta_secondary: 'Live demo try karein',
+    metrics_code: 'Code, data aur domain aapke hawale',
+    metrics_tax: 'Aapki sales mein se koi hissa nahi',
+    metrics_speed: 'Socket, RAM type aur PSU wattage',
+    metrics_rma: 'Supplier se customer claim tak',
+    metrics_code_top: 'MALKIAT AAPKI',
+    metrics_tax_top: '0% COMMISSION',
+    metrics_speed_top: 'PARTS CHECK',
+    metrics_rma_top: 'SERIAL WARRANTY',
+
+    // How we work
+    ultimatum_badge: 'HUM KAISE KAAM KARTE HAIN',
+    ultimatum_title: 'Poori payment se pehle system chalta hua dekhein',
+    ultimatum_sub:
+      'Payment milestones ke sath hoti hai. Aakhri raqam tab, jab aap private link par apne products ke sath store approve kar dein.',
+    ultimatum_best_tag: 'AAPKO KYA MILTA HAI',
+    ultimatum_best_title: 'Aapke kaam ke mutabiq bana store',
+    ultimatum_best_p1: 'Aapke products, prices aur branches ke sath online store.',
+    ultimatum_best_p2: 'PC builder jo checkout se pehle ghalat parts bata deta hai.',
+    ultimatum_best_p3: 'Counter sale aur online order — ek hi stock.',
+    ultimatum_best_p4: 'Na mahana platform fee, na hamara koi commission.',
+    ultimatum_best_p5: 'Project mukammal hone par poora code aur database aapke hawale.',
+    ultimatum_best_footer: 'Baar baar ke sawal aur ghalat parts ke orders kam karne ke liye banaya gaya.',
+
+    ultimatum_worst_tag: 'AGAR KUCH THEEK NA HO',
+    ultimatum_worst_title: 'Hum theek karenge — warna deposit wapas',
+    ultimatum_worst_p1: 'Launch se pehle aap har cheez ek likhi hui checklist ke mutabiq test karte hain, jis par hum dono sign karte hain.',
+    ultimatum_worst_p2: 'Jo cheez checklist ke mutabiq na ho, hum 10 working days mein theek karte hain.',
+    ultimatum_worst_p3: 'Phir bhi na ho sake, to aapki deposit wapas.',
+    ultimatum_worst_p4: 'Na lock-in contract, na chhupe mahana charges.',
+    ultimatum_worst_footer: 'Aapki payment un nataij se judi hai jo aap khud dekhte hain.',
+
+    // Staging approval banner
+    guarantee_badge: 'STAGING APPROVAL',
+    guarantee_title: 'Launch se pehle private link par apna store test karein',
+    guarantee_sub:
+      'Hum aapka store aapke asli products ke sath private staging link par set karte hain. Storefront, PC builder aur stock sync aap khud test karte hain. Aakhri payment sirf aapki approval ke baad.',
+
+    arch_badge: 'KYA SHAMIL HAI',
+    arch_title: 'Dukan, godam aur website — ek system',
+    arch_sub:
+      'Sirf catalogue nahi. Storefront, branches, counter sale aur WhatsApp orders sab ek hi data par chalte hain.',
+    arch_01_title: '01. ONLINE STORE',
+    arch_01_desc:
+      'PC hardware, CCTV aur electronics ke liye tez, mobile-friendly store — poori specs aur filters ke sath.',
+    arch_02_title: '02. PC BUILDER',
+    arch_02_desc:
+      'Customer qadam ba qadam parts chunta hai. Builder CPU socket (AM4/AM5, LGA1700/1851), DDR4 ya DDR5 aur PSU wattage check kar ke checkout se pehle bata deta hai.',
+    arch_03_title: '03. BRANCH STOCK',
+    arch_03_desc:
+      'Har dukan aur godam (maslan Hafeez Centre, Techno City) ek stock view mein. Counter ya online sale par stock foran update.',
+    arch_04_title: '04. SERIAL AUR WARRANTY',
+    arch_04_desc:
+      'Har GPU, motherboard ya DVR ka serial intake par record, invoice se link, aur warranty status seconds mein.',
+    arch_05_title: '05. WHATSAPP ORDERS',
+    arch_05_desc:
+      'Orders aur custom builds aapke sales WhatsApp par — items, specs, total aur delivery details ke sath.',
+    arch_06_title: '06. MUKAMMAL HANDOVER',
+    arch_06_desc:
+      'GitHub repository, database aur admin accounts aapke naam transfer.',
+    arch_07_title: '07. AI SALES ASSISTANT',
+    arch_07_desc:
+      'Aapke store par chat assistant jo budget ke mutabiq build suggest karta hai, compatibility check karta hai, aur poori chat ke sath customer ko aapke WhatsApp par bhej deta hai.',
+
+    demo_badge: 'LIVE DEMO',
+    demo_title: 'Khud chala kar dekhein',
+    demo_sub:
+      'Sample products ke sath chalta hua demo store. Aapka version aapke products, branches aur branding ke sath set hota hai.',
+    demo_store_title: '01. STOREFRONT',
+    demo_store_desc: 'Catalogue dekhein, specs se filter karein, cart mein daalein.',
+    demo_pc_title: '02. PC BUILDER',
+    demo_pc_desc: 'Parts chunein, compatibility warnings dekhein, build WhatsApp par share karein.',
+    demo_admin_title: '03. ADMIN PANEL',
+    demo_admin_desc: 'Ek click demo login. Orders, branch-wise stock aur serial records dekhein.',
+
+    plans_badge: 'PLANS AUR PRICES',
+    plans_title: 'Tech Retail plans',
+    plans_sub: 'Har plan ki ek fixed price. Koi commission nahi. Mukammal hone par poora handover.',
+    plans_sub_suffix: 'Poora scope, kya shamil nahi, aur screenshots dekhne ke liye plan kholein.',
+    detail_btn: 'Poora scope aur screenshots dekhein →',
+
+    starter_name: 'Single Store',
+    starter_badge: '1 DUKAN',
+    starter_desc:
+      'Ek computer ya CCTV dukan ke liye jo online bechna shuru kar rahi hai — orders WhatsApp par.',
+    starter_price_pkr: 'PKR 280,000',
+    starter_price_usd: '$2,450',
+    starter_delivery: '10 din mein live*',
+    starter_support_pkr: 'Ikhtiyari Care Plan: PKR 14,000 / mahana',
+    starter_support_usd: 'Ikhtiyari Care Plan: $140 / mahana',
+    starter_callout_label: 'KIS KE LIYE BEHTAR',
+    starter_callout_text: 'Dukan ko jaldi online lana, aisa admin panel jo staff aasani se chala sake.',
+    starter_f1: 'Online store — pehle 50 products hum daalte hain',
+    starter_f2: 'Orders poori details ke sath aapke WhatsApp par',
+    starter_f3: 'Products, stock aur orders ke liye admin panel',
+    starter_f4: 'Google Search Console, sitemap aur Analytics setup',
+
+    growth_name: 'Multi-Branch',
+    growth_badge: 'SAB SE MAQBOOL',
+    growth_desc: 'Established hardware aur gaming PC dukanon ke liye jo counter aur online dono par bechti hain.',
+    growth_price_pkr: 'PKR 550,000',
+    growth_price_usd: '$4,850',
+    growth_delivery: '21 din mein live*',
+    growth_support_pkr: 'Ikhtiyari Care Plan: PKR 28,000 / mahana',
+    growth_support_usd: 'Ikhtiyari Care Plan: $280 / mahana',
+    growth_callout_label: 'SINGLE STORE KA SAB KUCH, AUR',
+    growth_callout_text:
+      'PC builder, 3 locations ka stock, serial warranty tracking, online payments aur AI sales assistant.',
+    growth_f1: 'Compatibility check wala PC builder',
+    growth_f2: '3 locations tak stock sync',
+    growth_f3: 'Serial number warranty tracking',
+    growth_f4: 'Coupons, flash sales aur banners',
+    growth_f5_pkr: 'Card aur wallet payments — shamil (PKR 50,000 ki value)',
+    growth_f5_usd: 'Card aur wallet payments — shamil ($400 ki value)',
+    growth_f6_pkr: 'AI sales assistant — shamil (PKR 65,000 ki value)',
+    growth_f6_usd: 'AI sales assistant — shamil ($650 ki value)',
+
+    enterprise_name: 'Chain & Wholesale',
+    enterprise_badge: 'CHAINS KE LIYE',
+    enterprise_desc: 'Multi-branch chains, wholesalers aur importers ke liye jin ka staff kai locations par hai.',
     enterprise_price_pkr: 'PKR 950,000 se shuru',
-    enterprise_price_usd: '$8,500 USD se shuru',
-    enterprise_delivery: '⚡ 30 dinon mein delivery, guaranteed',
+    enterprise_price_usd: '$8,500 se shuru',
+    enterprise_delivery: '30 din se — final date scope document mein',
     enterprise_support_pkr: 'Dedicated Care Plan: PKR 55,000 / mahana',
     enterprise_support_usd: 'Dedicated Care Plan: $550 / mahana',
-    enterprise_callout_label: 'GROWTH SE BARI UPGRADES:',
+    enterprise_callout_label: 'MULTI-BRANCH KA SAB KUCH, AUR',
     enterprise_callout_text:
-      'La-mehdood branches, mukammal dynamic theme CMS, granular staff RBAC, courier/POS API integration, aur Enterprise AI Sales Agent.',
-    enterprise_f1: 'La-Mehdood Branches aur Godam Sync',
-    enterprise_f2: 'Staff Permissions (Super Admin, Manager, Cashier)',
-    enterprise_f3: 'Mukammal Storefront Theme aur Content CMS',
-    enterprise_f4: 'Custom POS Hardware aur Courier API Sync',
-    enterprise_f5: 'Online Payment Gateways aur Custom Financial APIs Shamil',
-    enterprise_f6: 'Dedicated AI Sales Agent aur Custom Inventory Knowledge Engine (Shamil Hai)',
+      'La-mehdood branches, staff roles, CMS, POS aur courier integrations, aur live stock se juda AI assistant.',
+    enterprise_f1: 'La-mehdood branches aur godam, stock transfer ke sath',
+    enterprise_f2: 'Staff roles: owner, manager, cashier, godam',
+    enterprise_f3: 'Pages, menus aur banners khud edit karein (CMS)',
+    enterprise_f4: 'POS hardware, courier (TCS, Leopards, Trax) aur FBR integration',
+    enterprise_f5: 'Ek se zyada payment gateways — shamil',
+    enterprise_f6: 'Live stock aur bulk quotes wala AI assistant — shamil',
 
-    whatsapp_cta: 'Yeh Plan WhatsApp Par Book Karein',
-    view_terms: 'Mukammal Sharaait aur Guarantees Dekhein →',
+    whatsapp_cta: 'Is plan par WhatsApp par baat karein',
+    view_terms: 'Scope, payment aur warranty ki sharaait parhein →',
   },
 }
 
 const PLANS_DETAIL = {
   en: {
     starter: {
-      name: 'Single Store Launch',
-      code: 'TXS-STARTER',
-      badge: 'ENTRY LEVEL // SINGLE OUTLET',
+      name: 'Single Store',
+      code: '',
+      badge: 'SINGLE STORE',
       pricePkr: 'PKR 280,000',
-      priceUsd: '$2,450 USD',
-      delivery: '10 days, guaranteed',
+      priceUsd: '$2,450',
+      delivery: '10 days',
       idealFor:
-        'Single-location computer shops, CCTV vendors, and electronics retail counters beginning online sales with direct WhatsApp dispatch without ongoing platform taxes.',
+        'A single computer shop, CCTV vendor or electronics counter starting to sell online, with orders coming to WhatsApp.',
       artifacts: [
-        {
-          title: 'Next.js Public Storefront',
-          image: '/txs/home.png',
-          tag: 'Storefront',
-        },
-        {
-          title: 'Product Stock & Order Manager',
-          image: '/txs/dashboard products.png',
-          tag: 'Admin Panel',
-        },
+        { title: 'Storefront', image: '/txs/home.png', tag: 'Storefront' },
+        { title: 'Product & order admin', image: '/txs/dashboard products.png', tag: 'Admin' },
       ],
       modules: [
         {
-          title: 'Custom Next.js Web Storefront',
-          desc: 'Fast, responsive storefront tailored for computer & electronics products.',
+          title: 'Online store',
+          desc: 'A fast, mobile-friendly store for computer and electronics products.',
           items: [
-            'Up to 50 SKUs initial setup and categorization',
-            'Rich technical specifications display (CPU, GPU, RAM, Storage)',
-            'Category & price filtering for desktop and mobile',
-            'Fast search and shopping cart functionality',
+            'We load your first 50 products (no limit after that)',
+            'Full spec sheets: CPU, GPU, RAM, storage',
+            'Category and price filters',
+            'Search and shopping cart',
           ],
         },
         {
-          title: 'WhatsApp Order Dispatch Integration',
-          desc: 'Instant direct checkout routing to your sales desk.',
+          title: 'WhatsApp orders',
+          desc: 'Every order arrives on your sales WhatsApp, ready to confirm.',
           items: [
-            'Pre-formatted WhatsApp message with items, specs, and total PKR price',
-            'Customer contact details and delivery address auto-captured',
-            'Zero platform transaction fee taken from your gross revenue',
+            'Items, specs and order total',
+            'Customer name, phone and delivery address',
+            'No commission on any order',
           ],
         },
         {
-          title: 'Essential Admin Control Panel',
-          desc: 'Straightforward management interface designed for shop floor staff.',
+          title: 'Admin panel',
+          desc: 'Simple enough for shop staff.',
           items: [
-            'Product Add / Edit / Delete interface',
-            'Real-time stock count updates (In Stock / Out of Stock status)',
-            'Order status tracker (Pending → Dispatched → Completed)',
-            'Customer details archive (Name, phone, delivery history)',
+            'Add, edit and remove products',
+            'In stock / out of stock updates',
+            'Order status: Pending → Dispatched → Completed',
+            'Customer list with order history',
           ],
         },
         {
-          title: 'SEO & Search Engine Indexing',
-          desc: 'Foundational search configuration to rank for local keywords.',
-          items: [
-            'Google Search Console setup and verification',
-            'Automated XML sitemap generation',
-            'Google Analytics 4 (GA4) visitor & event tracking setup',
-          ],
+          title: 'Google setup',
+          desc: 'So customers can find your shop.',
+          items: ['Google Search Console', 'XML sitemap', 'Google Analytics (GA4)'],
         },
       ],
       exclusions: [
-        'Interactive PC Builder compatibility engine (Available in Growth & Enterprise).',
-        'Multi branch stock synchronization (Single outlet stock only).',
-        'Hardware serial number and RMA warranty lifecycle tracking.',
-        'Product photos, descriptions, and data entry beyond the first 50 SKUs. You supply the content and we set it up.',
-        'Online card prepay payment gateway (Available as +PKR 50,000 / $400 add-on; included free in Growth & Chain plans).',
-        'AI Retail Sales & Hardware Advisor Chatbot (Available as +PKR 65,000 / $650 add-on; included free in Growth & Chain plans).',
+        'PC builder (in Multi-Branch and Chain)',
+        'Stock across more than one location',
+        'Serial-number warranty tracking',
+        'Product photos and descriptions — you provide them; data entry beyond 50 products is an add-on',
+        'Online card and wallet payments (add-on: +PKR 50,000 / $400; included in Multi-Branch & Chain)',
+        'AI sales assistant (add-on: +PKR 65,000 / $650; included in Multi-Branch & Chain)',
       ],
     },
     growth: {
-      name: 'Multi Branch Growth',
-      code: 'TXS-GROWTH',
-      badge: '★ MOST POPULAR // BEST VALUE',
+      name: 'Multi-Branch',
+      code: '',
+      badge: 'MOST POPULAR',
       pricePkr: 'PKR 550,000',
-      priceUsd: '$4,850 USD',
-      delivery: '21 days, guaranteed',
+      priceUsd: '$4,850',
+      delivery: '21 days',
       idealFor:
-        'Established computer hardware and gaming PC retailers selling high-ticket rigs, components, and managing stock across shop counters and online simultaneously.',
+        'Established hardware and gaming PC shops selling high-value builds and parts, with stock at the counter and online.',
       artifacts: [
-        {
-          title: 'Interactive PC Builder Configurator',
-          image: '/txs/RIG BUILDER.png',
-          tag: 'Compatibility Engine',
-        },
-        {
-          title: 'Hardware Serial & RMA Warranty',
-          image: '/txs/admin warranty.png',
-          tag: 'Serial Tracking',
-        },
-        {
-          title: 'Storefront Hardware Catalog',
-          image: '/txs/products.png',
-          tag: 'Hardware Catalog',
-        },
-        {
-          title: 'Central Revenue & Order Dashboard',
-          image: '/txs/dashboard.png',
-          tag: 'Admin Dashboard',
-        },
+        { title: 'PC builder', image: '/txs/RIG BUILDER.png', tag: 'PC builder' },
+        { title: 'Serial & warranty records', image: '/txs/admin warranty.png', tag: 'Warranty' },
+        { title: 'Product catalogue', image: '/txs/products.png', tag: 'Catalogue' },
+        { title: 'Sales dashboard', image: '/txs/dashboard.png', tag: 'Dashboard' },
       ],
       modules: [
         {
-          title: 'Interactive PC Builder Compatibility Engine',
-          desc: 'Real-time hardware validation preventing mismatched customer orders.',
+          title: 'PC builder',
+          desc: 'Checks every part as the customer builds.',
           items: [
-            'CPU Socket Matching (AM4/AM5 vs LGA1700/LGA1851)',
-            'RAM Generation Validation (DDR4 vs DDR5)',
-            'Power supply wattage overhead & GPU clearance calculation',
-            'One-click WhatsApp build sharing with pre-formatted specs and PKR total',
+            'CPU socket: AM4/AM5 vs LGA1700/LGA1851',
+            'RAM type: DDR4 vs DDR5',
+            'PSU wattage headroom and GPU clearance',
+            'Share the build to WhatsApp with specs and total',
           ],
         },
         {
-          title: 'Multi-Branch Inventory Synchronization (Up to 3 Nodes)',
-          desc: 'Unified stock management across multiple physical counters.',
+          title: 'Stock across 3 locations',
+          desc: 'One stock view for your counters and warehouse.',
           items: [
-            'Connect up to 3 physical branches (e.g. Hafeez Centre, Techno City) + central warehouse',
-            'Branch-level stock counts visible in the admin matrix',
-            'Real-time deduction upon store sales and online orders',
+            'Up to 3 locations (e.g. Hafeez Centre, Techno City + warehouse)',
+            'Stock by location in the admin',
+            'Counter and online sales update stock instantly',
           ],
         },
         {
-          title: 'Hardware Serial Number & RMA Lifecycle',
-          desc: 'Track individual GPUs, motherboards, and power supplies from intake to warranty.',
+          title: 'Serial-number warranty',
+          desc: 'Track each GPU, motherboard and PSU.',
           items: [
-            'Serial status: IN_STOCK → SOLD (linked to invoice) → RMA_PENDING → REPLACED',
-            'Eliminates customer return fraud and distributor disputes',
-            'Search warranty status by serial number in seconds',
+            'In stock → Sold (linked to invoice) → Warranty claim → Replaced',
+            'Check any serial in seconds',
+            'Clear records for supplier and customer disputes',
           ],
         },
         {
-          title: 'Marketing, Discounts & Automated PDF Invoices',
-          desc: 'Promotions engine to drive repeat commercial purchases.',
+          title: 'Promotions & invoices',
+          desc: 'Tools to bring customers back.',
           items: [
-            'Self-managed promotional hero sliders and flash sale banners',
-            'Coupon code engine (percentage discounts, flat PKR, minimum order rules)',
-            'Automated professional PDF receipts and invoice generation',
+            'Banners and flash sales you manage yourself',
+            'Coupon codes: percentage, fixed amount, minimum order',
+            'Printable receipts and invoices',
           ],
         },
         {
-          title: 'Online Payment Gateway Integration (Included — Save PKR 50,000)',
-          desc: 'Direct card and mobile wallet checkout for prepaid orders at zero extra integration fee.',
+          title: 'Online payments (included — PKR 50,000 value)',
+          desc: 'Card and wallet checkout for prepaid orders.',
           items: [
-            'Paymob, Bank Alfalah Alfa, Keenu, or PayFast payment gateway integration',
-            'Accept Visa, MasterCard, and UnionPay debit/credit cards directly on checkout',
-            'JazzCash & EasyPaisa direct mobile wallet payments',
-            'Zero add-on fee (PKR 50,000 extra fee waived for Growth plan)',
+            'One gateway of your choice: PayFast, Paymob, Bank Alfalah or Keenu',
+            'Visa, Mastercard and UnionPay',
+            'JazzCash and EasyPaisa',
+            'Gateway approval and transaction fees are between you and your gateway',
           ],
         },
         {
-          title: 'AI Retail Sales & Hardware Advisor Chatbot (Included — Save $650 / PKR 65,000)',
-          desc: '24/7 automated sales consultant directly inside the storefront.',
+          title: 'AI sales assistant (included — PKR 65,000 value)',
+          desc: 'A chat assistant on your store.',
           items: [
-            'Pre-trained on PC hardware specs, socket rules, PSU wattages, and monitor pairings',
-            'Natural language customer budget inquiries ("Best gaming PC under $1,200")',
-            'Direct 1-click cart and PC Builder prefill from chat recommendations',
-            'Instant customer handoff to sales desk WhatsApp with full conversation context',
+            'Suggests builds by budget and checks compatibility',
+            'Fills the PC builder or cart from the chat',
+            'Hands the chat to your WhatsApp with full context',
+            'AI usage fees are paid at cost; we estimate them upfront',
           ],
         },
       ],
       exclusions: [
-        'Limited to 3 branch nodes (Unlimited branches supported in Enterprise).',
-        'Does not include custom external accounting ERP/FBR direct API integrations.',
-        'Super Admin vs Cashier granular permission matrices (Single admin level).',
-        'Product photos, descriptions, and catalog migration beyond the included setup. You supply the content.',
-        'Unlimited revisions. Two revision rounds are included per milestone and further changes are billed hourly.',
+        'More than 3 locations (Chain plan)',
+        'FBR or accounting/ERP integration (add-on)',
+        'Separate staff permission levels (add-on or Chain plan)',
+        'Product photos and descriptions beyond the included setup',
+        'Unlimited revisions — 2 rounds per milestone are included, then hourly',
       ],
     },
     enterprise: {
-      name: 'Chain and Distribution OS',
-      code: 'TXS-ENTERPRISE',
-      badge: '★ COMPLETE RETAIL OS',
+      name: 'Chain & Wholesale',
+      code: '',
+      badge: 'FOR CHAINS',
       pricePkr: 'From PKR 950,000',
-      priceUsd: 'From $8,500 USD',
-      delivery: '30 days, guaranteed',
+      priceUsd: 'From $8,500',
+      delivery: 'From 30 days',
       idealFor:
-        'High-volume computer retail chains, nationwide hardware distributors, and tech importers with multi-branch networks requiring a custom enterprise ERP.',
+        'Computer retail chains, nationwide distributors and importers running several branches and warehouses.',
       artifacts: [
-        {
-          title: 'Site CMS & Banner Control Matrix',
-          image: '/txs/admin site control.png',
-          tag: 'CMS Panel',
-        },
-        {
-          title: 'Multi-Branch Inventory Management',
-          image: '/txs/dashboard products.png',
-          tag: 'Branch Matrix',
-        },
-        {
-          title: 'PC Builder Rig Configurator',
-          image: '/txs/RIG BUILDER.png',
-          tag: 'Rig Builder',
-        },
-        {
-          title: 'Serial Number Warranty & RMA',
-          image: '/txs/admin warranty.png',
-          tag: 'RMA Center',
-        },
+        { title: 'Site content & banners (CMS)', image: '/txs/admin site control.png', tag: 'CMS' },
+        { title: 'Product & stock admin', image: '/txs/dashboard products.png', tag: 'Stock' },
+        { title: 'PC builder', image: '/txs/RIG BUILDER.png', tag: 'PC builder' },
+        { title: 'Serial & warranty records', image: '/txs/admin warranty.png', tag: 'Warranty' },
       ],
       modules: [
         {
-          title: 'Unlimited Multi-Branch & Warehouse Network',
-          desc: 'Enterprise inventory distribution across all outlets.',
+          title: 'Unlimited branches & warehouses',
+          desc: 'Stock across all your outlets.',
           items: [
-            'Unlimited physical retail shops, distribution hubs, and warehouses',
-            'Inter-branch stock transfer requests with dispatch and receipt sign-off',
-            'Unified warehouse dispatch and counter pickup routing',
+            'Any number of shops, hubs and warehouses',
+            'Stock transfer requests with dispatch and receipt sign-off',
+            'Warehouse dispatch and counter pickup',
           ],
         },
         {
-          title: 'Granular Multi-Guard Role-Based Access Control (RBAC)',
-          desc: 'Spatie-style permissions restricting staff access according to job title.',
+          title: 'Staff roles',
+          desc: 'Each person sees only what their job needs.',
           items: [
-            'Super Admin: Financial P&L, gross margins, branch revenue rankings, master settings',
-            'Branch Manager: Local counter sales, staff rosters, local stock adjustments',
-            'Counter Cashier: Fast point-of-sale checkout and receipt printing',
-            'Warehouse Barcode Manager: Inbound shipment intake and bulk serial scanning',
+            'Owner: profit, margins, branch performance, settings',
+            'Branch manager: local sales, staff, stock adjustments',
+            'Cashier: fast billing and receipt printing',
+            'Warehouse: stock intake and bulk serial scanning',
           ],
         },
         {
-          title: 'Dynamic Theme & Content Management CMS',
-          desc: 'Complete control over your storefront without writing code.',
+          title: 'Content management (CMS)',
+          desc: 'Change your store without code.',
           items: [
-            'Navigation menu editor, custom landing page builder, announcement bars',
-            'Dynamic branding colors and hero promotional sliders',
-            'Customizable receipt and email template editor',
+            'Edit menus, pages and announcement bars',
+            'Brand colours and banners',
+            'Receipt and email templates',
           ],
         },
         {
-          title: 'Bespoke Third-Party API Integrations',
-          desc: 'Seamless connections to physical retail hardware and logistics.',
+          title: 'Integrations',
+          desc: 'Connect your counter and couriers.',
           items: [
-            'Thermal receipt printer and barcode scanner compatibility',
-            'Courier tracking API integration (TCS, Trax, Leopards, CallCourier)',
-            'FBR digital invoice compliance (optional integration)',
+            'Thermal printers and barcode scanners',
+            'Courier booking and tracking: TCS, Trax, Leopards, CallCourier',
+            'FBR POS integration (for Tier-1 retailers)',
           ],
         },
         {
-          title: 'Multi-Gateway Online Prepay & Financial Engine (Included)',
-          desc: 'Enterprise-grade payment routing and automated settlement reconciliation.',
+          title: 'Payments (included)',
+          desc: 'Built for high order volume.',
           items: [
-            'Multiple simultaneous payment gateways for high-volume failover',
-            'Direct credit/debit card, Raast P2M QR, JazzCash, and EasyPaisa integrations',
-            'Automated payment reconciliation reports with bank statements',
-            'Zero add-on fee (included standard in Chain and Distribution OS)',
+            'More than one gateway, with fallback',
+            'Cards, Raast QR, JazzCash and EasyPaisa',
+            'Daily payment reconciliation report',
           ],
         },
         {
-          title: 'Enterprise AI Retail Sales & Knowledge Agent (Included)',
-          desc: 'Dedicated multi-branch intelligent sales agent trained on your inventory.',
+          title: 'AI assistant with live stock (included)',
+          desc: 'Set up with your products and branches.',
           items: [
-            'Real-time multi-branch inventory lookup directly inside chat replies',
-            'B2B & wholesale quote guidance for bulk corporate hardware orders',
-            'Full conversation analytics and lead capture in admin matrix',
-            'Custom prompt engineering and brand voice customization',
+            'Answers with real-time stock by branch',
+            'Handles bulk and corporate quote requests',
+            'Chats and leads saved in your admin',
+            'Tone and answers set to your brand',
           ],
         },
       ],
       exclusions: [
-        'Bespoke custom hardware firmware modifications (quoted separately on request).',
-        'Bulk product photography and catalog data entry. You supply the content or we add it as a paid add-on.',
-        'Unlimited revisions. Two revision rounds are included per milestone and further changes are billed hourly.',
+        'Hardware firmware changes (quoted separately)',
+        'Bulk product photography and data entry (add-on)',
+        'Unlimited revisions — 2 rounds per milestone are included, then hourly',
       ],
     },
   },
   'ur-en': {
     starter: {
-      name: 'Single Store Launch',
-      code: 'TXS-STARTER',
-      badge: 'ENTRY LEVEL // SINGLE DUKAN',
+      name: 'Single Store',
+      code: '',
+      badge: 'SINGLE STORE',
       pricePkr: 'PKR 280,000',
-      priceUsd: '$2,450 USD',
-      delivery: '10 dinon mein, guaranteed',
+      priceUsd: '$2,450',
+      delivery: '10 din',
       idealFor:
-        'Single-location computer dukanon, CCTV vendors, aur retail counters ke liye jo direct WhatsApp order dispatch ke sath online sales shuru karna chahte hain — baghair kisi mahana platform tax ke.',
+        'Ek computer dukan, CCTV vendor ya electronics counter jo online bechna shuru kar raha hai — orders WhatsApp par.',
       artifacts: [
-        {
-          title: 'Next.js Public Online Storefront',
-          image: '/txs/home.png',
-          tag: 'Web Storefront',
-        },
-        {
-          title: 'Product Stock aur Order Manager',
-          image: '/txs/dashboard products.png',
-          tag: 'Admin Panel',
-        },
+        { title: 'Storefront', image: '/txs/home.png', tag: 'Storefront' },
+        { title: 'Product aur order admin', image: '/txs/dashboard products.png', tag: 'Admin' },
       ],
       modules: [
         {
-          title: 'Custom Next.js Web Storefront',
-          desc: 'Computer aur electronics products ke liye fast aur responsive web store.',
+          title: 'Online store',
+          desc: 'Computer aur electronics products ke liye tez, mobile-friendly store.',
           items: [
-            '50 SKUs tak ki initial setup aur product categories',
-            'Mukammal technical specifications display (CPU, GPU, RAM, Storage)',
-            'Category aur price filters (Desktop aur Mobile dono par)',
-            'Tez search bar aur direct shopping cart functionality',
+            'Pehle 50 products hum daalte hain (us ke baad koi limit nahi)',
+            'Poori specs: CPU, GPU, RAM, storage',
+            'Category aur price filters',
+            'Search aur shopping cart',
           ],
         },
         {
-          title: 'WhatsApp Direct Order Dispatch Integration',
-          desc: 'Har order seedha aapke sales counter WhatsApp par dispatch hota hai.',
+          title: 'WhatsApp orders',
+          desc: 'Har order confirm karne ke liye tayyar, aapke sales WhatsApp par.',
           items: [
-            'Pre-formatted WhatsApp message jisme items, specs aur total PKR price shamil ho',
-            'Customer ka naam, phone number aur delivery address auto-capture',
-            'Aapki kul amdani par 0% platform sales commission',
+            'Items, specs aur order total',
+            'Customer ka naam, phone aur address',
+            'Kisi order par koi commission nahi',
           ],
         },
         {
-          title: 'Bunyadi Admin Control Panel',
-          desc: 'Dukan ke staff ke liye aasan aur seedha management panel.',
+          title: 'Admin panel',
+          desc: 'Itna aasan ke dukan ka staff chala sake.',
           items: [
-            'Naya product add / edit / delete karne ka aasan panel',
-            'Live stock update status (In Stock / Out of Stock)',
-            'Order status tracker (Pending → Dispatched → Completed)',
-            'Customer details archive (Naam, mobile number, delivery history)',
+            'Products add, edit aur remove',
+            'In stock / out of stock updates',
+            'Order status: Pending → Dispatched → Completed',
+            'Customers ki list, order history ke sath',
           ],
         },
         {
-          title: 'SEO aur Search Engine Indexing',
-          desc: 'Google par aapki dukan ko local keywords ke liye rank karne ki bunyad.',
-          items: [
-            'Google Search Console setup aur site verification',
-            'Automated XML sitemap generation',
-            'Google Analytics 4 (GA4) visitor aur events tracking setup',
-          ],
+          title: 'Google setup',
+          desc: 'Taake customers aapki dukan dhoond sakein.',
+          items: ['Google Search Console', 'XML sitemap', 'Google Analytics (GA4)'],
         },
       ],
       exclusions: [
-        'Interactive PC Builder compatibility engine (Growth aur Enterprise mein dastiyab hai).',
-        'Multi branch stock synchronization (Sirf single outlet inventory support karta hai).',
-        'Hardware serial number aur RMA warranty lifecycle tracking.',
-        'Product photos, descriptions aur pehle 50 SKUs se zyada data entry. Content aap dein ge, hum setup karein ge.',
-        'Online card prepay payment gateway (Sirf +PKR 50,000 / $400 add-on ke tor par dastiyab hai; Growth aur Enterprise mein shamil hai).',
-        'AI Retail Sales aur Hardware Advisor Chatbot (+PKR 65,000 / $650 add-on ke tor par dastiyab hai; Growth aur Enterprise mein muft shamil hai).',
+        'PC builder (Multi-Branch aur Chain mein)',
+        'Ek se zyada location ka stock',
+        'Serial number warranty tracking',
+        'Product photos aur descriptions aap dein ge; 50 se zyada products ki data entry add-on hai',
+        'Online card aur wallet payments (add-on: +PKR 50,000 / $400; Multi-Branch aur Chain mein shamil)',
+        'AI sales assistant (add-on: +PKR 65,000 / $650; Multi-Branch aur Chain mein shamil)',
       ],
     },
     growth: {
-      name: 'Multi Branch Growth',
-      code: 'TXS-GROWTH',
-      badge: '★ SAB SE ZYADA PASANDIDAH // BEHTAREEN VALUE',
+      name: 'Multi-Branch',
+      code: '',
+      badge: 'SAB SE MAQBOOL',
       pricePkr: 'PKR 550,000',
-      priceUsd: '$4,850 USD',
-      delivery: '21 dinon mein, guaranteed',
+      priceUsd: '$4,850',
+      delivery: '21 din',
       idealFor:
-        'Established computer hardware aur gaming PC retailers ke liye jo high-ticket custom rigs aur components bechte hain, aur dukan counter aur online stock ko ek sath chalate hain.',
+        'Established hardware aur gaming PC dukanein jo mehngi builds aur parts bechti hain, aur counter aur online dono ka stock chalati hain.',
       artifacts: [
-        {
-          title: 'Interactive PC Builder Configurator',
-          image: '/txs/RIG BUILDER.png',
-          tag: 'Compatibility Engine',
-        },
-        {
-          title: 'Hardware Serial Number aur RMA Warranty',
-          image: '/txs/admin warranty.png',
-          tag: 'Serial Tracking',
-        },
-        {
-          title: 'Storefront Hardware Catalog',
-          image: '/txs/products.png',
-          tag: 'Hardware Catalog',
-        },
-        {
-          title: 'Central Revenue aur Order Dashboard',
-          image: '/txs/dashboard.png',
-          tag: 'Admin Dashboard',
-        },
+        { title: 'PC builder', image: '/txs/RIG BUILDER.png', tag: 'PC builder' },
+        { title: 'Serial aur warranty records', image: '/txs/admin warranty.png', tag: 'Warranty' },
+        { title: 'Product catalogue', image: '/txs/products.png', tag: 'Catalogue' },
+        { title: 'Sales dashboard', image: '/txs/dashboard.png', tag: 'Dashboard' },
       ],
       modules: [
         {
-          title: 'Interactive PC Builder Compatibility Engine',
-          desc: 'Real-time hardware validation jo galat component orders ko mukammal rokta hai.',
+          title: 'PC builder',
+          desc: 'Customer ke build karte waqt har part check.',
           items: [
-            'CPU Socket Matching (AM4/AM5 vs LGA1700/LGA1851)',
-            'RAM Generation Check (DDR4 vs DDR5 compatibility)',
-            'Power supply wattage overhead aur GPU clearance auto calculation',
-            'One-click WhatsApp build sharing pre-formatted specs aur PKR total ke sath',
+            'CPU socket: AM4/AM5 vs LGA1700/LGA1851',
+            'RAM type: DDR4 vs DDR5',
+            'PSU wattage headroom aur GPU clearance',
+            'Build WhatsApp par share, specs aur total ke sath',
           ],
         },
         {
-          title: 'Multi-Branch Inventory Synchronization (3 Branches Tak)',
-          desc: 'Mukhtalif physical dukanon ke darmiyan combined stock management.',
+          title: '3 locations ka stock',
+          desc: 'Counters aur godam ka ek stock view.',
           items: [
-            '3 physical branches tak connect karein (maslan Hafeez Centre, Techno City) + central warehouse',
-            'Branch-level stock matrix admin panel mein live nazar aayegi',
-            'Counter sale ya online order par real-time stock deduction',
+            '3 locations tak (maslan Hafeez Centre, Techno City + godam)',
+            'Admin mein location-wise stock',
+            'Counter ya online sale par stock foran update',
           ],
         },
         {
-          title: 'Hardware Serial Number aur RMA Lifecycle',
-          desc: 'Har GPU, motherboard aur PSU ko intake se warranty claim tak track karein.',
+          title: 'Serial number warranty',
+          desc: 'Har GPU, motherboard aur PSU track karein.',
           items: [
-            'Serial status flow: IN_STOCK → SOLD (invoice linked) → RMA_PENDING → REPLACED',
-            'Customer fraud aur distributor disputes ka mukammal khatma',
-            'Serial number daal kar chand seconds mein warranty status check karein',
+            'In stock → Sold (invoice se link) → Warranty claim → Replaced',
+            'Koi bhi serial seconds mein check',
+            'Supplier aur customer ke jhagron ke liye saaf record',
           ],
         },
         {
-          title: 'Marketing, Discounts aur Automated PDF Invoices',
-          desc: 'Dobara khareedari barhane ke liye promotions aur professional billing engine.',
+          title: 'Promotions aur invoices',
+          desc: 'Customers ko wapas lane ke tools.',
           items: [
-            'Promotional hero sliders aur flash sale banners khud manage karein',
-            'Coupon code engine (percentage discounts, flat PKR chhoot, minimum order rules)',
-            'Automated professional PDF receipts aur printable customer invoices',
+            'Banners aur flash sales khud manage karein',
+            'Coupon codes: percentage, fixed amount, minimum order',
+            'Printable receipts aur invoices',
           ],
         },
         {
-          title: 'Online Payment Gateway Integration (Shamil Hai — PKR 50,000 Bachat)',
-          desc: 'Baghair kisi izafi fee ke online card aur wallet payments receive karein.',
+          title: 'Online payments (shamil — PKR 50,000 ki value)',
+          desc: 'Prepaid orders ke liye card aur wallet checkout.',
           items: [
-            'Paymob, Bank Alfalah Alfa, Keenu ya PayFast payment gateway integration',
-            'Visa, MasterCard aur UnionPay cards se peshgi payment direct account mein',
-            'JazzCash aur EasyPaisa mobile wallets se aasan checkout',
-            'PKR 50,000 ki izafi fee bilkul FREE (Growth plan mein pehle se shamil hai)',
+            'Aapki pasand ka ek gateway: PayFast, Paymob, Bank Alfalah ya Keenu',
+            'Visa, Mastercard aur UnionPay',
+            'JazzCash aur EasyPaisa',
+            'Gateway approval aur transaction fees aapke aur gateway ke darmiyan',
           ],
         },
         {
-          title: 'AI Retail Sales & Hardware Advisor Chatbot (Shamil Hai — $650 / PKR 65,000 Bachat)',
-          desc: 'Storefront par 24/7 customer sales consultant aur hardware expert.',
+          title: 'AI sales assistant (shamil — PKR 65,000 ki value)',
+          desc: 'Aapke store par chat assistant.',
           items: [
-            'PC hardware specs, CPU sockets, PSU wattage requirements par trained AI',
-            'Customer ke budget ke mutabiq behtareen components ki instant recommendations',
-            'Chat se direct 1-click shopping cart aur PC Builder configuration prefill',
-            'Full chat history ke sath WhatsApp sales counter par instant lead handoff',
+            'Budget ke mutabiq build suggest aur compatibility check',
+            'Chat se PC builder ya cart bhar deta hai',
+            'Poori chat ke sath customer aapke WhatsApp par',
+            'AI usage ki fee at-cost aap dete hain — hum pehle andaza bata dete hain',
           ],
         },
       ],
       exclusions: [
-        'Sirf 3 branches tak mehdood (La-mehdood branches Enterprise tier mein shamil hain).',
-        'Custom external accounting ERP ya FBR direct API integration shamil nahi.',
-        'Super Admin vs Cashier granular staff permission matrix (Single admin level access).',
-        'Product photos, descriptions aur included setup se zyada catalog migration. Content aap dein ge.',
-        'La-mehdood revisions nahi. Har milestone par 2 revision rounds shamil hain, uske baad changes hourly charge honge.',
+        '3 se zyada locations (Chain plan)',
+        'FBR ya accounting/ERP integration (add-on)',
+        'Alag alag staff permissions (add-on ya Chain plan)',
+        'Included setup se zyada product photos aur descriptions',
+        'La-mehdood revisions nahi — har milestone par 2 rounds, phir hourly',
       ],
     },
     enterprise: {
-      name: 'Chain and Distribution OS',
-      code: 'TXS-ENTERPRISE',
-      badge: '★ MUKAMMAL RETAIL OS',
+      name: 'Chain & Wholesale',
+      code: '',
+      badge: 'CHAINS KE LIYE',
       pricePkr: 'PKR 950,000 se shuru',
-      priceUsd: '$8,500 USD se shuru',
-      delivery: '30 dinon mein, guaranteed',
+      priceUsd: '$8,500 se shuru',
+      delivery: '30 din se',
       idealFor:
-        'Bari computer retail chains, nationwide hardware distributors, aur tech importers ke liye jinko multi-branch network aur custom enterprise ERP ki zaroorat hoti hai.',
+        'Computer retail chains, mulk bhar ke distributors aur importers jo kai branches aur godam chalate hain.',
       artifacts: [
-        {
-          title: 'Site CMS aur Banner Control Matrix',
-          image: '/txs/admin site control.png',
-          tag: 'CMS Panel',
-        },
-        {
-          title: 'Multi-Branch Inventory Management',
-          image: '/txs/dashboard products.png',
-          tag: 'Branch Matrix',
-        },
-        {
-          title: 'PC Builder Rig Configurator',
-          image: '/txs/RIG BUILDER.png',
-          tag: 'Rig Builder',
-        },
-        {
-          title: 'Serial Number Warranty aur RMA Center',
-          image: '/txs/admin warranty.png',
-          tag: 'RMA Center',
-        },
+        { title: 'Site content aur banners (CMS)', image: '/txs/admin site control.png', tag: 'CMS' },
+        { title: 'Product aur stock admin', image: '/txs/dashboard products.png', tag: 'Stock' },
+        { title: 'PC builder', image: '/txs/RIG BUILDER.png', tag: 'PC builder' },
+        { title: 'Serial aur warranty records', image: '/txs/admin warranty.png', tag: 'Warranty' },
       ],
       modules: [
         {
-          title: 'La-Mehdood Multi-Branch aur Warehouse Network',
-          desc: 'Tamam outlets aur godam ke darmiyan enterprise inventory distribution.',
+          title: 'La-mehdood branches aur godam',
+          desc: 'Tamam outlets ka stock.',
           items: [
-            'La-mehdood physical shops, distribution hubs aur central warehouses',
-            'Inter-branch stock transfer requests dispatch aur receipt sign-off ke sath',
-            'Unified warehouse dispatch aur counter pickup routing',
+            'Jitni chahein dukanein, hubs aur godam',
+            'Stock transfer request — dispatch aur receipt sign-off ke sath',
+            'Godam se dispatch aur counter pickup',
           ],
         },
         {
-          title: 'Granular Multi-Guard Role-Based Access Control (RBAC)',
-          desc: 'Spatie-style staff permissions jo designation ke mutabiq ikhtiyarat deti hain.',
+          title: 'Staff roles',
+          desc: 'Har shakhs ko sirf apne kaam ki cheez nazar aaye.',
           items: [
-            'Super Admin: Mukammal P&L, gross margins, branch revenue reports aur master settings',
-            'Branch Manager: Local counter sales, staff shifts, aur local stock adjustments',
-            'Counter Cashier: Fast point-of-sale billing aur instant receipt printing',
-            'Warehouse Barcode Manager: Inbound shipments intake aur bulk serial scanning',
+            'Owner: munafa, margins, branch performance, settings',
+            'Branch manager: local sales, staff, stock adjustment',
+            'Cashier: tez billing aur receipt print',
+            'Godam: stock intake aur bulk serial scanning',
           ],
         },
         {
-          title: 'Dynamic Theme aur Content Management CMS',
-          desc: 'Baghair kisi code ke apna storefront mukammal control karein.',
+          title: 'Content management (CMS)',
+          desc: 'Baghair code ke store badlein.',
           items: [
-            'Navigation menu editor, custom landing pages, aur announcement bars',
-            'Dynamic branding colors aur hero promotional sliders',
-            'Customizable invoice receipts aur email template editor',
+            'Menus, pages aur announcement bars edit',
+            'Brand colours aur banners',
+            'Receipt aur email templates',
           ],
         },
         {
-          title: 'Bespoke Third-Party API Integrations',
-          desc: 'Hardware POS devices aur delivery logistics ke sath seamless connection.',
+          title: 'Integrations',
+          desc: 'Counter aur couriers ko jodein.',
           items: [
-            'Thermal receipt printer aur barcode scanner compatibility',
-            'Courier tracking API integration (TCS, Trax, Leopards, CallCourier)',
-            'FBR digital invoice tax compliance (ikhtiyari integration)',
+            'Thermal printers aur barcode scanners',
+            'Courier booking aur tracking: TCS, Trax, Leopards, CallCourier',
+            'FBR POS integration (Tier-1 retailers ke liye)',
           ],
         },
         {
-          title: 'Enterprise Multi-Gateway Prepay aur Financial Engine (Shamil Hai)',
-          desc: 'High-volume transactions ke liye payment routing aur auto bank reconciliation.',
+          title: 'Payments (shamil)',
+          desc: 'Zyada orders ke liye.',
           items: [
-            'Ek se zyada payment gateways tak seamlessly connect karein',
-            'Credit/Debit card, Raast QR, JazzCash aur EasyPaisa support',
-            'Bank statements aur daily sales ki auto reconciliation reports',
-            'Koi izafi charges nahi (Chain and Distribution OS mein standard shamil hai)',
+            'Ek se zyada gateway, backup ke sath',
+            'Cards, Raast QR, JazzCash aur EasyPaisa',
+            'Rozana payment reconciliation report',
           ],
         },
         {
-          title: 'Enterprise AI Retail Sales & Knowledge Agent (Shamil Hai)',
-          desc: 'Aapke inventory data aur branches ke mutabiq trained custom AI agent.',
+          title: 'Live stock wala AI assistant (shamil)',
+          desc: 'Aapke products aur branches par set.',
           items: [
-            'Live branch inventory lookup seedha chat ke andar customer ko batata hai',
-            'B2B aur wholesale bulk orders ke liye dynamic quote generation',
-            'Admin panel mein complete lead capture aur chat analytics',
-            'Aapke retail brand ke mutabiq custom prompt engineering aur tone',
+            'Branch-wise live stock ke sath jawab',
+            'Bulk aur corporate quotes ki requests',
+            'Chats aur leads aapke admin mein',
+            'Aapke brand ke mutabiq tone',
           ],
         },
       ],
       exclusions: [
-        'Custom hardware firmware modifications (zaroorat ke mutabiq alag quote ki jayegi).',
-        'Bulk product photography aur catalog data entry. Content aap dein ge ya hum paid add-on ke tor par add karein ge.',
-        'La-mehdood revisions nahi. Har milestone par 2 revision rounds shamil hain, uske baad changes hourly charge honge.',
+        'Hardware firmware changes (alag quote)',
+        'Bulk product photography aur data entry (add-on)',
+        'La-mehdood revisions nahi — har milestone par 2 rounds, phir hourly',
       ],
     },
   },
@@ -983,106 +878,106 @@ const PLANS_DETAIL = {
 
 const EXTRAS_DATA = [
   {
-    en: 'Extra branch or warehouse node',
-    ur: 'Extra branch ya godam node',
+    en: 'Extra branch or warehouse',
+    ur: 'Extra branch ya godam',
     pricePkr: '+ PKR 60,000',
-    priceUsd: '+ $450 USD',
+    priceUsd: '+ $450',
     descEn:
-      'Adds another physical shop (e.g. Hafeez Centre, Techno City) or godown to your system. Monitor live stock counts separately, make counter sales per branch, and track stock transfers between shops.',
+      'Add another shop or godown, with its own stock, counter sales and transfers between locations.',
     descUr:
-      'Aapki ek aur dukan (maslan Hafeez Centre ya Techno City) ya godam ko system se jodta hai. Har branch ka alag stock nazar aayega, counter sale hogi aur dukanon ke darmiyan stock transfer track hoga.',
+      'Ek aur dukan ya godam jodein — alag stock, counter sale aur locations ke darmiyan transfer.',
   },
   {
-    en: 'Wholesale and B2B pricing module',
-    ur: 'Wholesale aur B2B pricing module',
+    en: 'Dealer & wholesale pricing',
+    ur: 'Dealer aur wholesale pricing',
     pricePkr: '+ PKR 90,000',
-    priceUsd: '+ $750 USD',
+    priceUsd: '+ $750',
     descEn:
-      'Allows verified bulk buyers and dealers to log in and order at special discounted dealer rates, with minimum quantity rules (e.g. 5+ pieces) and separate customer account ledgers (Khata).',
+      'Approved dealers log in to see dealer prices, minimum quantities (e.g. 5+) and their own account ledger (khata).',
     descUr:
-      'Dealers aur wholesale khareedaron ke liye alag bulk rate dikhata hai. Wo login kar ke sasti rate par baray order de sakenge aur unka alag khata chalay ga.',
+      'Approved dealers login kar ke dealer rate, minimum quantity (maslan 5+) aur apna khata dekhte hain.',
   },
   {
-    en: 'Loyalty, wallet and gift cards',
-    ur: 'Loyalty, wallet aur gift cards',
+    en: 'Loyalty points & gift cards',
+    ur: 'Loyalty points aur gift cards',
     pricePkr: '+ PKR 70,000',
-    priceUsd: '+ $550 USD',
+    priceUsd: '+ $550',
     descEn:
-      'Rewards customers with cashback points in their digital store wallet on every purchase, and lets you issue digital gift vouchers so customers keep coming back to your shop.',
+      'Customers earn points on every purchase and can pay with gift vouchers — a reason to come back.',
     descUr:
-      'Customers ko har khareedari par reward points aur wallet cashback milta hai taake wo bar bar aap hi ki dukan se samaan khareedein.',
+      'Har khareedari par points aur gift vouchers — wapas aane ki wajah.',
   },
   {
-    en: 'Multi vendor marketplace',
-    ur: 'Multi vendor marketplace',
+    en: 'Marketplace for other sellers',
+    ur: 'Doosre sellers ka marketplace',
     pricePkr: '+ PKR 150,000',
-    priceUsd: '+ $1,200 USD',
+    priceUsd: '+ $1,200',
     descEn:
-      'Turns your site into an open platform like Daraz or Amazon where other third-party computer sellers and shops can list their own products, while you automatically collect a percentage commission on every sale.',
+      'Let other shops list their products on your site, and earn a commission on each sale.',
     descUr:
-      'Aapki website ko Daraz ki tarah banata hai jahan doosray tech sellers aur shops apna samaan list karenge aur aap har sale par apna commission rakhain ge.',
+      'Doosri dukanein aapki site par products list karein, aur har sale par aapka commission.',
   },
   {
-    en: 'Advanced staff roles and permissions',
-    ur: 'Advanced staff roles aur permissions',
+    en: 'Staff roles & permissions',
+    ur: 'Staff roles aur permissions',
     pricePkr: '+ PKR 40,000',
-    priceUsd: '+ $350 USD',
+    priceUsd: '+ $350',
     descEn:
-      'Protects sensitive store data. Lets cashiers only make sales receipts, technicians view RMA repairs, and stock staff scan inventory — while purchase costs and profit margins remain strictly visible to the owner only.',
+      'Cashiers bill, technicians handle warranty, stock staff scan items. Purchase costs and profit stay visible to the owner only.',
     descUr:
-      'Dukan ke har mulazim ke liye alag ikhtiyar. Cashier sirf bill banaye ga, technician sirf warranty dekhe ga, aur dukan ka asli munafa ya purchase cost sirf maalik ko nazar aayegi.',
+      'Cashier bill banaye, technician warranty dekhe, stock staff scan kare. Purchase cost aur munafa sirf owner ko nazar aaye.',
   },
   {
-    en: 'Product data entry beyond 50 SKUs',
-    ur: '50 SKUs se zyada product data entry',
+    en: 'Product data entry (per 50 products)',
+    ur: 'Product data entry (har 50 products)',
     pricePkr: '+ PKR 15,000 / 50',
-    priceUsd: '+ $120 USD / 50',
+    priceUsd: '+ $120 / 50',
     descEn:
-      "Don't have time to enter products? Our team cleans high-res photos, writes full technical specs (RAM generation, CPU socket, wattage), and uploads inventory in batches of 50 items.",
+      'We clean photos, write specs and upload your products in batches of 50.',
     descUr:
-      'Agar aapke paas product upload karne ka waqt nahi, to hamari team 50 products ki tasweerein, specs aur qeematein khud system mein daal kar degi.',
+      'Hum photos saaf karte hain, specs likhte hain aur 50 ke batch mein products upload karte hain.',
   },
   {
-    en: 'Courier tracking integration',
-    ur: 'Courier tracking integration',
+    en: 'Courier integration',
+    ur: 'Courier integration',
     pricePkr: '+ PKR 50,000',
-    priceUsd: '+ $400 USD',
+    priceUsd: '+ $400',
     descEn:
-      "Generates courier booking slips (Trax, PostEx, Leopards, TCS) with 1 click directly from your admin panel, and automatically sends the live tracking link to your customer's WhatsApp.",
+      "Book TCS, Trax, Leopards or PostEx from the admin, and send the tracking link to the customer's WhatsApp.",
     descUr:
-      'Admin panel se 1-click par courier slips (Trax, PostEx, Leopards, TCS) banayein aur tracking link customer ke WhatsApp par auto send ho jaye ga.',
+      'Admin se TCS, Trax, Leopards ya PostEx book karein, aur tracking link customer ke WhatsApp par.',
   },
   {
-    en: 'Online payment gateway for card prepay',
-    ur: 'Card prepay ke liye online payment gateway',
+    en: 'Online card & wallet payments',
+    ur: 'Online card aur wallet payments',
     pricePkr: '+ PKR 50,000',
-    priceUsd: '+ $400 USD',
+    priceUsd: '+ $400',
     starterOnly: true,
     descEn:
-      'Accepts Visa, Mastercard, PayPak, EasyPaisa, and JazzCash directly on your site for upfront prepaid orders. (Note: Multi Branch Growth and Chain plans already INCLUDE this at zero extra cost — no $400 / 50K fee).',
+      'Accept cards, JazzCash and EasyPaisa on your site. Included in Multi-Branch and Chain.',
     descUr:
-      'Website par hi Visa, Mastercard, EasyPaisa aur JazzCash se peshgi online payment receive karein. (Note: Multi-Branch Growth aur Chain plans mein yeh pehle se bilkul SHAMIL hai — baghair kisi 50K fee ke).',
+      'Website par cards, JazzCash aur EasyPaisa. Multi-Branch aur Chain mein shamil.',
   },
   {
-    en: 'AI Retail Sales & Hardware Advisor Chatbot',
-    ur: 'AI Retail Sales aur Hardware Advisor Chatbot',
+    en: 'AI sales assistant',
+    ur: 'AI sales assistant',
     pricePkr: '+ PKR 65,000',
-    priceUsd: '+ $650 USD',
+    priceUsd: '+ $650',
     starterOnly: true,
     descEn:
-      'Deploys an automated 24/7 AI Hardware Advisor directly on your storefront. Recommends parts by budget, checks socket/wattage compatibility, and converts visitors into WhatsApp and web orders. (Note: Multi Branch Growth and Chain plans already INCLUDE this at zero extra cost — no $650 / 65K fee).',
+      'Suggests parts by budget, checks compatibility, and passes the chat to your WhatsApp. Included in Multi-Branch and Chain.',
     descUr:
-      'Website par 24/7 mojud AI assistant jo customer ke budget ke mutabiq compatible parts recommend karta hai, socket aur wattage match karta hai, aur orders seedha WhatsApp ya cart mein bhejta hai. (Note: Multi-Branch Growth aur Chain plans mein yeh pehle se bilkul SHAMIL hai).',
+      'Budget ke mutabiq parts suggest, compatibility check, aur chat aapke WhatsApp par. Multi-Branch aur Chain mein shamil.',
   },
   {
-    en: 'FBR or accounting API integration',
-    ur: 'FBR ya accounting API integration',
+    en: 'FBR or accounting integration',
+    ur: 'FBR ya accounting integration',
     pricePkr: '+ PKR 80,000',
-    priceUsd: '+ $650 USD',
+    priceUsd: '+ $650',
     descEn:
-      "Connects your sales counter directly with FBR's POS digital invoice system for tax compliance, or syncs your daily books with QuickBooks, Zoho, or Xero automatically.",
+      "Connect your counter to FBR's POS invoicing, or sync sales to QuickBooks, Zoho or Xero.",
     descUr:
-      'Dukan ki sales ko FBR digital invoicing system se direct jodta hai, ya aapke rozana khate ko QuickBooks aur Xero se auto-sync karta hai.',
+      'Counter ko FBR POS invoicing se jodein, ya sales QuickBooks, Zoho ya Xero mein sync karein.',
   },
 ]
 
@@ -1130,8 +1025,8 @@ export default function TechRetailSolution() {
             {a.starterOnly && (
               <span className="inline-block px-1.5 py-0.5 rounded offer-ui font-bold bg-[#ECFDF5] dark:bg-[#10B981]/20 text-[#059669] dark:text-[#10B981] border border-[#059669]/30">
                 {isUrdu
-                  ? 'Growth & Chain mein SHAMIL (Bina Izafi Fee)'
-                  : 'INCLUDED in Growth & Chain (Zero Fee)'}
+                  ? 'Multi-Branch aur Chain mein shamil'
+                  : 'Included in Multi-Branch & Chain'}
               </span>
             )}
           </div>
@@ -1142,7 +1037,7 @@ export default function TechRetailSolution() {
               </span>
               {a.starterOnly && (
                 <span className="offer-ui text-[#8E8D88] dark:text-[#6A6965] block">
-                  {isUrdu ? '(Sirf Starter)' : '(Starter Only)'}
+                  {isUrdu ? '(Sirf Single Store)' : '(Single Store only)'}
                 </span>
               )}
             </div>
@@ -1177,8 +1072,8 @@ export default function TechRetailSolution() {
                 {a.starterOnly && (
                   <div className="p-2 bg-[#ECFDF5] dark:bg-[#10B981]/15 border border-[#059669]/30 offer-ui text-[#059669] dark:text-[#10B981] font-medium rounded-sm">
                     {isUrdu
-                      ? `✓ Multi Branch Growth (${currency === 'USD' ? '$4,850 USD' : 'PKR 550,000'}) aur Chain OS (${currency === 'USD' ? '$8,500+ USD' : 'PKR 950,000'}) plans mein yeh pehle se mukammal shamil hai — koi izafi fee nahi deni parti.`
-                      : `✓ Included standard in Multi Branch Growth (${currency === 'USD' ? '$4,850 USD' : 'PKR 550,000'}) & Chain OS (${currency === 'USD' ? 'From $8,500 USD' : 'From PKR 950,000'}) plans at NO extra charge.`}
+                      ? '✓ Multi-Branch aur Chain plans mein baghair izafi qeemat shamil.'
+                      : '✓ Included in Multi-Branch and Chain at no extra cost.'}
                   </div>
                 )}
               </div>
@@ -1200,10 +1095,10 @@ export default function TechRetailSolution() {
   const openWhatsApp = (planName, price) => {
     const text = isUrdu
       ? encodeURIComponent(
-          `Assalam o Alaikum TeXCodes team, main apne Computer / CCTV retail business ke liye [${planName} - ${price}] plan mein interested hoon. Barah-e-karam demo schedule karein aur agle marahil discuss karein.`
+          `Assalam o Alaikum TeXCodes, mujhe apni computer/CCTV dukan ke liye ${planName} (${price}) plan mein dilchaspi hai. Kya demo ho sakta hai?`
         )
       : encodeURIComponent(
-          `Hello TeXCodes team, I am interested in the [${planName} - ${price}] for my Computer / CCTV retail business. I would like to schedule a demonstration and discuss deployment.`
+          `Hello TeXCodes, I'm interested in the ${planName} (${price}) plan for my computer/CCTV shop. Can we schedule a demo?`
         )
     window.open(`https://wa.me/923091824000?text=${text}`, '_blank')
   }
@@ -1225,7 +1120,7 @@ export default function TechRetailSolution() {
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#059669] dark:bg-[#10B981] animate-pulse shadow-[0_0_8px_#10B981]" />
             <span className="text-[#0F0F0F] dark:text-[#EDECE6] font-bold uppercase tracking-wider hidden sm:inline">
-              TEXCODES RETAIL OS // COMMERCIAL SOLUTION
+              TEXCODES · TECH RETAIL OS
             </span>
             <span className="text-[#0F0F0F] dark:text-[#EDECE6] font-bold uppercase tracking-wider sm:hidden">
               RETAIL OS
@@ -1317,19 +1212,19 @@ export default function TechRetailSolution() {
           {/* Key Metrics Row */}
           <StaggerContainer staggerDelay={0.08} className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-4 offer-ui">
             <StaggerItem className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 card-hover-guided">
-              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{t.metrics_code_top || '100% OWNERSHIP'}</div>
+              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{t.metrics_code_top}</div>
               <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t.metrics_code}</div>
             </StaggerItem>
             <StaggerItem className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 card-hover-guided">
-              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{t.metrics_tax_top || '0% PLATFORM TAX'}</div>
+              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{t.metrics_tax_top}</div>
               <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t.metrics_tax}</div>
             </StaggerItem>
             <StaggerItem className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 card-hover-guided">
-              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{t.metrics_speed_top || '<1% RETURN RATE'}</div>
+              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{t.metrics_speed_top}</div>
               <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t.metrics_speed}</div>
             </StaggerItem>
             <StaggerItem className="p-4 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-1 card-hover-guided">
-              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{t.metrics_rma_top || 'SERIAL RMA'}</div>
+              <div className="text-[#059669] dark:text-[#10B981] font-bold offer-ui">{t.metrics_rma_top}</div>
               <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t.metrics_rma}</div>
             </StaggerItem>
           </StaggerContainer>
@@ -1417,7 +1312,7 @@ export default function TechRetailSolution() {
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="font-bold text-[#059669] dark:text-[#10B981] offer-ui">{t.arch_07_title}</span>
                 <span className="offer-eyebrow bg-[#059669] dark:bg-[#10B981] text-white px-2 py-0.5 font-bold">
-                  {isUrdu ? 'NAYA // 24/7 AI SALES ENGINE' : 'NEW // 24/7 AI SALES ENGINE'}
+                  {isUrdu ? 'MULTI-BRANCH AUR CHAIN PLANS' : 'MULTI-BRANCH & CHAIN PLANS'}
                 </span>
               </div>
               <p className="offer-ui text-[#0F0F0F] dark:text-[#EDECE6] font-medium">
@@ -1480,7 +1375,7 @@ export default function TechRetailSolution() {
 
             <StaggerItem>
               <a
-                href="https://store-demo-eight.vercel.app/admin"
+                href="https://store-demo-eight.vercel.app/admin/dashboard"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-6 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] card-hover-guided group block space-y-3 shadow-xs h-full"
@@ -1537,7 +1432,6 @@ export default function TechRetailSolution() {
                     <span className="offer-eyebrow font-bold text-[#059669] dark:text-[#10B981] bg-[#ECFDF5] dark:bg-[#10B981]/20 px-2.5 py-1 rounded">
                       {t.ultimatum_best_tag}
                     </span>
-                    <span className="offer-ui text-[#059669] dark:text-[#10B981] font-bold">WIN #1</span>
                   </div>
                   <div className="offer-ui-strong text-[#0F0F0F] dark:text-[#EDECE6]">
                     {t.ultimatum_best_title}
@@ -1577,7 +1471,6 @@ export default function TechRetailSolution() {
                     <span className="offer-eyebrow font-bold text-[#8E8D88] dark:text-[#6A6965] bg-neutral-200/60 dark:bg-neutral-800/60 px-2.5 py-1 rounded">
                       {t.ultimatum_worst_tag}
                     </span>
-                    <span className="offer-ui text-[#8E8D88] dark:text-[#6A6965] font-bold">WIN #2</span>
                   </div>
                   <div className="offer-ui-strong text-[#0F0F0F] dark:text-[#EDECE6]">
                     {t.ultimatum_worst_title}
@@ -1622,7 +1515,7 @@ export default function TechRetailSolution() {
                 </p>
               </div>
               <Link
-                to="/solutions/tech-retail/terms"
+                to="/solutions/terms"
                 className="btn-outline offer-btn offer-btn-sm shrink-0 whitespace-nowrap"
               >
                 <span>{t.view_terms}</span>
@@ -1634,17 +1527,17 @@ export default function TechRetailSolution() {
           <FadeIn direction="up" delay={0.1} className="flex items-center justify-center gap-2 sm:gap-4 offer-eyebrow text-[#575652] dark:text-[#9B9A95] pb-2 flex-wrap">
             <span className="flex items-center gap-1.5 text-[#059669] dark:text-[#10B981] font-bold">
               <span className="w-5 h-5 rounded-full border border-[#059669] dark:border-[#10B981] flex items-center justify-center offer-ui">1</span>
-              {isUrdu ? 'Tier Muntakhib Karein' : 'Select Tier'}
+              {isUrdu ? 'Plan chunein' : 'Choose a plan'}
             </span>
             <span className="text-[#8E8D88] dark:text-[#6A6965]">→</span>
             <span className="flex items-center gap-1.5 text-[#059669] dark:text-[#10B981] font-bold">
               <span className="w-5 h-5 rounded-full border border-[#059669] dark:border-[#10B981] flex items-center justify-center offer-ui">2</span>
-              {isUrdu ? 'Live Proof Inspect Karein' : 'Inspect Previews'}
+              {isUrdu ? 'Scope dekhein' : 'See the scope'}
             </span>
             <span className="text-[#8E8D88] dark:text-[#6A6965]">→</span>
             <span className="flex items-center gap-1.5 text-[#059669] dark:text-[#10B981] font-bold">
               <span className="w-5 h-5 rounded-full border border-[#059669] dark:border-[#10B981] flex items-center justify-center offer-ui">3</span>
-              {isUrdu ? 'WhatsApp Par Claim Karein' : 'Claim on WhatsApp'}
+              {isUrdu ? 'Call book karein' : 'Book a call'}
             </span>
           </FadeIn>
 
@@ -1677,11 +1570,11 @@ export default function TechRetailSolution() {
             <div className="offer-eyebrow text-[#8E8D88] dark:text-[#6A6965] text-center">
               {currency === 'USD'
                 ? isUrdu
-                  ? '🌍 International USD rates active (Bahar ke mulkon ke clients ke liye)'
-                  : '🌍 International USD rates active (Auto-selected for overseas clients)'
+                  ? 'Prices USD mein'
+                  : 'Prices in USD'
                 : isUrdu
-                ? '🇵🇰 Pakistan domestic rates active (PKR)'
-                : '🇵🇰 Pakistan domestic rates active (PKR)'}
+                ? 'Prices PKR mein (Pakistan ke karobar ke liye)'
+                : 'Prices in PKR (for businesses in Pakistan)'}
             </div>
           </FadeIn>
 
@@ -1944,11 +1837,18 @@ export default function TechRetailSolution() {
             </StaggerItem>
           </StaggerContainer>
 
-          {/* Limited build slots */}
-          <FadeIn direction="up" className="text-center offer-body text-[#575652] dark:text-[#9B9A95] max-w-2xl mx-auto">
-            {isUrdu
-              ? 'Hum har mahine sirf 3 retail builds lete hain taake har project ko pura waqt mile. Agli available start date ke liye WhatsApp par rabta karein.'
-              : 'We take on only 3 retail builds each month so every project gets full attention. Message us on WhatsApp to confirm the next available start date.'}
+          {/* Delivery footnote & build capacity */}
+          <FadeIn direction="up" className="text-center offer-body text-[#575652] dark:text-[#9B9A95] max-w-2xl mx-auto space-y-2">
+            <p className="offer-ui">
+              {isUrdu
+                ? '*Din us waqt se gine jate hain jab aapka content aur pehli payment humein mil jaye. Delivery date contract mein likhi hoti hai. Agar der hamari taraf se ho, to har hafte ki der par ek mahina Care Plan muft.'
+                : "*Counted from the day we receive your content and first payment. The delivery date is written into your contract. If we're late, you get one free month of Care Plan for each week of delay."}
+            </p>
+            <p>
+              {isUrdu
+                ? 'Hum har mahine mehdood projects lete hain taake har project ko poora waqt mile. Agli start date ke liye message karein.'
+                : 'We take on a limited number of builds each month so every project gets full attention. Message us for the next available start date.'}
+            </p>
           </FadeIn>
 
           {/* Extras menu */}
@@ -1956,20 +1856,20 @@ export default function TechRetailSolution() {
             <div className="space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold">
-                  {isUrdu ? 'EXTRAS // SIRF ZAROORAT KI CHEEZ ADD KAREIN' : 'EXTRAS // PAY ONLY FOR WHAT YOU NEED'}
+                  ADD-ONS
                 </div>
                 <div className="offer-ui text-[#059669] dark:text-[#10B981] flex items-center gap-1 font-medium bg-[#ECFDF5] dark:bg-[#10B981]/15 px-2 py-0.5 rounded border border-[#059669]/25">
                   <ChevronDown size={12} className="shrink-0" />
-                  <span>{isUrdu ? 'Kisi bhi item par click karein wazahat dekhne ke liye' : 'Click any item below to view simple layman explanation'}</span>
+                  <span>{isUrdu ? 'Tafseel ke liye tap karein' : 'Tap an add-on for details'}</span>
                 </div>
               </div>
               <h3 className="offer-h2 text-[#0F0F0F] dark:text-[#EDECE6]">
-                {isUrdu ? 'Base price mein yeh shamil nahi. Jo chahiye add karein.' : 'Not in the base price. Add only what you need.'}
+                {isUrdu ? 'Sirf zaroorat ki cheez add karein' : 'Add only what you need'}
               </h3>
               <p className="offer-body text-[#575652] dark:text-[#9B9A95] max-w-3xl">
                 {isUrdu
-                  ? 'Har plan ek fixed base price par aata hai. Extra modules neeche diye gaye hain aur final invoice mein saaf lafzon mein add hotay hain. Koi chhupa hua cost nahi.'
-                  : 'Every plan starts at one fixed base price. Extra modules are listed below and added to your final invoice in plain terms. No hidden costs.'}
+                  ? 'Har plan ki ek fixed price. Add-ons ki qeemat pehle se tay aur invoice par alag likhi hoti hai.'
+                  : 'Every plan has one fixed price. Add-ons are priced upfront and listed separately on your invoice.'}
               </p>
             </div>
             {/* Desktop 3-Column Layout: when an item in one column opens, only that column moves down; other columns are completely unaffected */}
@@ -2003,8 +1903,8 @@ export default function TechRetailSolution() {
             </div>
             <p className="offer-ui text-[#8E8D88] dark:text-[#6A6965]">
               {isUrdu
-                ? 'Tamam extra prices fixed hain aur pehle se bataye jate hain. Final scope WhatsApp par confirm hota hai.'
-                : 'All extra prices are fixed and quoted up front. Final scope is confirmed on WhatsApp before work starts.'}
+                ? 'Tamam add-on prices fixed hain. Kaam shuru hone se pehle final scope likh kar confirm hota hai.'
+                : 'All add-on prices are fixed. The final scope is confirmed in writing before work starts.'}
             </p>
           </FadeIn>
 
@@ -2012,22 +1912,22 @@ export default function TechRetailSolution() {
           <FadeIn direction="up" className="space-y-5">
             <div className="text-center space-y-2">
               <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold">
-                {isUrdu ? 'CARE PLAN // LAUNCH KE BAAD' : 'CARE PLAN // AFTER LAUNCH'}
+                {isUrdu ? 'LAUNCH KE BAAD' : 'AFTER LAUNCH'}
               </div>
               <h3 className="offer-h2 text-[#0F0F0F] dark:text-[#EDECE6]">
-                {isUrdu ? 'Launch ke baad hum sambhal lete hain' : 'We keep it running after launch'}
+                {isUrdu ? 'Care Plans: store hum chalta rakhte hain' : 'Care Plans: we keep your store running'}
               </h3>
               <p className="offer-body text-[#575652] dark:text-[#9B9A95] max-w-2xl mx-auto">
                 {isUrdu
-                  ? '30 din ki warranty ke baad, Care Plan aapke system ko online, secure aur updated rakhta hai. Code aapka hai, hosting hum par chhod dein ya khud manage karein.'
-                  : 'After the 30 day warranty, a Care Plan keeps your system online, secure and updated. You own the code, so let us host it or run it yourself.'}
+                  ? 'Har build ke sath 30 din ki warranty. Us ke baad Care Plan mein hosting, backups, updates aur support. Yeh ikhtiyari hai — code aapka hai, aap khud bhi host kar sakte hain.'
+                  : "Every build includes a 30-day warranty. After that, a Care Plan covers hosting, backups, updates and support. It's optional — you own the code, so you can also host it yourself."}
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
-                { name: 'Basic Care', pricePkr: 'PKR 14,000 / mo', priceUsd: '$140 / mo', en: ['Managed hosting and SSL', 'Daily backups', 'Uptime monitoring', 'Small text and image edits', 'Email support'], ur: ['Managed hosting aur SSL', 'Rozana backups', 'Uptime monitoring', 'Chhoti text aur image edits', 'Email support'] },
-                { name: 'Growth Care', pricePkr: 'PKR 28,000 / mo', priceUsd: '$280 / mo', en: ['Everything in Basic Care', 'Priority support within 4 business hours', 'Monthly feature tweaks', 'Multi branch hosting', 'WhatsApp support'], ur: ['Basic Care ki sab cheezein', '4 business hours ke andar priority support', 'Mahana feature tweaks', 'Multi branch hosting', 'WhatsApp support'] },
-                { name: 'Enterprise Care', pricePkr: 'PKR 55,000 / mo', priceUsd: '$550 / mo', en: ['Everything in Growth Care', 'Dedicated engineer hours each month', 'Integration and API support', '99.5% uptime target', 'Phone support'], ur: ['Growth Care ki sab cheezein', 'Har mahine dedicated engineer hours', 'Integration aur API support', '99.5% uptime target', 'Phone support'] },
+                { name: 'Basic Care', pricePkr: 'PKR 14,000 / mo', priceUsd: '$140 / mo', en: ['Hosting and SSL', 'Daily backups', 'Uptime monitoring', 'Small text and image edits', 'Email support'], ur: ['Hosting aur SSL', 'Rozana backups', 'Uptime monitoring', 'Chhoti text aur image edits', 'Email support'] },
+                { name: 'Growth Care', pricePkr: 'PKR 28,000 / mo', priceUsd: '$280 / mo', en: ['Everything in Basic', 'Priority support — reply within 4 business hours', 'Small monthly feature changes', 'Hosting for multiple branches', 'WhatsApp support'], ur: ['Basic ka sab kuch', 'Priority support — 4 business hours mein jawab', 'Mahana chhoti feature changes', 'Multi-branch hosting', 'WhatsApp support'] },
+                { name: 'Enterprise Care', pricePkr: 'PKR 55,000 / mo', priceUsd: '$550 / mo', en: ['Everything in Growth', 'Dedicated engineer hours each month', 'Integration and API support', '99.5% uptime target', 'Phone support'], ur: ['Growth ka sab kuch', 'Har mahine dedicated engineer hours', 'Integration aur API support', '99.5% uptime target', 'Phone support'] },
               ].map((c, i) => (
                 <div key={i} className="bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] p-5 space-y-3">
                   <div className="offer-ui-strong text-[#0F0F0F] dark:text-[#EDECE6]">{c.name}</div>
@@ -2049,7 +1949,7 @@ export default function TechRetailSolution() {
 
           <div className="text-center pt-4">
             <Link
-              to="/solutions/tech-retail/terms"
+              to="/solutions/terms"
               className="offer-ui font-semibold text-[#059669] dark:text-[#10B981] hover:underline"
             >
               {t.view_terms}
@@ -2062,21 +1962,21 @@ export default function TechRetailSolution() {
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#0F0F11]">
         <div className="max-w-4xl mx-auto space-y-6 text-center">
           <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold">
-            {isUrdu ? 'WAPSI // YEH KHUD KO KAISE PAY KARTA HAI' : 'PAYBACK // HOW THIS PAYS FOR ITSELF'}
+            {isUrdu ? 'CHALANE KA KHARCHA' : 'RUNNING COSTS'}
           </div>
           <h2 className="offer-h2 text-[#0F0F0F] dark:text-[#EDECE6]">
-            {isUrdu ? 'Aap ek dafa pay karte hain, phir commission nahi' : 'You pay once, then never pay commission again'}
+            {isUrdu ? 'Ek dafa payment. Us ke baad koi commission nahi.' : 'Pay once. No commission after that.'}
           </h2>
           <p className="offer-body text-[#575652] dark:text-[#9B9A95]">
             {isUrdu
-              ? 'Rented platform par aap har mahine subscription dete hain aur har order par ek cut kat ta hai. Yeh kharcha kabhi khatam nahi hota. Yahan aap system ke mukammal malik bante hain. Jo paisa aap har mahine platform ko dete, wahi bachat is build ko kuch hi arsay mein pura kar deti hai.'
-              : 'On a rented platform you pay a subscription every month plus a cut on every order, and that bill never ends. Here you own the system outright. The money you would have handed a platform every month stays in your business, and that saving is what pays the build back.'}
+              ? 'Marketplaces aur kiraye ke store platforms har mahine fee ya har order par hissa lete hain — jab tak aap bechte rahein. Yahan aap build ki payment ek dafa karte hain. Launch ke baad kharcha sirf hosting aur payment gateway ki standard fee.'
+              : "Marketplaces and rented store platforms charge a monthly fee or take a cut of every order, for as long as you sell. Here you pay for the build once. After launch, your running costs are hosting and your payment gateway's standard fees."}
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
             {[
               { big: currency === 'USD' ? '$0' : 'PKR 0', en: 'monthly platform fee after launch', ur: 'launch ke baad mahana platform fee' },
-              { big: '0%', en: 'commission on your orders, ever', ur: 'aapke orders par commission, kabhi nahi' },
-              { big: '100%', en: 'of the code and data is yours', ur: 'code aur data par aapka mukammal haq' },
+              { big: '0%', en: 'commission to us', ur: 'hamara commission' },
+              { big: '100%', en: 'your code and data', ur: 'code aur data aapka' },
             ].map((s, i) => (
               <div key={i} className="bg-[#FAF9F5] dark:bg-[#161619] border border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] p-5 space-y-1">
                 <div className="offer-h2 text-[#059669] dark:text-[#10B981]">{s.big}</div>
@@ -2087,25 +1987,27 @@ export default function TechRetailSolution() {
         </div>
       </section>
 
+      <OfferFAQ lang={lang} />
+
       {/* ─── Real builds / proof ─── */}
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#121215]">
         <div className="max-w-7xl mx-auto space-y-8">
           <div className="text-center space-y-3 max-w-3xl mx-auto">
             <div className="offer-eyebrow text-[#059669] dark:text-[#10B981] font-semibold">
-              {isUrdu ? 'ASLI KAAM // KHUD KHOL KAR DEKHEIN' : 'REAL WORK // OPEN IT YOURSELF'}
+              {isUrdu ? 'HAMARA KAAM' : 'OUR WORK'}
             </div>
             <h2 className="offer-h2 text-[#0F0F0F] dark:text-[#EDECE6]">
-              {isUrdu ? 'Yeh asli builds hain, aap abhi khol kar dekh sakte hain' : 'These are real builds you can open right now'}
+              {isUrdu ? 'Hamare banaye hue systems' : "Systems we've built"}
             </h2>
             <p className="offer-body text-[#575652] dark:text-[#9B9A95]">
               {isUrdu
-                ? 'Hum nakli testimonials nahi dikhate. Neeche diye gaye systems asli aur live hain. Click karein, khud test karein, phir faisla karein.'
-                : 'We will not pad this page with fake quotes. The systems below are real and live. Click them, test them yourself, then decide.'}
+                ? 'Koi banawati testimonials nahi. Neeche diye systems khol kar khud test karein.'
+                : 'No made-up testimonials. Open the systems below and test them yourself.'}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {projectsData
-              .filter((p) => [7, 1, 4].includes(p.id))
+              .filter((p) => [7, 9, 6].includes(p.id))
               .map((p) => {
                 const lp = getLocalizedProject(p, lang)
                 return (
@@ -2145,7 +2047,7 @@ export default function TechRetailSolution() {
               })}
           </div>
           <div className="text-center pt-2">
-            <Link to="/projects" className="offer-ui font-semibold text-[#059669] dark:text-[#10B981] hover:underline">
+            <Link to="/work" className="offer-ui font-semibold text-[#059669] dark:text-[#10B981] hover:underline">
               {isUrdu ? 'Tamam projects dekhein →' : 'See all projects →'}
             </Link>
           </div>
