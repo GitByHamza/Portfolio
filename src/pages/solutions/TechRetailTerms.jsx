@@ -2,25 +2,11 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ShieldCheck, ArrowLeft, CheckCircle2 } from 'lucide-react'
 import { useLanguage } from '../../context/LanguageContext'
+import { defaultCurrency } from '../../lib/currency'
 
 // Shared terms for all three Retail OS offers (Tech, Laptop, Console & Games).
-function detectCurrency() {
-  if (typeof window === 'undefined') return 'USD'
-  try {
-    const saved = localStorage.getItem('texcodes_currency') || localStorage.getItem('tex_pref_currency')
-    if (saved === 'USD' || saved === 'GBP' || saved === 'PKR') return saved
-  } catch {
-    // localStorage can be unavailable (private mode); fall through to timezone
-  }
-  try {
-    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
-    if (tz === 'Asia/Karachi') return 'PKR'
-    if (tz === 'Europe/London') return 'GBP'
-  } catch {
-    // Intl unavailable; default below
-  }
-  return 'USD'
-}
+// Currency follows the same rules as the offer pages (PKR only for visitors in Pakistan).
+const detectCurrency = () => defaultCurrency(['USD', 'GBP', 'PKR'])
 
 function Section({ num, title, children }) {
   return (

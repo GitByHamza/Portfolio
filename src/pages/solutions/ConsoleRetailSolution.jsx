@@ -35,6 +35,7 @@ import { FadeIn, StaggerContainer, StaggerItem } from '../../components/motion/M
 import PlanDetailModal from '../../components/PlanDetailModal'
 import OfferFAQ from '../../components/OfferFAQ'
 import ComparePrice from '../../components/ComparePrice'
+import { allowedCurrencies, defaultCurrency } from '../../lib/currency'
 import ThemeToggle from '../../components/ThemeToggle'
 import { useLanguage } from '../../context/LanguageContext'
 
@@ -73,27 +74,11 @@ function detectInitialLanguage() {
   return 'en'
 }
 
-// Geo / Timezone auto-selection for Currency
+// Default currency: saved choice -> visitor country (Pakistan -> PKR, UK -> GBP) -> USD.
+// PKR is only offered to visitors in Pakistan (rules in src/lib/currency.js).
+const CURRENCIES = ['USD', 'GBP', 'PKR']
 function detectInitialCurrency() {
-  if (typeof window === 'undefined') return 'USD'
-  try {
-    const saved = localStorage.getItem('texcodes_currency')
-    if (saved === 'USD' || saved === 'GBP' || saved === 'PKR') {
-      return saved
-    }
-  } catch (e) {}
-
-  try {
-    const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase()
-    if (tz === 'europe/london' || tz.includes('london') || tz.includes('belfast') || tz.includes('dublin')) {
-      return 'GBP'
-    }
-    if (tz === 'asia/karachi' || tz === 'asia/kolkata' || tz === 'asia/calcutta') {
-      return 'PKR'
-    }
-  } catch (e) {}
-
-  return 'USD'
+  return defaultCurrency(CURRENCIES)
 }
 
 const I18N_DATA = {
@@ -492,6 +477,7 @@ const compareFor = (key, currency) =>
 export default function ConsoleRetailSolution() {
   const { lang, setLang, isUrdu } = useLanguage()
   const [currency, setCurrency] = useState(detectInitialCurrency)
+  const showPkr = allowedCurrencies(CURRENCIES).includes('PKR')
   const [activeModalKey, setActiveModalKey] = useState(null)
   const [expandedExtras, setExpandedExtras] = useState({})
 
@@ -752,6 +738,7 @@ export default function ConsoleRetailSolution() {
               >
                 GBP (£)
               </button>
+              {showPkr && (
               <button
                 onClick={() => handleCurrencyChange('PKR')}
                 className={`px-2 py-0.5 font-bold transition-colors cursor-pointer ${
@@ -762,6 +749,7 @@ export default function ConsoleRetailSolution() {
               >
                 PKR (Rs)
               </button>
+              )}
             </div>
 
             <ThemeToggle />

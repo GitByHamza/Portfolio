@@ -33,6 +33,7 @@ import { FadeIn, StaggerContainer, StaggerItem } from '../../components/motion/M
 import PlanDetailModal from '../../components/PlanDetailModal'
 import OfferFAQ from '../../components/OfferFAQ'
 import ComparePrice from '../../components/ComparePrice'
+import { allowedCurrencies, defaultCurrency } from '../../lib/currency'
 import ThemeToggle from '../../components/ThemeToggle'
 import { useLanguage } from '../../context/LanguageContext'
 
@@ -71,26 +72,11 @@ function detectInitialLanguage() {
   return 'en'
 }
 
-/**
- * Geo / Timezone auto-selection for Currency:
- */
+// Default currency: saved choice -> visitor country (Pakistan -> PKR) -> USD.
+// PKR is only offered to visitors in Pakistan (rules in src/lib/currency.js).
+const CURRENCIES = ['USD', 'PKR']
 function detectInitialCurrency() {
-  if (typeof window === 'undefined') return 'USD'
-  try {
-    const saved = localStorage.getItem('texcodes_currency')
-    if (saved === 'USD' || saved === 'PKR') {
-      return saved
-    }
-  } catch (e) {}
-
-  try {
-    const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase()
-    if (tz === 'asia/karachi' || tz === 'asia/kolkata' || tz === 'asia/calcutta') {
-      return 'PKR'
-    }
-  } catch (e) {}
-
-  return 'USD'
+  return defaultCurrency(CURRENCIES)
 }
 
 const I18N_DATA = {
@@ -884,6 +870,8 @@ const COMPARE_PRICES = {
 export default function LaptopRetailSolution() {
   const { lang, setLang, isUrdu } = useLanguage()
   const [currency, setCurrency] = useState(detectInitialCurrency)
+  // PKR is only offered in Pakistan, so everyone else sees USD with no toggle
+  const showCurrencyToggle = allowedCurrencies(CURRENCIES).length > 1
   const [activeModalKey, setActiveModalKey] = useState(null)
   const [expandedExtra, setExpandedExtra] = useState(null)
 
@@ -1027,7 +1015,8 @@ export default function LaptopRetailSolution() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-            {/* Currency Selector */}
+            {/* Currency Selector (only when PKR is available, i.e. visitors in Pakistan) */}
+            {showCurrencyToggle && (
             <div className="inline-flex items-center border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#1A1A1E] p-0.5">
               <button
                 onClick={() => handleCurrencyChange('USD')}
@@ -1052,8 +1041,9 @@ export default function LaptopRetailSolution() {
                 ₨ PKR
               </button>
             </div>
+            )}
 
-            <span className="text-[rgba(15,15,15,0.2)] dark:text-[rgba(255,255,255,0.2)]">|</span>
+            {showCurrencyToggle && <span className="text-[rgba(15,15,15,0.2)] dark:text-[rgba(255,255,255,0.2)]">|</span>}
 
             {/* Language Selector */}
             <div className="flex items-center gap-1">
@@ -1422,6 +1412,7 @@ export default function LaptopRetailSolution() {
 
           {/* Currency Toggle Ribbon directly above plan tiers */}
           <FadeIn direction="up" delay={0.05} className="flex flex-col items-center justify-center gap-2 pt-2 pb-2">
+            {showCurrencyToggle && (
             <div className="inline-flex items-center p-1 rounded-md border border-[rgba(15,15,15,0.15)] dark:border-[rgba(255,255,255,0.15)] bg-white dark:bg-[#161619] shadow-sm">
               <button
                 onClick={() => handleCurrencyChange('USD')}
@@ -1446,6 +1437,7 @@ export default function LaptopRetailSolution() {
                 <span className="text-[10px] opacity-80 font-normal">(Pakistan)</span>
               </button>
             </div>
+            )}
             <div className="offer-eyebrow text-[#8E8D88] dark:text-[#6A6965] text-center">
               {currency === 'USD'
                 ? isUrdu

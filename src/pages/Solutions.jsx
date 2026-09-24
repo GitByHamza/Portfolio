@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, ArrowUpRight, Cpu, ShoppingBag, Layers, CheckCircle2, XCircle, ShieldCheck, Terminal, Laptop, Gamepad2 } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/motion/MotionReveal'
+import { defaultCurrency } from '../lib/currency'
 
 // Glowing "discounted price" label shown above each plan list
 function DiscountBadge() {
@@ -35,8 +36,38 @@ function PriceLine({ compare, price, strong = false, isUrdu = false }) {
   )
 }
 
+// Plan prices by currency. PKR is only shown to visitors in Pakistan; GBP only exists for Console.
+// Keep in sync with COMPARE_PRICES and the plan prices on each offer page.
+const PLAN_PRICES = {
+  tech: [
+    { usd: '$2,450', pkr: 'PKR 280,000', compareUsd: '$2,950', comparePkr: 'PKR 340,000' },
+    { usd: '$4,850', pkr: 'PKR 550,000', compareUsd: '$5,800', comparePkr: 'PKR 660,000' },
+    { usd: '$8,500', pkr: 'PKR 950,000', compareUsd: '$10,200', comparePkr: 'PKR 1,140,000', from: true },
+  ],
+  laptop: [
+    { usd: '$2,250', pkr: 'PKR 250,000', compareUsd: '$2,700', comparePkr: 'PKR 300,000' },
+    { usd: '$4,450', pkr: 'PKR 490,000', compareUsd: '$5,350', comparePkr: 'PKR 590,000' },
+    { usd: '$7,900', pkr: 'PKR 850,000', compareUsd: '$9,500', comparePkr: 'PKR 1,020,000', from: true },
+  ],
+  console: [
+    { usd: '$2,250', gbp: '£1,850', pkr: 'PKR 260,000', compareUsd: '$2,700', compareGbp: '£2,200', comparePkr: 'PKR 310,000' },
+    { usd: '$4,450', gbp: '£3,650', pkr: 'PKR 490,000', compareUsd: '$5,350', compareGbp: '£4,400', comparePkr: 'PKR 590,000' },
+    { usd: '$7,900', gbp: '£6,500', pkr: 'PKR 850,000', compareUsd: '$9,500', compareGbp: '£7,800', comparePkr: 'PKR 1,020,000', from: true },
+  ],
+}
+
+function priceFor(row, currency, isUrdu) {
+  const pick = (usd, gbp, pkr) => (currency === 'PKR' && pkr ? pkr : currency === 'GBP' && gbp ? gbp : usd)
+  const price = pick(row.usd, row.gbp, row.pkr)
+  return {
+    price: row.from ? (isUrdu ? `${price} se shuru` : `From ${price}`) : price,
+    compare: pick(row.compareUsd, row.compareGbp, row.comparePkr),
+  }
+}
+
 export default function Solutions() {
   const { t, isUrdu } = useLanguage()
+  const currency = defaultCurrency(['USD', 'GBP', 'PKR'])
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -208,7 +239,7 @@ export default function Solutions() {
                 <div className="space-y-3">
                   <div className="card-hover-guided p-3 bg-white dark:bg-[#161619] border border-[#08966a]">
                     <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'tier1_title')}</div>
-                    <PriceLine compare={t('solutionsPage', 'tier1_compare')} price={t('solutionsPage', 'tier1_price')} isUrdu={isUrdu} />
+                    <PriceLine {...priceFor(PLAN_PRICES.tech[0], currency, isUrdu)} isUrdu={isUrdu} />
                     <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'tier1_sub')}</div>
                   </div>
 
@@ -217,13 +248,13 @@ export default function Solutions() {
                       <span className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'tier2_title')}</span>
                       <span className="offer-eyebrow font-bold text-white bg-[#059669] dark:bg-[#10B981] px-2 py-0.5">{t('solutionsPage', 'tier2_popular')}</span>
                     </div>
-                    <PriceLine strong compare={t('solutionsPage', 'tier2_compare')} price={t('solutionsPage', 'tier2_price')} isUrdu={isUrdu} />
+                    <PriceLine strong {...priceFor(PLAN_PRICES.tech[1], currency, isUrdu)} isUrdu={isUrdu} />
                     <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'tier2_sub')}</div>
                   </div>
 
                   <div className="card-hover-guided p-3 bg-white dark:bg-[#161619] border border-[#08966a]">
                     <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'tier3_title')}</div>
-                    <PriceLine compare={t('solutionsPage', 'tier3_compare')} price={t('solutionsPage', 'tier3_price')} isUrdu={isUrdu} />
+                    <PriceLine {...priceFor(PLAN_PRICES.tech[2], currency, isUrdu)} isUrdu={isUrdu} />
                     <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'tier3_sub')}</div>
                   </div>
                 </div>
@@ -313,7 +344,7 @@ export default function Solutions() {
                 <div className="space-y-3">
                   <div className="card-hover-guided p-3 bg-white dark:bg-[#161619] border border-[#08966a]">
                     <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'flagship2_tier1_title')}</div>
-                    <PriceLine compare={t('solutionsPage', 'flagship2_tier1_compare')} price={t('solutionsPage', 'flagship2_tier1_price')} isUrdu={isUrdu} />
+                    <PriceLine {...priceFor(PLAN_PRICES.laptop[0], currency, isUrdu)} isUrdu={isUrdu} />
                     <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'flagship2_tier1_sub')}</div>
                   </div>
 
@@ -322,13 +353,13 @@ export default function Solutions() {
                       <span className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'flagship2_tier2_title')}</span>
                       <span className="offer-eyebrow font-bold text-white bg-[#059669] dark:bg-[#10B981] px-2 py-0.5">{t('solutionsPage', 'tier2_popular')}</span>
                     </div>
-                    <PriceLine strong compare={t('solutionsPage', 'flagship2_tier2_compare')} price={t('solutionsPage', 'flagship2_tier2_price')} isUrdu={isUrdu} />
+                    <PriceLine strong {...priceFor(PLAN_PRICES.laptop[1], currency, isUrdu)} isUrdu={isUrdu} />
                     <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'flagship2_tier2_sub')}</div>
                   </div>
 
                   <div className="card-hover-guided p-3 bg-white dark:bg-[#161619] border border-[#08966a]">
                     <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'flagship2_tier3_title')}</div>
-                    <PriceLine compare={t('solutionsPage', 'flagship2_tier3_compare')} price={t('solutionsPage', 'flagship2_tier3_price')} isUrdu={isUrdu} />
+                    <PriceLine {...priceFor(PLAN_PRICES.laptop[2], currency, isUrdu)} isUrdu={isUrdu} />
                     <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'flagship2_tier3_sub')}</div>
                   </div>
                 </div>
@@ -418,7 +449,7 @@ export default function Solutions() {
                 <div className="space-y-3">
                   <div className="card-hover-guided p-3 bg-white dark:bg-[#161619] border border-[#08966a]">
                     <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'flagship3_tier1_title')}</div>
-                    <PriceLine compare={t('solutionsPage', 'flagship3_tier1_compare')} price={t('solutionsPage', 'flagship3_tier1_price')} isUrdu={isUrdu} />
+                    <PriceLine {...priceFor(PLAN_PRICES.console[0], currency, isUrdu)} isUrdu={isUrdu} />
                     <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'flagship3_tier1_sub')}</div>
                   </div>
 
@@ -427,13 +458,13 @@ export default function Solutions() {
                       <span className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'flagship3_tier2_title')}</span>
                       <span className="offer-eyebrow font-bold text-white bg-[#059669] dark:bg-[#10B981] px-2 py-0.5">{t('solutionsPage', 'tier2_popular')}</span>
                     </div>
-                    <PriceLine strong compare={t('solutionsPage', 'flagship3_tier2_compare')} price={t('solutionsPage', 'flagship3_tier2_price')} isUrdu={isUrdu} />
+                    <PriceLine strong {...priceFor(PLAN_PRICES.console[1], currency, isUrdu)} isUrdu={isUrdu} />
                     <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'flagship3_tier2_sub')}</div>
                   </div>
 
                   <div className="card-hover-guided p-3 bg-white dark:bg-[#161619] border border-[#08966a]">
                     <div className="font-bold text-[#0F0F0F] dark:text-[#EDECE6]">{t('solutionsPage', 'flagship3_tier3_title')}</div>
-                    <PriceLine compare={t('solutionsPage', 'flagship3_tier3_compare')} price={t('solutionsPage', 'flagship3_tier3_price')} isUrdu={isUrdu} />
+                    <PriceLine {...priceFor(PLAN_PRICES.console[2], currency, isUrdu)} isUrdu={isUrdu} />
                     <div className="offer-ui text-[#575652] dark:text-[#9B9A95]">{t('solutionsPage', 'flagship3_tier3_sub')}</div>
                   </div>
                 </div>
