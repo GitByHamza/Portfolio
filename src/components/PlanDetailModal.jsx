@@ -82,6 +82,11 @@ const MODAL_I18N = {
 
 function formatScopeCurrency(text, currency) {
   if (!text) return text
+  if (currency === 'GBP') {
+    return formatScopeCurrency(text, 'USD')
+      .replace(/\$400 USD/g, '£320 GBP')
+      .replace(/\$650 USD/g, '£520 GBP')
+  }
   if (currency === 'USD') {
     return text
       .replace(/\+PKR\s*50,000\s*\/\s*\$400/gi, '+$400 USD')
@@ -112,7 +117,7 @@ function formatScopeCurrency(text, currency) {
   }
 }
 
-export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', compare = null, onClose, onOpenWhatsApp }) {
+export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', compare = null, termsOffer = 'tech', onClose, onOpenWhatsApp }) {
   const bodyRef = useRef(null)
   const galleryRef = useRef(null)
   const [expandedImageIndex, setExpandedImageIndex] = useState(null)
@@ -417,7 +422,7 @@ export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', c
                 ))}
               </ul>
               <Link
-                to="/solutions/terms"
+                to={`/solutions/terms?offer=${termsOffer}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="offer-ui inline-flex items-center gap-1.5 font-semibold text-[#059669] dark:text-[#10B981] hover:underline pt-1 border-t border-[rgba(15,15,15,0.08)] dark:border-[rgba(255,255,255,0.08)] mt-1"

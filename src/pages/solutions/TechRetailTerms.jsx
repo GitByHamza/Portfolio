@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { ShieldCheck, ArrowLeft, CheckCircle2 } from 'lucide-react'
 import { useLanguage } from '../../context/LanguageContext'
 import { defaultCurrency } from '../../lib/currency'
 
 // Shared terms for all three Retail OS offers (Tech, Laptop, Console & Games).
-// Currency follows the same rules as the offer pages (PKR only for visitors in Pakistan).
-const detectCurrency = () => defaultCurrency(['USD', 'GBP', 'PKR'])
+// GBP is offered for Console only; Tech and Laptop use USD outside Pakistan.
 
 function Section({ num, title, children }) {
   return (
@@ -34,7 +33,8 @@ function Box({ items }) {
 
 export default function TechRetailTerms() {
   const { isUrdu } = useLanguage()
-  const currency = detectCurrency()
+  const [searchParams] = useSearchParams()
+  const currency = defaultCurrency(searchParams.get('offer') === 'console' ? ['USD', 'GBP', 'PKR'] : ['USD', 'PKR'])
   const money = (usd, gbp, pkr) => (currency === 'USD' ? usd : currency === 'GBP' ? gbp : pkr)
   const ur = (en, urdu) => (isUrdu ? urdu : en)
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { defaultCurrency } from "../lib/currency";
 import { 
   Cpu, 
   ShoppingBag, 
@@ -14,10 +15,7 @@ import {
 } from "lucide-react";
 
 export default function SolutionsSection() {
-  const currency = typeof window !== 'undefined'
-    ? localStorage.getItem('tex_pref_currency') ||
-      (['Asia/Karachi', 'Asia/Kolkata'].includes(Intl.DateTimeFormat().resolvedOptions().timeZone) ? 'PKR' : 'USD')
-    : 'USD'
+  const currency = defaultCurrency(['USD', 'PKR'])
 
   return (
     <section id="solutions" className="py-24 px-4 sm:px-6 lg:px-8 border-t border-zinc-800/80 bg-zinc-950/80 relative">

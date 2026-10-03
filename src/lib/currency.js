@@ -1,11 +1,9 @@
-// Default-currency rules for the offer pages:
+// Regional currency rules for the offer pages:
 //   Pakistan → PKR · United Kingdom → GBP (only where a page has GBP prices) · everyone else → USD
-// PKR prices are only ever offered to visitors in Pakistan.
+// The displayed currency is determined by location, not a saved visitor preference.
 //
 // The visitor's country comes from the `tx_country` cookie set by netlify/edge-functions/geo.js.
 // Without the cookie (local dev, cookies blocked) we fall back to a timezone guess.
-
-const SAVED_KEY = 'texcodes_currency'
 
 export function getVisitorCountry() {
   if (typeof document === 'undefined') return null
@@ -21,23 +19,10 @@ export function getVisitorCountry() {
   return null
 }
 
-// Currencies this visitor may see, out of the ones a page supports (e.g. ['USD', 'PKR']).
-export function allowedCurrencies(supported) {
-  const inPakistan = getVisitorCountry() === 'PK'
-  return supported.filter((c) => c !== 'PKR' || inPakistan)
-}
-
-// Saved manual choice (if still allowed) → country rule → USD.
+// Select the regional price from currencies supported by this offer.
 export function defaultCurrency(supported) {
-  const allowed = allowedCurrencies(supported)
-  try {
-    const saved = localStorage.getItem(SAVED_KEY)
-    if (saved && allowed.includes(saved)) return saved
-  } catch {
-    // storage unavailable (private mode)
-  }
   const country = getVisitorCountry()
-  if (country === 'PK' && allowed.includes('PKR')) return 'PKR'
-  if (country === 'GB' && allowed.includes('GBP')) return 'GBP'
+  if (country === 'PK' && supported.includes('PKR')) return 'PKR'
+  if (country === 'GB' && supported.includes('GBP')) return 'GBP'
   return 'USD'
 }

@@ -29,7 +29,7 @@ import { FadeIn, StaggerContainer, StaggerItem } from '../../components/motion/M
 import PlanDetailModal from '../../components/PlanDetailModal'
 import OfferFAQ from '../../components/OfferFAQ'
 import ComparePrice from '../../components/ComparePrice'
-import { allowedCurrencies, defaultCurrency } from '../../lib/currency'
+import { defaultCurrency } from '../../lib/currency'
 import ThemeToggle from '../../components/ThemeToggle'
 import { useLanguage } from '../../context/LanguageContext'
 import { projectsData, getLocalizedProject } from '../../data/projects'
@@ -107,8 +107,7 @@ function detectInitialLanguage() {
   return 'en'
 }
 
-// Default currency: saved choice -> visitor country (Pakistan -> PKR) -> USD.
-// PKR is only offered to visitors in Pakistan (rules in src/lib/currency.js).
+// Currency follows the visitor's region (Pakistan -> PKR; elsewhere -> USD).
 const CURRENCIES = ['USD', 'PKR']
 function detectInitialCurrency() {
   return defaultCurrency(CURRENCIES)
@@ -968,22 +967,13 @@ const COMPARE_PRICES = {
 
 export default function TechRetailSolution() {
   const { lang, setLang, isUrdu } = useLanguage()
-  const [currency, setCurrency] = useState(detectInitialCurrency)
-  // PKR is only offered in Pakistan, so everyone else sees USD with no toggle
-  const showCurrencyToggle = allowedCurrencies(CURRENCIES).length > 1
+  const currency = detectInitialCurrency()
   const [activeModalKey, setActiveModalKey] = useState(null)
   const [expandedExtra, setExpandedExtra] = useState(null)
   const t = I18N_DATA[lang] || I18N_DATA.en
   const activePlan = activeModalKey
     ? (PLANS_DETAIL[lang] || PLANS_DETAIL.en)[activeModalKey]
     : null
-
-  const handleCurrencyChange = (newCurr) => {
-    setCurrency(newCurr)
-    try {
-      localStorage.setItem('texcodes_currency', newCurr)
-    } catch (e) {}
-  }
 
   const toggleExtra = (index) => {
     setExpandedExtra((prev) => (prev === index ? null : index))
@@ -1102,7 +1092,7 @@ export default function TechRetailSolution() {
         onOpenWhatsApp={(name, price) => openWhatsApp(name, price)}
       />
 
-      {/* ─── Top Language & Currency Bar ─── */}
+      {/* ─── Top Language & Theme Bar ─── */}
       <div className="border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#161619] px-4 sm:px-8 py-2.5">
         <div className="max-w-7xl mx-auto flex items-center justify-between offer-ui flex-wrap gap-2">
           <div className="flex items-center gap-2">
@@ -1116,36 +1106,6 @@ export default function TechRetailSolution() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-            {/* Currency Selector (only when PKR is available, i.e. visitors in Pakistan) */}
-            {showCurrencyToggle && (
-            <div className="inline-flex items-center border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#1A1A1E] p-0.5">
-              <button
-                onClick={() => handleCurrencyChange('USD')}
-                className={`px-2.5 py-0.5 offer-ui font-bold transition-colors cursor-pointer ${
-                  currency === 'USD'
-                    ? 'bg-[#059669] text-white dark:bg-[#10B981]'
-                    : 'text-[#575652] dark:text-[#9B9A95] hover:text-[#0F0F0F] dark:hover:text-[#EDECE6]'
-                }`}
-                title="International Rates in USD"
-              >
-                $ USD
-              </button>
-              <button
-                onClick={() => handleCurrencyChange('PKR')}
-                className={`px-2.5 py-0.5 offer-ui font-bold transition-colors cursor-pointer ${
-                  currency === 'PKR'
-                    ? 'bg-[#059669] text-white dark:bg-[#10B981]'
-                    : 'text-[#575652] dark:text-[#9B9A95] hover:text-[#0F0F0F] dark:hover:text-[#EDECE6]'
-                }`}
-                title="Pakistan Rates in PKR"
-              >
-                ₨ PKR
-              </button>
-            </div>
-            )}
-
-            {showCurrencyToggle && <span className="text-[rgba(15,15,15,0.2)] dark:text-[rgba(255,255,255,0.2)]">|</span>}
-
             {/* Language Selector */}
             <div className="flex items-center gap-1">
               <Globe size={13} className="text-[#575652] dark:text-[#9B9A95]" />
@@ -1505,7 +1465,7 @@ export default function TechRetailSolution() {
                 </p>
               </div>
               <Link
-                to="/solutions/terms"
+                to="/solutions/terms?offer=tech"
                 className="btn-outline offer-btn offer-btn-sm shrink-0 whitespace-nowrap"
               >
                 <span>{t.view_terms}</span>
@@ -1531,34 +1491,8 @@ export default function TechRetailSolution() {
             </span>
           </FadeIn>
 
-          {/* Currency Toggle Ribbon directly above plan tiers */}
+          {/* Regional price label above plan tiers */}
           <FadeIn direction="up" delay={0.05} className="flex flex-col items-center justify-center gap-2 pt-2 pb-2">
-            {showCurrencyToggle && (
-            <div className="inline-flex items-center p-1 rounded-md border border-[rgba(15,15,15,0.15)] dark:border-[rgba(255,255,255,0.15)] bg-white dark:bg-[#161619] shadow-sm">
-              <button
-                onClick={() => handleCurrencyChange('USD')}
-                className={`flex items-center gap-1.5 px-4 py-1.5 rounded text-xs font-bold offer-ui transition-all cursor-pointer ${
-                  currency === 'USD'
-                    ? 'bg-[#059669] dark:bg-[#10B981] text-white shadow-xs'
-                    : 'text-[#575652] dark:text-[#9B9A95] hover:text-[#0F0F0F] dark:hover:text-[#EDECE6]'
-                }`}
-              >
-                <span>$ USD</span>
-                <span className="text-[10px] opacity-80 font-normal">(International)</span>
-              </button>
-              <button
-                onClick={() => handleCurrencyChange('PKR')}
-                className={`flex items-center gap-1.5 px-4 py-1.5 rounded text-xs font-bold offer-ui transition-all cursor-pointer ${
-                  currency === 'PKR'
-                    ? 'bg-[#059669] dark:bg-[#10B981] text-white shadow-xs'
-                    : 'text-[#575652] dark:text-[#9B9A95] hover:text-[#0F0F0F] dark:hover:text-[#EDECE6]'
-                }`}
-              >
-                <span>₨ PKR</span>
-                <span className="text-[10px] opacity-80 font-normal">(Pakistan)</span>
-              </button>
-            </div>
-            )}
             <div className="offer-eyebrow text-[#8E8D88] dark:text-[#6A6965] text-center">
               {currency === 'USD'
                 ? isUrdu
@@ -1944,7 +1878,7 @@ export default function TechRetailSolution() {
 
           <div className="text-center pt-4">
             <Link
-              to="/solutions/terms"
+              to="/solutions/terms?offer=tech"
               className="offer-ui font-semibold text-[#059669] dark:text-[#10B981] hover:underline"
             >
               {t.view_terms}

@@ -35,7 +35,7 @@ import { FadeIn, StaggerContainer, StaggerItem } from '../../components/motion/M
 import PlanDetailModal from '../../components/PlanDetailModal'
 import OfferFAQ from '../../components/OfferFAQ'
 import ComparePrice from '../../components/ComparePrice'
-import { allowedCurrencies, defaultCurrency } from '../../lib/currency'
+import { defaultCurrency } from '../../lib/currency'
 import ThemeToggle from '../../components/ThemeToggle'
 import { useLanguage } from '../../context/LanguageContext'
 
@@ -74,8 +74,7 @@ function detectInitialLanguage() {
   return 'en'
 }
 
-// Default currency: saved choice -> visitor country (Pakistan -> PKR, UK -> GBP) -> USD.
-// PKR is only offered to visitors in Pakistan (rules in src/lib/currency.js).
+// Currency follows the visitor's region (Pakistan -> PKR, UK -> GBP, elsewhere -> USD).
 const CURRENCIES = ['USD', 'GBP', 'PKR']
 function detectInitialCurrency() {
   return defaultCurrency(CURRENCIES)
@@ -476,8 +475,7 @@ const compareFor = (key, currency) =>
 
 export default function ConsoleRetailSolution() {
   const { lang, setLang, isUrdu } = useLanguage()
-  const [currency, setCurrency] = useState(detectInitialCurrency)
-  const showPkr = allowedCurrencies(CURRENCIES).includes('PKR')
+  const currency = detectInitialCurrency()
   const [activeModalKey, setActiveModalKey] = useState(null)
   const [expandedExtras, setExpandedExtras] = useState({})
 
@@ -489,13 +487,6 @@ export default function ConsoleRetailSolution() {
 
   const handleLangChange = (newLang) => {
     setLang(newLang)
-  }
-
-  const handleCurrencyChange = (newCurrency) => {
-    setCurrency(newCurrency)
-    try {
-      localStorage.setItem('texcodes_currency', newCurrency)
-    } catch (e) {}
   }
 
   const toggleExtra = (idx) => {
@@ -716,42 +707,6 @@ export default function ConsoleRetailSolution() {
               </button>
             </div>
 
-            {/* Currency Selector */}
-            <div className="inline-flex items-center bg-white dark:bg-[#1F1F24] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] p-0.5">
-              <button
-                onClick={() => handleCurrencyChange('USD')}
-                className={`px-2 py-0.5 font-bold transition-colors cursor-pointer ${
-                  currency === 'USD'
-                    ? 'bg-[#059669] text-white shadow-xs'
-                    : 'text-[#575652] dark:text-[#9B9A95] hover:text-[#0F0F0F] dark:hover:text-white'
-                }`}
-              >
-                USD ($)
-              </button>
-              <button
-                onClick={() => handleCurrencyChange('GBP')}
-                className={`px-2 py-0.5 font-bold transition-colors cursor-pointer ${
-                  currency === 'GBP'
-                    ? 'bg-[#059669] text-white shadow-xs'
-                    : 'text-[#575652] dark:text-[#9B9A95] hover:text-[#0F0F0F] dark:hover:text-white'
-                }`}
-              >
-                GBP (£)
-              </button>
-              {showPkr && (
-              <button
-                onClick={() => handleCurrencyChange('PKR')}
-                className={`px-2 py-0.5 font-bold transition-colors cursor-pointer ${
-                  currency === 'PKR'
-                    ? 'bg-[#059669] text-white shadow-xs'
-                    : 'text-[#575652] dark:text-[#9B9A95] hover:text-[#0F0F0F] dark:hover:text-white'
-                }`}
-              >
-                PKR (Rs)
-              </button>
-              )}
-            </div>
-
             <ThemeToggle />
           </div>
         </div>
@@ -927,7 +882,7 @@ export default function ConsoleRetailSolution() {
             </p>
           </div>
           <Link
-            to="/solutions/terms"
+            to="/solutions/terms?offer=console"
             className="btn-outline offer-btn offer-btn-md shrink-0 font-mono text-xs flex items-center gap-1.5"
           >
             <span>{t.view_terms}</span>
@@ -1125,6 +1080,12 @@ export default function ConsoleRetailSolution() {
               <span>{isUrdu ? '3. WhatsApp par call book karein' : '3. Book a call on WhatsApp'}</span>
             </div>
           </div>
+
+          <p className="offer-eyebrow text-[#8E8D88] dark:text-[#6A6965] text-center">
+            {currency === 'PKR'
+              ? isUrdu ? 'Prices PKR mein (Pakistan ke karobar ke liye)' : 'Prices in PKR (for businesses in Pakistan)'
+              : isUrdu ? `Prices ${currency} mein` : `Prices in ${currency}`}
+          </p>
 
           {/* 3 Plan Cards Grid */}
           <StaggerContainer staggerDelay={0.12} className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
@@ -1471,7 +1432,7 @@ export default function ConsoleRetailSolution() {
               <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none animate-shimmer-sweep" />
             </button>
             <Link
-              to="/solutions/terms"
+              to="/solutions/terms?offer=console"
               className="btn-outline offer-btn offer-btn-lg"
             >
               <span>{isUrdu ? 'SHARAAIT PARHEIN' : 'READ THE TERMS'}</span>
@@ -1487,6 +1448,7 @@ export default function ConsoleRetailSolution() {
           plan={modalData[activeModalKey]}
           lang={lang}
           currency={currency}
+          termsOffer="console"
           compare={compareFor(activeModalKey, currency)}
           onOpenWhatsApp={(name, price) => openWhatsApp(name, price)}
         />
