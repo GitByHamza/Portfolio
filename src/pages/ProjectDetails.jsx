@@ -153,9 +153,14 @@ const ProjectDetails = () => {
                   <img
                     src={project.mainImage}
                     alt={project.title}
-                    className="w-full h-auto object-cover max-h-[500px]"
+                    className={`w-full max-h-[500px] ${project.imagePresentation === 'portrait' ? 'h-[500px] object-contain' : 'h-auto object-cover'}`}
                   />
                 </div>
+                {project.mediaNote && (
+                  <p className="mt-3 font-mono text-xs leading-relaxed text-[#575652] dark:text-[#A3A29E]">
+                    {project.mediaNote}
+                  </p>
+                )}
               </FadeIn>
             )}
 
@@ -201,24 +206,27 @@ const ProjectDetails = () => {
                   </span>
                 </div>
 
-                <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <StaggerContainer className={`grid gap-4 ${project.imagePresentation === 'portrait' ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-1 sm:grid-cols-2'}`}>
                   {project.images.map((img, idx) => (
                     <StaggerItem key={idx}>
-                      <div
+                      <button
+                        type="button"
                         onClick={() => openModal(idx)}
-                        className="card-hover-guided group border border-[#08966a] bg-white dark:bg-[#141414] p-1.5 cursor-pointer relative"
+                        aria-label={`${isUrdu ? 'Screenshot kholein' : 'Open screenshot'} ${idx + 1}: ${project.title}`}
+                        className="card-hover-guided group w-full border border-[#08966a] bg-white dark:bg-[#141414] p-1.5 cursor-pointer relative focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#059669]"
                       >
-                        <div className="relative aspect-video overflow-hidden bg-[#ECEAE3] dark:bg-[#1E1E1E]">
+                        <div className={`relative overflow-hidden bg-[#ECEAE3] dark:bg-[#1E1E1E] ${project.imagePresentation === 'portrait' ? 'h-56 sm:h-64' : 'aspect-video'}`}>
                           <img
                             src={img}
                             alt={`${project.title} screenshot ${idx + 1}`}
-                            className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-102"
+                            className={`w-full h-full transition-transform duration-300 group-hover:scale-102 ${project.imagePresentation === 'portrait' ? 'object-contain' : 'object-cover object-top'}`}
+                            loading="lazy"
                           />
                           <div className="absolute inset-0 bg-[#0F0F0F]/0 group-hover:bg-[#0F0F0F]/20 transition-colors flex items-center justify-center">
                             <ZoomIn size={22} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
                           </div>
                         </div>
-                      </div>
+                      </button>
                     </StaggerItem>
                   ))}
                 </StaggerContainer>
@@ -321,7 +329,7 @@ const ProjectDetails = () => {
 
       {/* ─── Fullscreen Image Modal Lightbox ─── */}
       {modalOpen && project.images && (
-        <div className="fixed inset-0 z-50 bg-[#0F0F0F]/90 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8">
+        <div role="dialog" aria-modal="true" aria-label={`${project.title} screenshots`} className="fixed inset-0 z-50 bg-[#0F0F0F]/90 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8">
           <div className="relative max-w-6xl w-full bg-[#F6F5F0] dark:bg-[#141414] border border-[rgba(15,15,15,0.2)] dark:border-[rgba(255,255,255,0.2)] p-2 sm:p-4 shadow-2xl space-y-3 font-mono text-xs">
             <div className="flex items-center justify-between border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.1)] pb-2 px-2">
               <span className="text-[#0F0F0F] dark:text-white font-semibold">

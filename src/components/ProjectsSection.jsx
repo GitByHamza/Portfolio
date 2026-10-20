@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, Github, ArrowUpRight } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { FadeIn } from './motion/MotionReveal'
+import { projectsData, getLocalizedProject } from '../data/projects'
 
 const ProjectsSection = () => {
-  const { t, isUrdu } = useLanguage()
+  const { t, lang, isUrdu } = useLanguage()
 
-  const editorialProjects = [
+  const existingFeaturedProjects = [
     {
       id: 6,
       num: '01',
@@ -88,6 +89,23 @@ const ProjectsSection = () => {
       impactNote: isUrdu ? 'Automated 24/7 Lead Qualification & Booking' : 'Automated 24/7 Lead Qualification & Booking',
     },
   ]
+
+  const editorialProjects = [
+    ...projectsData.filter((project) => project.featured).map((rawProject) => {
+      const project = getLocalizedProject(rawProject, lang)
+      return {
+        ...project,
+        badge: isUrdu ? project.featured.badge_ur : project.featured.badge,
+        badgeClass: 'tag-blue',
+        role: project.featured.role,
+        techStack: project.tags,
+        image: project.mainImage,
+        caseStudyUrl: `/project/${project.id}`,
+        impactNote: project.impact,
+      }
+    }),
+    ...existingFeaturedProjects,
+  ].map((project, index) => ({ ...project, num: String(index + 1).padStart(2, '0') }))
 
   return (
     <section id="work-section" className="w-full bg-[#F6F5F0] dark:bg-[#0F0F11] border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] transition-colors duration-200">
@@ -199,7 +217,8 @@ const ProjectsSection = () => {
                         <img
                           src={project.image}
                           alt={project.title}
-                          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-102"
+                          className={`w-full h-full transition-transform duration-500 group-hover:scale-102 ${project.imagePresentation === 'portrait' ? 'object-contain object-center' : 'object-cover object-top'}`}
+                          loading="lazy"
                         />
                         <div className="absolute bottom-2 left-2 bg-[#0F0F0F] text-white font-mono text-[9px] uppercase px-2 py-0.5 tracking-wider">
                           {project.impactNote}
@@ -217,7 +236,7 @@ const ProjectsSection = () => {
       {/* ─── Footer CTA to Full Work Archive ─── */}
       <FadeIn direction="up" delay={0.1} className="p-8 sm:p-12 text-center bg-[#FAF9F5] dark:bg-[#161619] border-t border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)]">
         <Link to="/work" className="btn-blue text-xs sm:text-sm px-8 py-4 group">
-          <span>{t('projectsSection', 'view_all')} (9+ SYSTEMS)</span>
+          <span>{t('projectsSection', 'view_all')} ({projectsData.length} SYSTEMS)</span>
           <ArrowRight size={16} className="arrow-slide" />
         </Link>
       </FadeIn>

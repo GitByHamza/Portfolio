@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { projectsData, getLocalizedProject } from '../data/projects'
+import { matchesProjectCategory } from '../lib/project-categories'
 import { useLanguage } from '../context/LanguageContext'
 import { ArrowRight, ExternalLink, Github, ArrowUpRight, Box } from 'lucide-react'
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/motion/MotionReveal'
@@ -18,36 +19,12 @@ export default function Work() {
     { id: 'ENTERPRISE', label: t('workPage', 'filter_enterprise') },
     { id: 'COMMERCE', label: t('workPage', 'filter_commerce') },
     { id: 'SAAS', label: t('workPage', 'filter_saas') },
+    { id: 'BUSINESS', label: t('workPage', 'filter_business') },
+    { id: 'MOBILE', label: t('workPage', 'filter_mobile') },
+    { id: 'WEB', label: t('workPage', 'filter_web') },
   ]
 
-  const filteredProjects = projectsData.filter((p) => {
-    if (filterId === 'ALL') return true
-    if (filterId === 'ENTERPRISE') {
-      return (
-        p.tags?.some((t) => ['Laravel 12', 'PostgreSQL', 'Spatie', 'Next.js'].includes(t)) ||
-        p.title.includes('Enterprise') ||
-        p.title.includes('Myls') ||
-        p.title.includes('Hospital')
-      )
-    }
-    if (filterId === 'COMMERCE') {
-      return (
-        p.tags?.includes('Prisma') ||
-        p.title.includes('Store') ||
-        p.title.includes('Shop') ||
-        p.title.includes('Ecommerce') ||
-        p.title.includes('Retail')
-      )
-    }
-    if (filterId === 'SAAS') {
-      return (
-        p.title.includes('SaaS') ||
-        p.title.includes('AI') ||
-        p.tags?.some((t) => t.toLowerCase().includes('ai') || t.includes('Micro SaaS'))
-      )
-    }
-    return true
-  })
+  const filteredProjects = projectsData.filter((project) => matchesProjectCategory(project, filterId))
 
   return (
     <div className="w-full bg-[#F6F5F0] dark:bg-[#0A0A0A] min-h-screen transition-colors duration-200">
@@ -73,6 +50,7 @@ export default function Work() {
               <button
                 key={c.id}
                 onClick={() => setFilterId(c.id)}
+                aria-pressed={filterId === c.id}
                 className={`px-4 py-2 border uppercase tracking-wider font-semibold transition-all cursor-pointer ${
                   filterId === c.id
                     ? 'bg-[#0F0F0F] dark:bg-white text-white dark:text-[#0F0F0F] border-[#0F0F0F] dark:border-white shadow-sm'
@@ -107,7 +85,8 @@ export default function Work() {
                             <img
                               src={project.mainImage}
                               alt={project.title}
-                              className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-103"
+                              className={`w-full h-full transition-transform duration-500 group-hover:scale-103 ${project.imagePresentation === 'portrait' ? 'object-contain object-center' : 'object-cover object-top'}`}
+                              loading="lazy"
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center text-[#8E8D88]">
@@ -135,7 +114,7 @@ export default function Work() {
                         />
                       )}
                       <span className="font-display text-2xl text-[#059669] dark:text-[#10B981]">
-                        0{idx + 1}
+                        {String(idx + 1).padStart(2, '0')}
                       </span>
                       <span>/</span>
                       <span className="text-[#0F0F0F] dark:text-white font-semibold uppercase">
