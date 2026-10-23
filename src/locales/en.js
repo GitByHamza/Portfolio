@@ -291,12 +291,6 @@ export const en = {
     business_email_label: 'EMAIL',
     phone_label: 'PHONE / WHATSAPP',
   },
-  legal: {
-    terms_title: 'TERMS OF SERVICE',
-    privacy_title: 'PRIVACY POLICY',
-    last_updated: 'LAST UPDATED: 2026 EDITION',
-    contact_email: 'If you have questions about these Terms, contact us at admin@texcodes.com.',
-  },
   error404: {
     badge: 'STATUS 404 // ROUTE NOT FOUND',
     title: 'DISPATCH ERROR.',
