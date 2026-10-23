@@ -33,9 +33,10 @@ export const en = {
     active_production: '● ACTIVE PRODUCTION',
     pledge: 'No bloated frameworks. Strict engineering discipline. Handover with 100% source ownership.',
     top_dispatch: 'TOP OF DISPATCH',
-    copyright: '© 2026 TEXCODES STUDIO · INDEPENDENT SOFTWARE ENGINEERING & PRODUCT BUILDING',
-    terms: 'TERMS OF DISPATCH',
-    privacy: 'PRIVACY',
+    copyright: '© 2026 TeXCodes · Independent Software Engineering & Product Building',
+    terms: 'Terms of Service',
+    privacy: 'Privacy Policy',
+    data_deletion: 'Data Deletion',
   },
   curtain: {
     vol: 'TEXCODES // VOL. 01',

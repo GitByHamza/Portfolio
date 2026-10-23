@@ -2,6 +2,8 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import { BUSINESS, FULL_ADDRESS, LEGAL_PATHS, LEGACY_LEGAL_REDIRECTS } from './business.js'
+import { en } from '../locales/en.js'
+import { ur } from '../locales/ur.js'
 
 test('business details keep the exact public spelling', () => {
   assert.equal(BUSINESS.name, 'TeXCodes')
@@ -51,5 +53,14 @@ test('old legal URLs 301 to the new ones before the SPA fallback', () => {
     const index = rules.findIndex(([source]) => source === from)
     assert.ok(index !== -1 && index < fallback, `${from} must be redirected before the /* fallback`)
     assert.deepEqual(rules[index].slice(1), [to, '301'])
+  }
+})
+
+test('footer legal copy uses the TeXCodes spelling in both languages', () => {
+  for (const dict of [en, ur]) {
+    assert.equal(dict.footer.copyright, '© 2026 TeXCodes · Independent Software Engineering & Product Building')
+    assert.equal(dict.footer.terms, 'Terms of Service')
+    assert.equal(dict.footer.privacy, 'Privacy Policy')
+    assert.equal(dict.footer.data_deletion, 'Data Deletion')
   }
 })

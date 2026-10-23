@@ -33,9 +33,10 @@ export const ur = {
     active_production: '● ACTIVE PRODUCTION',
     pledge: 'Baghair kisi slow framework ke. Strict engineering discipline. 100% source code ownership ke sath handover.',
     top_dispatch: 'WAAPIS OOPAR JAYEIN',
-    copyright: '© 2026 TEXCODES STUDIO · INDEPENDENT SOFTWARE ENGINEERING & PRODUCT BUILDING',
-    terms: 'TERMS OF DISPATCH',
-    privacy: 'PRIVACY POLICY',
+    copyright: '© 2026 TeXCodes · Independent Software Engineering & Product Building',
+    terms: 'Terms of Service',
+    privacy: 'Privacy Policy',
+    data_deletion: 'Data Deletion',
   },
   curtain: {
     vol: 'TEXCODES // VOL. 01',

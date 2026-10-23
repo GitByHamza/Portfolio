@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowUp, ArrowUpRight, Mail, MessageSquare } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
+import { BUSINESS, FULL_ADDRESS, LEGAL_PATHS } from '../data/business'
 
 export const Footer = () => {
   const { t } = useLanguage()
@@ -28,6 +29,10 @@ export const Footer = () => {
             <div>LEAD ENGINEER: HAMZA</div>
             <div>LOCATION: GUJRANWALA, PAKISTAN (PKT / UTC+5)</div>
           </div>
+          <address className="not-italic text-[11px] leading-relaxed space-y-1 max-w-sm">
+            <div>{BUSINESS.name} – {BUSINESS.owner}</div>
+            <div>{FULL_ADDRESS}</div>
+          </address>
         </div>
 
         {/* Index Navigation */}
@@ -146,11 +151,13 @@ export const Footer = () => {
         <div>
           {t('footer', 'copyright')}
         </div>
-        <div className="flex items-center gap-4">
-          <Link to="/terms" className="hover:underline">{t('footer', 'terms')}</Link>
-          <span>·</span>
-          <Link to="/privacy" className="hover:underline">{t('footer', 'privacy')}</Link>
-        </div>
+        <nav aria-label="Legal" className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+          <Link to={LEGAL_PATHS.terms} className="hover:underline">{t('footer', 'terms')}</Link>
+          <span aria-hidden="true">·</span>
+          <Link to={LEGAL_PATHS.privacy} className="hover:underline">{t('footer', 'privacy')}</Link>
+          <span aria-hidden="true">·</span>
+          <Link to={LEGAL_PATHS.dataDeletion} className="hover:underline">{t('footer', 'data_deletion')}</Link>
+        </nav>
       </div>
     </footer>
   )
