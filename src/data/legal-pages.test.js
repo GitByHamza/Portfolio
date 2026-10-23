@@ -54,3 +54,17 @@ test('data deletion page gives the email subject and the 30-day deadline', () =>
     'disconnect',
   ])
 })
+
+test('privacy policy makes no claim the site code does not support', () => {
+  const source = pageSource('PrivacyPolicy')
+  // Supabase policies and the admin page don't restrict access to contact messages yet;
+  // Iconify isn't loaded; only PKR, GBP and USD are offered; Google, Meta and TikTok
+  // process data under their own policies, not only for us.
+  for (const claim of ['limiting access', 'Iconify', 'local currency', 'only to provide their service to us']) {
+    assert.ok(!source.includes(claim), `PrivacyPolicy must not claim "${claim}"`)
+  }
+})
+
+test('published offer terms take priority over the general refund rule', () => {
+  assertMentions('TermsOfService', ['/solutions/terms', 'take priority'])
+})

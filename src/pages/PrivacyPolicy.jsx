@@ -36,8 +36,8 @@ const PrivacyPolicy = () => (
       <ul>
         <li>
           Country: when you open texcodes.com, our hosting provider works out your country from your IP address. We keep
-          only the two-letter country code, in a cookie called <code>tx_country</code> that lasts 24 hours, so that prices
-          are shown in your local currency.
+          only the two-letter country code, in a cookie called <code>tx_country</code> that lasts 24 hours, so that we can
+          choose which currency to show prices in.
         </li>
         <li>
           Server logs: our hosting provider records standard technical information, such as IP address, browser type and
@@ -102,8 +102,8 @@ const PrivacyPolicy = () => (
 
     <LegalSection number={5} title="Third parties we work with">
       <p>
-        We use a small number of service providers to run our website and products. They process data only to provide
-        their service to us.
+        We use a small number of service providers to run our website and products. Netlify and Supabase process data on
+        our behalf. Google, Meta and TikTok also handle data under their own privacy policies.
       </p>
       <ul>
         <li>
@@ -113,8 +113,8 @@ const PrivacyPolicy = () => (
           <strong>Supabase</strong> stores the messages sent through our contact form.
         </li>
         <li>
-          <strong>Google Fonts</strong> and <strong>Iconify</strong> serve some fonts and icons on texcodes.com, so they
-          receive your IP address and browser details when a page loads.
+          <strong>Google Fonts</strong> serves the fonts on texcodes.com, so Google receives your IP address and browser
+          details when a page loads.
         </li>
         <li>
           <strong>Meta</strong> (Instagram, Facebook and WhatsApp) and <strong>TikTok</strong> provide the APIs that
@@ -131,9 +131,9 @@ const PrivacyPolicy = () => (
     <LegalSection number={6} title="Storage and security">
       <p>
         Your information is stored with the service providers listed above, and some of them store data outside
-        Pakistan. We protect it with encrypted (HTTPS) connections, by limiting access to the people who need it to run
-        the service, and through the security controls of those providers. No online service can be completely secure,
-        but we take reasonable steps to protect your information.
+        Pakistan. Information is sent over encrypted (HTTPS) connections and is protected by the security controls of
+        those providers. No online service can be completely secure, but we take reasonable steps to protect your
+        information.
       </p>
       <p>
         We keep information only for as long as we need it for the purpose it was collected for, or as the law requires.

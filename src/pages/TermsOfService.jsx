@@ -14,7 +14,9 @@ const TermsOfService = () => (
       <p>
         {BUSINESS.name} builds and runs software products, such as CommentIQ, and takes on custom software projects for
         clients. Where a client project has its own written quote or agreement, that document applies to the project,
-        and it takes priority over these terms if the two conflict.
+        and it takes priority over these terms if the two conflict. The same applies to offers that have their own
+        published terms, such as our <LegalLink to="/solutions/terms">retail offer terms</LegalLink>: those terms apply
+        to that offer and take priority over these terms if the two conflict.
       </p>
     </LegalSection>
 
@@ -60,7 +62,8 @@ const TermsOfService = () => (
           you have already paid for.
         </li>
         <li>
-          Payments are not refundable, except where the law requires a refund or where we have agreed to one in writing.
+          Payments are not refundable, except where the law requires a refund, where we have agreed to one in writing,
+          or where an offer’s published terms provide for one.
         </li>
         <li>Prices do not include any taxes that may apply.</li>
         <li>If we change a price, we will tell you before the change applies to your next billing period.</li>
