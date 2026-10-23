@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
-import { BUSINESS, FULL_ADDRESS, LEGAL_PATHS } from './business.js'
+import { BUSINESS, FULL_ADDRESS, LEGAL_PATHS, LEGACY_LEGAL_REDIRECTS } from './business.js'
 
 test('business details keep the exact public spelling', () => {
   assert.equal(BUSINESS.name, 'TeXCodes')
@@ -38,4 +38,18 @@ test('index.html Organization JSON-LD matches the business details', () => {
       addressCountry: address.countryCode,
     },
   })
+})
+
+test('old legal URLs 301 to the new ones before the SPA fallback', () => {
+  const rules = readFileSync(new URL('../../public/_redirects', import.meta.url), 'utf8')
+    .split('\n')
+    .map((line) => line.trim().split(/\s+/))
+    .filter(([from]) => from && !from.startsWith('#'))
+  const fallback = rules.findIndex(([from]) => from === '/*')
+  assert.notEqual(fallback, -1, 'SPA fallback rule is missing')
+  for (const { from, to } of LEGACY_LEGAL_REDIRECTS) {
+    const index = rules.findIndex(([source]) => source === from)
+    assert.ok(index !== -1 && index < fallback, `${from} must be redirected before the /* fallback`)
+    assert.deepEqual(rules[index].slice(1), [to, '301'])
+  }
 })

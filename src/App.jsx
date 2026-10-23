@@ -16,7 +16,9 @@ import ProjectDetails from './pages/ProjectDetails'
 import AdminDashboard from './pages/AdminDashboard'
 import TermsOfService from './pages/TermsOfService'
 import PrivacyPolicy from './pages/PrivacyPolicy'
+import DataDeletion from './pages/DataDeletion'
 import Error404 from './pages/Error404'
+import { LEGAL_PATHS, LEGACY_LEGAL_REDIRECTS } from './data/business'
 
 import Navbar from './components/Navbar'
 import { Footer } from './components/Footer'
@@ -133,8 +135,12 @@ function App() {
             <Route path="/offer/gaming" element={<Navigate to="/solutions/console-retail" replace />} />
 
             {/* Legal */}
-            <Route path="/terms" element={<TermsOfService />} />
-            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path={LEGAL_PATHS.terms} element={<TermsOfService />} />
+            <Route path={LEGAL_PATHS.privacy} element={<PrivacyPolicy />} />
+            <Route path={LEGAL_PATHS.dataDeletion} element={<DataDeletion />} />
+            {LEGACY_LEGAL_REDIRECTS.map(({ from, to }) => (
+              <Route key={from} path={from} element={<Navigate to={to} replace />} />
+            ))}
             <Route path="*" element={<Error404 />} />
           </Route>
         </Routes>
