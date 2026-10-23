@@ -1,5 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 import { BUSINESS, FULL_ADDRESS, LEGAL_PATHS } from './business.js'
 
 test('business details keep the exact public spelling', () => {
@@ -13,4 +14,28 @@ test('business details keep the exact public spelling', () => {
 
 test('legal pages live at clean URLs', () => {
   assert.deepEqual(LEGAL_PATHS, { privacy: '/privacy-policy', terms: '/terms-of-service', dataDeletion: '/data-deletion' })
+})
+
+test('index.html Organization JSON-LD matches the business details', () => {
+  const html = readFileSync(new URL('../../index.html', import.meta.url), 'utf8')
+  const json = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1]
+  assert.ok(json, 'index.html is missing the Organization JSON-LD')
+  const { address } = BUSINESS
+  assert.deepEqual(JSON.parse(json), {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: BUSINESS.name,
+    url: BUSINESS.url,
+    email: BUSINESS.email,
+    telephone: BUSINESS.phoneE164,
+    founder: { '@type': 'Person', name: BUSINESS.owner },
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: address.street,
+      addressLocality: address.city,
+      addressRegion: address.region,
+      postalCode: address.postalCode,
+      addressCountry: address.countryCode,
+    },
+  })
 })
