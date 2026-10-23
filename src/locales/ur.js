@@ -284,6 +284,12 @@ export const ur = {
     modal_title: 'INQUIRY RECORD HO GAYI',
     modal_desc: 'Aapki details kamyabi se register ho gayi hain. Fauri reply ke liye aap abhi WhatsApp par bhi pre-filled summary bhej sakte hain:',
     modal_close: 'Khirki Band Karein',
+    business_heading: 'KAROBARI MALOOMAT',
+    business_name_label: 'KAROBAR KA NAAM',
+    owner_label: 'MALIK',
+    address_label: 'PATA',
+    business_email_label: 'EMAIL',
+    phone_label: 'PHONE / WHATSAPP',
   },
   legal: {
     terms_title: 'TERMS OF SERVICE',

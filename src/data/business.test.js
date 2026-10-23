@@ -64,3 +64,11 @@ test('footer legal copy uses the TeXCodes spelling in both languages', () => {
     assert.equal(dict.footer.data_deletion, 'Data Deletion')
   }
 })
+
+test('contact page business card is labelled in both languages', () => {
+  for (const dict of [en, ur]) {
+    for (const key of ['business_heading', 'business_name_label', 'owner_label', 'address_label', 'business_email_label', 'phone_label']) {
+      assert.ok(dict.contact[key]?.trim(), `missing contact.${key}`)
+    }
+  }
+})

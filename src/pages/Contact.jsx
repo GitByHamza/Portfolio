@@ -3,6 +3,7 @@ import { Send, Mail, MessageSquare, MapPin, CheckCircle2, ArrowUpRight, AlertCir
 import { supabase } from '@/lib/supabase'
 import { useLanguage } from '../context/LanguageContext'
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/motion/MotionReveal'
+import { BUSINESS, FULL_ADDRESS } from '../data/business'
 
 export default function Contact() {
   const { t, isUrdu } = useLanguage()
@@ -307,6 +308,37 @@ export default function Contact() {
                   {isUrdu ? '100% CLIENT GITHUB AUR DATABASE TRANSFER' : '100% CLIENT GITHUB & DATABASE TRANSFER'}
                 </div>
               </div>
+            </div>
+
+            {/* Business Information */}
+            <div className="card-hover-guided p-6 bg-white dark:bg-[#161619] border border-[#08966a] space-y-4">
+              <h2 className="text-[10px] text-[#08966a] dark:text-[#10B981] uppercase tracking-widest font-semibold">
+                {t('contact', 'business_heading')}
+              </h2>
+              <address className="not-italic space-y-3">
+                {[
+                  ['business_name_label', BUSINESS.name],
+                  ['owner_label', BUSINESS.owner],
+                  ['address_label', FULL_ADDRESS],
+                ].map(([label, value]) => (
+                  <div key={label}>
+                    <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] uppercase tracking-widest mb-1">{t('contact', label)}</div>
+                    <div className="font-semibold text-[#0F0F0F] dark:text-[#EDECE6] leading-relaxed">{value}</div>
+                  </div>
+                ))}
+                <div>
+                  <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] uppercase tracking-widest mb-1">{t('contact', 'business_email_label')}</div>
+                  <a href={`mailto:${BUSINESS.email}`} className="font-semibold text-[#0F0F0F] dark:text-[#EDECE6] hover:text-[#059669] dark:hover:text-[#10B981] transition-colors">
+                    {BUSINESS.email}
+                  </a>
+                </div>
+                <div>
+                  <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] uppercase tracking-widest mb-1">{t('contact', 'phone_label')}</div>
+                  <a href={`tel:${BUSINESS.phoneE164}`} className="font-semibold text-[#0F0F0F] dark:text-[#EDECE6] hover:text-[#059669] dark:hover:text-[#10B981] transition-colors">
+                    {BUSINESS.phone}
+                  </a>
+                </div>
+              </address>
             </div>
           </FadeIn>
         </div>

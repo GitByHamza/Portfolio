@@ -284,6 +284,12 @@ export const en = {
     modal_title: 'INQUIRY CAPTURED',
     modal_desc: 'Your project details have been successfully registered. You can also send a pre-filled direct WhatsApp summary right now for expedited review:',
     modal_close: 'Close Window',
+    business_heading: 'BUSINESS INFORMATION',
+    business_name_label: 'BUSINESS NAME',
+    owner_label: 'OWNER',
+    address_label: 'ADDRESS',
+    business_email_label: 'EMAIL',
+    phone_label: 'PHONE / WHATSAPP',
   },
   legal: {
     terms_title: 'TERMS OF SERVICE',
