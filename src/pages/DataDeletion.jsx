@@ -42,8 +42,12 @@ const DataDeletion = () => (
         disconnect from within the app. Until then, please send us an email as described above.
       </p>
       <p>
-        You can also remove CommentIQ’s access at any time from your Facebook, Instagram or TikTok settings. This stops
-        us from receiving any new data. To delete the data we already hold, send us a deletion request as well.
+        If you remove CommentIQ from your Facebook or Instagram settings, we receive a notice from Meta and delete the
+        data we hold for that account within 30 days.
+      </p>
+      <p>
+        You can also remove CommentIQ’s access at any time from your TikTok settings. This stops us from receiving any
+        new data from that account. To delete the data we already hold, send us a deletion request as well.
       </p>
     </LegalSection>
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { LegalContact, LegalLink, LegalPage, LegalSection } from '../components/legal/LegalPage'
-import { BUSINESS, LEGAL_EFFECTIVE_DATE, LEGAL_PATHS } from '../data/business'
+import { BUSINESS, COMMENTIQ_AI_PROVIDER, LEGAL_EFFECTIVE_DATE, LEGAL_PATHS } from '../data/business'
 
 const PrivacyPolicy = () => (
   <LegalPage title="Privacy Policy">
@@ -87,44 +87,69 @@ const PrivacyPolicy = () => (
           profiles of commenters.
         </li>
         <li>
+          <strong>AI analysis.</strong> Comment text is sent to {COMMENTIQ_AI_PROVIDER} only to produce the analysis for
+          the user who connected the account. We use {COMMENTIQ_AI_PROVIDER}’s API with model training turned off, and
+          neither we nor {COMMENTIQ_AI_PROVIDER} use this data to train or improve AI models.
+        </li>
+        <li>
+          <strong>Access tokens.</strong> Access tokens are stored encrypted on our servers and are never shared.
+        </li>
+        <li>
           <strong>Disconnecting and deletion.</strong> You can disconnect at any time. You can remove CommentIQ’s access
           in your Facebook, Instagram or TikTok settings, and you will also be able to disconnect inside CommentIQ once
-          that option is available. We delete your platform data when you ask us to, or when you delete your CommentIQ
-          account.
+          that option is available. When you disconnect an account or delete your CommentIQ account, we delete that
+          account’s tokens, comments and analysis within 30 days, as described on our{' '}
+          <LegalLink to={LEGAL_PATHS.dataDeletion}>Data Deletion page</LegalLink>. We also delete your platform data
+          whenever you ask us to.
         </li>
       </ul>
       <p>
-        To ask us to delete your data, follow the steps on our{' '}
-        <LegalLink to={LEGAL_PATHS.dataDeletion}>Data Deletion page</LegalLink>.
+        We use Meta and TikTok platform data only as their platform terms allow, and only to provide CommentIQ to the
+        user who connected the account.
       </p>
-      <p>We handle data received from Meta and TikTok in line with their platform terms and developer policies.</p>
     </LegalSection>
 
     <LegalSection number={5} title="Third parties we work with">
       <p>
-        We use a small number of service providers to run our website and products. Netlify and Supabase process data on
-        our behalf. Google, Meta and TikTok also handle data under their own privacy policies.
+        We use only the services below to run our website and products. Netlify, Supabase, Zoho Mail and{' '}
+        {COMMENTIQ_AI_PROVIDER} process data on our behalf. Google, Calendly, Meta and TikTok also handle data under their
+        own privacy policies.
       </p>
       <ul>
         <li>
           <strong>Netlify</strong> hosts texcodes.com and works out your country for currency display.
         </li>
         <li>
-          <strong>Supabase</strong> stores the messages sent through our contact form.
+          <strong>Supabase</strong> is our database. It stores the messages sent through our contact form and CommentIQ
+          data.
+        </li>
+        <li>
+          <strong>Zoho Mail</strong> hosts our email at {BUSINESS.email}, so it holds the emails you send us.
+        </li>
+        <li>
+          <strong>Calendly</strong> runs our <LegalLink href={BUSINESS.bookingUrl}>call booking page</LegalLink>. If you
+          book a call, Calendly collects the name, email and booking details you enter, under Calendly’s own privacy
+          policy.
         </li>
         <li>
           <strong>Google Fonts</strong> serves the fonts on texcodes.com, so Google receives your IP address and browser
           details when a page loads.
         </li>
         <li>
-          <strong>Meta</strong> (Instagram, Facebook and WhatsApp) and <strong>TikTok</strong> provide the APIs that
-          CommentIQ uses. WhatsApp also carries any messages you send us there.
+          <strong>{COMMENTIQ_AI_PROVIDER}</strong> analyses comment text for CommentIQ, as described in section 4.
         </li>
         <li>
-          <strong>Payment providers</strong>: if you buy a paid plan, your payment is handled by the payment provider or
-          bank shown at checkout. We receive only what we need to confirm your payment.
+          <strong>Meta</strong> (Facebook and Instagram APIs) and <strong>TikTok</strong> (TikTok API for Business)
+          provide the connected-account data that CommentIQ uses. We use these APIs for CommentIQ only.
+        </li>
+        <li>
+          <strong>WhatsApp</strong> (Meta) carries any messages you choose to send us there.
         </li>
       </ul>
+      <p>
+        We do not use an online payment gateway. Clients pay by bank transfer against an invoice, and we receive only what
+        we need to confirm the payment.
+      </p>
       <p>We may also share information when the law requires it.</p>
     </LegalSection>
 

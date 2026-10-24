@@ -52,6 +52,33 @@ test('data deletion page gives the email subject and the 30-day deadline', () =>
     'Data Deletion Request',
     'within 30 days',
     'disconnect',
+    'If you remove CommentIQ from your Facebook or Instagram settings, we receive a notice from Meta and delete the data we hold for that account within 30 days.',
+  ])
+})
+
+test('privacy policy names the services the site and CommentIQ use', () => {
+  assertMentions('PrivacyPolicy', [
+    'Netlify',
+    'Supabase',
+    'Zoho Mail',
+    'Calendly',
+    'BUSINESS.bookingUrl',
+    "under Calendly’s own privacy policy",
+    'Google Fonts',
+    'COMMENTIQ_AI_PROVIDER',
+    'TikTok API for Business',
+    'bank transfer against an invoice',
+  ])
+})
+
+test('privacy policy states how CommentIQ handles comment text, tokens and deletion', () => {
+  assertMentions('PrivacyPolicy', [
+    'only to produce the analysis for the user who connected the account',
+    'model training turned off',
+    'train or improve AI models',
+    'Access tokens are stored encrypted on our servers and are never shared',
+    "we delete that account’s tokens, comments and analysis within 30 days",
+    'only as their platform terms allow',
   ])
 })
 
@@ -59,8 +86,8 @@ test('privacy policy makes no claim the site code does not support', () => {
   const source = pageSource('PrivacyPolicy')
   // Supabase policies and the admin page don't restrict access to contact messages yet;
   // Iconify isn't loaded; only PKR, GBP and USD are offered; Google, Meta and TikTok
-  // process data under their own policies, not only for us.
-  for (const claim of ['limiting access', 'Iconify', 'local currency', 'only to provide their service to us']) {
+  // process data under their own policies, not only for us; the site has no checkout.
+  for (const claim of ['limiting access', 'Iconify', 'local currency', 'only to provide their service to us', 'shown at checkout']) {
     assert.ok(!source.includes(claim), `PrivacyPolicy must not claim "${claim}"`)
   }
 })

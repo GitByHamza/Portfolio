@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
-import { BUSINESS, FULL_ADDRESS, LEGAL_PATHS, LEGACY_LEGAL_REDIRECTS } from './business.js'
+import { BUSINESS, COMMENTIQ_AI_PROVIDER, FULL_ADDRESS, LEGAL_PATHS, LEGACY_LEGAL_REDIRECTS } from './business.js'
 import { en } from '../locales/en.js'
 import { ur } from '../locales/ur.js'
 
@@ -11,6 +11,7 @@ test('business details keep the exact public spelling', () => {
   assert.equal(BUSINESS.email, 'admin@texcodes.com')
   assert.equal(BUSINESS.phone, '+92 309 1824000')
   assert.equal(BUSINESS.phoneE164, '+923091824000')
+  assert.equal(BUSINESS.bookingUrl, 'https://calendly.com/texcodes000/30min')
   assert.equal(FULL_ADDRESS, 'Bazar Mehar Noor Wala, Gali No 9, Mohalla Islam Pura, Gujranwala 52250, Punjab, Pakistan')
 })
 
@@ -71,4 +72,8 @@ test('contact page business card is labelled in both languages', () => {
       assert.ok(dict.contact[key]?.trim(), `missing contact.${key}`)
     }
   }
+})
+
+test('CommentIQ AI provider is named before deploy', { todo: 'replace the [AI PROVIDER] placeholder in src/data/business.js' }, () => {
+  assert.notEqual(COMMENTIQ_AI_PROVIDER, '[AI PROVIDER]')
 })
