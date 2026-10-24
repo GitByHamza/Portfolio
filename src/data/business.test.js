@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
-import { BUSINESS, COMMENTIQ_AI_PROVIDER, FULL_ADDRESS, LEGAL_PATHS, LEGACY_LEGAL_REDIRECTS } from './business.js'
+import { BUSINESS, COMMENTIQ_AI_PROVIDER, FULL_ADDRESS, LEGAL_PAGES, LEGAL_PATHS, LEGACY_LEGAL_REDIRECTS } from './business.js'
 import { en } from '../locales/en.js'
 import { ur } from '../locales/ur.js'
 
@@ -76,4 +76,19 @@ test('contact page business card is labelled in both languages', () => {
 
 test('CommentIQ AI provider is named before deploy', { todo: 'replace the [AI PROVIDER] placeholder in src/data/business.js' }, () => {
   assert.notEqual(COMMENTIQ_AI_PROVIDER, '[AI PROVIDER]')
+})
+
+test('every legal path has static page metadata', () => {
+  assert.deepEqual(LEGAL_PAGES.map((page) => page.path), Object.values(LEGAL_PATHS))
+  for (const page of LEGAL_PAGES) {
+    assert.ok(page.title.trim() && page.description.trim(), `${page.path}: needs a title and description`)
+    assert.doesNotMatch(page.description, /["&<>]/, `${page.path}: keep the description free of HTML-escaped characters`)
+  }
+})
+
+test('SPA fallback is not forced, so Netlify serves the prerendered legal pages first', () => {
+  const rules = readFileSync(new URL('../../public/_redirects', import.meta.url), 'utf8').split('\n').map((line) => line.trim())
+  // A forced rule ("200!") would shadow dist/privacy-policy/index.html and the other static pages.
+  assert.ok(rules.some((line) => /^\/\*\s+\/index\.html\s+200$/.test(line)), 'fallback must be "/* /index.html 200" (not forced)')
+  assert.ok(!rules.some((line) => /^\/\*.*!$/.test(line)))
 })

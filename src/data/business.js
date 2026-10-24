@@ -27,6 +27,28 @@ export const LEGAL_PATHS = {
   dataDeletion: '/data-deletion',
 }
 
+// Static HTML is written for these at build time (scripts/prerender-legal.js).
+export const LEGAL_PAGES = [
+  {
+    path: LEGAL_PATHS.privacy,
+    title: 'Privacy Policy',
+    description:
+      'How TeXCodes collects, uses and protects personal information on texcodes.com and in CommentIQ, including data from connected Instagram, Facebook and TikTok accounts.',
+  },
+  {
+    path: LEGAL_PATHS.terms,
+    title: 'Terms of Service',
+    description:
+      'The terms for using texcodes.com and TeXCodes software, including CommentIQ: accounts, acceptable use, payments, termination, liability and governing law.',
+  },
+  {
+    path: LEGAL_PATHS.dataDeletion,
+    title: 'Data Deletion',
+    description:
+      'How to ask TeXCodes to delete your data, including CommentIQ data from connected Instagram, Facebook and TikTok accounts. Deletion is completed within 30 days.',
+  },
+]
+
 // Old URLs that are already shared or indexed. public/_redirects 301s them as well.
 export const LEGACY_LEGAL_REDIRECTS = [
   { from: '/terms', to: LEGAL_PATHS.terms },

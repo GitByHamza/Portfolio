@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, Outlet, Navigate, useLocation } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, Navigate, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import Lenis from 'lenis'
@@ -20,8 +20,7 @@ import DataDeletion from './pages/DataDeletion'
 import Error404 from './pages/Error404'
 import { LEGAL_PATHS, LEGACY_LEGAL_REDIRECTS } from './data/business'
 
-import Navbar from './components/Navbar'
-import { Footer } from './components/Footer'
+import MainLayout from './components/MainLayout'
 import PageCurtain from './components/PageCurtain'
 import { LanguageProvider } from './context/LanguageContext'
 import { ScrollProgress } from './components/motion/MotionReveal'
@@ -71,17 +70,6 @@ function SmoothScroll() {
 
   return null
 }
-
-// Layout wrapper for all editorial pages
-const MainLayout = () => (
-  <div className="w-full bg-[#F6F5F0] dark:bg-[#0F0F11] text-[#0F0F0F] dark:text-[#EDECE6] min-h-screen flex flex-col justify-between transition-colors duration-200">
-    <Navbar />
-    <div className="flex-1 w-full">
-      <Outlet />
-    </div>
-    <Footer />
-  </div>
-)
 
 function App() {
   useEffect(() => {

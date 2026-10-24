@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && vite build --ssr src/entry-legal.jsx --outDir dist-ssr && node scripts/prerender-legal.js",
     "lint": "eslint .",
     "test": "node --test --experimental-test-coverage src/lib/*.test.js src/data/*.test.js",
     "preview": "vite preview"

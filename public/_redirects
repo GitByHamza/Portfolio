@@ -1,3 +1,7 @@
+# Old legal URLs.
 /terms      /terms-of-service   301
 /privacy    /privacy-policy     301
+
+# SPA fallback. Not forced (no "!"), so the static legal pages that
+# scripts/prerender-legal.js writes to dist/ are served before it.
 /*          /index.html         200
