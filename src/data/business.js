@@ -57,6 +57,6 @@ export const LEGACY_LEGAL_REDIRECTS = [
 
 export const LEGAL_EFFECTIVE_DATE = 'October 24, 2026'
 
-// The AI service that analyses comment text for CommentIQ, named in the Privacy Policy.
-// Placeholder until the owner confirms the provider; a todo test in business.test.js flags it.
-export const COMMENTIQ_AI_PROVIDER = '[AI PROVIDER]'
+// The AI service that analyses comment text for CommentIQ (OpenAI API, GPT models),
+// named in the Privacy Policy.
+export const COMMENTIQ_AI_PROVIDER = 'OpenAI'

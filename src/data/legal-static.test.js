@@ -23,6 +23,7 @@ const pageText = {
     'Information we collect',
     'We do not sell this data, do not use it for advertising, and do not build profiles of commenters.',
     'Zoho Mail',
+    'Comment text is sent to OpenAI only to produce the analysis',
   ],
   '/terms-of-service': ['Acceptable use', 'These terms are governed by the laws of Pakistan.'],
   '/data-deletion': ['Data Deletion Request', 'we will complete the deletion within 30 days'],

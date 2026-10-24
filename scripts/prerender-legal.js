@@ -4,7 +4,7 @@
 // Netlify serves it at /<page> and /<page>/ without a redirect.
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { injectPage } from '../src/lib/prerender.js'
-import { COMMENTIQ_AI_PROVIDER, LEGAL_PAGES } from '../src/data/business.js'
+import { LEGAL_PAGES } from '../src/data/business.js'
 
 const { render } = await import('../dist-ssr/entry-legal.js')
 const dist = new URL('../dist/', import.meta.url)
@@ -17,8 +17,4 @@ for (const page of LEGAL_PAGES) {
   writeFileSync(new URL(`${name}/index.html`, dist), html)
   writeFileSync(new URL(`${name}.html`, dist), html)
   console.log(`prerendered ${page.path}`)
-}
-
-if (COMMENTIQ_AI_PROVIDER === '[AI PROVIDER]') {
-  console.warn('WARNING: the Privacy Policy still names "[AI PROVIDER]". Set COMMENTIQ_AI_PROVIDER in src/data/business.js.')
 }

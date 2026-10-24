@@ -74,8 +74,8 @@ test('contact page business card is labelled in both languages', () => {
   }
 })
 
-test('CommentIQ AI provider is named before deploy', { todo: 'replace the [AI PROVIDER] placeholder in src/data/business.js' }, () => {
-  assert.notEqual(COMMENTIQ_AI_PROVIDER, '[AI PROVIDER]')
+test('CommentIQ names OpenAI as its AI provider', () => {
+  assert.equal(COMMENTIQ_AI_PROVIDER, 'OpenAI')
 })
 
 test('every legal path has static page metadata', () => {
