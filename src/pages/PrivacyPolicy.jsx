@@ -12,7 +12,7 @@ const PrivacyPolicy = () => (
 
     <LegalSection number={1} title="Who we are">
       <p>
-        {BUSINESS.name} is a software business run by {BUSINESS.owner} from Gujranwala, Pakistan. In this policy,
+        {BUSINESS.name} is a software business run by {BUSINESS.owner} in Pakistan. In this policy,
         “{BUSINESS.name}”, “we”, “us” and “our” mean {BUSINESS.name}. Our full contact details are in section 11.
       </p>
     </LegalSection>

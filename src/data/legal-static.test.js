@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { existsSync, readFileSync } from 'node:fs'
-import { FULL_ADDRESS, LEGAL_PAGES } from './business.js'
+import { BUSINESS, LEGAL_PAGES } from './business.js'
 
 // Checks the static HTML that `npm run build` writes for the legal pages, which
 // Meta's URL checker reads without running JavaScript. Skipped until dist/ exists.
@@ -38,9 +38,10 @@ for (const page of LEGAL_PAGES) {
       assert.ok(html.includes(`<title>${page.title} — TeXCodes</title>`), `${file}: wrong <title>`)
       assert.ok(html.includes(`<meta name="description" content="${page.description}" />`), `${file}: wrong description`)
       assert.ok(!html.includes('<div id="root"></div>'), `${file}: root div is empty`)
+      assert.doesNotMatch(html, /Gujranwala|Mehar Noor/i, `${file}: still shows the address`)
       assert.match(html, /<script type="module"[^>]*src="\/assets\//, `${file}: client script missing`)
       const text = visibleText(html)
-      for (const phrase of [page.title, FULL_ADDRESS, ...pageText[page.path]]) {
+      for (const phrase of [page.title, BUSINESS.email, ...pageText[page.path]]) {
         assert.ok(text.includes(phrase), `${file} must show "${phrase}"`)
       }
     }

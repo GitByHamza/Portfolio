@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowUp, ArrowUpRight, Mail, MessageSquare } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
-import { BUSINESS, FULL_ADDRESS, LEGAL_PATHS } from '../data/business'
+import { BUSINESS, LEGAL_PATHS } from '../data/business'
 
 export const Footer = () => {
   const { t } = useLanguage()
@@ -27,12 +27,10 @@ export const Footer = () => {
           </p>
           <div className="pt-2 text-[11px] text-[#8E8D88] dark:text-[#6A6965] space-y-1">
             <div>LEAD ENGINEER: HAMZA</div>
-            <div>LOCATION: GUJRANWALA, PAKISTAN (PKT / UTC+5)</div>
           </div>
-          <address className="not-italic text-[11px] leading-relaxed space-y-1 max-w-sm">
-            <div>{BUSINESS.name} – {BUSINESS.owner}</div>
-            <div>{FULL_ADDRESS}</div>
-          </address>
+          <div className="text-[11px] leading-relaxed max-w-sm">
+            {BUSINESS.name} – {BUSINESS.owner}
+          </div>
         </div>
 
         {/* Index Navigation */}

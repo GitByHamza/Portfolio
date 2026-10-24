@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Send, Mail, MessageSquare, MapPin, CheckCircle2, ArrowUpRight, AlertCircle } from 'lucide-react'
+import { Send, Mail, MessageSquare, CheckCircle2, ArrowUpRight, AlertCircle } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { useLanguage } from '../context/LanguageContext'
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/motion/MotionReveal'
-import { BUSINESS, FULL_ADDRESS } from '../data/business'
+import { BUSINESS } from '../data/business'
 
 export default function Contact() {
   const { t, isUrdu } = useLanguage()
@@ -290,16 +290,6 @@ export default function Contact() {
                 <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">{t('contact', 'sla_desc')}</div>
               </div>
 
-              <div className="border-b border-[#08966a]/20 dark:border-[#08966a]/30 pb-3">
-                <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] uppercase tracking-widest mb-1">
-                  {t('contact', 'timezone_heading')}
-                </div>
-                <div className="font-semibold text-[#0F0F0F] dark:text-[#EDECE6] flex items-center gap-1">
-                  <MapPin size={13} className="text-[#059669] dark:text-[#10B981]" /> GUJRANWALA, PAKISTAN
-                </div>
-                <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">{t('contact', 'timezone_desc')}</div>
-              </div>
-
               <div>
                 <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] uppercase tracking-widest mb-1">
                   {isUrdu ? 'MALKIANA HUQOOQ GUARANTEE' : 'CODE OWNERSHIP GUARANTEE'}
@@ -319,7 +309,6 @@ export default function Contact() {
                 {[
                   ['business_name_label', BUSINESS.name],
                   ['owner_label', BUSINESS.owner],
-                  ['address_label', FULL_ADDRESS],
                 ].map(([label, value]) => (
                   <div key={label}>
                     <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] uppercase tracking-widest mb-1">{t('contact', label)}</div>

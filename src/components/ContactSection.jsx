@@ -3,7 +3,6 @@ import {
   Instagram,
   Linkedin,
   Mail,
-  MapPin,
   Phone,
   Send,
 } from "lucide-react";
@@ -103,17 +102,6 @@ export const ContactSection = () => {
                   >
                     +92 339 0001824
                   </a>
-                </div>
-              </div>
-              <div className="flex items-start space-x-4">
-                <div className="font-body p-3 rounded-full bg-primary/10">
-                  <MapPin className="h-6 w-6 text-primary" />
-                </div>
-                <div>
-                  <h4 className="text-left font-medium font-body"> Location</h4>
-                  <span className="font-body text-muted-foreground hover:text-primary transition-colors cursor-default">
-                    Gujranwala, Punjab, Pakistan
-                  </span>
                 </div>
               </div>
             </div>

@@ -8,18 +8,7 @@ export const BUSINESS = {
   phone: '+92 309 1824000',
   phoneE164: '+923091824000',
   bookingUrl: 'https://calendly.com/texcodes000/30min',
-  address: {
-    street: 'Bazar Mehar Noor Wala, Gali No 9, Mohalla Islam Pura',
-    city: 'Gujranwala',
-    region: 'Punjab',
-    postalCode: '52250',
-    country: 'Pakistan',
-    countryCode: 'PK',
-  },
 }
-
-const { street, city, postalCode, region, country } = BUSINESS.address
-export const FULL_ADDRESS = `${street}, ${city} ${postalCode}, ${region}, ${country}`
 
 export const LEGAL_PATHS = {
   privacy: '/privacy-policy',
