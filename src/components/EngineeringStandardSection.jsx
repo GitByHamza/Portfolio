@@ -176,7 +176,7 @@ const EngineeringStandardSection = () => {
           <div className="inline-flex flex-col sm:flex-row items-center gap-4">
             <Magnetic>
               <Link
-                to="/solutions/tech-retail"
+                to="/offers/tech-retail"
                 className="cosmic-button flex items-center gap-2 text-sm px-6 py-3"
               >
                 Inspect The Tech Retail Solution <ArrowRight size={16} />

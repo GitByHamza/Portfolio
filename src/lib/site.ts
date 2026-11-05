@@ -20,23 +20,24 @@ const basePages: Omit<PublicPage, 'lang'>[] = [
   { path: '/about', kind: 'about', title: 'About Hamza & TeXCodes', description: 'Muhammad Ameer Hamza’s software engineering background, production work, SaaS modernization and approach to building business systems.' },
   { path: '/work', kind: 'work', title: 'Software Projects & Case Studies', description: 'Explore 12 software projects: SaaS, enterprise systems, retail platforms, AI automation, business applications and mobile products.' },
   { path: '/contact', kind: 'contact', title: 'Contact TeXCodes', description: `Discuss a custom system, SaaS modernization or retail platform with Hamza. Email ${BUSINESS.email} or contact TeXCodes on WhatsApp.` },
-  { path: '/solutions', kind: 'solutions', title: 'Retail Software Solutions & Plans', description: 'Compare Tech Retail OS, Laptop Retail OS and Console & Games Retail OS: plans, regional prices, source code handover and delivery scope.' },
+  { path: '/offers', kind: 'solutions', title: 'Retail Software Offers & Plans', description: 'Compare Tech Retail OS, Laptop Retail OS and Console & Games Retail OS: plans, regional prices, source code handover and delivery scope.' },
   { path: '/tech-retail/offer', kind: 'funnel', title: 'Tech Retail OS — One System for Your PC Retail Business', description: 'PC compatibility checks, stock across three locations and serial-number warranty records. Explore the Multi-Branch offer and arrange a personalised demo.', offer: 'tech-retail', plan: 'multi-branch', image: '/tech-retail/preview.webp' },
-  ...offerIndex.map((offer): Omit<PublicPage, 'lang'> => ({ path: `/solutions/${offer.slug}`, kind: 'offer', title: `${offer.name} — Plans & Pricing`, description: offer.description, offer: offer.slug })),
-  ...offerIndex.flatMap((offer) => PLAN_KEYS.map((key): Omit<PublicPage, 'lang'> => ({ path: `/solutions/${offer.slug}/plans/${PLAN_SLUGS[key]}`, kind: 'plan', title: `${offer.name} — ${PLAN_NAMES[key]} Full Scope`, description: `Full ${PLAN_NAMES[key]} scope for ${offer.name}: included modules, exclusions, regional prices, delivery conditions and ownership.`, offer: offer.slug, plan: PLAN_SLUGS[key] }))),
+  ...offerIndex.map((offer): Omit<PublicPage, 'lang'> => ({ path: `/offers/${offer.slug}`, kind: 'offer', title: `${offer.name} — Plans & Pricing`, description: offer.description, offer: offer.slug })),
+  ...offerIndex.flatMap((offer) => PLAN_KEYS.map((key): Omit<PublicPage, 'lang'> => ({ path: `/offers/${offer.slug}/plans/${PLAN_SLUGS[key]}`, kind: 'plan', title: `${offer.name} — ${PLAN_NAMES[key]} Full Scope`, description: `Full ${PLAN_NAMES[key]} scope for ${offer.name}: included modules, exclusions, regional prices, delivery conditions and ownership.`, offer: offer.slug, plan: PLAN_SLUGS[key] }))),
   ...projectsData.map((project): Omit<PublicPage, 'lang'> => ({ path: `/project/${project.id}`, kind: 'project', title: project.title, description: project.overview, projectId: project.id, image: project.mainImage })),
-  { path: '/solutions/terms', kind: 'terms', title: 'Retail OS — Scope, Payment & Warranty Terms', description: 'The scope, ownership, delivery, revisions, warranty, payment milestones, hosting and support terms for all three TeXCodes retail offers.' },
+  { path: '/offers/terms', kind: 'terms', title: 'Retail OS — Scope, Payment & Warranty Terms', description: 'The scope, ownership, delivery, revisions, warranty, payment milestones, hosting and support terms for all three TeXCodes retail offers.' },
   ...LEGAL_PAGES.map((page): Omit<PublicPage, 'lang'> => ({ ...page, kind: 'legal' })),
   { path: '/context', kind: 'context', title: 'TeXCodes — Business & Portfolio Briefing', description: 'A complete public briefing on Hamza, engineering services, three Retail OS offers, pricing, delivery, ownership, projects and contact details.' },
 ]
 
 const aliases: Record<string, string> = {
   '/terms': '/terms-of-service', '/privacy': '/privacy-policy',
-  '/solutions/tech-retail/terms': '/solutions/terms',
-  '/offer': '/solutions/tech-retail', '/offer/tech-retail': '/solutions/tech-retail',
-  '/offer/laptop': '/solutions/laptop-retail', '/offer/laptop-retail': '/solutions/laptop-retail',
-  '/offer/console': '/solutions/console-retail', '/offer/console-retail': '/solutions/console-retail',
-  '/offer/gaming': '/solutions/console-retail',
+  '/solutions/tech-retail/terms': '/offers/terms',
+  '/offers/tech-retail/terms': '/offers/terms',
+  '/offer': '/offers/tech-retail', '/offer/tech-retail': '/offers/tech-retail',
+  '/offer/laptop': '/offers/laptop-retail', '/offer/laptop-retail': '/offers/laptop-retail',
+  '/offer/console': '/offers/console-retail', '/offer/console-retail': '/offers/console-retail',
+  '/offer/gaming': '/offers/console-retail',
 }
 
 
@@ -51,16 +52,17 @@ const pageMap = new Map(getPublicPages().map((page) => [page.path, page]))
 export type Resolution = { kind: 'page'; page: PublicPage } | { kind: 'redirect'; to: string } | { kind: 'missing' }
 
 export function resolvePublicPath(path: string): Resolution {
-  if (path !== '/' && path.endsWith('/')) return { kind: 'redirect', to: path.replace(/\/+$/, '') || '/' }
-  const lang = /^\/ur(?:\/|$)/.test(path) ? 'ur-en' : 'en'
-  const plain = path.replace(/^\/ur(?=\/|$)/, '') || '/'
+  const clean = path.replace(/\/+$/, '') || '/'
+  const lang = /^\/ur(?:\/|$)/.test(clean) ? 'ur-en' : 'en'
+  const plain = clean.replace(/^\/ur(?=\/|$)/, '') || '/'
   if (aliases[plain]) return { kind: 'redirect', to: localizePath(aliases[plain], lang) }
   const projectAlias = plain.match(/^\/work\/([1-9]\d*)$/)
   if (projectAlias && projectsData.some((project) => project.id === Number(projectAlias[1]))) {
     return { kind: 'redirect', to: localizePath(`/project/${projectAlias[1]}`, lang) }
   }
-  const localized = localizePath(plain, lang)
-  if (localized !== path && pageMap.has(localized)) return { kind: 'redirect', to: localized }
-  const page = pageMap.get(path)
-  return page ? { kind: 'page', page } : { kind: 'missing' }
+  const canonical = localizePath(plain.replace(/^\/solutions(?=\/|$)/, '/offers'), lang)
+  const page = pageMap.get(canonical)
+  if (page) return canonical !== path ? { kind: 'redirect', to: canonical } : { kind: 'page', page }
+  if (clean !== path) return { kind: 'redirect', to: clean }
+  return { kind: 'missing' }
 }

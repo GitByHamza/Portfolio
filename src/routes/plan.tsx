@@ -19,7 +19,7 @@ export function loader(args: LoaderFunctionArgs) {
 export default function PlanPage() {
   const { offer, plan } = useLoaderData<typeof loader>()
   return <main className="max-w-6xl mx-auto px-5 sm:px-8 py-12 sm:py-20 space-y-10">
-    <Link to={`/solutions/${offer.slug}`} className="inline-block underline underline-offset-4">← {offer.name}</Link>
+    <Link to={`/offers/${offer.slug}`} className="inline-block underline underline-offset-4">← {offer.name}</Link>
     <header className="space-y-5 border-b border-black/15 dark:border-white/15 pb-10">
       <p className="font-serif text-lg">{offer.name}</p>
       <h1 className="font-display text-5xl sm:text-7xl uppercase leading-none">{plan.name}</h1>
@@ -30,7 +30,7 @@ export default function PlanPage() {
     </header>
     <div className="grid lg:grid-cols-[minmax(0,1fr)_18rem] gap-10 lg:gap-16 items-start">
       <div className="space-y-10"><h2 className="font-display text-4xl">What's included</h2>{plan.modules.map((module) => <section key={module.title} className="space-y-3 border-t border-black/15 dark:border-white/15 pt-6"><h3 className="text-xl font-semibold">{module.title}</h3>{module.desc && <p className="font-serif text-lg max-w-prose leading-relaxed">{module.desc}</p>}<ul className="list-disc pl-5 space-y-2">{module.items?.map((item) => <li key={item}>{item}</li>)}</ul></section>)}</div>
-      <aside className="space-y-7 border-y border-black/15 dark:border-white/15 py-6"><h2 className="font-display text-3xl">Not included</h2><ul className="list-disc pl-5 space-y-3 text-sm leading-relaxed">{plan.exclusions.map((item) => <li key={item}>{item}</li>)}</ul><Link to="/solutions/terms" className="underline underline-offset-4 text-sm">Read full retail terms →</Link></aside>
+      <aside className="space-y-7 border-y border-black/15 dark:border-white/15 py-6"><h2 className="font-display text-3xl">Not included</h2><ul className="list-disc pl-5 space-y-3 text-sm leading-relaxed">{plan.exclusions.map((item) => <li key={item}>{item}</li>)}</ul><Link to="/offers/terms" className="underline underline-offset-4 text-sm">Read full retail terms →</Link></aside>
     </div>
     <section className="space-y-5 border-t border-black/15 dark:border-white/15 pt-10"><h2 className="font-display text-4xl">Regional prices</h2><PricingTable offerKey={offer.key} /></section>
     <section className="space-y-5 border-t border-black/15 dark:border-white/15 pt-10 max-w-3xl"><h2 className="font-display text-4xl">Payment, delivery and handover</h2>{[COMMERCIAL.payment, COMMERCIAL.delivery, COMMERCIAL.ownership, COMMERCIAL.warranty, COMMERCIAL.guarantee, COMMERCIAL.costs].map((copy) => <p key={copy} className="font-serif text-lg leading-relaxed">{copy}</p>)}</section>

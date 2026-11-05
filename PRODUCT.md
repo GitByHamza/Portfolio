@@ -20,7 +20,7 @@ React Router Framework Mode, SSR and prerendered public content. English and Rom
 
 The approved campaign URL is /tech-retail/offer. It has no portfolio navbar and features one Multi-Branch offer with four identical booking CTAs. The live-store demo is reserved for follow-up rather than a competing funnel action.
 
-Portfolio navigation says Offers, with an animated desktop hover dropdown and a mobile tap disclosure. Its three entries lead directly to /tech-retail/offer, /solutions/laptop-retail and /solutions/console-retail; language prefixes are preserved. Keep /solutions as the existing comparison page.
+Portfolio navigation says Offers, with an animated desktop hover dropdown and a mobile tap disclosure. Its three entries lead to the full offer pages at /offers/tech-retail, /offers/laptop-retail and /offers/console-retail; language prefixes are preserved. The comparison page is /offers, with plan scopes and retail terms under that prefix. Former /solutions URLs redirect permanently. The dedicated campaign at /tech-retail/offer remains separate from the dropdown.
 
 ## Brand Commitments
 

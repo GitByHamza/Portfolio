@@ -445,7 +445,7 @@ export default function TechRetailSolution() {
                 </p>
               </div>
               <Link
-                to="/solutions/terms?offer=tech"
+                to="/offers/terms?offer=tech"
                 className="btn-outline offer-btn offer-btn-sm shrink-0 whitespace-nowrap"
               >
                 <span>{t.view_terms}</span>
@@ -858,7 +858,7 @@ export default function TechRetailSolution() {
 
           <div className="text-center pt-4">
             <Link
-              to="/solutions/terms?offer=tech"
+              to="/offers/terms?offer=tech"
               className="offer-ui font-semibold text-[#059669] dark:text-[#10B981] hover:underline"
             >
               {t.view_terms}

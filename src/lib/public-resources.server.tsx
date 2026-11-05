@@ -11,7 +11,7 @@ import { getPublicPages, SITE_ORIGIN } from './site.ts'
 
 
 function legalMarkdown() {
-  return [PrivacyPolicy, TermsOfService, DataDeletion, RetailTerms].map((Page) => htmlToText(renderToStaticMarkup(<StaticRouter location="/solutions/terms"><LanguageProvider><Page /></LanguageProvider></StaticRouter>))).join('\n\n')
+  return [PrivacyPolicy, TermsOfService, DataDeletion, RetailTerms].map((Page) => htmlToText(renderToStaticMarkup(<StaticRouter location="/offers/terms"><LanguageProvider><Page /></LanguageProvider></StaticRouter>))).join('\n\n')
 }
 
 const cache = new Map<string, { body: string; type: string }>()

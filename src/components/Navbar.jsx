@@ -22,7 +22,7 @@ const Navbar = () => {
   const navLinks = [
     { name: t('nav', 'work'), path: '/work' },
     { name: t('nav', 'about'), path: '/about' },
-    { name: t('nav', 'solutions'), path: '/solutions' },
+    { name: t('nav', 'solutions'), path: '/offers' },
     { name: t('nav', 'contact'), path: '/contact' },
   ]
 
@@ -145,7 +145,7 @@ const Navbar = () => {
           >
             HOME
           </Link>
-          {navLinks.map((item) => item.path === '/solutions' ? (
+          {navLinks.map((item) => item.path === '/offers' ? (
             <OffersMenu key={item.path} active={isActive(item.path)} />
           ) : (
             <Link prefetch="render"
@@ -164,7 +164,7 @@ const Navbar = () => {
 
         <div className="flex items-center gap-4 text-[11px] font-normal text-[#575652] dark:text-[#9B9A95]">
           <Link prefetch="render"
-            to="/tech-retail/offer"
+            to="/offers/tech-retail"
             className="text-[#059669] dark:text-[#10B981] hover:underline font-semibold flex items-center gap-1"
           >
             {t('nav', 'retail_os_offer')} <ArrowUpRight size={13} />
@@ -216,7 +216,7 @@ const Navbar = () => {
           >
             01 / HOME
           </Link>
-          {navLinks.map((item, idx) => item.path === '/solutions' ? (
+          {navLinks.map((item, idx) => item.path === '/offers' ? (
             <OffersMenu key={item.path} mobile active={isActive(item.path)} prefix={`0${idx + 2} / `} onNavigate={() => setIsMenuOpen(false)} />
           ) : (
             <Link prefetch="render"
@@ -234,7 +234,7 @@ const Navbar = () => {
           ))}
           <div className="pt-2">
             <Link prefetch="render"
-              to="/tech-retail/offer"
+              to="/offers/tech-retail"
               onClick={() => setIsMenuOpen(false)}
               className="btn-blue w-full text-center text-xs justify-center"
             >

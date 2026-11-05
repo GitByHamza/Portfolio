@@ -15,7 +15,7 @@ const TermsOfService = () => (
         {BUSINESS.name} builds and runs software products, such as CommentIQ, and takes on custom software projects for
         clients. Where a client project has its own written quote or agreement, that document applies to the project,
         and it takes priority over these terms if the two conflict. The same applies to offers that have their own
-        published terms, such as our <LegalLink to="/solutions/terms">retail offer terms</LegalLink>: those terms apply
+        published terms, such as our <LegalLink to="/offers/terms">retail offer terms</LegalLink>: those terms apply
         to that offer and take priority over these terms if the two conflict.
       </p>
     </LegalSection>

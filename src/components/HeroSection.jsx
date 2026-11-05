@@ -77,7 +77,7 @@ const HeroSection = () => {
               <a href="#work-section" className="btn-blue text-xs shadow-sm">
                 {t('hero', 'cta_work')} <ArrowDown size={14} />
               </a>
-              <Link to="/solutions" className="btn-outline text-xs">
+              <Link to="/offers" className="btn-outline text-xs">
                 {t('hero', 'cta_solutions')} <ArrowRight size={14} />
               </Link>
             </div>

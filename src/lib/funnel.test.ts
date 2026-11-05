@@ -48,7 +48,7 @@ test('the funnel has four consistent booking actions, honest preview content and
     else assert.equal((html.match(new RegExp(`href="${FUNNEL_ASSETS.bookingUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"`, 'g')) || []).length, 4)
   }
   for (const prefix of ['', '/ur']) {
-    const html = readFileSync(new URL(`${prefix.slice(1)}${prefix ? '/' : ''}solutions/index.html`, output), 'utf8')
+    const html = readFileSync(new URL(`${prefix.slice(1)}${prefix ? '/' : ''}offers/index.html`, output), 'utf8')
     assert.ok(html.includes(`href="${prefix}/tech-retail/offer"`))
   }
 })

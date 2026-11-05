@@ -34,7 +34,7 @@ const ClosingSection = () => {
             <ArrowRight size={14} className="arrow-slide" />
           </Link>
 
-          <Link to="/solutions" className="btn-outline text-xs">
+          <Link to="/offers" className="btn-outline text-xs">
             {t('closing', 'cta_solutions')}
           </Link>
 

@@ -19,12 +19,23 @@ test('production SSR serves every public route and resource with real HTTP seman
     assert.ok(body.includes('<h1'), page.path)
     assert.match(response.headers.get('Content-Type') || '', /text\/html/)
   }
-  for (const [path, to] of [['/offer', '/solutions/tech-retail'], ['/offer/laptop', '/solutions/laptop-retail'], ['/work/12', '/project/12'], ['/ur/work/12', '/ur/project/12'], ['/terms', '/terms-of-service'], ['/privacy', '/privacy-policy'], ['/solutions/tech-retail/terms?offer=console', '/solutions/terms?offer=console'], ['/project/12/', '/project/12']]) {
+  for (const [path, to] of [['/offer', '/offers/tech-retail'], ['/offer/laptop', '/offers/laptop-retail'], ['/work/12', '/project/12'], ['/ur/work/12', '/ur/project/12'], ['/terms', '/terms-of-service'], ['/privacy', '/privacy-policy'], ['/offers/tech-retail/terms?offer=console', '/offers/terms?offer=console'], ['/project/12/', '/project/12']]) {
     const response = await handle(new Request(`http://localhost${path}`))
     assert.equal(response.status, 301, path)
     assert.equal(response.headers.get('Location'), to, path)
   }
-  for (const path of ['/not-a-page', '/project/999', '/project/12abc', '/work/999', '/solutions/tech-retail/plans/unknown']) {
+  for (const page of getPublicPages().filter((page) => /^\/(?:ur\/)?offers(?:\/|$)/.test(page.path))) {
+    for (const suffix of ['', '/']) {
+      const path = page.path.replace('/offers', '/solutions') + suffix + '?ref=legacy&offer=tech'
+      const response = await handle(new Request(`http://localhost${path}`))
+      assert.equal(response.status, 301, path)
+      assert.equal(response.headers.get('Location'), `${page.path}?ref=legacy&offer=tech`, path)
+    }
+  }
+  const oldTerms = await handle(new Request('http://localhost/solutions/tech-retail/terms/?offer=console'))
+  assert.equal(oldTerms.status, 301)
+  assert.equal(oldTerms.headers.get('Location'), '/offers/terms?offer=console')
+  for (const path of ['/not-a-page', '/project/999', '/project/12abc', '/work/999', '/offers/tech-retail/plans/unknown']) {
     const response = await handle(new Request(`http://localhost${path}`))
     assert.equal(response.status, 404, path)
     assert.match(await response.text(), /404/)

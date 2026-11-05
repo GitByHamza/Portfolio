@@ -14,7 +14,7 @@ const SolutionsBridgeSection = () => {
       desc: isUrdu
         ? 'PC Builder compatibility validation, branch stock sync, aur serial number warranty tracking par mushtamil bespoke retail management engine.'
         : 'Bespoke retail management system with automated PC Builder compatibility validation, branch stock sync, and serial number warranty tracking.',
-      link: '/solutions/tech-retail',
+      link: '/offers/tech-retail',
       linkText: isUrdu ? 'Retail Solution Offer Inspect Karein' : 'Inspect Retail Solution Offer',
     },
     {
@@ -23,7 +23,7 @@ const SolutionsBridgeSection = () => {
       desc: isUrdu
         ? 'Instant RAM/SSD upgrade configurator, battery health verification, multi-branch condition grading aur WhatsApp checkout.'
         : 'Automated RAM & SSD upgrade calculator, transparent battery health verification badges, condition grading, and WhatsApp checkout.',
-      link: '/solutions/laptop-retail',
+      link: '/offers/laptop-retail',
       linkText: isUrdu ? 'Laptop OS Offer Inspect Karein' : 'Inspect Laptop Retail Offer',
     },
     {
@@ -32,7 +32,7 @@ const SolutionsBridgeSection = () => {
       desc: isUrdu
         ? 'Instant console aur game disc trade-in buyback calculator, scratch-free disc condition grading, aur motherboard serial RMA.'
         : 'Automated console & disc trade-in buyback calculator, scratch-free disc condition grading, and motherboard serial warranty tracking.',
-      link: '/solutions/console-retail',
+      link: '/offers/console-retail',
       linkText: isUrdu ? 'Console OS Offer Inspect Karein' : 'Inspect Console Retail Offer',
     },
     {
@@ -41,7 +41,7 @@ const SolutionsBridgeSection = () => {
       desc: isUrdu
         ? 'Custom administrative operating panels, Spatie-style multi-guard staff RBAC permissions aur operational efficiency ke liye automated workflows.'
         : 'Custom headless Next.js storefronts, multi-guard staff role permissions, and bespoke operational automation with 100% source code ownership.',
-      link: '/solutions',
+      link: '/offers',
       linkText: isUrdu ? 'Systems Architecture Dekhein' : 'View Systems Architecture',
     },
   ]
@@ -68,7 +68,7 @@ const SolutionsBridgeSection = () => {
                 : 'Custom digital systems built around how your business actually operates — unifying online sales, inventory synchronization, counter sales, and customer order dispatch into one cohesive operational engine.'}
             </p>
             <div>
-              <Link to="/solutions" className="btn-blue text-xs shadow-sm group">
+              <Link to="/offers" className="btn-blue text-xs shadow-sm group">
                 <span>{isUrdu ? 'TAMAM SOLUTIONS DEKHEIN' : 'EXPLORE ALL SOLUTIONS'}</span>
                 <ArrowRight size={14} className="arrow-slide" />
               </Link>

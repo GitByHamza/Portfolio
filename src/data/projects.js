@@ -292,7 +292,7 @@ export const projectsData = [
             "/txs/dashboard email system.png"
         ],
         demoUrl: "https://store-demo-eight.vercel.app/",
-        offerUrl: "/solutions/tech-retail",
+        offerUrl: "/offers/tech-retail",
         // Repo is private; '#' hides the "View code" button instead of linking to a GitHub 404.
         githubUrl: "#",
         tags: ["Next.js", "React", "Prisma", "PostgreSQL", "Tailwind CSS", "TypeScript"],
@@ -347,7 +347,7 @@ export const projectsData = [
             "/console/trade-in.png"
         ],
         demoUrl: "https://console-store-demo.vercel.app/",
-        offerUrl: "/solutions/console-retail",
+        offerUrl: "/offers/console-retail",
         tags: ["React", "JavaScript", "Tailwind CSS", "Retail OS", "E-Commerce", "Trade-In"],
     },
 

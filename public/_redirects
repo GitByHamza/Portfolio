@@ -1,11 +1,12 @@
 # Canonical redirects. The React Router adapter owns SSR and real 404s.
 /terms /terms-of-service 301
 /privacy /privacy-policy 301
-/offer /solutions/tech-retail 301
-/offer/tech-retail /solutions/tech-retail 301
-/offer/laptop /solutions/laptop-retail 301
-/offer/laptop-retail /solutions/laptop-retail 301
-/offer/console /solutions/console-retail 301
-/offer/console-retail /solutions/console-retail 301
-/offer/gaming /solutions/console-retail 301
-/solutions/tech-retail/terms /solutions/terms 301
+/offer /offers/tech-retail 301
+/offer/tech-retail /offers/tech-retail 301
+/offer/laptop /offers/laptop-retail 301
+/offer/laptop-retail /offers/laptop-retail 301
+/offer/console /offers/console-retail 301
+/offer/console-retail /offers/console-retail 301
+/offer/gaming /offers/console-retail 301
+/offers/tech-retail/terms /offers/terms 301
+/solutions/tech-retail/terms /offers/terms 301

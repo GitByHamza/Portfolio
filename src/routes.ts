@@ -7,8 +7,8 @@ function publicRoutes(prefix: string): RouteConfigEntry[] {
     route(prefix || '/', 'routes/home.tsx', { id: `${id}home` }),
     ...[
       ['work', 'work'], ['project/:id', 'project'], ['about', 'about'], ['contact', 'contact'],
-      ['solutions', 'solutions'], ['solutions/tech-retail', 'tech'], ['solutions/laptop-retail', 'laptop'],
-      ['solutions/console-retail', 'console'], ['solutions/:offer/plans/:plan', 'plan'], ['solutions/terms', 'terms'],
+      ['offers', 'solutions'], ['offers/tech-retail', 'tech'], ['offers/laptop-retail', 'laptop'],
+      ['offers/console-retail', 'console'], ['offers/:offer/plans/:plan', 'plan'], ['offers/terms', 'terms'],
     ].map(([path, file]) => route(`${prefix}/${path}`, `routes/${file}.tsx`, { id: `${id}${file}` })),
   ]
 }

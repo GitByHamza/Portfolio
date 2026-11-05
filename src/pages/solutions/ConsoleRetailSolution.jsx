@@ -283,7 +283,7 @@ export default function ConsoleRetailSolution() {
             </p>
           </div>
           <Link
-            to="/solutions/terms?offer=console"
+            to="/offers/terms?offer=console"
             className="btn-outline offer-btn offer-btn-md shrink-0 font-mono text-xs flex items-center gap-1.5"
           >
             <span>{t.view_terms}</span>
@@ -791,7 +791,7 @@ export default function ConsoleRetailSolution() {
               <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none animate-shimmer-sweep" />
             </button>
             <Link
-              to="/solutions/terms?offer=console"
+              to="/offers/terms?offer=console"
               className="btn-outline offer-btn offer-btn-lg"
             >
               <span>{isUrdu ? 'SHARAAIT PARHEIN' : 'READ THE TERMS'}</span>

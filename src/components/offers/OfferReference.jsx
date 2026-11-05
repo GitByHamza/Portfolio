@@ -44,7 +44,7 @@ export default function OfferReference({ offerKey }) {
       <h2 className="offer-h2">{isUrdu ? 'Har plan ka poora scope' : 'Every plan, in full.'}</h2>
       <p className="font-serif max-w-3xl text-[#575652] dark:text-[#C5C4BE]">{isUrdu ? 'Shamil features, exclusions aur delivery ki sharaait parhein.' : 'Read the included modules, exclusions, delivery conditions and handover details before choosing a plan.'}</p>
       <div className="divide-y divide-black/15 dark:divide-white/15 border-y border-black/15 dark:border-white/15">
-        {PLAN_KEYS.map((key) => <Link key={key} to={`/solutions/${offer.slug}/plans/${PLAN_SLUGS[key]}`} className="flex justify-between items-center gap-4 py-5 font-medium hover:text-[#047857] dark:hover:text-[#10B981]"><span>{PLAN_NAMES[key]} — {isUrdu ? 'poori tafseel' : 'full scope'}</span><ArrowRight size={18} /></Link>)}
+        {PLAN_KEYS.map((key) => <Link key={key} to={`/offers/${offer.slug}/plans/${PLAN_SLUGS[key]}`} className="flex justify-between items-center gap-4 py-5 font-medium hover:text-[#047857] dark:hover:text-[#10B981]"><span>{PLAN_NAMES[key]} — {isUrdu ? 'poori tafseel' : 'full scope'}</span><ArrowRight size={18} /></Link>)}
       </div>
       <PricingTable offerKey={offerKey} />
     </div>

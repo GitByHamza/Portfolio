@@ -6,9 +6,9 @@ import '../styles/offer-navigation.css'
 
 // Keep navigation lightweight; the full offer catalog is loaded on its own routes.
 const offers = [
-  { path: '/tech-retail/offer', label: 'offer_computers', product: 'Tech Retail OS' },
-  { path: '/solutions/laptop-retail', label: 'offer_laptops', product: 'Laptop Retail OS' },
-  { path: '/solutions/console-retail', label: 'offer_consoles', product: 'Console & Games Retail OS' },
+  { path: '/offers/tech-retail', label: 'offer_computers', product: 'Tech Retail OS' },
+  { path: '/offers/laptop-retail', label: 'offer_laptops', product: 'Laptop Retail OS' },
+  { path: '/offers/console-retail', label: 'offer_consoles', product: 'Console & Games Retail OS' },
 ]
 
 export default function OffersMenu({ mobile = false, active = false, prefix = '', onNavigate }) {

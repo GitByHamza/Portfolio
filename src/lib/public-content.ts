@@ -19,17 +19,17 @@ export function briefingMarkdown(): string {
     '## Commercial offers', '',
   ]
   for (const offer of offers) {
-    lines.push(`### ${offer.name}`, '', offer.description, '', `Offer: ${absolute(`/solutions/${offer.slug}`)}`, `Demo: ${offer.demo}`, '')
+    lines.push(`### ${offer.name}`, '', offer.description, '', `Offer: ${absolute(`/offers/${offer.slug}`)}`, `Demo: ${offer.demo}`, '')
     for (const key of PLAN_KEYS) {
       const plan = offer.plans.en[key]
       const prices = Object.entries(offer.prices[key]).map(([currency, value]) => `${priceLabel(value, currency as Currency)} ${currency}${currency === 'PKR' ? ' (Pakistan)' : currency === 'GBP' ? ' (UK)' : ' (international)'}`).join('; ')
-      lines.push(`- **${plan.name}** — ${prices}. Delivery: ${plan.delivery}. Best for: ${plan.idealFor}`, `  Full scope: ${absolute(`/solutions/${offer.slug}/plans/${PLAN_SLUGS[key]}`)}`)
+      lines.push(`- **${plan.name}** — ${prices}. Delivery: ${plan.delivery}. Best for: ${plan.idealFor}`, `  Full scope: ${absolute(`/offers/${offer.slug}/plans/${PLAN_SLUGS[key]}`)}`)
     }
     lines.push('')
   }
   lines.push('## Delivery, ownership and ongoing costs', '', COMMERCIAL.delivery, '', COMMERCIAL.payment, '', COMMERCIAL.ownership, '', COMMERCIAL.warranty, '', COMMERCIAL.guarantee, '', COMMERCIAL.costs, '', 'Optional Care Plans, per month (GBP available for Console):', '')
   for (const care of carePlans) lines.push(`- ${care.name}: ${money(care.USD, 'USD')} USD / ${money(care.GBP, 'GBP')} GBP / ${money(care.PKR, 'PKR')} PKR. ${care.description}`)
-  lines.push('', `Authoritative retail terms: ${absolute('/solutions/terms')}`, '', '## Portfolio evidence', '', 'Project descriptions below reflect the published portfolio. Demo and development status are identified where provided.', '')
+  lines.push('', `Authoritative retail terms: ${absolute('/offers/terms')}`, '', '## Portfolio evidence', '', 'Project descriptions below reflect the published portfolio. Demo and development status are identified where provided.', '')
   for (const project of projectsData) lines.push(`### ${project.title}`, '', project.overview, '', `Status / evidence: ${project.impact}`, `Case study: ${absolute(`/project/${project.id}`)}`, ...(project.demoUrl ? [`Live / demo: ${project.demoUrl}`] : []), ...(project.githubUrl && project.githubUrl !== '#' ? [`Repository: ${project.githubUrl}`] : []), '')
   lines.push('## Contact', '', `Email: ${BUSINESS.email}`, `WhatsApp: https://wa.me/${BUSINESS.phoneE164.replace('+', '')}`, `Phone: ${BUSINESS.phone}`, `Book a call: ${BUSINESS.bookingUrl}`, '', `Full public content: ${absolute('/llms-full.txt')}`, `Privacy: ${absolute('/privacy-policy')}`, `General terms: ${absolute('/terms-of-service')}`, `Data deletion: ${absolute('/data-deletion')}`, '')
   return lines.join('\n')
@@ -69,9 +69,9 @@ export function structuredData(page: PublicPage): Record<string, unknown> {
   const offer = offers.find((offer) => offer.slug === page.offer)
   if (offer) {
     const keys = page.plan ? PLAN_KEYS.filter((key) => PLAN_SLUGS[key] === page.plan) : PLAN_KEYS
-    graph.push({ '@type': 'Service', name: offer.name, description: offer.description, provider: { '@id': organization['@id'] }, url: absolute(page.kind === 'funnel' ? page.path : `/solutions/${offer.slug}`), offers: keys.flatMap((key) => Object.entries(offer.prices[key])
+    graph.push({ '@type': 'Service', name: offer.name, description: offer.description, provider: { '@id': organization['@id'] }, url: absolute(page.kind === 'funnel' ? page.path : `/offers/${offer.slug}`), offers: keys.flatMap((key) => Object.entries(offer.prices[key])
       .filter(([currency]) => page.kind !== 'funnel' || currency === 'USD')
-      .map(([currency, price]) => ({ '@type': 'Offer', name: offer.plans.en[key].name, price: price.amount, priceCurrency: currency, url: absolute(`/solutions/${offer.slug}/plans/${PLAN_SLUGS[key]}`), description: `${price.startingAt ? 'Starting price; final scope quoted. ' : 'Fixed agreed scope. '}${currency === 'PKR' ? 'For businesses in Pakistan.' : currency === 'GBP' ? 'For UK Console clients.' : 'For international clients.'}` }))) })
+      .map(([currency, price]) => ({ '@type': 'Offer', name: offer.plans.en[key].name, price: price.amount, priceCurrency: currency, url: absolute(`/offers/${offer.slug}/plans/${PLAN_SLUGS[key]}`), description: `${price.startingAt ? 'Starting price; final scope quoted. ' : 'Fixed agreed scope. '}${currency === 'PKR' ? 'For businesses in Pakistan.' : currency === 'GBP' ? 'For UK Console clients.' : 'For international clients.'}` }))) })
   }
   if (page.kind === 'project') graph.push({ '@type': 'CreativeWork', name: page.title, description: page.description, url: absolute(page.path), creator: { '@type': 'Person', name: BUSINESS.owner } })
   return { '@context': 'https://schema.org', '@graph': graph }

@@ -17,17 +17,17 @@ test('public inventory contains every project and all nine plan scopes without a
 test('route resolution rejects partial IDs and unknown offers and preserves aliases', () => {
   assert.equal(resolvePublicPath('/project/12abc').kind, 'missing')
   assert.equal(resolvePublicPath('/project/999').kind, 'missing')
-  assert.equal(resolvePublicPath('/solutions/unknown/plans/single-store').kind, 'missing')
+  assert.equal(resolvePublicPath('/offers/unknown/plans/single-store').kind, 'missing')
   assert.deepEqual(resolvePublicPath('/work/12'), { kind: 'redirect', to: '/project/12' })
-  assert.deepEqual(resolvePublicPath('/offer/console'), { kind: 'redirect', to: '/solutions/console-retail' })
+  assert.deepEqual(resolvePublicPath('/offer/console'), { kind: 'redirect', to: '/offers/console-retail' })
   assert.equal(resolvePublicPath('/ur/project/12').kind, 'page')
   assert.equal(resolvePublicPath('/project/12/').kind, 'redirect')
 })
 
 test('language URLs are stable, idempotent, and leave English legal pages alone', () => {
-  assert.equal(localizePath('/solutions?ref=home#plans', 'ur-en'), '/ur/solutions?ref=home#plans')
-  assert.equal(localizePath('/ur/solutions', 'ur-en'), '/ur/solutions')
-  assert.equal(localizePath('/ur/solutions', 'en'), '/solutions')
+  assert.equal(localizePath('/offers?ref=home#plans', 'ur-en'), '/ur/offers?ref=home#plans')
+  assert.equal(localizePath('/ur/offers', 'ur-en'), '/ur/offers')
+  assert.equal(localizePath('/ur/offers', 'en'), '/offers')
   assert.equal(localizePath('/', 'ur-en'), '/ur')
   assert.equal(localizePath('/privacy-policy', 'ur-en'), '/privacy-policy')
   assert.equal(localizePath('https://example.com', 'ur-en'), 'https://example.com')
@@ -40,7 +40,7 @@ test('console scopes honor every supported regional price and language', () => {
   assert.equal(getConsolePlans('en', 'GBP').starter.price, '£1,850')
   assert.equal(getConsolePlans('ur-en', 'PKR').growth.price, 'PKR 490,000')
   assert.equal(getConsolePlans('en', 'USD').enterprise.price, 'From $7,900')
-  const page = getPublicPages().find((item) => item.path === '/solutions/console-retail/plans/single-store')!
+  const page = getPublicPages().find((item) => item.path === '/offers/console-retail/plans/single-store')!
   const data = JSON.stringify(structuredData(page))
   assert.match(data, /1850/)
   assert.doesNotMatch(data, /7900/)
@@ -83,7 +83,7 @@ test('sitemap and structured data use canonical public URLs and real price amoun
   const xml = sitemapXml()
   assert.match(xml, /<loc>https:\/\/texcodes.com\/project\/12<\/loc>/)
   assert.doesNotMatch(xml, /\/admin|\/offer\/|\/work\/12/)
-  const page = getPublicPages().find((item) => item.path === '/solutions/tech-retail')!
+  const page = getPublicPages().find((item) => item.path === '/offers/tech-retail')!
   const json = JSON.stringify(structuredData(page))
   assert.match(json, /2450/)
   assert.match(json, /priceCurrency/)

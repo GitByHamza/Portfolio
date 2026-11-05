@@ -34,10 +34,10 @@ This runs lint, TypeScript checks, a fresh production build, unit/content checks
 - src/routes.ts defines route modules. Each page has its own browser bundle. Shared chrome stays mounted during client navigation.
 - The small route manifest loads once initially, avoiding discovery requests during navigation; page code remains split by route.
 - Navigation links prefetch likely destinations; other internal links prefetch when visible, including on mobile. There is no page curtain or artificial route delay.
-- The portfolio's Offers dropdown links directly to the computer funnel, laptop offer and console offer. A native disclosure supports hover, click/tap, keyboard navigation and no-JavaScript use. Its links prefetch on intent; the legacy /solutions comparison URL remains available.
+- The portfolio's Offers dropdown links directly to the three full offer pages under /offers/tech-retail, /offers/laptop-retail and /offers/console-retail. The separate campaign stays at /tech-retail/offer. A native disclosure supports hover, click/tap, keyboard navigation and no-JavaScript use. Its links prefetch on intent. The comparison page, plan scopes and retail terms use /offers; former /solutions URLs redirect permanently to their canonical replacement in one hop, preserving queries and language.
 - Page content is visible before scripts load. FAQs and add-ons use native details elements; plan scopes have ordinary links and dedicated pages.
 - Browser-only smooth scrolling loads after the content. Reduced-motion users keep native scrolling.
-- Canonical English URLs retain their existing paths. Roman Urdu lives at /ur and /ur/...; its language tag is ur-Latn, with left-to-right text. Legal documents remain English.
+- Canonical offer URLs live under /offers; former /solutions addresses redirect permanently. Roman Urdu lives at /ur and /ur/...; its language tag is ur-Latn, with left-to-right text. Legal documents remain English.
 - Server HTML and the hydration snapshot use USD. The existing regional signal enhances the selected price after hydration. All eligible USD/PKR/GBP prices remain available in HTML tables. PKR is for Pakistan; GBP is offered for Console clients.
 - Public HTML is shared and cacheable. Private admin responses are no-store. Do not add cookie-dependent content to cached HTML without changing the caching strategy.
 

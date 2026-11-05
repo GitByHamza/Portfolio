@@ -37,11 +37,11 @@ test('all FAQ answers, add-on descriptions, regional prices and scope links exis
   for (const offer of offers) {
     for (const lang of ['en', 'ur-en'] as const) {
       const prefix = lang === 'en' ? '' : '/ur'
-      const html = htmlFor(`${prefix}/solutions/${offer.slug}`)
+      const html = htmlFor(`${prefix}/offers/${offer.slug}`)
       const text = normalize(htmlToText(html))
       for (const item of FAQ_I18N[lang].items) assert.ok(text.includes(normalize(item.a)), `${offer.slug}/${lang}: ${item.q}`)
       for (const extra of offer.extras) assert.ok(text.includes(normalize(lang === 'en' ? extra.descEn : extra.descUr)))
-      for (const slug of Object.values(PLAN_SLUGS)) assert.ok(html.includes(`href="${prefix}/solutions/${offer.slug}/plans/${slug}"`))
+      for (const slug of Object.values(PLAN_SLUGS)) assert.ok(html.includes(`href="${prefix}/offers/${offer.slug}/plans/${slug}"`))
       assert.match(html, /<details/)
     }
   }
@@ -49,7 +49,7 @@ test('all FAQ answers, add-on descriptions, regional prices and scope links exis
 
 test('all dedicated scopes contain their complete modules and exclusions in raw HTML', { skip: !built }, () => {
   for (const offer of offers) for (const key of ['starter', 'growth', 'enterprise'] as const) {
-    const text = normalize(htmlToText(htmlFor(`/solutions/${offer.slug}/plans/${PLAN_SLUGS[key]}`)))
+    const text = normalize(htmlToText(htmlFor(`/offers/${offer.slug}/plans/${PLAN_SLUGS[key]}`)))
     for (const module of offer.plans.en[key].modules) {
       assert.ok(text.includes(normalize(module.title)))
       for (const item of module.items || []) assert.ok(text.includes(normalize(item)))
@@ -69,7 +69,7 @@ test('generated public resources are complete, match their source, and include p
 test('briefing page links stay on the current site and downloads use native resource URLs', { skip: !built }, () => {
   const html = htmlFor('/context')
   assert.ok(html.includes('href="/project/10"'))
-  assert.ok(html.includes('href="/solutions/tech-retail/plans/single-store"'))
+  assert.ok(html.includes('href="/offers/tech-retail/plans/single-store"'))
   assert.ok(html.includes('href="/llms-full.txt"'))
   assert.doesNotMatch(html, /href="https:\/\/texcodes.com\/project\//)
 })
@@ -106,9 +106,18 @@ test('Offers navigation exposes three direct localised offer links before JavaSc
     assert.ok(menu, `${prefix || '/'}: offers disclosure missing`)
     assert.match(menu, />OFFERS<svg/)
     assert.equal((menu.match(/<a\b/g) || []).length, 3)
-    for (const path of ['/tech-retail/offer', '/solutions/laptop-retail', '/solutions/console-retail']) {
+    for (const path of ['/offers/tech-retail', '/offers/laptop-retail', '/offers/console-retail']) {
       assert.ok(menu.includes(`href="${prefix}${path}"`), `${prefix}${path}`)
     }
-    assert.doesNotMatch(menu, /href="(?:\/ur)?\/solutions"/)
+    assert.doesNotMatch(menu, /href="(?:\/ur)?\/offers"/)
+    assert.doesNotMatch(menu, /href="(?:\/ur)?\/tech-retail\/offer"/)
   }
+})
+
+test('generated links use Offers URLs and old static pages cannot bypass redirects', { skip: !built }, () => {
+  for (const page of getPublicPages()) {
+    assert.doesNotMatch(htmlFor(page.path), /href="(?:https:\/\/texcodes.com)?(?:\/ur)?\/solutions(?:[\/\?#"])/, page.path)
+  }
+  assert.equal(existsSync(new URL('solutions/index.html', output)), false)
+  assert.equal(existsSync(new URL('ur/solutions/index.html', output)), false)
 })

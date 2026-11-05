@@ -122,6 +122,6 @@ export default function TechRetailOffer() {
 
       <section className="tr-final tr-section" aria-labelledby="final-title"><div className="tr-wrap"><h2 id="final-title">{copy.finalHeading}</h2><p>{copy.finalCopy}</p><BookingAction placement="final" /></div></section>
     </main>
-    <footer className="tr-footer tr-wrap"><p>{copy.identity}</p><div><a href="/privacy-policy">{copy.privacy}</a><a href="/terms-of-service">{copy.terms}</a><a href="/solutions/terms">{copy.retailTerms}</a></div><small>© {new Date().getUTCFullYear()} TeXCodes</small></footer>
+    <footer className="tr-footer tr-wrap"><p>{copy.identity}</p><div><a href="/privacy-policy">{copy.privacy}</a><a href="/terms-of-service">{copy.terms}</a><a href="/offers/terms">{copy.retailTerms}</a></div><small>© {new Date().getUTCFullYear()} TeXCodes</small></footer>
   </div>
 }

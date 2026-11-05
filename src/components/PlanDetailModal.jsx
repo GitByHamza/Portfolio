@@ -423,7 +423,7 @@ export default function PlanDetailModal({ plan, lang = 'en', currency = 'USD', c
                 ))}
               </ul>
               <Link
-                to={`/solutions/terms?offer=${termsOffer}`}
+                to={`/offers/terms?offer=${termsOffer}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="offer-ui inline-flex items-center gap-1.5 font-semibold text-[#059669] dark:text-[#10B981] hover:underline pt-1 border-t border-[rgba(15,15,15,0.08)] dark:border-[rgba(255,255,255,0.08)] mt-1"

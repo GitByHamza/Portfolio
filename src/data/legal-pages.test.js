@@ -93,5 +93,5 @@ test('privacy policy makes no claim the site code does not support', () => {
 })
 
 test('published offer terms take priority over the general refund rule', () => {
-  assertMentions('TermsOfService', ['/solutions/terms', 'take priority'])
+  assertMentions('TermsOfService', ['/offers/terms', 'take priority'])
 })

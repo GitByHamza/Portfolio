@@ -49,7 +49,7 @@ export default function TechRetailTerms() {
         {/* Back Link */}
         <div>
           <Link
-            to="/solutions"
+            to="/offers"
             className="inline-flex items-center gap-2 text-xs font-bold text-[#059669] dark:text-[#10B981] hover:underline uppercase tracking-wider"
           >
             <ArrowLeft size={14} />
@@ -83,9 +83,9 @@ export default function TechRetailTerms() {
                 'Each build follows the scope written into your agreement. Prices for each plan are listed on the offer pages:',
                 'Har build aapke agreement mein likhe scope ke mutabiq hoti hai. Har plan ki price offer pages par di gayi hai:'
               )}{' '}
-              <Link to="/solutions/tech-retail" className="text-[#059669] dark:text-[#10B981] hover:underline">Tech Retail</Link>,{' '}
-              <Link to="/solutions/laptop-retail" className="text-[#059669] dark:text-[#10B981] hover:underline">Laptop Retail</Link>,{' '}
-              <Link to="/solutions/console-retail" className="text-[#059669] dark:text-[#10B981] hover:underline">Console & Games Retail</Link>.
+              <Link to="/offers/tech-retail" className="text-[#059669] dark:text-[#10B981] hover:underline">Tech Retail</Link>,{' '}
+              <Link to="/offers/laptop-retail" className="text-[#059669] dark:text-[#10B981] hover:underline">Laptop Retail</Link>,{' '}
+              <Link to="/offers/console-retail" className="text-[#059669] dark:text-[#10B981] hover:underline">Console & Games Retail</Link>.
             </p>
             <Box
               items={[
@@ -270,7 +270,7 @@ export default function TechRetailTerms() {
         <CarePricing />
 {/* Footer Links */}
         <div className="pt-8 border-t border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] flex flex-wrap items-center justify-between gap-3 font-mono text-xs">
-          <Link to="/solutions" className="text-[#059669] dark:text-[#10B981] font-bold hover:underline">
+          <Link to="/offers" className="text-[#059669] dark:text-[#10B981] font-bold hover:underline">
             {ur('← Back to solutions', '← Solutions par wapis jayein')}
           </Link>
           <a

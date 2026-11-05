@@ -88,7 +88,7 @@ export default function SolutionsSection() {
 
             <div className="pt-4 border-t border-zinc-800">
               <Link
-                to="/solutions/tech-retail"
+                to="/offers/tech-retail"
                 className="w-full h-11 bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-black font-black uppercase text-xs tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 transition-all cursor-pointer"
               >
                 <span>VIEW SOLUTION & PRICING</span>
