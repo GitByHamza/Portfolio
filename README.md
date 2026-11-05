@@ -34,6 +34,7 @@ This runs lint, TypeScript checks, a fresh production build, unit/content checks
 - src/routes.ts defines route modules. Each page has its own browser bundle. Shared chrome stays mounted during client navigation.
 - The small route manifest loads once initially, avoiding discovery requests during navigation; page code remains split by route.
 - Navigation links prefetch likely destinations; other internal links prefetch when visible, including on mobile. There is no page curtain or artificial route delay.
+- The portfolio's Offers dropdown links directly to the computer funnel, laptop offer and console offer. A native disclosure supports hover, click/tap, keyboard navigation and no-JavaScript use. Its links prefetch on intent; the legacy /solutions comparison URL remains available.
 - Page content is visible before scripts load. FAQs and add-ons use native details elements; plan scopes have ordinary links and dedicated pages.
 - Browser-only smooth scrolling loads after the content. Reduced-motion users keep native scrolling.
 - Canonical English URLs retain their existing paths. Roman Urdu lives at /ur and /ur/...; its language tag is ur-Latn, with left-to-right text. Legal documents remain English.

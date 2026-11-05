@@ -98,3 +98,17 @@ test('public pages keep portfolio text branding and reserve the supplied logo fo
     assert.doesNotMatch(html, /href="\/Icon.png"/, page.path)
   }
 })
+
+test('Offers navigation exposes three direct localised offer links before JavaScript', { skip: !built }, () => {
+  for (const prefix of ['', '/ur']) {
+    const html = htmlFor(prefix || '/')
+    const menu = html.match(/<details[^>]*class="nav-offers\b[\s\S]*?<\/details>/)?.[0]
+    assert.ok(menu, `${prefix || '/'}: offers disclosure missing`)
+    assert.match(menu, />OFFERS<svg/)
+    assert.equal((menu.match(/<a\b/g) || []).length, 3)
+    for (const path of ['/tech-retail/offer', '/solutions/laptop-retail', '/solutions/console-retail']) {
+      assert.ok(menu.includes(`href="${prefix}${path}"`), `${prefix}${path}`)
+    }
+    assert.doesNotMatch(menu, /href="(?:\/ur)?\/solutions"/)
+  }
+})

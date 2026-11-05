@@ -20,6 +20,8 @@ React Router Framework Mode, SSR and prerendered public content. English and Rom
 
 The approved campaign URL is /tech-retail/offer. It has no portfolio navbar and features one Multi-Branch offer with four identical booking CTAs. The live-store demo is reserved for follow-up rather than a competing funnel action.
 
+Portfolio navigation says Offers, with an animated desktop hover dropdown and a mobile tap disclosure. Its three entries lead directly to /tech-retail/offer, /solutions/laptop-retail and /solutions/console-retail; language prefixes are preserved. Keep /solutions as the existing comparison page.
+
 ## Brand Commitments
 
 TeXCodes identity and the existing editorial design system. The funnel uses the owner's brown monogram and calligraphic wordmark on its matching cream background (#F5EDDE) throughout, including when the portfolio's saved theme is dark. The portfolio header and footer retain the original uppercase TEXCODES text wordmark. Browser icons keep the supplied monogram. The campaign targets international buyers and displays the USD build price and USD support cost, with no regional currency switching. Plain business language, honest demonstrations, no invented customer results or testimonials.

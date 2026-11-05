@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router'
 import { Menu, X, ArrowUpRight } from 'lucide-react'
 import ThemeToggle from './ThemeToggle'
+import OffersMenu from './OffersMenu'
 import { useLanguage } from '../context/LanguageContext'
 
 const Navbar = () => {
@@ -31,7 +32,7 @@ const Navbar = () => {
   }
 
   return (
-    <header className="w-full bg-[#F6F5F0] dark:bg-[#0F0F11] z-50 sticky top-0 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] transition-colors duration-200">
+    <header className="portfolio-navbar w-full bg-[#F6F5F0] dark:bg-[#0F0F11] z-50 sticky top-0 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] transition-colors duration-200">
       {/* ─── Top Newspaper Metadata Ticker ─── */}
       <div className="hidden sm:flex items-center justify-between px-4 sm:px-8 py-2 text-[11px] font-mono text-[#575652] dark:text-[#9B9A95] uppercase tracking-wider border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.08)]">
         <div className="flex items-center gap-4">
@@ -122,6 +123,8 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="p-1.5 text-[#0F0F0F] dark:text-[#EDECE6] hover:text-[#059669] dark:hover:text-[#10B981] focus:outline-none cursor-pointer"
               aria-label="Toggle navigation menu"
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-navigation"
             >
               {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
@@ -142,7 +145,9 @@ const Navbar = () => {
           >
             HOME
           </Link>
-          {navLinks.map((item) => (
+          {navLinks.map((item) => item.path === '/solutions' ? (
+            <OffersMenu key={item.path} active={isActive(item.path)} />
+          ) : (
             <Link prefetch="render"
               key={item.path}
               to={item.path}
@@ -159,7 +164,7 @@ const Navbar = () => {
 
         <div className="flex items-center gap-4 text-[11px] font-normal text-[#575652] dark:text-[#9B9A95]">
           <Link prefetch="render"
-            to="/solutions/tech-retail"
+            to="/tech-retail/offer"
             className="text-[#059669] dark:text-[#10B981] hover:underline font-semibold flex items-center gap-1"
           >
             {t('nav', 'retail_os_offer')} <ArrowUpRight size={13} />
@@ -178,7 +183,7 @@ const Navbar = () => {
 
       {/* ─── Mobile Drawer ─── */}
       {isMenuOpen && (
-        <div className="md:hidden border-t border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#F6F5F0] dark:bg-[#0F0F11] px-4 py-6 space-y-4 font-mono text-sm uppercase tracking-wider">
+        <div id="mobile-navigation" className="mobile-navigation md:hidden border-t border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#F6F5F0] dark:bg-[#0F0F11] px-4 py-6 space-y-4 font-mono text-sm uppercase tracking-wider">
           <div className="flex items-center justify-between pb-3 border-b border-[rgba(15,15,15,0.08)] dark:border-[rgba(255,255,255,0.08)]">
             <span className="text-xs text-[#575652] dark:text-[#9B9A95]">LANGUAGE / ZUBAN</span>
             <div className="inline-flex items-center border border-[rgba(15,15,15,0.2)] dark:border-[rgba(255,255,255,0.2)] p-0.5 font-mono text-xs font-bold">
@@ -211,7 +216,9 @@ const Navbar = () => {
           >
             01 / HOME
           </Link>
-          {navLinks.map((item, idx) => (
+          {navLinks.map((item, idx) => item.path === '/solutions' ? (
+            <OffersMenu key={item.path} mobile active={isActive(item.path)} prefix={`0${idx + 2} / `} onNavigate={() => setIsMenuOpen(false)} />
+          ) : (
             <Link prefetch="render"
               key={item.path}
               to={item.path}
@@ -227,7 +234,7 @@ const Navbar = () => {
           ))}
           <div className="pt-2">
             <Link prefetch="render"
-              to="/solutions/tech-retail"
+              to="/tech-retail/offer"
               onClick={() => setIsMenuOpen(false)}
               className="btn-blue w-full text-center text-xs justify-center"
             >
