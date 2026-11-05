@@ -1,7 +1,8 @@
+import Link from './SiteLink'
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Zap, ShieldCheck, DollarSign, Layers, CheckCircle2, XCircle, ArrowRight } from 'lucide-react'
-import { Link } from 'react-router-dom'
+
 import Magnetic from './Magnetic'
 
 const EngineeringStandardSection = () => {
@@ -84,7 +85,7 @@ const EngineeringStandardSection = () => {
             transition={{ delay: 0.2 }}
             className="text-muted-foreground text-base md:text-lg leading-relaxed font-body"
           >
-            Off-the-shelf platforms charge you forever while slowing your customer experience down with 40+ plugins. 
+            Off-the-shelf platforms charge you forever while slowing your customer experience down with 40+ plugins.
             We build blazing-fast, custom-engineered digital systems that you own outright.
           </motion.p>
         </div>

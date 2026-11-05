@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Sun, Moon } from 'lucide-react'
 import { cn } from '../lib/utils'
 
@@ -11,12 +11,12 @@ function applyTheme(dark) {
     document.documentElement.classList.add('dark')
     try {
       localStorage.setItem('Theme', 'Dark')
-    } catch (e) {}
+    } catch { /* Storage may be unavailable. */ }
   } else {
     document.documentElement.classList.remove('dark')
     try {
       localStorage.setItem('Theme', 'Light')
-    } catch (e) {}
+    } catch { /* Storage may be unavailable. */ }
   }
   window.dispatchEvent(
     new CustomEvent('texcodes-theme-change', { detail: { isDark: dark } })
@@ -24,12 +24,7 @@ function applyTheme(dark) {
 }
 
 export default function ThemeToggle({ className, variant = 'full' }) {
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('Theme') === 'Dark'
-    }
-    return false
-  })
+  const [isDarkMode, setIsDarkMode] = useState(false)
 
   useEffect(() => {
     const syncState = () => {
@@ -43,6 +38,8 @@ export default function ThemeToggle({ className, variant = 'full' }) {
         syncState()
       }
     }
+
+    syncState()
 
     // Observe changes to document.documentElement 'class' attribute
     const observer = new MutationObserver(syncState)

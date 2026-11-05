@@ -2,6 +2,9 @@
 // built-in geolocation) in a `tx_country` cookie. The site reads it to choose the
 // default currency — see src/lib/currency.js.
 export default async (request, context) => {
+  // Speculative navigation must remain a cheap, cacheable static response.
+  const purpose = request.headers.get('Sec-Purpose') || request.headers.get('Purpose') || ''
+  if (purpose.includes('prefetch')) return context.next()
   const response = await context.next()
 
   const country = String(context.geo?.country?.code || '').toUpperCase()
@@ -20,6 +23,7 @@ export const config = {
   path: '/*',
   excludedPath: [
     '/assets/*',
+    '/__manifest', '/*.data', '/*.md',
     '/*.css', '/*.js', '/*.json', '/*.map',
     '/*.png', '/*.jpg', '/*.jpeg', '/*.webp', '/*.gif', '/*.svg', '/*.ico',
     '/*.glb', '/*.pdf', '/*.txt', '/*.xml', '/*.woff', '/*.woff2',

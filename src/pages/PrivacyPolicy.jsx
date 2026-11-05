@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { LegalContact, LegalLink, LegalPage, LegalSection } from '../components/legal/LegalPage'
 import { BUSINESS, COMMENTIQ_AI_PROVIDER, LEGAL_EFFECTIVE_DATE, LEGAL_PATHS } from '../data/business'
 

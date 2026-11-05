@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import Link from './SiteLink'
+
 import { ArrowDown, ArrowRight, Terminal, Layers, Database, Cpu } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { FadeIn, StaggerContainer, StaggerItem } from './motion/MotionReveal'
@@ -32,7 +32,7 @@ const HeroSection = () => {
       {/* ─── Massive Conceptual Statement ─── */}
       <div className="px-4 sm:px-8 pt-10 sm:pt-16 pb-8 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)]">
         <FadeIn direction="up" duration={0.7} distance={22}>
-          <h2 className="text-5xl sm:text-7xl md:text-8xl lg:text-[7.2rem] font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.88] max-w-7xl">
+          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[7.2rem] font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.88] max-w-7xl">
             {isUrdu ? (
               <>
                 BUILDING{' '}
@@ -50,7 +50,7 @@ const HeroSection = () => {
                 <br className="hidden sm:inline" /> THAT MOVE BUSINESSES.
               </>
             )}
-          </h2>
+          </h1>
         </FadeIn>
       </div>
 

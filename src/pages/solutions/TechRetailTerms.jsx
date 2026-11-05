@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { CarePricing } from '../../components/offers/OfferReference'
+import { carePlans, money as formatMoney } from '../../content/pricing.ts'
+import Link from '../../components/SiteLink'
+
+import { useSearchParams } from 'react-router'
 import { ShieldCheck, ArrowLeft, CheckCircle2 } from 'lucide-react'
 import { useLanguage } from '../../context/LanguageContext'
-import { defaultCurrency } from '../../lib/currency'
+import { useCurrency } from '../../hooks/useCurrency'
 
 // Shared terms for all three Retail OS offers (Tech, Laptop, Console & Games).
 // GBP is offered for Console only; Tech and Laptop use USD outside Pakistan.
@@ -34,13 +37,9 @@ function Box({ items }) {
 export default function TechRetailTerms() {
   const { isUrdu } = useLanguage()
   const [searchParams] = useSearchParams()
-  const currency = defaultCurrency(searchParams.get('offer') === 'console' ? ['USD', 'GBP', 'PKR'] : ['USD', 'PKR'])
+  const currency = useCurrency(searchParams.get('offer') === 'console' ? ['USD', 'GBP', 'PKR'] : ['USD', 'PKR'])
   const money = (usd, gbp, pkr) => (currency === 'USD' ? usd : currency === 'GBP' ? gbp : pkr)
   const ur = (en, urdu) => (isUrdu ? urdu : en)
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
 
   const hourly = money('$45 USD', '£36 GBP', 'PKR 6,000')
 
@@ -246,16 +245,16 @@ export default function TechRetailTerms() {
             <Box
               items={[
                 ur(
-                  `Basic Care — ${money('$140', '£115', 'PKR 14,000')} per month: hosting, SSL, daily backups, uptime monitoring, small edits, email support.`,
-                  `Basic Care — ${money('$140', '£115', 'PKR 14,000')} mahana: hosting, SSL, rozana backups, uptime monitoring, chhoti edits, email support.`
+                  `Basic Care — ${formatMoney(carePlans[0][currency], currency)} per month: hosting, SSL, daily backups, uptime monitoring, small edits, email support.`,
+                  `Basic Care — ${formatMoney(carePlans[0][currency], currency)} mahana: hosting, SSL, rozana backups, uptime monitoring, chhoti edits, email support.`
                 ),
                 ur(
-                  `Growth Care — ${money('$280', '£230', 'PKR 28,000')} per month: everything in Basic, priority replies within 4 business hours, small monthly changes, WhatsApp support.`,
-                  `Growth Care — ${money('$280', '£230', 'PKR 28,000')} mahana: Basic ka sab kuch, 4 business hours mein priority jawab, mahana chhoti changes, WhatsApp support.`
+                  `Growth Care — ${formatMoney(carePlans[1][currency], currency)} per month: everything in Basic, priority replies within 4 business hours, small monthly changes, WhatsApp support.`,
+                  `Growth Care — ${formatMoney(carePlans[1][currency], currency)} mahana: Basic ka sab kuch, 4 business hours mein priority jawab, mahana chhoti changes, WhatsApp support.`
                 ),
                 ur(
-                  `Enterprise Care — ${money('$550', '£450', 'PKR 55,000')} per month: everything in Growth, dedicated engineer hours, integration support, 99.5% uptime target, phone support.`,
-                  `Enterprise Care — ${money('$550', '£450', 'PKR 55,000')} mahana: Growth ka sab kuch, dedicated engineer hours, integration support, 99.5% uptime target, phone support.`
+                  `Enterprise Care — ${formatMoney(carePlans[2][currency], currency)} per month: everything in Growth, dedicated engineer hours, integration support, 99.5% uptime target, phone support.`,
+                  `Enterprise Care — ${formatMoney(carePlans[2][currency], currency)} mahana: Growth ka sab kuch, dedicated engineer hours, integration support, 99.5% uptime target, phone support.`
                 ),
               ]}
             />
@@ -268,7 +267,8 @@ export default function TechRetailTerms() {
           </Section>
         </div>
 
-        {/* Footer Links */}
+        <CarePricing />
+{/* Footer Links */}
         <div className="pt-8 border-t border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] flex flex-wrap items-center justify-between gap-3 font-mono text-xs">
           <Link to="/solutions" className="text-[#059669] dark:text-[#10B981] font-bold hover:underline">
             {ur('← Back to solutions', '← Solutions par wapis jayein')}

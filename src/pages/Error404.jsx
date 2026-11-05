@@ -1,10 +1,11 @@
+import Link from '../components/SiteLink'
 import React from 'react'
 import { ArrowLeft, Terminal } from 'lucide-react'
-import { Link } from 'react-router-dom'
+
 import { useLanguage } from '../context/LanguageContext'
 
 const Error404 = () => {
-  const { t, isUrdu } = useLanguage()
+  const { t } = useLanguage()
 
   return (
     <div className="min-h-[75vh] w-full bg-[#F6F5F0] dark:bg-[#0A0A0A] flex flex-col items-center justify-center px-4 py-16 text-center font-mono transition-colors duration-200">

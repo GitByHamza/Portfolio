@@ -1,15 +1,11 @@
-import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import Link from '../components/SiteLink'
+
 import { ArrowRight, ArrowUpRight, CheckCircle2 } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/motion/MotionReveal'
 
 export default function About() {
   const { t, isUrdu } = useLanguage()
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
 
   const technicalStack = [
     {

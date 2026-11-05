@@ -1,16 +1,11 @@
 import { defineConfig } from 'vite'
+import { reactRouter } from '@react-router/dev/vite'
+import netlifyReactRouter from '@netlify/vite-plugin-react-router'
 import tailwindcss from '@tailwindcss/vite'
-import react from '@vitejs/plugin-react'
-import path from 'path'
+import { fileURLToPath } from 'node:url'
 
-export default defineConfig(({ isSsrBuild }) => (
-  {  plugins: [ react(),tailwindcss(),  ],
-    resolve:{
-      alias:{
-        "@" : path.resolve(__dirname,"./src")
-      }
-    },
-    // The SSR build only renders the legal pages (scripts/prerender-legal.js); it doesn't need public/
-    build: { copyPublicDir: !isSsrBuild },
-
-  }))
+export default defineConfig({
+  plugins: [tailwindcss(), reactRouter(), ...(process.env.VERCEL === '1' ? [] : [netlifyReactRouter()])],
+  resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
+  server: { host: '127.0.0.1' },
+})

@@ -5,7 +5,7 @@ import { BUSINESS, LEGAL_PAGES } from './business.js'
 
 // Checks the static HTML that `npm run build` writes for the legal pages, which
 // Meta's URL checker reads without running JavaScript. Skipped until dist/ exists.
-const dist = new URL('../../dist/', import.meta.url)
+const dist = new URL('../../build/client/', import.meta.url)
 const built = existsSync(new URL('index.html', dist))
 
 const visibleText = (html) =>
@@ -31,15 +31,16 @@ const pageText = {
 
 for (const page of LEGAL_PAGES) {
   test(`static ${page.path} contains its page text`, { skip: !built && 'run npm run build first' }, () => {
-    for (const file of [`${page.path.slice(1)}/index.html`, `${page.path.slice(1)}.html`]) {
+    for (const file of [`${page.path.slice(1)}/index.html`]) {
       const path = new URL(file, dist)
       assert.ok(existsSync(path), `missing dist/${file}`)
       const html = readFileSync(path, 'utf8')
       assert.ok(html.includes(`<title>${page.title} — TeXCodes</title>`), `${file}: wrong <title>`)
-      assert.ok(html.includes(`<meta name="description" content="${page.description}" />`), `${file}: wrong description`)
+      assert.equal(html.match(/<meta name="description" content="([^"]*)"/)?.[1], page.description, `${file}: wrong description`)
       assert.ok(!html.includes('<div id="root"></div>'), `${file}: root div is empty`)
       assert.doesNotMatch(html, /Gujranwala|Mehar Noor/i, `${file}: still shows the address`)
-      assert.match(html, /<script type="module"[^>]*src="\/assets\//, `${file}: client script missing`)
+      assert.match(html, /<script type="module"/, `${file}: client script missing`)
+      assert.match(html, /entry\.client-/, `${file}: hydration entry missing`)
       const text = visibleText(html)
       for (const phrase of [page.title, BUSINESS.email, ...pageText[page.path]]) {
         assert.ok(text.includes(phrase), `${file} must show "${phrase}"`)

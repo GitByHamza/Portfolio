@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import Link from './SiteLink'
+
 import { ArrowRight, Github, ArrowUpRight } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { FadeIn } from './motion/MotionReveal'
@@ -8,87 +8,29 @@ import { projectsData, getLocalizedProject } from '../data/projects'
 const ProjectsSection = () => {
   const { t, lang, isUrdu } = useLanguage()
 
-  const existingFeaturedProjects = [
-    {
-      id: 6,
-      num: '01',
-      badge: isUrdu ? 'MERA BANAYA HUA PRODUCT · LIVE MICRO-SAAS' : 'PRODUCT I BUILT · LIVE MICRO-SAAS',
-      badgeClass: 'tag-blue',
-      title: 'TOOLKITO — MICRO SAAS TOOLKIT',
-      role: isUrdu ? 'Solo Product Builder (Concept, Engineering, Growth)' : 'Solo Product Builder (Concept, Engineering, Growth)',
-      overview: isUrdu
-        ? 'Aik live production Micro SaaS platform jo image upscaling, background removal, PDF conversions, OCR aur video processing ke 10+ browser utilities faraham karta hai. Zero framework overhead aur automated processing pipelines ke sath tayyar shuda.'
-        : 'A live production Micro SaaS platform offering 10+ professional browser-based utilities for image upscaling, background removal, PDF conversions, OCR extraction, and video processing. Engineered from scratch with serverless processing pipelines, daily usage limits, and SEO strategy.',
-      techStack: ['Next.js', 'Tailwind CSS', 'Sharp', 'FFmpeg', 'Tesseract OCR', 'Supabase PostgreSQL', 'Vercel'],
-      image: '/toolkito.png',
-      demoUrl: 'https://toolkito.app',
-      caseStudyUrl: '/project/6',
-      impactNote: isUrdu ? 'Live Solo SaaS Product at toolkito.app' : 'Live Solo SaaS Product at toolkito.app',
-    },
-    {
-      id: 1,
-      num: '02',
-      badge: isUrdu ? 'PROFESSIONAL ENGINEERING · SWISS PLATFORM' : 'PROFESSIONAL ENGINEERING · SWISS PLATFORM',
-      badgeClass: 'tag-pill',
-      title: 'MYLS — MULTI-TENANT SAAS MODERNIZATION',
-      role: isUrdu ? 'Full-Stack Systems Modernization' : 'Full-Stack Systems Modernization',
-      overview: isUrdu
-        ? 'Switzerland mein 2,800+ active business locations ko serve karne wala production SaaS platform. Legacy Laravel 8 se Laravel 12 aur Vue 3 (Composition API) par mukammal modernization, PostgreSQL architecture aur granular Spatie RBAC ke sath.'
-        : 'Production SaaS platform serving 2,800+ active business locations in Switzerland. Successfully executed a full modernization from legacy Laravel 8 to Laravel 12, migrated the frontend to Vue 3 (Composition API), redesigned the database architecture from MySQL to PostgreSQL, and implemented granular Spatie role-based access control (RBAC).',
-      techStack: ['Laravel 12', 'Vue 3 / Composition API', 'PostgreSQL', 'Spatie RBAC', 'REST APIs'],
-      image: '/myls.png',
-      demoUrl: 'https://app.myls.ch',
-      caseStudyUrl: '/project/1',
-      impactNote: isUrdu ? '2,800+ Active Swiss Business Locations' : '2,800+ Active Swiss Business Locations',
-    },
-    {
-      id: 7,
-      num: '03',
-      badge: isUrdu ? 'CUSTOM E-COMMERCE · RETAIL SYSTEM' : 'CUSTOM E-COMMERCE · RETAIL SYSTEM',
-      badgeClass: 'tag-blue',
-      title: 'TXS — ENTERPRISE TECH STORE & PC BUILDER OS',
-      role: isUrdu ? 'Full-Stack Architecture & Development' : 'Full-Stack Architecture & Development',
-      overview: isUrdu
-        ? 'Computer hardware, gaming rigs aur CCTV retailers ke liye khas tor par tayyar shuda e-commerce retail engine. Real-time PC Builder compatibility engine (Socket AM5/LGA1700, DDR4/DDR5, wattage calculation), multi-branch stock sync, aur WhatsApp automated dispatch ke sath.'
-        : 'High-performance retail commerce engine tailored for technology, computer hardware, and CCTV retailers. Features a real-time hardware compatibility engine (CPU sockets AM5/LGA1700, DDR4/DDR5, wattage calculation), multi-branch inventory synchronization, serial number warranty lifecycle, and automated WhatsApp order dispatch.',
-      techStack: ['Next.js 16', 'React 19', 'Prisma ORM', 'PostgreSQL', 'Tailwind CSS'],
-      image: '/txs/home.png',
-      demoUrl: 'https://store-demo-eight.vercel.app/',
-      caseStudyUrl: '/project/7',
-      impactNote: isUrdu ? 'Real-Time Hardware Compatibility Engine' : 'Real-Time Hardware Compatibility Engine',
-    },
-    {
-      id: 8,
-      num: '04',
-      badge: isUrdu ? 'ENTERPRISE HEALTHCARE · 4-PORTAL ERP' : 'ENTERPRISE HEALTHCARE · 4-PORTAL ERP',
-      badgeClass: 'tag-pill',
-      title: 'MEDICORE — MODERN HOSPITAL MANAGEMENT SYSTEM',
-      role: isUrdu ? 'Full-Stack ERP Architecture' : 'Full-Stack ERP Architecture',
-      overview: isUrdu
-        ? 'Super Admin, Doctor, Staff aur Patient ke 4 user portals par mushtamil comprehensive healthcare ERP ecosystem. Dynamic JSON clinical forms, interactive SVG 32-tooth dental chart with FDI notation, aur live ward bed occupancy tracking ke sath.'
-        : 'A comprehensive hospital management ecosystem featuring multi-guard authentication across 4 user portals: Super Admin, Doctor, Staff, and Patient. Includes a dynamic JSON-configured clinical dashboard, an interactive SVG 32-tooth dental chart with FDI notation, and live ward bed occupancy tracking.',
-      techStack: ['PHP Laravel 12 (REST API)', 'Next.js (App Router)', 'PostgreSQL', 'Recharts', 'TypeScript'],
-      image: '/hms/landing.png',
-      githubUrl: 'https://github.com/GitByHamza/Hospital-Management-System',
-      caseStudyUrl: '/project/8',
-      impactNote: isUrdu ? '4 Role-Based Portals & Clinical SVG Dental Engine' : '4 Role-Based Portals & Clinical SVG Dental Engine',
-    },
-    {
-      id: 2,
-      num: '05',
-      badge: isUrdu ? 'AI BUSINESS AUTOMATION · 24/7 AGENT' : 'AI BUSINESS AUTOMATION · 24/7 AGENT',
-      badgeClass: 'tag-pill',
-      title: 'AI RECEPTIONIST & CRM PIPELINE AGENT',
-      role: isUrdu ? 'AI Integration & Full-Stack Development' : 'AI Integration & Full-Stack Development',
-      overview: isUrdu
-        ? 'Full-stack business automation platform jisme WhatsApp voice & text AI agent 24/7 customer inquiries handle karta hai, appointments book karta hai aur real-time CRM pipelines update karta hai.'
-        : 'A full-stack business automation platform featuring a WhatsApp voice & text agent that handles customer inquiries 24/7 using company knowledge base data, automates calendar appointment booking, and updates CRM lead qualification pipelines in real-time.',
-      techStack: ['Next.js', 'Node.js / Laravel', 'OpenAI API', 'WhatsApp API', 'CRM System'],
-      image: '/ai/main.png',
-      caseStudyUrl: '/project/2',
-      impactNote: isUrdu ? 'Automated 24/7 Lead Qualification & Booking' : 'Automated 24/7 Lead Qualification & Booking',
-    },
-  ]
+  const existingFeaturedProjects = [{id: 6,
+badge: isUrdu ? 'MERA BANAYA HUA PRODUCT · LIVE MICRO-SAAS' : 'PRODUCT I BUILT · LIVE MICRO-SAAS',
+badgeClass: 'tag-blue',
+role: isUrdu ? 'Solo Product Builder (Concept, Engineering, Growth)' : 'Solo Product Builder (Concept, Engineering, Growth)'},
+{id: 1,
+badge: isUrdu ? 'PROFESSIONAL ENGINEERING · SWISS PLATFORM' : 'PROFESSIONAL ENGINEERING · SWISS PLATFORM',
+badgeClass: 'tag-pill',
+role: isUrdu ? 'Full-Stack Systems Modernization' : 'Full-Stack Systems Modernization'},
+{id: 7,
+badge: isUrdu ? 'CUSTOM E-COMMERCE · RETAIL SYSTEM' : 'CUSTOM E-COMMERCE · RETAIL SYSTEM',
+badgeClass: 'tag-blue',
+role: isUrdu ? 'Full-Stack Architecture & Development' : 'Full-Stack Architecture & Development'},
+{id: 8,
+badge: isUrdu ? 'ENTERPRISE HEALTHCARE · 4-PORTAL ERP' : 'ENTERPRISE HEALTHCARE · 4-PORTAL ERP',
+badgeClass: 'tag-pill',
+role: isUrdu ? 'Full-Stack ERP Architecture' : 'Full-Stack ERP Architecture'},
+{id: 2,
+badge: isUrdu ? 'AI BUSINESS AUTOMATION · 24/7 AGENT' : 'AI BUSINESS AUTOMATION · 24/7 AGENT',
+badgeClass: 'tag-pill',
+role: isUrdu ? 'AI Integration & Full-Stack Development' : 'AI Integration & Full-Stack Development'}].map((entry) => {
+ const project = getLocalizedProject(projectsData.find((item) => item.id === entry.id), lang)
+ return { ...project, ...entry, title: project.title.toUpperCase(), techStack: project.tags, image: project.mainImage, caseStudyUrl: '/project/' + project.id, impactNote: project.impact }
+})
 
   const editorialProjects = [
     ...projectsData.filter((project) => project.featured).map((rawProject) => {

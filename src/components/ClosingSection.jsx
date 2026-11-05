@@ -1,11 +1,11 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import Link from './SiteLink'
+
 import { ArrowRight, Mail, Github, Linkedin, MessageSquare } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { FadeIn } from './motion/MotionReveal'
 
 const ClosingSection = () => {
-  const { t, isUrdu } = useLanguage()
+  const { t } = useLanguage()
 
   return (
     <section className="w-full bg-[#FAF9F5] dark:bg-[#161619] border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] py-20 sm:py-28 px-4 sm:px-8 transition-colors duration-200">

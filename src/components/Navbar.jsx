@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { LanguageLink } from './SiteLink'
+import Link from './SiteLink'
+import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router'
 import { Menu, X, ArrowUpRight } from 'lucide-react'
 import ThemeToggle from './ThemeToggle'
 import { useLanguage } from '../context/LanguageContext'
@@ -8,7 +10,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [currentDate, setCurrentDate] = useState('')
   const location = useLocation()
-  const { lang, setLang, t, isUrdu } = useLanguage()
+  const { lang, t, isUrdu } = useLanguage()
 
   useEffect(() => {
     const now = new Date()
@@ -24,9 +26,8 @@ const Navbar = () => {
   ]
 
   const isActive = (path) => {
-    if (path === '/' && location.pathname === '/') return true
-    if (path !== '/' && location.pathname.startsWith(path)) return true
-    return false
+    const pathname = location.pathname.replace(/^\/ur(?=\/|$)/, '') || '/'
+    return path === '/' ? pathname === '/' : pathname.startsWith(path)
   }
 
   return (
@@ -34,18 +35,18 @@ const Navbar = () => {
       {/* ─── Top Newspaper Metadata Ticker ─── */}
       <div className="hidden sm:flex items-center justify-between px-4 sm:px-8 py-2 text-[11px] font-mono text-[#575652] dark:text-[#9B9A95] uppercase tracking-wider border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.08)]">
         <div className="flex items-center gap-4">
-          <span className="font-semibold text-[#0F0F0F] dark:text-[#EDECE6]">{t('nav', 'vol')}</span>
-          <span className="text-[rgba(15,15,15,0.3)] dark:text-[rgba(255,255,255,0.2)]">/</span>
-          <span>{t('nav', 'journal')}</span>
+          <span className="whitespace-nowrap font-semibold text-[#0F0F0F] dark:text-[#EDECE6]">{t('nav', 'vol')}</span>
+          <span className="hidden xl:inline text-[rgba(15,15,15,0.3)] dark:text-[rgba(255,255,255,0.2)]">/</span>
+          <span className="hidden xl:inline">{t('nav', 'journal')}</span>
         </div>
         <div className="flex items-center gap-4">
-          <span>{currentDate || t('nav', 'edition')}</span>
+          <span className="hidden lg:inline-block min-w-[19rem] text-right">{currentDate || t('nav', 'edition')}</span>
           <span className="text-[rgba(15,15,15,0.2)] dark:text-[rgba(255,255,255,0.2)]">|</span>
 
           {/* Language Switcher */}
           <div className="inline-flex items-center border border-[rgba(15,15,15,0.2)] dark:border-[rgba(255,255,255,0.2)] p-0.5 font-mono text-[10px] font-bold">
-            <button
-              onClick={() => setLang('en')}
+            <LanguageLink
+              language="en"
               className={`px-2 py-0.5 transition-colors cursor-pointer ${
                 lang === 'en'
                   ? 'bg-[#059669] text-white'
@@ -54,9 +55,9 @@ const Navbar = () => {
               title="English"
             >
               EN
-            </button>
-            <button
-              onClick={() => setLang('ur-en')}
+            </LanguageLink>
+            <LanguageLink
+              language="ur-en"
               className={`px-2 py-0.5 transition-colors cursor-pointer ${
                 lang === 'ur-en'
                   ? 'bg-[#059669] text-white'
@@ -65,7 +66,7 @@ const Navbar = () => {
               title="Roman Urdu"
             >
               UR
-            </button>
+            </LanguageLink>
           </div>
 
           <span className="text-[rgba(15,15,15,0.2)] dark:text-[rgba(255,255,255,0.2)]">|</span>
@@ -76,10 +77,10 @@ const Navbar = () => {
       {/* ─── Main Masthead ─── */}
       <div className="px-4 sm:px-8 py-2 sm:py-3 flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.08)]">
         <div className="shrink-0">
-          <Link to="/" className="inline-block group">
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.88] group-hover:text-[#059669] dark:group-hover:text-[#10B981] transition-colors">
+          <Link prefetch="render" to="/" className="inline-block group">
+            <span className="block text-3xl sm:text-5xl md:text-6xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.88] group-hover:text-[#059669] dark:group-hover:text-[#10B981] transition-colors">
               TEXCODES
-            </h1>
+            </span>
           </Link>
         </div>
 
@@ -103,18 +104,18 @@ const Navbar = () => {
           <div className="flex items-center gap-2">
             {/* Mobile language switch buttons */}
             <div className="inline-flex items-center border border-[rgba(15,15,15,0.2)] dark:border-[rgba(255,255,255,0.2)] p-0.5 font-mono text-[9px] font-bold">
-              <button
-                onClick={() => setLang('en')}
+              <LanguageLink
+                language="en"
                 className={`px-1.5 py-0.5 ${lang === 'en' ? 'bg-[#059669] text-white' : 'text-[#575652] dark:text-[#9B9A95]'}`}
               >
                 EN
-              </button>
-              <button
-                onClick={() => setLang('ur-en')}
+              </LanguageLink>
+              <LanguageLink
+                language="ur-en"
                 className={`px-1.5 py-0.5 ${lang === 'ur-en' ? 'bg-[#059669] text-white' : 'text-[#575652] dark:text-[#9B9A95]'}`}
               >
                 UR
-              </button>
+              </LanguageLink>
             </div>
             <ThemeToggle variant="icon" />
             <button
@@ -131,7 +132,7 @@ const Navbar = () => {
       {/* ─── Bottom Editorial Navigation Bar ─── */}
       <nav className="hidden md:flex items-center justify-between px-4 sm:px-8 py-2 font-mono text-xs font-semibold tracking-widest uppercase">
         <div className="flex items-center gap-8">
-          <Link
+          <Link prefetch="render"
             to="/"
             className={`transition-colors hover:text-[#059669] dark:hover:text-[#10B981] ${
               location.pathname === '/'
@@ -142,7 +143,7 @@ const Navbar = () => {
             HOME
           </Link>
           {navLinks.map((item) => (
-            <Link
+            <Link prefetch="render"
               key={item.path}
               to={item.path}
               className={`transition-colors hover:text-[#059669] dark:hover:text-[#10B981] ${
@@ -157,7 +158,7 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-4 text-[11px] font-normal text-[#575652] dark:text-[#9B9A95]">
-          <Link
+          <Link prefetch="render"
             to="/solutions/tech-retail"
             className="text-[#059669] dark:text-[#10B981] hover:underline font-semibold flex items-center gap-1"
           >
@@ -181,25 +182,25 @@ const Navbar = () => {
           <div className="flex items-center justify-between pb-3 border-b border-[rgba(15,15,15,0.08)] dark:border-[rgba(255,255,255,0.08)]">
             <span className="text-xs text-[#575652] dark:text-[#9B9A95]">LANGUAGE / ZUBAN</span>
             <div className="inline-flex items-center border border-[rgba(15,15,15,0.2)] dark:border-[rgba(255,255,255,0.2)] p-0.5 font-mono text-xs font-bold">
-              <button
-                onClick={() => setLang('en')}
+              <LanguageLink
+                language="en"
                 className={`px-3 py-1 ${lang === 'en' ? 'bg-[#059669] text-white' : 'text-[#575652] dark:text-[#9B9A95]'}`}
               >
                 ENGLISH
-              </button>
-              <button
-                onClick={() => setLang('ur-en')}
+              </LanguageLink>
+              <LanguageLink
+                language="ur-en"
                 className={`px-3 py-1 ${lang === 'ur-en' ? 'bg-[#059669] text-white' : 'text-[#575652] dark:text-[#9B9A95]'}`}
               >
                 ROMAN URDU
-              </button>
+              </LanguageLink>
             </div>
           </div>
           <div className="flex items-center justify-between pb-3 border-b border-[rgba(15,15,15,0.08)] dark:border-[rgba(255,255,255,0.08)]">
             <span className="text-xs text-[#575652] dark:text-[#9B9A95]">THEME EDITION</span>
             <ThemeToggle />
           </div>
-          <Link
+          <Link prefetch="render"
             to="/"
             onClick={() => setIsMenuOpen(false)}
             className={`block py-2 border-b border-[rgba(15,15,15,0.08)] dark:border-[rgba(255,255,255,0.08)] ${
@@ -211,7 +212,7 @@ const Navbar = () => {
             01 / HOME
           </Link>
           {navLinks.map((item, idx) => (
-            <Link
+            <Link prefetch="render"
               key={item.path}
               to={item.path}
               onClick={() => setIsMenuOpen(false)}
@@ -225,7 +226,7 @@ const Navbar = () => {
             </Link>
           ))}
           <div className="pt-2">
-            <Link
+            <Link prefetch="render"
               to="/solutions/tech-retail"
               onClick={() => setIsMenuOpen(false)}
               className="btn-blue w-full text-center text-xs justify-center"

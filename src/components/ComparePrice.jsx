@@ -1,4 +1,4 @@
-import React from 'react'
+
 
 // Regular price shown struck through above a discounted plan price.
 // Dark red in light mode, light red in dark mode.

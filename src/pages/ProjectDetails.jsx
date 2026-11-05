@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import Link from '../components/SiteLink'
+import { useEffect, useState, useCallback } from 'react'
+import { useParams } from 'react-router'
 import { ArrowLeft, ArrowRight, ArrowUpRight, Github, CheckCircle2, X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react'
 import { projectsData, getLocalizedProject } from '../data/projects'
 import { useLanguage } from '../context/LanguageContext'
@@ -20,15 +21,6 @@ const ProjectDetails = () => {
 
   const [modalOpen, setModalOpen] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
-
-  useEffect(() => {
-    if (window.__lenis) {
-      window.__lenis.scrollTo(0, { immediate: true })
-    }
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-    document.documentElement.scrollTop = 0
-    document.body.scrollTop = 0
-  }, [id])
 
   const openModal = (index) => {
     setSelectedImageIndex(index)

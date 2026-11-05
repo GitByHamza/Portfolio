@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Send, Mail, MessageSquare, CheckCircle2, ArrowUpRight, AlertCircle } from 'lucide-react'
-import { supabase } from '@/lib/supabase'
+
 import { useLanguage } from '../context/LanguageContext'
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/motion/MotionReveal'
 import { BUSINESS } from '../data/business'
@@ -19,10 +19,6 @@ export default function Contact() {
     message: '',
   })
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
-
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
@@ -36,6 +32,7 @@ export default function Contact() {
     setLastSubmittedPayload(payload)
 
     try {
+      const { supabase } = await import('../lib/supabase')
       const { error } = await supabase.from('messages').insert([
         {
           name: payload.name,
@@ -99,10 +96,10 @@ export default function Contact() {
                   <CheckCircle2 size={24} />
                 </div>
                 <h3 className="font-display text-3xl uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6]">
-                  {t('contact', 'modal_title')}
+                  {submissionWarning ? 'Please send your enquiry directly' : t('contact', 'modal_title')}
                 </h3>
                 <p className="font-serif text-[#575652] dark:text-[#9B9A95] max-w-md mx-auto text-sm leading-relaxed">
-                  {t('contact', 'modal_desc')}
+                  {submissionWarning ? 'We could not confirm your form submission. Please use the WhatsApp link below or email admin@texcodes.com.' : t('contact', 'modal_desc')}
                 </p>
 
                 {lastSubmittedPayload && (
@@ -131,7 +128,7 @@ export default function Contact() {
                 </div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onFocus={() => import('../lib/supabase')} onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <div className="font-mono text-xs font-semibold uppercase tracking-wider text-[#0F0F0F] dark:text-[#EDECE6] mb-1">
                     {isUrdu ? 'SYSTEM INQUIRY FORM' : 'PROJECT INQUIRY FORM'}
@@ -335,5 +332,4 @@ export default function Contact() {
     </div>
   )
 }
-
 

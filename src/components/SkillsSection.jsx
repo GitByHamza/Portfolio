@@ -80,6 +80,9 @@ const InteractiveCard = ({ children, className }) => {
   const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 })
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['7deg', '-7deg'])
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-7deg', '7deg'])
+  const spotlight = useTransform(
+    () => `radial-gradient(300px circle at ${(x.get() + 0.5) * 100}% ${(y.get() + 0.5) * 100}%, rgba(0,212,255,0.8), transparent 40%)`
+  )
 
   const handleMouseMove = (e) => {
     if (!ref.current || shouldReduceMotion) return
@@ -104,9 +107,7 @@ const InteractiveCard = ({ children, className }) => {
         <motion.div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
           style={{
-            background: useTransform(
-              () => `radial-gradient(300px circle at ${(x.get() + 0.5) * 100}% ${(y.get() + 0.5) * 100}%, rgba(0,212,255,0.8), transparent 40%)`
-            ),
+            background: spotlight,
           }}
         />
       )}

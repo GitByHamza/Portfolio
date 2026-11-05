@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { priceCatalog, PLAN_KEYS, money } from '../content/pricing.ts'
+import Link from '../components/SiteLink'
+
 import { ArrowRight, ArrowUpRight, Cpu, ShoppingBag, Layers, CheckCircle2, XCircle, ShieldCheck, Terminal, Laptop, Gamepad2 } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/motion/MotionReveal'
-import { defaultCurrency } from '../lib/currency'
+import { useCurrency } from '../hooks/useCurrency'
 
 // Glowing "discounted price" label shown above each plan list
 function DiscountBadge() {
@@ -38,23 +39,10 @@ function PriceLine({ compare, price, strong = false, isUrdu = false }) {
 
 // Plan prices by currency. PKR is only shown to visitors in Pakistan; GBP only exists for Console.
 // Keep in sync with COMPARE_PRICES and the plan prices on each offer page.
-const PLAN_PRICES = {
-  tech: [
-    { usd: '$2,450', pkr: 'PKR 280,000', compareUsd: '$2,950', comparePkr: 'PKR 340,000' },
-    { usd: '$4,850', pkr: 'PKR 550,000', compareUsd: '$5,800', comparePkr: 'PKR 660,000' },
-    { usd: '$8,500', pkr: 'PKR 950,000', compareUsd: '$10,200', comparePkr: 'PKR 1,140,000', from: true },
-  ],
-  laptop: [
-    { usd: '$2,250', pkr: 'PKR 250,000', compareUsd: '$2,700', comparePkr: 'PKR 300,000' },
-    { usd: '$4,450', pkr: 'PKR 490,000', compareUsd: '$5,350', comparePkr: 'PKR 590,000' },
-    { usd: '$7,900', pkr: 'PKR 850,000', compareUsd: '$9,500', comparePkr: 'PKR 1,020,000', from: true },
-  ],
-  console: [
-    { usd: '$2,250', gbp: '£1,850', pkr: 'PKR 260,000', compareUsd: '$2,700', compareGbp: '£2,200', comparePkr: 'PKR 310,000' },
-    { usd: '$4,450', gbp: '£3,650', pkr: 'PKR 490,000', compareUsd: '$5,350', compareGbp: '£4,400', comparePkr: 'PKR 590,000' },
-    { usd: '$7,900', gbp: '£6,500', pkr: 'PKR 850,000', compareUsd: '$9,500', compareGbp: '£7,800', comparePkr: 'PKR 1,020,000', from: true },
-  ],
-}
+const PLAN_PRICES = Object.fromEntries(Object.entries(priceCatalog).map(([offer, plans]) => [offer, PLAN_KEYS.map((key) => {
+ const row = plans[key]
+ return { usd: money(row.USD.amount, 'USD'), pkr: money(row.PKR.amount, 'PKR'), compareUsd: money(row.USD.compare, 'USD'), comparePkr: money(row.PKR.compare, 'PKR'), from: row.USD.startingAt, ...(row.GBP ? { gbp: money(row.GBP.amount, 'GBP'), compareGbp: money(row.GBP.compare, 'GBP') } : {}) }
+})]))
 
 function priceFor(row, currency, isUrdu) {
   const pick = (usd, gbp, pkr) => (currency === 'PKR' && pkr ? pkr : currency === 'GBP' && gbp ? gbp : usd)
@@ -67,11 +55,7 @@ function priceFor(row, currency, isUrdu) {
 
 export default function Solutions() {
   const { t, isUrdu } = useLanguage()
-  const currency = defaultCurrency(['USD', 'GBP', 'PKR'])
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+  const currency = useCurrency(['USD', 'GBP', 'PKR'])
 
   const comparisonItems = [
     {

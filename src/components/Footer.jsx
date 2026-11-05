@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import Link from './SiteLink'
+
 import { ArrowUp, ArrowUpRight, Mail, MessageSquare } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { BUSINESS, LEGAL_PATHS } from '../data/business'
@@ -39,6 +39,7 @@ export const Footer = () => {
             {t('footer', 'col_nav')}
           </div>
           <ul className="space-y-2 text-xs">
+            <li><Link to="/context" className="hover:underline">Business & portfolio briefing</Link></li>
             <li>
               <Link to="/work" className="hover:text-[#059669] dark:hover:text-[#10B981] transition-colors flex items-center gap-1">
                 {t('footer', 'selected_work')} <span className="text-[10px] text-[#8E8D88] dark:text-[#6A6965]">({t('footer', 'archive')})</span>

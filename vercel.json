@@ -1,8 +1,20 @@
 {
-  "rewrites": [
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "react-router",
+  "buildCommand": "npm run build:vercel",
+  "outputDirectory": "build/client",
+  "trailingSlash": false,
+  "headers": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/admin",
+      "headers": [
+        { "key": "Cache-Control", "value": "private, no-store" },
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+      ]
+    },
+    {
+      "source": "/context.md",
+      "headers": [{ "key": "Content-Type", "value": "text/markdown; charset=utf-8" }]
     }
   ]
 }

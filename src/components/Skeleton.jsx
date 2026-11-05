@@ -10,7 +10,7 @@ const Skeleton = ({ className, ...props }) => {
   )
 }
 
-const ProjectImage = ({ src, alt, layoutId, className }) => {
+const ProjectImage = ({ src, alt, className }) => {
   const [isLoaded, setIsLoaded] = React.useState(false)
 
   return (

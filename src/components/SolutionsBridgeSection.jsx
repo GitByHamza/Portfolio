@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import Link from './SiteLink'
+
 import { ArrowRight, ArrowUpRight, Cpu, Layers, ShoppingBag, Laptop, Gamepad2 } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { FadeIn, StaggerContainer, StaggerItem } from './motion/MotionReveal'

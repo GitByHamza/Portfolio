@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import Link from '../../components/SiteLink'
+
 import { ArrowLeft, ShieldCheck } from 'lucide-react'
 import { useLanguage } from '../../context/LanguageContext'
 import { BUSINESS, LEGAL_EFFECTIVE_DATE } from '../../data/business'
@@ -44,15 +44,6 @@ export const LegalContact = () => (
 
 export const LegalPage = ({ title, children }) => {
   const { isUrdu } = useLanguage()
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-    const previousTitle = document.title
-    document.title = `${title} — ${BUSINESS.name}`
-    return () => {
-      document.title = previousTitle
-    }
-  }, [title])
 
   return (
     <main className="w-full bg-[#F6F5F0] dark:bg-[#0A0A0A] min-h-screen py-16 px-4 sm:px-8 font-mono text-xs text-[#0F0F0F] dark:text-[#EDECE6] transition-colors duration-200">

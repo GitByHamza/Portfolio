@@ -31,7 +31,7 @@ export const en = {
     github: 'GitHub Profile',
     linkedin: 'LinkedIn',
     active_production: '● ACTIVE PRODUCTION',
-    pledge: 'No bloated frameworks. Strict engineering discipline. Handover with 100% source ownership.',
+    pledge: 'No bloated frameworks. Strict engineering discipline. Full repository and database handover.',
     top_dispatch: 'TOP OF DISPATCH',
     copyright: '© 2026 TeXCodes · Independent Software Engineering & Product Building',
     terms: 'Terms of Service',

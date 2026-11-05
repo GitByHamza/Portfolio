@@ -1,12 +1,13 @@
+import Link from './SiteLink'
 import React from "react";
-import { Link } from "react-router-dom";
+;
 import { defaultCurrency } from "../lib/currency";
-import { 
-  Cpu, 
-  ShoppingBag, 
-  Bot, 
-  ArrowRight, 
-  CheckCircle2, 
+import {
+  Cpu,
+  ShoppingBag,
+  Bot,
+  ArrowRight,
+  CheckCircle2,
   ExternalLink,
   Sparkles,
   Zap,

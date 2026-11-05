@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import Link from './SiteLink'
+
 import { ArrowRight } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { FadeIn } from './motion/MotionReveal'

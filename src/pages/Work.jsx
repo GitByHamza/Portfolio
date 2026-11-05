@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import Link from '../components/SiteLink'
+import { useState } from 'react'
+
 import { projectsData, getLocalizedProject } from '../data/projects'
 import { matchesProjectCategory } from '../lib/project-categories'
 import { useLanguage } from '../context/LanguageContext'
@@ -9,10 +10,6 @@ import { FadeIn, StaggerContainer, StaggerItem } from '../components/motion/Moti
 export default function Work() {
   const { t, lang, isUrdu } = useLanguage()
   const [filterId, setFilterId] = useState('ALL')
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
 
   const categories = [
     { id: 'ALL', label: t('workPage', 'filter_all') },

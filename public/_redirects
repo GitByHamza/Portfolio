@@ -1,7 +1,11 @@
-# Old legal URLs.
-/terms      /terms-of-service   301
-/privacy    /privacy-policy     301
-
-# SPA fallback. Not forced (no "!"), so the static legal pages that
-# scripts/prerender-legal.js writes to dist/ are served before it.
-/*          /index.html         200
+# Canonical redirects. The React Router adapter owns SSR and real 404s.
+/terms /terms-of-service 301
+/privacy /privacy-policy 301
+/offer /solutions/tech-retail 301
+/offer/tech-retail /solutions/tech-retail 301
+/offer/laptop /solutions/laptop-retail 301
+/offer/laptop-retail /solutions/laptop-retail 301
+/offer/console /solutions/console-retail 301
+/offer/console-retail /solutions/console-retail 301
+/offer/gaming /solutions/console-retail 301
+/solutions/tech-retail/terms /solutions/terms 301

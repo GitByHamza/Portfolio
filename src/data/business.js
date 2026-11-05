@@ -1,5 +1,5 @@
 // Public business details. The footer, contact page, legal pages and the
-// JSON-LD in index.html must all match these (see business.test.js).
+// generated page JSON-LD must all match these (see business.test.js).
 export const BUSINESS = {
   name: 'TeXCodes',
   owner: 'Muhammad Ameer Hamza',
@@ -16,7 +16,7 @@ export const LEGAL_PATHS = {
   dataDeletion: '/data-deletion',
 }
 
-// Static HTML is written for these at build time (scripts/prerender-legal.js).
+// The framework pre-renders these canonical pages at build time.
 export const LEGAL_PAGES = [
   {
     path: LEGAL_PATHS.privacy,

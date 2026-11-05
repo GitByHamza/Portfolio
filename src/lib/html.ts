@@ -1,0 +1,3 @@
+export function htmlToText(html: string): string {
+  return html.replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<a\b[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi, '$2 ($1)').replace(/<\/(?:p|h[1-6]|section|div|li|tr)>/gi, '\n').replace(/<[^>]*>/g, ' ').replace(/&#x([\da-f]+);/gi, (_, code: string) => String.fromCodePoint(parseInt(code, 16))).replace(/&#(\d+);/g, (_, code: string) => String.fromCodePoint(Number(code))).replaceAll('&amp;', '&').replaceAll('&quot;', '"').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replace(/[ \t]+/g, ' ').replace(/ *\n */g, '\n').replace(/\n{3,}/g, '\n\n').trim()
+}

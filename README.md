@@ -1,104 +1,90 @@
-# 🌌 Hamza's Portfolio - Project Blueprint
+# TeXCodes portfolio
 
-Welcome to the definitive architectural guide and project blueprint for **Hamza's Professional Portfolio**. This document serves as the primary source of truth for project standards, technical architecture, and development workflows.
+React 19, React Router Framework Mode, Vite and Tailwind CSS. Public pages ship complete HTML, then hydrate for fast client navigation. The production build pre-renders 64 English and Roman Urdu pages; unknown URLs and aliases are handled by the SSR runtime.
 
----
+## Local development
 
-## 🚀 Project Overview 
+Use Node.js 22.18 or newer (Netlify is configured for Node 22).
 
-A high-performance, visually stunning, and interactive personal portfolio showcasing full-stack expertise, AI integration, and modern web aesthetics. This project is built with a focus on immersive UX, leveraging 3D graphics, smooth animations, and a robust backend.
-
-<<<<<<< HEAD
-- **URL:** [Live Demo](https://texcodes.com) (Placeholder)
-=======
-- **URL:** [Live Demo](https://your-portfolio-url.com) (Placeholder)
->>>>>>> NewLook
-- **Primary Focus:** UI/UX Excellence, 3D Interactivity, Full-stack Capabilities.
-
----
-
-## 🛠 Tech Stack
-
-### Frontend Core
-- **Framework:** [React 19](https://react.dev/) (Functional Components, Hooks)
-- **Build Tool:** [Vite 7](https://vitejs.dev/)
-- **Styling:** [Tailwind CSS 4](https://tailwindcss.com/) (using `@tailwindcss/vite`)
-- **Animations:** [Framer Motion](https://www.framer.com/motion/), [GSAP](https://gsap.com/)
-- **Smooth Scrolling:** [Lenis](https://lenis.darkroom.engineering/)
-
-### 3D & Visuals
-- **3D Engine:** [Three.js](https://threejs.org/) via `@react-three/fiber` & `@react-three/drei`
-- **Post-processing:** `@react-three/postprocessing`
-- **Backgrounds:** Custom Aurora and Star backgrounds.
-
-### Backend & Infrastructure
-- **BaaS:** [Supabase](https://supabase.com/) (Authentication, Database, Edge Functions)
-- **Deployment:** [Vercel](https://vercel.com/) (Recommended)
-
----
-
-## 📂 Directory Structure
-
-```text
-D:\SE\Portfolio\Portfolio\
-├── public/                 # Static assets (3D models, images, icons)
-├── src/
-│   ├── assets/             # SVGs and component-specific assets
-│   ├── components/         # Atomic and Layout components
-│   │   ├── 3D/             # HeroScene3D, etc.
-│   │   ├── UI/             # Buttons, Modals, Skeletons
-│   │   └── Sections/       # Hero, About, Projects, Contact, etc.
-│   ├── data/               # Static content (projects.js, testimonials.js)
-│   ├── hooks/              # Custom React hooks (useDarkMode, etc.)
-│   ├── lib/                # Utility configurations (supabase.js, utils.js)
-│   ├── pages/              # Main route entries (Home, ProjectDetails, Admin)
-│   ├── App.jsx             # Main Application Entry & Routing
-│   ├── index.css           # Global styles and Tailwind directives
-│   └── main.jsx            # React DOM mounting
-└── supabase_schema.sql     # Database structure for portability
+```sh
+npm ci
+npm run dev
 ```
 
----
+For a production preview:
 
-## 🎨 Development Standards & Conventions
+```sh
+npm run build
+npm run preview
+```
 
-### 1. Styling & UI
-- **Tailwind First:** Always prefer Tailwind utility classes for styling.
-- **Consistency:** Use the `cn()` utility (from `lib/utils.js`) for conditional class merging.
-- **Responsiveness:** Mobile-first approach. Ensure 3D scenes are optimized for performance on smaller screens.
-- **Dark Mode:** Native support via `useDarkMode` hook. Ensure all components are themed correctly.
+The preview defaults to port 3000; set PORT to change it. It runs the actual SSR build rather than a Vite SPA fallback.
 
-### 2. Component Architecture
-- **Functional Components:** Use arrow functions and hooks exclusively.
-- **Prop Validation:** Prefer clean destructuring and default values.
-- **Performance:** Memoize expensive calculations and 3D renders where necessary.
+## Checks
 
-### 3. State & Backend
-- **Supabase:** All dynamic data (e.g., contact form submissions, admin data) should flow through Supabase.
-- **Routing:** Use `react-router-dom` for client-side navigation.
+```sh
+npm run verify
+```
 
-### 4. Git Workflow
-- **Branching:** Main branch is for production. Use feature branches for major updates.
-- **Commits:** Follow conventional commits (e.g., `feat:`, `fix:`, `docs:`, `chore:`).
+This runs lint, TypeScript checks, a fresh production build, unit/content checks, generated-HTML checks and production request-handler checks. Artifact-dependent tests skip if no build exists; use verify for release validation.
 
----
+## Rendering and navigation
 
-## 🤖 AI Agent Instructions (Gemini CLI)
+- src/root.jsx owns the document and src/entry.client.jsx hydrates it. src/entry.server.tsx returns complete server-rendered content.
+- src/routes.ts defines route modules. Each page has its own browser bundle. Shared chrome stays mounted during client navigation.
+- The small route manifest loads once initially, avoiding discovery requests during navigation; page code remains split by route.
+- Navigation links prefetch likely destinations; other internal links prefetch when visible, including on mobile. There is no page curtain or artificial route delay.
+- Page content is visible before scripts load. FAQs and add-ons use native details elements; plan scopes have ordinary links and dedicated pages.
+- Browser-only smooth scrolling loads after the content. Reduced-motion users keep native scrolling.
+- Canonical English URLs retain their existing paths. Roman Urdu lives at /ur and /ur/...; its language tag is ur-Latn, with left-to-right text. Legal documents remain English.
+- Server HTML and the hydration snapshot use USD. The existing regional signal enhances the selected price after hydration. All eligible USD/PKR/GBP prices remain available in HTML tables. PKR is for Pakistan; GBP is offered for Console clients.
+- Public HTML is shared and cacheable. Private admin responses are no-store. Do not add cookie-dependent content to cached HTML without changing the caching strategy.
 
-When working on this project, adhere to the following mandates:
+## Updating public content
 
-1. **Maintain Aesthetic Integrity:** Ensure any new UI components match the "Aurora" and "Glassmorphism" aesthetic established in `AuroraBackground.jsx` and other UI components.
-2. **3D Optimization:** When modifying 3D components (`HeroScene3D.jsx`), ensure assets are loaded efficiently using `useGLTF` and `Suspense`.
-3. **Data-Driven Sections:** Sections like `ProjectsSection` must remain synchronized with `src/data/projects.js`.
-4. **Clean Code:** Always run `npm run lint` before finalizing changes to ensure ESLint compliance.
-5. **Types & Safety:** Although JS is used, write "pseudo-typed" code by ensuring variables are well-named and object structures are consistent with existing data.
+- src/data/business.js: business identity and contact links.
+- src/data/projects.js: all case studies, statuses, screenshots and featured project data.
+- src/content/pricing.ts: numeric regional plan prices, compare-at prices, care prices and common commercial facts.
+- src/content/offers/: original English/Roman Urdu offer copy, complete scopes and add-ons. Plan amounts are applied from the shared numeric catalog.
+- src/content/faq.ts: all FAQ questions and answers.
+- src/locales/: portfolio interface and editorial copy.
+- src/lib/site.ts: public route inventory and reviewed content date. Update the date when the public facts are reviewed; sitemap output does not invent update dates.
 
----
+Change source content, run verify, then use the normal deployment workflow. There is no second hand-written AI description to maintain. Preserve the distinction between professional work, live products, demonstrations and projects in development.
 
-## 📜 License
+## Sharing the offer with an assistant
 
-This project is private and for personal showcase purposes. All rights reserved.
+After deployment, share https://texcodes.com/context. It covers the business, services, three offers, all plan prices, scope links, delivery/payment/ownership limits, recurring costs, all 12 projects and contact details.
 
----
+- /context.md: the same briefing as Markdown; attach it to a chat that cannot browse.
+- /llms.txt: a short directory of public content.
+- /llms-full.txt: full plan modules, exclusions, add-ons, FAQs, case studies and published terms/policies.
+- /sitemap.xml and /robots.txt: normal crawl discovery.
 
-*Last Updated: May 13, 2026*
+These exports are generated in the same build as the pages. LLM access is improved; discovery, provider support and memory between chats are not guaranteed. The public exports never query the contact-message database.
+
+## Hosting
+
+Vercel configuration is in vercel.json. It selects React Router Framework Mode and runs npm run build:vercel, which enables the Vercel preset and produces the SSR server bundle alongside build/client. The former /index.html SPA fallback has been removed. Vercel builds use only the Vercel adapter; local and Netlify builds use the Netlify adapter.
+
+Netlify configuration is in netlify.toml. The React Router adapter creates the SSR function and the static publish directory is build/client. Deploy the complete framework build, not the former dist directory. The geo edge function only supplies an optional country signal; the initial HTML does not vary by country cookie.
+
+The catch-all SPA rewrite has been removed. Redirect aliases are preserved; unknown pages and invalid project/plan IDs return actual HTTP 404 responses. Flat HTML mirrors support slashless static URLs, and Netlify's Pretty URLs post-processing is disabled so it cannot rewrite framework links after rendering. Keep the production hostname consistent with BUSINESS.url when configuring a domain.
+
+No deploy or Git push is performed by the application build. Validate the provider preview and production responses when releasing; local checks cannot verify CDN/domain configuration or real-user network conditions.
+
+## Contact and admin access
+
+The existing public Supabase settings remain VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY. Contact submissions load the SDK only on form interaction. If delivery fails, the UI offers direct WhatsApp/email instead of claiming confirmed receipt. Do not put a service-role key in a VITE variable.
+
+The old VITE_ADMIN_PASSWORD and sessionStorage gate are retired. /admin uses Supabase Auth email/password and requires a trusted app_metadata.portfolio_admin boolean claim. This claim must be set through a trusted Supabase admin operation, never editable user metadata.
+
+Before deploying the authenticated dashboard:
+
+1. Review current database policies and apply supabase/migrations/20261105_private_messages.up.sql through the normal migration workflow. It removes the original public read/delete policies and restricts those actions to the trusted admin claim; public contact inserts remain supported.
+2. Create or identify the authorized Supabase Auth account and assign its portfolio_admin claim through a trusted admin operation. Refresh its session after changing claims.
+3. Verify anonymous users and non-admin authenticated users cannot read or delete messages, and the authorized admin can read them.
+
+On November 5, the project owner reported applying the migration and configuring the admin account, and confirmed successful dashboard access with existing messages. Anonymous/non-admin denial has not been independently verified. For another database, follow the steps above. The migration only removes the broad policies named in the original repository schema; inspect any additional live policies separately. The down migration deliberately restores the former public read/delete behavior, so use it only when that rollback is intended.
+
+For a fresh database, supabase_schema.sql uses the secure admin policies by default. Admin HTML, messages and credentials are excluded from public pre-rendering, sitemaps and text exports.
