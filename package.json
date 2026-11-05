@@ -11,6 +11,8 @@
     "typecheck": "tsc --noEmit",
     "preview": "react-router-serve ./build/server/index.js",
     "verify": "npm run lint && npm run typecheck && npm run build && npm test",
+    "video:studio": "npm --prefix videos/tech-retail run dev",
+    "video:render": "npm --prefix videos/tech-retail run render:4k && npm --prefix videos/tech-retail run publish:web",
     "build:vercel": "node scripts/build-vercel.ts"
   },
   "dependencies": {

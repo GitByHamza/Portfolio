@@ -27,6 +27,7 @@ test('server-rendered Organization JSON-LD matches the business details', () => 
     '@id': `${BUSINESS.url}/#organization`,
     name: BUSINESS.name,
     url: BUSINESS.url,
+    logo: `${BUSINESS.url}/brand/texcodes-logo.png`,
     email: BUSINESS.email,
     telephone: BUSINESS.phoneE164,
     founder: { '@type': 'Person', name: BUSINESS.owner },

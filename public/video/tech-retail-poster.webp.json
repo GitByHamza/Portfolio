@@ -1,0 +1,7 @@
+{
+  "source": "videos/tech-retail/out/texcodes-tech-retail-4k.mp4",
+  "method": "FFmpeg extraction at 2.5 seconds, resized to 1600x900, WebP quality 85",
+  "content": "Opening frame of the local Remotion composition: owner-supplied TeXCodes logo and offer typography",
+  "reproduce": "npm run video:render",
+  "created": "2026-11-05"
+}

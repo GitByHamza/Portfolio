@@ -195,7 +195,7 @@ export default function Solutions() {
                 </div>
 
                 <div className="pt-3 flex flex-wrap items-center gap-4">
-                  <Link to="/solutions/tech-retail" className="btn-blue offer-btn offer-btn-xl shadow-sm group relative overflow-hidden">
+                  <Link to="/tech-retail/offer" className="btn-blue offer-btn offer-btn-xl shadow-sm group relative overflow-hidden">
                     <span className="relative z-10">{t('solutionsPage', 'flagship_cta')}</span>
                     <ArrowRight size={14} className="relative z-10 group-hover:translate-x-1.5 transition-transform" />
                     <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none animate-shimmer-sweep" />

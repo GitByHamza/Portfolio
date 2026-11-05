@@ -7,7 +7,7 @@ import { getConsolePlans } from '../content/offers/console.ts'
 
 test('public inventory contains every project and all nine plan scopes without admin data', () => {
   const pages = getPublicPages()
-  assert.equal(pages.filter((page) => page.lang === 'en').length, 34)
+  assert.equal(pages.filter((page) => page.lang === 'en').length, 35)
   assert.equal(pages.filter((page) => page.kind === 'project' && page.lang === 'en').length, 12)
   assert.equal(pages.filter((page) => page.kind === 'plan' && page.lang === 'en').length, 9)
   assert.equal(new Set(pages.map((page) => page.path)).size, pages.length)

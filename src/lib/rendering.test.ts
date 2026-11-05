@@ -83,3 +83,13 @@ test('homepage initial scripts exclude unrelated offers and backend SDKs', { ski
   const initialBytes = preloads.reduce((sum, path) => sum + statSync(new URL(path.slice(1), output)).size, 0)
   assert.ok(initialBytes < 650000, `Initial JS grew to ${initialBytes} bytes`)
 })
+
+test('all public pages use the supplied TeXCodes logo and browser icon', { skip: !built }, () => {
+  for (const page of getPublicPages()) {
+    const html = htmlFor(page.path)
+    assert.match(html, /href="\/brand\/favicon-32.png"/, page.path)
+    assert.match(html, /src="\/brand\/texcodes-mark.png"/, page.path)
+    assert.match(html, /src="\/brand\/texcodes-wordmark.webp"/, page.path)
+    assert.doesNotMatch(html, /href="\/Icon.png"/, page.path)
+  }
+})

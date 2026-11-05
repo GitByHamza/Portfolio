@@ -14,9 +14,9 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     { tagName: 'link', rel: 'canonical', href: canonical },
     { property: 'og:type', content: 'website' }, { property: 'og:title', content: title },
     { property: 'og:description', content: page.description }, { property: 'og:url', content: canonical },
-    { property: 'og:image', content: new URL(page.image || '/Icon.png', SITE_ORIGIN).href },
+    { property: 'og:image', content: new URL(page.image || '/brand/texcodes-social.png', SITE_ORIGIN).href },
     { property: 'og:image:alt', content: page.kind === 'project' ? page.title : 'TeXCodes' },
-    { name: 'twitter:image', content: new URL(page.image || '/Icon.png', SITE_ORIGIN).href },
+    { name: 'twitter:image', content: new URL(page.image || '/brand/texcodes-social.png', SITE_ORIGIN).href },
     { property: 'og:site_name', content: 'TeXCodes' }, { name: 'twitter:card', content: 'summary' },
     ...(!['legal', 'context'].includes(page.kind) ? [
       { tagName: 'link' as const, rel: 'alternate', hrefLang: 'en', href: `${SITE_ORIGIN}${localizePath(page.path, 'en')}` },

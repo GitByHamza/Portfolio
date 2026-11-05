@@ -1,6 +1,6 @@
 # TeXCodes portfolio
 
-React 19, React Router Framework Mode, Vite and Tailwind CSS. Public pages ship complete HTML, then hydrate for fast client navigation. The production build pre-renders 64 English and Roman Urdu pages; unknown URLs and aliases are handled by the SSR runtime.
+React 19, React Router Framework Mode, Vite and Tailwind CSS. Public pages ship complete HTML, then hydrate for fast client navigation. The production build pre-renders 66 English and Roman Urdu pages; unknown URLs and aliases are handled by the SSR runtime.
 
 ## Local development
 
@@ -48,9 +48,13 @@ This runs lint, TypeScript checks, a fresh production build, unit/content checks
 - src/content/offers/: original English/Roman Urdu offer copy, complete scopes and add-ons. Plan amounts are applied from the shared numeric catalog.
 - src/content/faq.ts: all FAQ questions and answers.
 - src/locales/: portfolio interface and editorial copy.
+- src/content/tech-retail-funnel.ts: standalone /tech-retail/offer campaign copy, owner-supplied booking URL, local product video and optional Loom recording. The supplied Calendly event currently displays a 20-minute FREE SITE AUDIT, so CTA copy promises a personalised demo without a different duration. Until the owner records Loom, a 42-second Remotion overview plays in a compact 16:9 native player with captions, no autoplay and preload disabled. A configured Loom loads only after the visitor starts it. All four booking actions use the same calendar destination.
+- The standalone campaign targets international clients: its build price, optional care price and structured offer data use USD only. Existing detailed catalogue pages retain their regional prices. Shared BrandLogo branding and public/brand assets use the owner's supplied brown monogram and calligraphic wordmark, with matching favicons and social imagery.
 - src/lib/site.ts: public route inventory and reviewed content date. Update the date when the public facts are reviewed; sitemap output does not invent update dates.
 
 Change source content, run verify, then use the normal deployment workflow. There is no second hand-written AI description to maintain. Preserve the distinction between professional work, live products, demonstrations and projects in development.
+
+The editable film lives in `videos/tech-retail`, isolated from the website build. Install its dependencies there. `npm run video:studio` opens Remotion; `npm run video:render` creates the 4K master and publishes the lighter website video and poster using FFmpeg. See that directory's README for assets, licensing and editing instructions. Changes to the film require a new render before rebuilding the website.
 
 ## Sharing the offer with an assistant
 

@@ -7,7 +7,7 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist', 'dist-ssr', 'build', '.netlify', '.react-router', 'test-results', 'playwright-report']),
+  globalIgnores(['dist', 'dist-ssr', 'build', '.netlify', '.react-router', 'test-results', 'playwright-report', 'videos/tech-retail']),
   {
     files: ['**/*.{js,jsx}'],
     extends: [

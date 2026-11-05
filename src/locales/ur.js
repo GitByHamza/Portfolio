@@ -197,7 +197,7 @@ export const ur = {
     flagship_f2: 'Dukanon, godam aur website ka ek hi stock',
     flagship_f3: 'Serial number se warranty check — supplier se customer tak',
     flagship_f4: 'Orders aur custom builds poori details ke sath aapke WhatsApp par',
-    flagship_cta: 'TECH RETAIL PLANS DEKHEIN',
+    flagship_cta: 'TECH RETAIL OFFER DEKHEIN',
     flagship_demo: 'LIVE DEMO KHOLEIN',
     flagship2_badge: 'LAPTOP AUR ACCESSORIES DUKANON KE LIYE',
     flagship2_title: 'LAPTOP RETAIL OS',

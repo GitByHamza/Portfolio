@@ -197,7 +197,7 @@ export const en = {
     flagship_f2: 'One stock count for your shops, warehouse and website',
     flagship_f3: 'Warranty lookup by serial number, from supplier to customer',
     flagship_f4: 'Orders and custom builds arrive on your WhatsApp, fully detailed',
-    flagship_cta: 'VIEW TECH RETAIL PLANS',
+    flagship_cta: 'VIEW TECH RETAIL OFFER',
     flagship_demo: 'OPEN LIVE DEMO',
     flagship2_badge: 'FOR LAPTOP & ACCESSORIES SHOPS',
     flagship2_title: 'LAPTOP RETAIL OS',

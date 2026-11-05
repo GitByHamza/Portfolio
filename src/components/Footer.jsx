@@ -1,4 +1,5 @@
 import Link from './SiteLink'
+import BrandLogo from './BrandLogo'
 
 import { ArrowUp, ArrowUpRight, Mail, MessageSquare } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
@@ -18,9 +19,7 @@ export const Footer = () => {
         {/* Brand & Ethos */}
         <div className="md:col-span-4 space-y-4">
           <Link to="/" className="inline-block">
-            <span className="font-display text-4xl text-[#0F0F0F] dark:text-[#EDECE6] tracking-tight uppercase">
-              TEXCODES
-            </span>
+            <BrandLogo />
           </Link>
           <p className="font-serif text-[#575652] dark:text-[#9B9A95] text-sm leading-relaxed max-w-sm">
             {t('footer', 'pledge')}

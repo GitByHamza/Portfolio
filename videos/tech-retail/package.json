@@ -1,0 +1,39 @@
+{
+  "name": "tech-retail",
+  "version": "1.0.0",
+  "description": "TeXCodes Tech Retail OS — 42-second 4K offer film",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "private": true,
+  "dependencies": {
+    "@remotion/cli": "4.0.541",
+    "@remotion/fonts": "4.0.541",
+    "@remotion/tailwind-v4": "4.0.541",
+    "lucide-react": "^0.544.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.541"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "4.0.541",
+    "@types/react": "19.3.0",
+    "@types/web": "0.0.166",
+    "eslint": "10.12.0",
+    "prettier": "3.8.1",
+    "typescript": "5.9.3"
+  },
+  "scripts": {
+    "prepare:assets": "node scripts/prepare.mjs",
+    "dev": "npm run prepare:assets && remotion studio",
+    "build": "remotion bundle",
+    "upgrade": "remotion upgrade",
+    "lint": "eslint src && tsc",
+    "render:4k": "npm run prepare:assets && remotion render src/index.ts TechRetailOffer4K out/texcodes-tech-retail-4k.mp4 --codec=h264 --crf=16 --concurrency=2 --pixel-format=yuv420p --overwrite",
+    "publish:web": "node scripts/publish-web.mjs"
+  },
+  "allowScripts": {
+    "esbuild": false
+  }
+}

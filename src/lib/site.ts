@@ -8,7 +8,7 @@ import type { Language } from '../content/pricing.ts'
 
 export type PublicPage = {
   path: string; title: string; description: string; lang: Language
-  kind: 'home' | 'about' | 'work' | 'contact' | 'solutions' | 'offer' | 'plan' | 'project' | 'terms' | 'legal' | 'context'
+  kind: 'home' | 'about' | 'work' | 'contact' | 'solutions' | 'offer' | 'funnel' | 'plan' | 'project' | 'terms' | 'legal' | 'context'
   offer?: string; plan?: string; projectId?: number; image?: string
 }
 export const SITE_ORIGIN = BUSINESS.url
@@ -21,6 +21,7 @@ const basePages: Omit<PublicPage, 'lang'>[] = [
   { path: '/work', kind: 'work', title: 'Software Projects & Case Studies', description: 'Explore 12 software projects: SaaS, enterprise systems, retail platforms, AI automation, business applications and mobile products.' },
   { path: '/contact', kind: 'contact', title: 'Contact TeXCodes', description: `Discuss a custom system, SaaS modernization or retail platform with Hamza. Email ${BUSINESS.email} or contact TeXCodes on WhatsApp.` },
   { path: '/solutions', kind: 'solutions', title: 'Retail Software Solutions & Plans', description: 'Compare Tech Retail OS, Laptop Retail OS and Console & Games Retail OS: plans, regional prices, source code handover and delivery scope.' },
+  { path: '/tech-retail/offer', kind: 'funnel', title: 'Tech Retail OS — One System for Your PC Retail Business', description: 'PC compatibility checks, stock across three locations and serial-number warranty records. Explore the Multi-Branch offer and arrange a personalised demo.', offer: 'tech-retail', plan: 'multi-branch', image: '/tech-retail/preview.webp' },
   ...offerIndex.map((offer): Omit<PublicPage, 'lang'> => ({ path: `/solutions/${offer.slug}`, kind: 'offer', title: `${offer.name} — Plans & Pricing`, description: offer.description, offer: offer.slug })),
   ...offerIndex.flatMap((offer) => PLAN_KEYS.map((key): Omit<PublicPage, 'lang'> => ({ path: `/solutions/${offer.slug}/plans/${PLAN_SLUGS[key]}`, kind: 'plan', title: `${offer.name} — ${PLAN_NAMES[key]} Full Scope`, description: `Full ${PLAN_NAMES[key]} scope for ${offer.name}: included modules, exclusions, regional prices, delivery conditions and ownership.`, offer: offer.slug, plan: PLAN_SLUGS[key] }))),
   ...projectsData.map((project): Omit<PublicPage, 'lang'> => ({ path: `/project/${project.id}`, kind: 'project', title: project.title, description: project.overview, projectId: project.id, image: project.mainImage })),

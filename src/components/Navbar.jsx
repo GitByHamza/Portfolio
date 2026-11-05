@@ -1,5 +1,6 @@
 import { LanguageLink } from './SiteLink'
 import Link from './SiteLink'
+import BrandLogo from './BrandLogo'
 import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router'
 import { Menu, X, ArrowUpRight } from 'lucide-react'
@@ -78,9 +79,7 @@ const Navbar = () => {
       <div className="px-4 sm:px-8 py-2 sm:py-3 flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.08)]">
         <div className="shrink-0">
           <Link prefetch="render" to="/" className="inline-block group">
-            <span className="block text-3xl sm:text-5xl md:text-6xl font-display uppercase tracking-tight text-[#0F0F0F] dark:text-[#EDECE6] leading-[0.88] group-hover:text-[#059669] dark:group-hover:text-[#10B981] transition-colors">
-              TEXCODES
-            </span>
+            <BrandLogo variant="masthead" />
           </Link>
         </div>
 

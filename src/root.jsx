@@ -8,7 +8,8 @@ const fonts = 'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat
 const themeScript = "try{if(localStorage.getItem('Theme')==='Dark')document.documentElement.classList.add('dark')}catch{}"
 
 export const links = () => [
-  { rel: 'icon', type: 'image/png', href: '/Icon.png' },
+  { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/brand/favicon-32.png' },
+  { rel: 'apple-touch-icon', sizes: '192x192', href: '/brand/apple-touch-icon.png' },
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
   { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
   { rel: 'stylesheet', href: fonts },
