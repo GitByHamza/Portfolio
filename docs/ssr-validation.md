@@ -1,6 +1,6 @@
 # SSR migration validation
 
-Validated locally on November 5, 2026. These checks cover the release source and local build artifacts; a hosted deployment has not been inspected.
+Validated on November 5, 2026. The original migration checks and the subsequent deployed-function regression are recorded below.
 
 ## Implemented
 
@@ -13,7 +13,7 @@ Validated locally on November 5, 2026. These checks cover the release source and
 
 ## Automated checks
 
-`npm run verify` passes: ESLint, strict TypeScript checking, a fresh production build and all 49 tests, with no skips. `npm run build:vercel` also passes, followed by the same 49 tests against its Node server bundle, including a run with the Vercel request handler enabled.
+`npm run verify` passes: ESLint, strict TypeScript checking, a fresh production build and all 50 tests, with no skips. `npm run build:vercel` also passes, followed by the same 50 tests against its Node server bundle, including a run with the Vercel request handler enabled.
 
 The checks inspect every generated page, all FAQ answers and add-ons, all nine complete scopes, canonical/language metadata, public exports, initial script contents, country-cookie behavior and the production request handler. Handler checks cover all public routes, redirects, invalid URLs, resource content types and non-cacheable admin login HTML. They also assert that route discovery is configured as `initial`, avoiding discovery requests during navigation, and verify deployment configuration and server-bundle resolution.
 
@@ -41,6 +41,14 @@ Coverage for the source content/routing/utility modules exercised by the tests i
 The final initial JavaScript set is about 54% smaller than the existing build artifact. The comparison artifact was already present and dated October 24; it was not a fresh baseline build of the latest pre-migration source. Gzip size is a local calculation, not a measured network transfer. The final route manifest adds a small initial payload to eliminate route-discovery round trips; other page code remains split and prefetched.
 
 These are local build/behavior checks. Production CDN/domain behavior and real-user Core Web Vitals have not been measured.
+
+## Deployed-function regression
+
+After the initial release, the homepage served its generated HTML, but requests for `/about`, `/solutions` and navigation data returned Vercel `FUNCTION_INVOCATION_FAILED` responses. The owner supplied the runtime exception: missing `react-router/dist/development/dom-export.js`.
+
+The shared layout retained one `react-router-dom` import. That compatibility entry re-exports browser APIs and caused an unnecessary `react-router/dom` dependency in the server function. Vercel's traced package omitted its CommonJS entry. The failure was reproduced locally by copying only the files found by Vercel's dependency tracer into a separate temporary directory and running with Node's experimental require-module support disabled; the same missing-module exception occurred.
+
+The layout now imports `Outlet` directly from `react-router`, and the compatibility dependency is removed. A regression test runs that isolated package with require-module support enabled and disabled, requesting every public document and navigation-data URL, all public resources, admin login and a missing page. Both modes pass after the fix. The temporary package cannot resolve missing files through the working tree's installed dependencies.
 
 ## Deployment requirements and limits
 

@@ -1,9 +1,8 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router'
 import Navbar from './Navbar'
 import { Footer } from './Footer'
 
-// Layout wrapper for all editorial pages. Also used by src/entry-legal.jsx to
-// prerender the legal pages with the same header and footer.
+// Shared layout for server-rendered pages and client navigation.
 const MainLayout = () => (
   <div className="w-full bg-[#F6F5F0] dark:bg-[#0F0F11] text-[#0F0F0F] dark:text-[#EDECE6] min-h-screen flex flex-col justify-between transition-colors duration-200">
     <Navbar />

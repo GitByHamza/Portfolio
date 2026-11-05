@@ -67,6 +67,8 @@ These exports are generated in the same build as the pages. LLM access is improv
 
 Vercel configuration is in vercel.json. It selects React Router Framework Mode and runs npm run build:vercel, which enables the Vercel preset and produces the SSR server bundle alongside build/client. The former /index.html SPA fallback has been removed. Vercel builds use only the Vercel adapter; local and Netlify builds use the Netlify adapter.
 
+Shared routes import from react-router. The retired react-router-dom compatibility package can pull browser-only exports into the server function and trigger a missing-module failure after dependency tracing. The release tests trace and run an isolated server package in both Node module modes, checking public HTML, navigation data, resources and 404s without access to the development installation.
+
 Netlify configuration is in netlify.toml. The React Router adapter creates the SSR function and the static publish directory is build/client. Deploy the complete framework build, not the former dist directory. The geo edge function only supplies an optional country signal; the initial HTML does not vary by country cookie.
 
 The catch-all SPA rewrite has been removed. Redirect aliases are preserved; unknown pages and invalid project/plan IDs return actual HTTP 404 responses. Flat HTML mirrors support slashless static URLs, and Netlify's Pretty URLs post-processing is disabled so it cannot rewrite framework links after rendering. Keep the production hostname consistent with BUSINESS.url when configuring a domain.
