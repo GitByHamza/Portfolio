@@ -26,7 +26,7 @@ export const FUNNEL_COPY = {
     ctaNote: 'A conversation about your products, locations and workflow. No commitment.',
     preview: 'Tech Retail OS · 42-second overview',
     previewNote: 'Actual product screens · Sample products and demo data',
-    videoButton: 'Watch the product walkthrough',
+    videoButton: 'Play the Tech Retail OS overview',
     videoFallback: 'Your browser cannot play this video.',
     previewCaption: 'Your storefront and back office, connected. Explore the workflows below.',
     problemHeading: 'Sound familiar at your shop?',
@@ -77,7 +77,7 @@ export const FUNNEL_COPY = {
     ctaNote: 'Aapke products, locations aur workflow par baat. Koi commitment nahi.',
     preview: 'Tech Retail OS · 42-second English overview', previewNote: 'Asal product screens · Sample products aur demo data',
     videoFallback: 'Aapka browser yeh video nahi chala sakta.',
-    videoButton: 'Product walkthrough dekhein', previewCaption: 'Storefront aur back office, aapas mein connected. Neeche workflows dekhein.',
+    videoButton: 'Tech Retail OS ka overview chalayein', previewCaption: 'Storefront aur back office, aapas mein connected. Neeche workflows dekhein.',
     problemHeading: 'Kya aapki dukan mein bhi aisa hota hai?',
     problems: [
       ['“Kya yeh parts saath chalenge?”', 'Har custom build ke liye socket, RAM aur power ke checks dobara karne parte hain.', 'Customer parts chunta hai aur builder CPU socket, RAM type aur PSU requirements check karta hai.'],

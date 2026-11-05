@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useLoaderData } from 'react-router'
 import { ArrowRight, Check, ChevronDown, Play } from 'lucide-react'
 import type { loader } from '../routes/tech-offer.tsx'
@@ -15,8 +15,17 @@ export default function TechRetailOffer() {
   const currency = 'USD'
   const price = priceCatalog.tech.growth
   const [playing, setPlaying] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const embed = loomEmbedUrl(FUNNEL_ASSETS.loomUrl)
   const screens = ['pc-builder', 'stock', 'warranty']
+
+  function startPreview() {
+    if (embed) { setPlaying(true); return }
+    const video = videoRef.current
+    if (!video) return
+    video.focus({ preventScroll: true })
+    void video.play().catch(() => setPlaying(false))
+  }
 
   function BookingAction({ placement }: { placement: string }) {
     const contents = <>{copy.cta}<ArrowRight size={18} aria-hidden="true" /></>
@@ -43,12 +52,13 @@ export default function TechRetailOffer() {
             {playing && embed
               ? <iframe src={embed} title={copy.preview} allow="fullscreen; picture-in-picture" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" />
               : embed
-                ? <><img src={FUNNEL_ASSETS.poster} alt={copy.preview} width="1600" height="900" fetchPriority="high" /><button className="tr-watch" onClick={() => setPlaying(true)} type="button"><Play size={22} aria-hidden="true" fill="currentColor" />{copy.videoButton}</button></>
-                : <video controls preload="none" playsInline poster={FUNNEL_ASSETS.poster} width="1920" height="1080" aria-label={copy.preview}>
+                ? <img src={FUNNEL_ASSETS.poster} alt={copy.preview} width="1600" height="900" fetchPriority="high" />
+                : <video ref={videoRef} controls preload="none" playsInline poster={FUNNEL_ASSETS.poster} width="1920" height="1080" aria-label={copy.preview} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={() => setPlaying(false)}>
                   <source src={FUNNEL_ASSETS.video} type="video/mp4" />
                   <track kind="captions" src="/video/tech-retail-en.vtt" srcLang="en" label="English" />
                   {copy.videoFallback}
                 </video>}
+            {!playing && <button className="tr-watch" onClick={startPreview} type="button" aria-label={copy.videoButton}><Play aria-hidden="true" fill="currentColor" /></button>}
           </div>
           <figcaption><span>{copy.preview}</span><span>{copy.previewNote}</span></figcaption>
         </figure>

@@ -11,7 +11,9 @@
 .tr-preview-screen { aspect-ratio: 16 / 9; overflow: hidden; border: 1px solid var(--rule-strong); border-radius: 12px; position: relative; background: #15241e; }
 .tr-preview-screen > img, .tr-preview-screen > video { display: block; width: 100%; height: 100%; object-fit: contain; }
 .tr-preview-screen iframe { width: 100%; height: 100%; border: 0; }
-.tr-watch { position: absolute; inset: auto 20px 20px auto; display: flex; align-items: center; gap: 10px; padding: 14px 20px; border-radius: 8px; background: var(--ink); color: var(--paper); cursor: pointer; font: inherit; font-weight: 700; }
+.tr-watch { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; width: 80px; height: 80px; padding: 0; border: 0; border-radius: 50%; background: #047857; color: #fff; box-shadow: 0 8px 24px rgba(0, 0, 0, .24); cursor: pointer; transition: background .18s ease; }
+.tr-watch:hover { background: #065f46; }
+.tr-watch svg { width: 32px; height: 32px; margin-left: 4px; }
 .tr-preview figcaption { display: flex; justify-content: space-between; gap: 8px 20px; text-align: left; font-size: 11px; color: var(--ink-muted); margin-top: 10px; }
 .tr-preview figcaption > :first-child { color: var(--ink); font-weight: 600; }
 .tr-action { text-align: center; margin-top: 26px; }
@@ -94,6 +96,8 @@
   .tr-hero { padding-block: 18px 45px; }
   .tr-hero h1 { font-size: clamp(36px, 8.8vw, 51px); }
   .tr-intro { font-size: 14px; line-height: 1.75; }
+  .tr-watch { width: 64px; height: 64px; }
+  .tr-watch svg { width: 28px; height: 28px; }
   .tr-preview figcaption { flex-direction: column; gap: 3px; font-size: 10px; }
   .tr-action { margin-top: 23px; }
   .tr-cta { width: 100%; gap: 12px; padding: 16px; font-size: 12px; }
