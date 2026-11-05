@@ -22,7 +22,7 @@ The approved campaign URL is /tech-retail/offer. It has no portfolio navbar and 
 
 ## Brand Commitments
 
-TeXCodes identity and the existing editorial design system. The owner supplied a brown monogram and calligraphic wordmark to replace portfolio branding and browser icons. The campaign targets international buyers and displays the USD build price and USD support cost, with no regional currency switching. Plain business language, honest demonstrations, no invented customer results or testimonials.
+TeXCodes identity and the existing editorial design system. The funnel uses the owner's brown monogram and calligraphic wordmark on its matching cream background (#F5EDDE) throughout, including when the portfolio's saved theme is dark. The portfolio header and footer retain the original uppercase TEXCODES text wordmark. Browser icons keep the supplied monogram. The campaign targets international buyers and displays the USD build price and USD support cost, with no regional currency switching. Plain business language, honest demonstrations, no invented customer results or testimonials.
 
 ## Evidence on Hand
 

@@ -84,12 +84,17 @@ test('homepage initial scripts exclude unrelated offers and backend SDKs', { ski
   assert.ok(initialBytes < 650000, `Initial JS grew to ${initialBytes} bytes`)
 })
 
-test('all public pages use the supplied TeXCodes logo and browser icon', { skip: !built }, () => {
+test('public pages keep portfolio text branding and reserve the supplied logo for the funnel', { skip: !built }, () => {
   for (const page of getPublicPages()) {
     const html = htmlFor(page.path)
     assert.match(html, /href="\/brand\/favicon-32.png"/, page.path)
-    assert.match(html, /src="\/brand\/texcodes-mark.png"/, page.path)
-    assert.match(html, /src="\/brand\/texcodes-wordmark.webp"/, page.path)
+    if (page.kind === 'funnel') {
+      assert.match(html, /src="\/brand\/texcodes-mark.png"/, page.path)
+      assert.match(html, /src="\/brand\/texcodes-wordmark.webp"/, page.path)
+    } else {
+      assert.doesNotMatch(html, /src="\/brand\/texcodes-(?:mark.png|wordmark.webp)"/, page.path)
+      assert.match(html, />TEXCODES<\/span>/, page.path)
+    }
     assert.doesNotMatch(html, /href="\/Icon.png"/, page.path)
   }
 })

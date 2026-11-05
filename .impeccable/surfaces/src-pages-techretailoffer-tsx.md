@@ -11,7 +11,7 @@ Mode: Persuade. Approved route: /tech-retail/offer, with a Roman Urdu equivalent
 
 Preserve the existing offer catalogue and scopes. No portfolio navigation, live-demo button, tier selector, invented sales metrics or automatic video download. Product previews use existing screenshots labelled as demo data. Loom is pending. The owner supplied https://calendly.com/artsbyhamza/30min; its visible event is a 20-minute FREE SITE AUDIT, so public CTA copy omits a duration.
 
-Owner revision: campaign pricing is USD only ($4,850 build; optional Growth Care $280/month), including structured offer data. Portfolio branding and browser icons use the supplied brown monogram and calligraphic TeXCodes wordmark, with a light backing for dark-theme visibility.
+Owner revision: campaign pricing is USD only ($4,850 build; optional Growth Care $280/month), including structured offer data. The funnel retains the supplied brown monogram and calligraphic TeXCodes wordmark; its entire background matches the logo's #F5EDDE cream backing. The portfolio header/footer use the original uppercase TEXCODES text. Browser icons retain the monogram.
 
 ## Direction contract
 

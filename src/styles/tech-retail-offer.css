@@ -1,4 +1,21 @@
-.tr-funnel { background: var(--paper); color: var(--ink); }
+:root:has(.tr-funnel) { --paper: var(--brand-cream); color-scheme: light; }
+body:has(.tr-funnel)::before { display: none; }
+.tr-funnel {
+  --paper: var(--brand-cream);
+  --paper-light: var(--brand-cream);
+  --paper-dark: var(--brand-cream);
+  --ink: #0F0F0F;
+  --ink-muted: #575652;
+  --ink-faint: #8E8D88;
+  --blue: #059669;
+  --blue-hover: #047857;
+  --rule: rgba(15, 15, 15, .14);
+  --rule-strong: rgba(15, 15, 15, .35);
+  background: var(--paper);
+  color: var(--ink);
+  color-scheme: light;
+  min-height: 100svh;
+}
 .tr-wrap { width: min(1080px, calc(100% - 64px)); margin-inline: auto; }
 .tr-masthead { display: flex; justify-content: center; align-items: center; gap: 10px; padding: 22px 20px; font-size: 17px; font-weight: 800; }
 .tr-masthead-divider { width: 1px; height: 18px; background: var(--rule-strong); margin-inline: 5px; }
