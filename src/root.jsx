@@ -9,6 +9,7 @@ const themeScript = "try{if(localStorage.getItem('Theme')==='Dark')document.docu
 
 export const links = () => [
   { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/brand/favicon-32.png' },
+  { rel: 'icon', type: 'image/svg+xml', sizes: 'any', href: '/brand/favicon-rounded.svg' },
   { rel: 'apple-touch-icon', sizes: '192x192', href: '/brand/apple-touch-icon.png' },
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
   { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },

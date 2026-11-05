@@ -2,7 +2,7 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-.brand-lockup { display: inline-flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 7px; background: #f5edde; vertical-align: middle; }
+.brand-lockup { display: inline-flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 12px; background: #f5edde; vertical-align: middle; }
 .brand-lockup .brand-mark { display: block; width: 40px; height: 40px; object-fit: contain; flex-shrink: 0; }
 .brand-lockup .brand-wordmark { display: block; width: 142px; height: auto; object-fit: contain; }
 .brand-lockup--masthead .brand-mark { width: 52px; height: 52px; }
