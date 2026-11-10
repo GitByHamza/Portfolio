@@ -1,6 +1,7 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation, useNavigation, isRouteErrorResponse, useRouteError } from 'react-router'
 import { LanguageProvider } from './context/LanguageContext'
 import BrowserEnhancements from './components/BrowserEnhancements'
+import MetaPixel from './components/MetaPixel'
 import Error404 from './pages/Error404'
 import './index.css'
 
@@ -46,6 +47,7 @@ export default function Root() {
     {navigation.state !== 'idle' && <div className="navigation-progress" role="progressbar" aria-label="Opening page" />}
     <Outlet />
     <BrowserEnhancements />
+    <MetaPixel />
   </>
 }
 

@@ -53,7 +53,21 @@ const PrivacyPolicy = () => (
           whether you have seen the theme tip. This stays in your browser and is not sent to us.
         </li>
       </ul>
-      <p>texcodes.com does not use advertising cookies or third-party analytics tools.</p>
+      <p>
+        <strong>Advertising measurement (visitors in Pakistan only)</strong>
+      </p>
+      <ul>
+        <li>
+          If you open texcodes.com from Pakistan, the site loads the Meta Pixel, an advertising tool from Meta. It tells
+          Meta which pages you opened and whether you tapped a WhatsApp link or sent the contact form, so that we can
+          measure our adverts and show them to people who have visited the site. Meta sets its own cookies for this, such
+          as <code>_fbp</code>. The content of your messages is not sent to the Meta Pixel.
+        </li>
+      </ul>
+      <p>
+        The Meta Pixel is not loaded for visitors in other countries. Apart from it, texcodes.com does not use
+        advertising cookies or third-party analytics tools.
+      </p>
     </LegalSection>
 
     <LegalSection number={3} title="How we use your information">
@@ -145,6 +159,10 @@ const PrivacyPolicy = () => (
         <li>
           <strong>WhatsApp</strong> (Meta) carries any messages you choose to send us there.
         </li>
+        <li>
+          <strong>Meta Pixel</strong> (Meta) receives the page-view, WhatsApp-click and contact-form events described in
+          section 2, for visitors in Pakistan only. Meta handles this data under its own privacy policy.
+        </li>
       </ul>
       <p>
         We do not use an online payment gateway. Clients pay by bank transfer against an invoice, and we receive only what
@@ -182,9 +200,10 @@ const PrivacyPolicy = () => (
 
     <LegalSection number={8} title="Cookies and local storage">
       <p>
-        We use one cookie, <code>tx_country</code>, to show prices in your currency, and your browser’s local storage for
-        your theme and language choices, as described in section 2. You can clear both in your browser settings at any
-        time. The site still works without them.
+        We set one cookie of our own, <code>tx_country</code>, to show prices in your currency, and your browser’s local storage for
+        your theme and language choices, as described in section 2. For visitors in Pakistan, the Meta Pixel also sets
+        Meta’s advertising cookies. You can clear all of these in your browser settings at any time. The site still
+        works without them.
       </p>
     </LegalSection>
 

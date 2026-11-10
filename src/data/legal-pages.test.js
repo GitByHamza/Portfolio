@@ -92,6 +92,17 @@ test('privacy policy makes no claim the site code does not support', () => {
   }
 })
 
+test('privacy policy discloses the Meta Pixel and where it is loaded', () => {
+  assertMentions('PrivacyPolicy', [
+    'Meta Pixel',
+    'visitors in Pakistan only',
+    'is not loaded for visitors in other countries',
+    '_fbp',
+    'Meta handles this data under its own privacy policy',
+  ])
+  assert.ok(!pageSource('PrivacyPolicy').includes('texcodes.com does not use advertising cookies or third-party analytics tools.</p>'), 'the old no-advertising claim must be gone')
+})
+
 test('published offer terms take priority over the general refund rule', () => {
   assertMentions('TermsOfService', ['/offers/terms', 'take priority'])
 })

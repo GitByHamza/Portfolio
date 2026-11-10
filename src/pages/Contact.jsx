@@ -45,6 +45,9 @@ export default function Contact() {
       if (error) {
         console.warn('Supabase insert warning:', error)
         setSubmissionWarning(true)
+      } else {
+        const { trackPixelEvent } = await import('../lib/meta-pixel')
+        trackPixelEvent(window, 'Lead', { content_name: payload.projectType })
       }
       setSubmitted(true)
       setFormData({ name: '', email: '', country: '', projectType: 'Tech Retail OS', message: '' })

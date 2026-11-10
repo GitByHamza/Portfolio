@@ -97,10 +97,10 @@ export const ContactSection = () => {
                 <div>
                   <h4 className="text-left font-medium font-body"> Phone</h4>
                   <a
-                    href="tel:+923390001824"
+                    href="tel:+923091824000"
                     className="font-body text-muted-foreground hover:text-primary transition-colors"
                   >
-                    +92 339 0001824
+                    +92 309 1824000
                   </a>
                 </div>
               </div>
