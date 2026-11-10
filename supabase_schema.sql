@@ -19,3 +19,5 @@ CREATE POLICY "Portfolio admin reads messages" ON public.messages FOR SELECT TO 
 USING (auth.jwt() -> 'app_metadata' ->> 'portfolio_admin' = 'true');
 CREATE POLICY "Portfolio admin deletes messages" ON public.messages FOR DELETE TO authenticated
 USING (auth.jwt() -> 'app_metadata' ->> 'portfolio_admin' = 'true');
+
+-- 2. Leads from the Tech Retail funnel form: apply supabase/migrations/20261111_funnel_leads.up.sql.

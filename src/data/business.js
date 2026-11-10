@@ -44,7 +44,7 @@ export const LEGACY_LEGAL_REDIRECTS = [
   { from: '/privacy', to: LEGAL_PATHS.privacy },
 ]
 
-export const LEGAL_EFFECTIVE_DATE = 'October 24, 2026'
+export const LEGAL_EFFECTIVE_DATE = 'November 11, 2026'
 
 // The AI service that analyses comment text for CommentIQ (OpenAI API, GPT models),
 // named in the Privacy Policy.

@@ -4,7 +4,8 @@ import { existsSync, readFileSync } from 'node:fs'
 import { resolvePublicPath } from './site.ts'
 import { structuredData } from './public-content.ts'
 import { htmlToText } from './html.ts'
-import { FOUNDING_PARTNER_OPEN, FUNNEL_COPY, SHOP_TYPES, funnelDemoUrl, funnelWhatsAppUrl, loomEmbedUrl } from '../content/tech-retail-funnel.ts'
+import { FOUNDING_PARTNER_OPEN, FUNNEL_COPY, SHOP_TYPES, funnelDemoUrl, funnelFormWhatsAppUrl, funnelWhatsAppUrl, loomEmbedUrl } from '../content/tech-retail-funnel.ts'
+import { BRANCH_OPTIONS } from './funnel-lead.ts'
 
 const PRICE = /\$\s?\d|PKR|USD|GBP|\bRs\.?\s?\d|\d{2,3},\d{3}|\/\s?(month|mahana)/i
 
@@ -59,6 +60,24 @@ test('proof copy is complete in both languages and the Founding Partner strip na
   assert.ok(decodeURIComponent(funnelWhatsAppUrl('ur-en', 'laptop', undefined, true)).includes('Founding Partner'))
 })
 
+test('the short form has every label, option and error message in both languages', () => {
+  for (const lang of ['en', 'ur-en'] as const) {
+    const form = FUNNEL_COPY[lang].form
+    for (const text of [form.shop, form.city, form.cityPlaceholder, form.branches, form.whatsapp, form.whatsappPlaceholder, form.submit, form.note, form.doneHeading, form.doneCopy, form.doneCta, FUNNEL_COPY[lang].orDirect]) assert.ok(text.length > 2, lang)
+    assert.deepEqual(Object.keys(form.branchOptions), [...BRANCH_OPTIONS])
+    assert.deepEqual(Object.keys(form.errors).sort(), ['branches', 'city', 'shop', 'whatsapp'])
+  }
+})
+
+test('after the form, WhatsApp opens on the business number with the answers written in', () => {
+  for (const lang of ['en', 'ur-en'] as const) {
+    const href = funnelFormWhatsAppUrl(lang, { shop: 'camera', city: 'Rawalpindi', branches: '2-3' })
+    assert.ok(href.startsWith(WHATSAPP), href)
+    const message = decodeURIComponent(href.slice(WHATSAPP.length))
+    for (const part of [FUNNEL_COPY[lang].shops.camera.chat, 'Rawalpindi', FUNNEL_COPY[lang].form.branchOptions['2-3']]) assert.ok(message.includes(part), `${lang}: ${message}`)
+  }
+})
+
 test('each shop type opens a real demo store', () => {
   assert.equal(funnelDemoUrl('laptop'), 'https://store-demo-eight.vercel.app/?mode=laptop')
   assert.equal(funnelDemoUrl('console'), 'https://console-store-demo.vercel.app/')
@@ -83,7 +102,7 @@ test('the built funnel has WhatsApp actions, shop types, three plans, no pricing
     const html = readFileSync(new URL(`${prefix.slice(1)}${prefix ? '/' : ''}tech-retail/offer/index.html`, output), 'utf8')
     const text = htmlToText(html)
     const actions = html.match(/<a[^>]*data-funnel-cta="[^"]*"[^>]*>/g) || []
-    assert.equal(actions.length, 4)
+    assert.equal(actions.length, 2, 'one WhatsApp button in the hero and one beside the form; plans and the sticky bar have their own')
     for (const action of actions) assert.match(action, /href="https:\/\/wa\.me\/923091824000\?text=/)
     assert.equal((html.match(/data-funnel-sticky=/g) || []).length, 1)
     assert.equal((html.match(/data-shop="/g) || []).length, 5)
@@ -104,6 +123,16 @@ test('the built funnel has WhatsApp actions, shop types, three plans, no pricing
     assert.match(html, /src="\/video\/tech-retail-overview\.mp4"/)
     assert.match(html, /kind="captions"[^>]*src="\/video\/tech-retail-captions\.vtt"/)
     assert.doesNotMatch(text, /MOST POPULAR/)
+    const form = html.match(/<form[^>]*data-funnel-form[^>]*>[\s\S]*?<\/form>/)?.[0] ?? ''
+    assert.ok(form, 'the short form is on the page')
+    assert.match(form, /<select[^>]*name="shop"/)
+    assert.equal((form.match(/<option /g) || []).length, 5)
+    assert.match(form, /<input[^>]*name="city"/)
+    assert.equal((form.match(/type="radio"[^>]*name="branches"|name="branches"[^>]*type="radio"/g) || []).length, 3)
+    assert.match(form, /<input[^>]*type="tel"[^>]*name="whatsapp"|<input[^>]*name="whatsapp"[^>]*type="tel"/)
+    assert.match(form, /name="website"[^>]*tabindex="-1"|tabindex="-1"[^>]*name="website"/, 'a hidden field catches spam bots')
+    assert.doesNotMatch(html, /tr-serial-flow|tr-workflows/, 'the long workflows section is gone')
+    assert.equal((html.match(/<section/g) || []).length, 8, 'hero, problems, proof, plans, trust, FAQ, Founding Partner, form')
     assert.match(html, /<details/)
     assert.match(html, /href="\/privacy-policy"/)
     assert.match(html, /href="\/terms-of-service"/)

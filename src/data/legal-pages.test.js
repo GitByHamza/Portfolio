@@ -103,6 +103,16 @@ test('privacy policy discloses the Meta Pixel and where it is loaded', () => {
   assert.ok(!pageSource('PrivacyPolicy').includes('texcodes.com does not use advertising cookies or third-party analytics tools.</p>'), 'the old no-advertising claim must be gone')
 })
 
+test('privacy policy discloses the Tech Retail lead form and what the Pixel receives from it', () => {
+  assertMentions('PrivacyPolicy', [
+    'short form on our Tech Retail OS page',
+    'shop type, city, number of branches and WhatsApp',
+    'UTM parameters',
+    'session storage',
+    'your city and phone number are not',
+  ])
+})
+
 test('published offer terms take priority over the general refund rule', () => {
   assertMentions('TermsOfService', ['/offers/terms', 'take priority'])
 })

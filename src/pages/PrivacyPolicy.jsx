@@ -26,6 +26,11 @@ const PrivacyPolicy = () => (
           When you use the contact form on texcodes.com: your name, email address, country, the project category you
           choose and your message.
         </li>
+        <li>
+          When you use the short form on our Tech Retail OS page: your shop type, city, number of branches and WhatsApp
+          number. If you came from one of our adverts, we save the advert’s campaign labels with it (UTM parameters and
+          Meta’s click ID, <code>fbclid</code>), so that we know which advert brought you.
+        </li>
         <li>When you email us or message us on WhatsApp: your contact details and whatever you include in the message.</li>
         <li>When you create an account for one of our products: account details such as your name and email address.</li>
         <li>When you connect a social media account to CommentIQ: the data described in section 4.</li>
@@ -52,6 +57,10 @@ const PrivacyPolicy = () => (
           texcodes.com uses your browser’s local storage to remember your theme (light or dark), your language and
           whether you have seen the theme tip. This stays in your browser and is not sent to us.
         </li>
+        <li>
+          If you arrive from one of our adverts, the advert’s campaign labels are kept in your browser’s session storage
+          until you close the tab. They are sent to us only if you send the short form on our Tech Retail OS page.
+        </li>
       </ul>
       <p>
         <strong>Advertising measurement (visitors in Pakistan only)</strong>
@@ -59,9 +68,11 @@ const PrivacyPolicy = () => (
       <ul>
         <li>
           If you open texcodes.com from Pakistan, the site loads the Meta Pixel, an advertising tool from Meta. It tells
-          Meta which pages you opened and whether you tapped a WhatsApp link or sent the contact form, so that we can
+          Meta which pages you opened, whether you tapped a WhatsApp link or a demo store link, and whether you sent the
+          contact form or the short form on our Tech Retail OS page, so that we can
           measure our adverts and show them to people who have visited the site. Meta sets its own cookies for this, such
-          as <code>_fbp</code>. The content of your messages is not sent to the Meta Pixel.
+          as <code>_fbp</code>. The content of your messages is not sent to the Meta Pixel. From the short form, only the
+          shop type you chose is sent; your city and phone number are not.
         </li>
       </ul>
       <p>
@@ -134,8 +145,8 @@ const PrivacyPolicy = () => (
           <strong>Netlify</strong> hosts texcodes.com and works out your country for currency display.
         </li>
         <li>
-          <strong>Supabase</strong> is our database. It stores the messages sent through our contact form and CommentIQ
-          data.
+          <strong>Supabase</strong> is our database. It stores the messages sent through our contact form, the answers
+          sent through the short form on our Tech Retail OS page, and CommentIQ data.
         </li>
         <li>
           <strong>Zoho Mail</strong> hosts our email at {BUSINESS.email}, so it holds the emails you send us.
@@ -160,7 +171,7 @@ const PrivacyPolicy = () => (
           <strong>WhatsApp</strong> (Meta) carries any messages you choose to send us there.
         </li>
         <li>
-          <strong>Meta Pixel</strong> (Meta) receives the page-view, WhatsApp-click and contact-form events described in
+          <strong>Meta Pixel</strong> (Meta) receives the page-view, WhatsApp-click, demo-store and form events described in
           section 2, for visitors in Pakistan only. Meta handles this data under its own privacy policy.
         </li>
       </ul>
