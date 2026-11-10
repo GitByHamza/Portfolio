@@ -67,10 +67,11 @@ export function structuredData(page: PublicPage): Record<string, unknown> {
   const organization = { '@type': 'Organization', '@id': `${SITE_ORIGIN}/#organization`, name: BUSINESS.name, url: SITE_ORIGIN, logo: absolute('/brand/texcodes-logo.png'), email: BUSINESS.email, telephone: BUSINESS.phoneE164, founder: { '@type': 'Person', name: BUSINESS.owner } }
   const graph: Record<string, unknown>[] = [organization, { '@type': 'WebSite', '@id': `${SITE_ORIGIN}/#website`, name: BUSINESS.name, url: SITE_ORIGIN, publisher: { '@id': organization['@id'] } }, { '@type': 'WebPage', '@id': absolute(page.path), url: absolute(page.path), name: page.title, description: page.description, inLanguage: page.lang === 'ur-en' ? 'ur-Latn' : 'en', isPartOf: { '@id': `${SITE_ORIGIN}/#website` } }]
   const offer = offers.find((offer) => offer.slug === page.offer)
-  if (offer) {
+  // The funnel shows no pricing, so it publishes the service without any price offers.
+  if (offer && page.kind === 'funnel') graph.push({ '@type': 'Service', name: offer.name, description: page.description, provider: { '@id': organization['@id'] }, url: absolute(page.path), areaServed: 'PK' })
+  else if (offer) {
     const keys = page.plan ? PLAN_KEYS.filter((key) => PLAN_SLUGS[key] === page.plan) : PLAN_KEYS
-    graph.push({ '@type': 'Service', name: offer.name, description: offer.description, provider: { '@id': organization['@id'] }, url: absolute(page.kind === 'funnel' ? page.path : `/offers/${offer.slug}`), offers: keys.flatMap((key) => Object.entries(offer.prices[key])
-      .filter(([currency]) => page.kind !== 'funnel' || currency === 'USD')
+    graph.push({ '@type': 'Service', name: offer.name, description: offer.description, provider: { '@id': organization['@id'] }, url: absolute(`/offers/${offer.slug}`), offers: keys.flatMap((key) => Object.entries(offer.prices[key])
       .map(([currency, price]) => ({ '@type': 'Offer', name: offer.plans.en[key].name, price: price.amount, priceCurrency: currency, url: absolute(`/offers/${offer.slug}/plans/${PLAN_SLUGS[key]}`), description: `${price.startingAt ? 'Starting price; final scope quoted. ' : 'Fixed agreed scope. '}${currency === 'PKR' ? 'For businesses in Pakistan.' : currency === 'GBP' ? 'For UK Console clients.' : 'For international clients.'}` }))) })
   }
   if (page.kind === 'project') graph.push({ '@type': 'CreativeWork', name: page.title, description: page.description, url: absolute(page.path), creator: { '@type': 'Person', name: BUSINESS.owner } })
