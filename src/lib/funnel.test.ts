@@ -4,7 +4,7 @@ import { existsSync, readFileSync } from 'node:fs'
 import { resolvePublicPath } from './site.ts'
 import { structuredData } from './public-content.ts'
 import { htmlToText } from './html.ts'
-import { FUNNEL_COPY, SHOP_TYPES, funnelDemoUrl, funnelWhatsAppUrl, loomEmbedUrl } from '../content/tech-retail-funnel.ts'
+import { FOUNDING_PARTNER_OPEN, FUNNEL_COPY, SHOP_TYPES, funnelDemoUrl, funnelWhatsAppUrl, loomEmbedUrl } from '../content/tech-retail-funnel.ts'
 
 const PRICE = /\$\s?\d|PKR|USD|GBP|\bRs\.?\s?\d|\d{2,3},\d{3}|\/\s?(month|mahana)/i
 
@@ -45,6 +45,20 @@ test('funnel WhatsApp links open the business number with the chosen shop type i
   assert.ok(funnelWhatsAppUrl('ur-en', 'pc', 'Multi-Branch').includes(encodeURIComponent('Multi-Branch')))
 })
 
+test('proof copy is complete in both languages and the Founding Partner strip names no discount', () => {
+  for (const lang of ['en', 'ur-en'] as const) {
+    const copy = FUNNEL_COPY[lang]
+    assert.deepEqual(copy.stores.map((store) => store.shop), ['pc', 'laptop', 'console'])
+    assert.equal(copy.owned.length, 4)
+    for (const text of [copy.storesHeading, copy.ownedHeading, copy.founderHeading, copy.founderName, copy.founderWorkLink, copy.partnerHeading, copy.partnerCta, ...copy.founderLines, ...copy.partnerAsks]) assert.ok(text.length > 2)
+    assert.match(copy.founderLines.join(' '), /2,800\+/)
+    assert.equal(copy.partnerAsks.length, 3)
+    assert.doesNotMatch(`${copy.partnerHeading} ${copy.partnerBody} ${copy.partnerAsks.join(' ')}`, /\d+\s?%|percent|discount|off\b/i)
+  }
+  assert.equal(FOUNDING_PARTNER_OPEN, true)
+  assert.ok(decodeURIComponent(funnelWhatsAppUrl('ur-en', 'laptop', undefined, true)).includes('Founding Partner'))
+})
+
 test('each shop type opens a real demo store', () => {
   assert.equal(funnelDemoUrl('laptop'), 'https://store-demo-eight.vercel.app/?mode=laptop')
   assert.equal(funnelDemoUrl('console'), 'https://console-store-demo.vercel.app/')
@@ -75,6 +89,12 @@ test('the built funnel has WhatsApp actions, shop types, three plans, no pricing
     assert.equal((html.match(/data-shop="/g) || []).length, 5)
     assert.equal((html.match(/data-funnel-plan="/g) || []).length, 3)
     assert.match(html, /href="https:\/\/store-demo-eight\.vercel\.app\/\?mode=pc"/)
+    const stores = html.match(/<a[^>]*data-funnel-store="[^"]*"[^>]*>/g) || []
+    assert.equal(stores.length, 3)
+    for (const url of ['store-demo-eight.vercel.app/?mode=pc', 'store-demo-eight.vercel.app/?mode=laptop', 'console-store-demo.vercel.app/']) assert.ok(stores.some((store) => store.includes(url)), `missing demo store ${url}`)
+    assert.equal((html.match(/<a[^>]*data-funnel-partner="[^"]*"[^>]*href="https:\/\/wa\.me\/923091824000\?text=/g) || []).length, 1)
+    assert.match(text, /2,800\+/)
+    assert.doesNotMatch(text.replace(/\(https?:[^)]*\)/g, ''), /\d+\s?%/, 'the funnel must not state a discount percentage')
     assert.doesNotMatch(html, /calendly/i)
     assert.doesNotMatch(text, PRICE, 'the funnel must not show a price')
     assert.doesNotMatch(text, /international businesses|Growth Care/i)

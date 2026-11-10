@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { ArrowRight, ArrowUpRight, Check, ChevronDown, MessageCircle, Play } from 'lucide-react'
-import { FUNNEL_ASSETS, FUNNEL_COPY, SHOP_TYPES, funnelDemoUrl, funnelWhatsAppUrl } from '../content/tech-retail-funnel.ts'
+import { FOUNDING_PARTNER_OPEN, FUNNEL_ASSETS, FUNNEL_COPY, SHOP_TYPES, funnelDemoUrl, funnelWhatsAppUrl } from '../content/tech-retail-funnel.ts'
 import type { FunnelLanguage, ShopType } from '../content/tech-retail-funnel.ts'
 import { useLanguage } from '../context/LanguageContext.jsx'
 import BrandLogo from '../components/BrandLogo.jsx'
@@ -117,14 +117,47 @@ export default function TechRetailOffer() {
         </div>
       </section>
 
+      <section className="tr-section tr-wrap" aria-labelledby="stores-title">
+        <div className="tr-section-heading"><h2 id="stores-title">{copy.storesHeading}</h2><p>{copy.storesIntro}</p></div>
+        <div className="tr-stores">
+          {copy.stores.map((store) => <a className="tr-store" key={store.shop} data-funnel-store={store.shop} href={funnelDemoUrl(store.shop)} target="_blank" rel="noopener">
+            <span><strong>{store.name}</strong><small>{store.line}</small></span>
+            <span className="tr-store-go">{copy.storeCta}<ArrowUpRight size={16} aria-hidden="true" /></span>
+          </a>)}
+        </div>
+      </section>
+
       <section className="tr-section tr-wrap" aria-labelledby="process-title">
         <h2 id="process-title">{copy.processHeading}</h2>
         <ol className="tr-process">{copy.process.map(([title, description], index) => <li key={title}><span className="tr-step">{index + 1}</span><div><h3>{title}</h3><p>{description}</p></div></li>)}</ol>
       </section>
 
+      <section className="tr-trust tr-section" aria-labelledby="owned-title">
+        <div className="tr-wrap tr-trust-grid">
+          <div>
+            <h2 id="owned-title">{copy.ownedHeading}</h2>
+            <p className="tr-trust-intro">{copy.ownedIntro}</p>
+            <ul className="tr-owned">{copy.owned.map(([name, detail]) => <li key={name}><Check size={18} aria-hidden="true" /><span><strong>{name}</strong><small>{detail}</small></span></li>)}</ul>
+          </div>
+          <aside className="tr-founder" aria-labelledby="founder-title">
+            <p className="tr-founder-label" id="founder-title">{copy.founderHeading}</p>
+            <div className="tr-founder-id"><span className="tr-founder-mark" aria-hidden="true">H</span><span><strong>{copy.founderName}</strong><small>{copy.founderRole}</small></span></div>
+            {copy.founderLines.map((line) => <p key={line}>{line}</p>)}
+            <a href={language === 'ur-en' ? '/ur/work' : '/work'}>{copy.founderWorkLink}<ArrowRight size={16} aria-hidden="true" /></a>
+          </aside>
+        </div>
+      </section>
+
       <section className="tr-faq tr-section tr-wrap" aria-labelledby="faq-title"><h2 id="faq-title">{copy.faqHeading}</h2>
         <div>{copy.faq.map(([question, answer]) => <details key={question}><summary>{question}<ChevronDown size={18} aria-hidden="true" /></summary><p>{answer}</p></details>)}</div>
       </section>
+
+      {FOUNDING_PARTNER_OPEN && <section className="tr-partner" aria-labelledby="partner-title"><div className="tr-wrap">
+        <h2 id="partner-title">{copy.partnerHeading}</h2>
+        <p>{copy.partnerBody}</p>
+        <ul>{copy.partnerAsks.map((ask) => <li key={ask}><Check size={18} aria-hidden="true" /><span>{ask}</span></li>)}</ul>
+        <a className="tr-partner-cta" data-funnel-partner="whatsapp" href={funnelWhatsAppUrl(language, shop, undefined, true)} target="_blank" rel="noopener"><MessageCircle size={19} aria-hidden="true" />{copy.partnerCta}<ArrowRight size={17} aria-hidden="true" /></a>
+      </div></section>}
 
       <section className="tr-final tr-section" aria-labelledby="final-title"><div className="tr-wrap"><h2 id="final-title">{copy.finalHeading}</h2><p>{copy.finalCopy}</p>{action('final')}</div></section>
     </main>

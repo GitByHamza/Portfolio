@@ -29,6 +29,10 @@ export function loomEmbedUrl(value: string | null): string | null {
 
 type Shop = { label: string; chat: string; question: string; pain: string; fix: string; featureTitle: string; featureCaption: string; points: [string, string][] | null }
 type Plan = { name: string; line: string; delivery: string; items: string[] }
+type Store = { shop: ShopType; name: string; line: string }
+
+// Set to false the day the second Founding Partner shop signs: the strip disappears from the funnel.
+export const FOUNDING_PARTNER_OPEN = true
 
 export const FUNNEL_COPY = {
   en: {
@@ -72,6 +76,27 @@ export const FUNNEL_COPY = {
     ] satisfies Plan[],
     planCta: 'Get the quote on WhatsApp',
     plansNote: 'Delivery time starts when your content and first payment arrive.',
+    storesHeading: 'Do not take our word for it. Use it.',
+    storesIntro: 'These are working demo stores with sample products. Open one on your phone and place a test order.',
+    stores: [
+      { shop: 'pc', name: 'Computer & gaming store', line: 'With the PC builder' },
+      { shop: 'laptop', name: 'Laptop store', line: 'With grades and battery health' },
+      { shop: 'console', name: 'Console & games store', line: 'With trade-in quotes' },
+    ] satisfies Store[],
+    storeCta: 'Open the demo',
+    ownedHeading: 'After launch, it is all yours.',
+    ownedIntro: 'On final payment everything is transferred to you. You are not renting your own shop.',
+    owned: [['Code', 'The full repository'], ['Database', 'Your products, orders and customers'], ['Admin accounts', 'Every login is handed over'], ['30 days of bug fixes', 'Free, for what we delivered']],
+    founderHeading: 'Who is building it',
+    founderName: 'Hamza · TeXCodes',
+    founderRole: 'Software engineer, Pakistan',
+    founderLines: ['I build and deliver every system myself. You talk to the person writing your code, not a sales team.', 'Before TeXCodes I led the rebuild of MYLS in Switzerland, a platform serving 2,800+ business locations across Europe.'],
+    founderWorkLink: 'See my work and case studies',
+    partnerHeading: 'Founding Partner: only 2 shops.',
+    partnerBody: 'We are starting in Pakistan, so our first two tech shops get special terms. In return we ask for three things:',
+    partnerAsks: ['Your review after launch', 'Permission to show your shop as a case study', 'A 20-minute feedback call'],
+    partnerCta: 'Ask about Founding Partner',
+    partnerMessage: ' I would also like to know about the Founding Partner terms.',
     processHeading: 'From first message to your own system.',
     process: [
       ['Demo first', 'We show you the system for your kind of shop. It costs nothing.'],
@@ -132,6 +157,27 @@ export const FUNNEL_COPY = {
     ] satisfies Plan[],
     planCta: 'Quote WhatsApp pe lein',
     plansNote: 'Delivery ka time aap ka content aur pehli payment milne se shuru hota hai.',
+    storesHeading: 'Hamari baat pe na jayein. Khud chala kar dekhein.',
+    storesIntro: 'Yeh chalte hue demo stores hain, sample products ke saath. Apne phone pe kholein aur ek test order kar ke dekhein.',
+    stores: [
+      { shop: 'pc', name: 'Computer & gaming store', line: 'PC builder ke saath' },
+      { shop: 'laptop', name: 'Laptop store', line: 'Grades aur battery health ke saath' },
+      { shop: 'console', name: 'Console & games store', line: 'Trade-in quotes ke saath' },
+    ] satisfies Store[],
+    storeCta: 'Demo kholein',
+    ownedHeading: 'Launch ke baad sab aap ka.',
+    ownedIntro: 'Final payment pe sab kuch aap ko transfer ho jata hai. Aap apni hi shop kiraye pe nahi lete.',
+    owned: [['Code', 'Poori repository'], ['Database', 'Aap ke products, orders aur customers'], ['Admin accounts', 'Har login aap ke hawale'], ['30 din bug fixes', 'Free, jo humne deliver kiya us ke liye']],
+    founderHeading: 'Kaun bana raha hai',
+    founderName: 'Hamza · TeXCodes',
+    founderRole: 'Software engineer, Pakistan',
+    founderLines: ['Har system main khud banata aur deliver karta hoon. Aap usi se baat karte hain jo aap ka code likh raha hai, kisi sales team se nahi.', 'TeXCodes se pehle maine Switzerland mein MYLS ka rebuild lead kiya, jo Europe mein 2,800+ business locations ko serve karta hai.'],
+    founderWorkLink: 'Mera kaam aur case studies dekhein',
+    partnerHeading: 'Founding Partner: sirf 2 shops.',
+    partnerBody: 'Hum Pakistan mein start kar rahe hain, is liye pehli 2 tech shops ko special terms milte hain. Badle mein hum 3 cheezein maangte hain:',
+    partnerAsks: ['Launch ke baad aap ka review', 'Aap ki shop ko case study dikhane ki permission', '20-minute ka feedback call'],
+    partnerCta: 'Founding Partner ke baare mein poochein',
+    partnerMessage: ' Founding Partner terms ke baare mein bhi batayein.',
     processHeading: 'Pehle message se apne system tak.',
     process: [
       ['Pehle demo', 'Hum aap ki shop ke hisaab se system dikhate hain. Bilkul free.'],
@@ -153,7 +199,7 @@ export const FUNNEL_COPY = {
   },
 }
 
-export function funnelWhatsAppUrl(lang: FunnelLanguage, shop: ShopType, plan?: string): string {
+export function funnelWhatsAppUrl(lang: FunnelLanguage, shop: ShopType, plan?: string, partner = false): string {
   const copy = FUNNEL_COPY[lang]
-  return `https://wa.me/${BUSINESS.phoneE164.replace('+', '')}?text=${encodeURIComponent(copy.whatsappMessage(copy.shops[shop].chat, plan))}`
+  return `https://wa.me/${BUSINESS.phoneE164.replace('+', '')}?text=${encodeURIComponent(copy.whatsappMessage(copy.shops[shop].chat, plan) + (partner ? copy.partnerMessage : ''))}`
 }
