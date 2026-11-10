@@ -16,8 +16,8 @@ export const TechRetailFilm = () => {
       <Sequence name="PC compatibility" from={4.5 * fps} durationInFrames={8 * fps}><Compatibility /></Sequence>
       <Sequence name="Catalogue and stock" from={12 * fps} durationInFrames={8 * fps}><Stock /></Sequence>
       <Sequence name="Serial lifecycle" from={19.5 * fps} durationInFrames={6.5 * fps}><Warranty /></Sequence>
-      <Sequence name="The Multi-Branch offer" from={25.5 * fps} durationInFrames={9.5 * fps}><Package /></Sequence>
-      <Sequence name="Personalised demo" from={34.5 * fps} durationInFrames={7.5 * fps}><Closing /></Sequence>
+      <Sequence name="Three plans, no pricing" from={25.5 * fps} durationInFrames={9.5 * fps}><Package /></Sequence>
+      <Sequence name="WhatsApp demo" from={34.5 * fps} durationInFrames={7.5 * fps}><Closing /></Sequence>
       <FinishLayers />
     </div>
   </AbsoluteFill>;

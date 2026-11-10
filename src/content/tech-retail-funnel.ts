@@ -6,7 +6,8 @@ export const SHOP_TYPES = ['pc', 'laptop', 'mobile', 'camera', 'console'] as con
 export type ShopType = (typeof SHOP_TYPES)[number]
 export type FunnelLanguage = 'en' | 'ur-en'
 
-export const FUNNEL_ASSETS = { preview: '/tech-retail/preview.webp' }
+// The hero film carries no pricing. Its source is the Remotion project in videos/tech-retail.
+export const FUNNEL_ASSETS = { video: '/video/tech-retail-overview.mp4', poster: '/video/tech-retail-poster.webp', captions: '/video/tech-retail-captions.vtt' }
 
 const PC_DEMO = 'https://store-demo-eight.vercel.app/?mode=pc'
 const DEMOS: Record<ShopType, string> = {
@@ -39,8 +40,10 @@ export const FUNNEL_COPY = {
     demoCta: 'Try the live demo yourself',
     demoNote: 'Opens a working demo store with sample products.',
     demoNoteOther: 'Opens the computer-shop demo store as an example, with sample products.',
-    preview: 'A real screen from the demo store',
-    previewNote: 'Sample products and demo data',
+    preview: 'Tech Retail OS · 42-second overview',
+    previewNote: 'Real product screens · Sample products and demo data',
+    videoButton: 'Play the Tech Retail OS overview',
+    videoFallback: 'Your browser cannot play this video.',
     stickyCta: 'Demo on WhatsApp',
     whatsappMessage: (shop: string, plan?: string) => `Assalam o Alaikum, I have a ${shop} shop and I would like to see the demo${plan ? ` and get a quote for the ${plan} plan` : ''}.`,
     problemHeading: 'Does this happen in your shop?',
@@ -97,8 +100,10 @@ export const FUNNEL_COPY = {
     demoCta: 'Live demo khud dekhein',
     demoNote: 'Chalta hua demo store khulega, sample products ke saath.',
     demoNoteOther: 'Example ke taur pe computer shop ka demo store khulega, sample products ke saath.',
-    preview: 'Demo store ki real screen',
-    previewNote: 'Sample products aur demo data',
+    preview: 'Tech Retail OS · 42-second overview',
+    previewNote: 'Real product screens · Sample products aur demo data',
+    videoButton: 'Tech Retail OS ka overview chalayein',
+    videoFallback: 'Aap ka browser yeh video nahi chala sakta.',
     stickyCta: 'WhatsApp pe demo',
     whatsappMessage: (shop: string, plan?: string) => `Assalam o Alaikum, meri ${shop} shop hai aur mujhe demo dekhna hai${plan ? `. ${plan} plan ka quote bhi chahiye` : ''}.`,
     problemHeading: 'Kya aap ki shop mein bhi aisa hota hai?',

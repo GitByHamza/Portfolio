@@ -1,7 +1,7 @@
-{
-  "source": "videos/tech-retail/out/texcodes-tech-retail-4k.mp4",
-  "method": "FFmpeg extraction at 2.5 seconds, resized to 1600x900, WebP quality 85",
-  "content": "Opening frame of the local Remotion composition: owner-supplied TeXCodes logo and offer typography",
-  "reproduce": "npm run video:render",
-  "created": "2026-11-05"
+﻿{
+  "source": "videos/tech-retail (Remotion composition TechRetailOffer4K)",
+  "method": "Remotion still at frame 96 (3.2 seconds), resized to 1600x900, WebP quality 85",
+  "content": "Opening frame of the funnel hero film: owner-supplied TeXCodes logo, headline and shop types. No pricing.",
+  "reproduce": "npx remotion still src/index.ts TechRetailOffer4K poster.png --frame=96, then convert to WebP",
+  "created": "2026-11-10"
 }

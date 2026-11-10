@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { ArrowRight, ArrowUpRight, Check, ChevronDown, MessageCircle } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Check, ChevronDown, MessageCircle, Play } from 'lucide-react'
 import { FUNNEL_ASSETS, FUNNEL_COPY, SHOP_TYPES, funnelDemoUrl, funnelWhatsAppUrl } from '../content/tech-retail-funnel.ts'
 import type { FunnelLanguage, ShopType } from '../content/tech-retail-funnel.ts'
 import { useLanguage } from '../context/LanguageContext.jsx'
@@ -11,6 +11,8 @@ export default function TechRetailOffer() {
   const language = lang as FunnelLanguage
   const copy = FUNNEL_COPY[language]
   const [shop, setShop] = useState<ShopType>('pc')
+  const [playing, setPlaying] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const current = copy.shops[shop]
   const whatsapp = funnelWhatsAppUrl(language, shop)
   const problems = [[current.question, current.pain, current.fix], copy.stock, copy.warranty]
@@ -55,7 +57,14 @@ export default function TechRetailOffer() {
         </div>
         {action('hero', true)}
         <figure className="tr-preview">
-          <div className="tr-preview-screen"><img src={FUNNEL_ASSETS.preview} alt={copy.preview} width="1200" height="611" fetchPriority="high" /></div>
+          <div className={`tr-preview-screen${playing ? ' is-playing' : ''}`}>
+            <video ref={videoRef} controls preload="none" playsInline poster={FUNNEL_ASSETS.poster} width="1920" height="1080" aria-label={copy.preview} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={() => setPlaying(false)}>
+              <source src={FUNNEL_ASSETS.video} type="video/mp4" />
+              <track kind="captions" src={FUNNEL_ASSETS.captions} srcLang="ur" label="Roman Urdu" />
+              {copy.videoFallback}
+            </video>
+            {!playing && <button className="tr-watch" onClick={() => { void videoRef.current?.play().catch(() => setPlaying(false)) }} type="button" aria-label={copy.videoButton}><Play aria-hidden="true" fill="currentColor" /></button>}
+          </div>
           <figcaption><span>{copy.preview}</span><span>{copy.previewNote}</span></figcaption>
         </figure>
       </section>
