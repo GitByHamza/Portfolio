@@ -51,13 +51,33 @@ test('proof copy is complete in both languages and the Founding Partner strip na
     const copy = FUNNEL_COPY[lang]
     assert.deepEqual(copy.stores.map((store) => store.shop), ['pc', 'laptop', 'console'])
     assert.equal(copy.owned.length, 4)
-    for (const text of [copy.storesHeading, copy.ownedHeading, copy.founderHeading, copy.founderName, copy.founderWorkLink, copy.partnerHeading, copy.partnerCta, ...copy.founderLines, ...copy.partnerAsks]) assert.ok(text.length > 2)
-    assert.match(copy.founderLines.join(' '), /2,800\+/)
-    assert.equal(copy.partnerAsks.length, 3)
-    assert.doesNotMatch(`${copy.partnerHeading} ${copy.partnerBody} ${copy.partnerAsks.join(' ')}`, /\d+\s?%|percent|discount|off\b/i)
+    for (const text of [copy.storesHeading, copy.ownedHeading, copy.partnerStrip, copy.partnerStripCta, ...copy.partnerFaq]) assert.ok(text.length > 2)
+    for (const ask of ['review', 'case study', 'feedback call']) assert.ok(copy.partnerFaq[1].includes(ask), `${lang} Founding Partner answer must name: ${ask}`)
+    assert.doesNotMatch(`${copy.partnerStrip} ${copy.partnerFaq.join(' ')}`, /\d+\s?%|percent|discount|off\b/i)
   }
   assert.equal(FOUNDING_PARTNER_OPEN, true)
   assert.ok(decodeURIComponent(funnelWhatsAppUrl('ur-en', 'laptop', undefined, true)).includes('Founding Partner'))
+})
+
+test('problem cards say who is asking, so a visitor knows what each quote is', () => {
+  for (const lang of ['en', 'ur-en'] as const) {
+    const copy = FUNNEL_COPY[lang]
+    for (const text of [copy.problemIntro, copy.problemAsk, copy.stockAsk, copy.warrantyAsk]) assert.ok(text.length > 10, lang)
+  }
+})
+
+test('the hero promises an outcome and the shop prompt uses professional wording', () => {
+  for (const lang of ['en', 'ur-en'] as const) {
+    const copy = FUNNEL_COPY[lang]
+    assert.match(copy.headline[1], /sleep|so rahe/i, `${lang} headline must promise orders while the owner sleeps`)
+    assert.doesNotMatch(`${copy.shopPrompt} ${copy.form.shop}`, /cheez/i)
+  }
+})
+
+test('the PC screen explains the online builder works from the shop\'s own stock', () => {
+  assert.match(FUNNEL_COPY.en.shops.pc.featureLine, /stock/)
+  assert.match(FUNNEL_COPY['ur-en'].shops.pc.featureLine, /stock/)
+  for (const lang of ['en', 'ur-en'] as const) for (const shop of SHOP_TYPES) assert.ok(FUNNEL_COPY[lang].shops[shop].featureLine.length > 20, `${lang}/${shop}`)
 })
 
 test('the short form has every label, option and error message in both languages', () => {
@@ -112,7 +132,8 @@ test('the built funnel has WhatsApp actions, shop types, three plans, no pricing
     assert.equal(stores.length, 3)
     for (const url of ['store-demo-eight.vercel.app/?mode=pc', 'store-demo-eight.vercel.app/?mode=laptop', 'console-store-demo.vercel.app/']) assert.ok(stores.some((store) => store.includes(url)), `missing demo store ${url}`)
     assert.equal((html.match(/<a[^>]*data-funnel-partner="[^"]*"[^>]*href="https:\/\/wa\.me\/923091824000\?text=/g) || []).length, 1)
-    assert.match(text, /2,800\+/)
+    assert.ok(html.indexOf('data-funnel-partner') < html.indexOf('tr-masthead'), 'the Founding Partner strip sits above everything else')
+    assert.doesNotMatch(html, /tr-founder|Hamza ki taraf se|Built and delivered by Hamza/, 'no founder block and no name line in the footer')
     assert.doesNotMatch(text.replace(/\(https?:[^)]*\)/g, ''), /\d+\s?%/, 'the funnel must not state a discount percentage')
     assert.doesNotMatch(html, /calendly/i)
     assert.doesNotMatch(text, PRICE, 'the funnel must not show a price')
@@ -132,8 +153,9 @@ test('the built funnel has WhatsApp actions, shop types, three plans, no pricing
     assert.match(form, /<input[^>]*type="tel"[^>]*name="whatsapp"|<input[^>]*name="whatsapp"[^>]*type="tel"/)
     assert.match(form, /name="website"[^>]*tabindex="-1"|tabindex="-1"[^>]*name="website"/, 'a hidden field catches spam bots')
     assert.doesNotMatch(html, /tr-serial-flow|tr-workflows/, 'the long workflows section is gone')
-    assert.equal((html.match(/<section/g) || []).length, 8, 'hero, problems, proof, plans, trust, FAQ, Founding Partner, form')
-    assert.match(html, /<details/)
+    assert.equal((html.match(/<section/g) || []).length, 7, 'hero, problems, proof, plans, trust, FAQ, form')
+    assert.equal((html.match(/<button[^>]*aria-controls="faq-answer-\d+"/g) || []).length, prefix ? FUNNEL_COPY['ur-en'].faq.length + 1 : FUNNEL_COPY.en.faq.length + 1, 'every FAQ question opens with an animated panel, plus the Founding Partner question')
+    assert.ok(text.includes(FUNNEL_COPY[prefix ? 'ur-en' : 'en'].faq[0][1]), 'FAQ answers are in the page for search engines')
     assert.match(html, /href="\/privacy-policy"/)
     assert.match(html, /href="\/terms-of-service"/)
     assert.match(html, /\/tech-retail\/preview\.webp/)
