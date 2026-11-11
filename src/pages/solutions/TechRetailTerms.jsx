@@ -90,12 +90,12 @@ export default function TechRetailTerms() {
             <Box
               items={[
                 ur(
-                  'Single Store — 10 days: one location, online store, your first products loaded, admin panel and WhatsApp orders.',
-                  'Single Store — 10 din: ek location, online store, pehle products setup, admin panel aur WhatsApp orders.'
+                  'Online Store — 10 days: one location, online store, your first products loaded, admin panel and WhatsApp orders.',
+                  'Online Store — 10 din: ek location, online store, pehle products setup, admin panel aur WhatsApp orders.'
                 ),
                 ur(
-                  "Multi-Branch — 21 days: everything in Single Store, plus stock across up to 3 locations, serial-number warranty tracking, online payments, an AI assistant and the offer's specialist feature (PC builder, upgrade options or trade-in calculator).",
-                  'Multi-Branch — 21 din: Single Store ka sab kuch, aur 3 locations tak stock, serial number warranty tracking, online payments, AI assistant aur offer ka khaas feature (PC builder, upgrade options ya trade-in calculator).'
+                  "Retail Operations — 21 days: everything in Online Store, plus stock across up to 3 locations, serial-number warranty tracking, online payments, an AI assistant and the offer's specialist feature (PC builder, upgrade options or trade-in calculator).",
+                  'Retail Operations — 21 din: Online Store ka sab kuch, aur 3 locations tak stock, serial number warranty tracking, online payments, AI assistant aur offer ka khaas feature (PC builder, upgrade options ya trade-in calculator).'
                 ),
                 ur(
                   'Chain & Wholesale — from 30 days: unlimited branches, staff roles, integrations (POS, couriers, FBR, ERP) and wholesale features. The final timeline is fixed in your scope document.',
@@ -210,8 +210,8 @@ export default function TechRetailTerms() {
             </p>
             <p>
               {ur(
-                'Online card and wallet payments on your store are included in Multi-Branch and Chain & Wholesale, and available as an add-on on Single Store.',
-                'Store par online card aur wallet payments Multi-Branch aur Chain & Wholesale mein shamil hain, aur Single Store par add-on ke tor par dastiyab.'
+                'Online card and wallet payments on your store are included in Retail Operations and Chain & Wholesale, and available as an add-on on Online Store.',
+                'Store par online card aur wallet payments Retail Operations aur Chain & Wholesale mein shamil hain, aur Online Store par add-on ke tor par dastiyab.'
               )}
             </p>
           </Section>

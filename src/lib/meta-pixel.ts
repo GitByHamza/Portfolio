@@ -65,9 +65,16 @@ export function trackPixelCustom(win: PixelWindow, event: 'LiveDemoClick', param
   }
 }
 
-/** The ad funnel, in both languages. Its page view also counts as ViewContent. */
+/** The ad funnel and its per-shop pages, in both languages. Their page view also counts as ViewContent. */
+const FUNNEL_PATH = /^(?:\/ur)?\/tech-retail\/offer(?:\/(pc|laptop|console))?\/?$/
 export function isFunnelPath(pathname: string): boolean {
-  return /^(?:\/ur)?\/tech-retail\/offer\/?$/.test(pathname)
+  return FUNNEL_PATH.test(pathname)
+}
+
+/** The ViewContent label for a funnel page, naming the shop type when the page has one. */
+export function funnelViewName(pathname: string): string {
+  const shop = pathname.match(FUNNEL_PATH)?.[1]
+  return shop ? `Tech Retail OS funnel: ${shop}` : 'Tech Retail OS funnel'
 }
 
 type LinkData = { funnelCta?: string; funnelPlan?: string; funnelPartner?: string; funnelSticky?: string; funnelForm?: string; funnelDemo?: string; funnelStore?: string }

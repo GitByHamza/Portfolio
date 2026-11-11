@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router'
 import { getVisitorCountry } from '../lib/currency'
-import { clickEvent, installPixel, isFunnelPath, pixelAllowed, trackPixelCustom, trackPixelEvent } from '../lib/meta-pixel'
+import { clickEvent, funnelViewName, installPixel, isFunnelPath, pixelAllowed, trackPixelCustom, trackPixelEvent } from '../lib/meta-pixel'
 
 // Loads the Meta Pixel for visitors in Pakistan and reports page views, funnel views,
 // WhatsApp clicks and demo-store clicks. Renders nothing, so the server-rendered HTML is the same for everyone.
@@ -15,7 +15,7 @@ export default function MetaPixel() {
     const installed = installPixel(window, document)
     if (installed || lastPath.current !== pathname) {
       if (!installed) trackPixelEvent(window, 'PageView')
-      if (isFunnelPath(pathname)) trackPixelEvent(window, 'ViewContent', { content_name: 'Tech Retail OS funnel' })
+      if (isFunnelPath(pathname)) trackPixelEvent(window, 'ViewContent', { content_name: funnelViewName(pathname) })
     }
     lastPath.current = pathname
   }, [pathname])

@@ -322,7 +322,7 @@ export default function ConsoleRetailSolution() {
 
             <StaggerItem className="p-6 bg-white dark:bg-[#161619] border-2 border-[#059669] dark:border-[#10B981] space-y-3 card-hover-guided md:col-span-2 lg:col-span-3">
               <div className="flex items-center justify-between text-xs font-mono text-[#059669] dark:text-[#10B981]">
-                <span className="font-bold">{isUrdu ? '07 · MULTI-BRANCH AUR CHAIN PLANS' : '07 · MULTI-BRANCH & CHAIN PLANS'}</span>
+                <span className="font-bold">{isUrdu ? '07 · RETAIL OPERATIONS AUR CHAIN PLANS' : '07 · RETAIL OPERATIONS & CHAIN PLANS'}</span>
                 <Sparkles size={16} />
               </div>
               <h4 className="offer-h4 text-[#0F0F0F] dark:text-[#EDECE6]">{t.arch_07_title}</h4>
@@ -522,7 +522,7 @@ export default function ConsoleRetailSolution() {
               </div>
             </StaggerItem>
 
-            {/* 2. Growth Tier (Most Popular) */}
+            {/* 2. Growth Tier (Recommended) */}
             <StaggerItem className="h-full">
               <div className="p-8 bg-white dark:bg-[#161619] border-2 border-[#059669] dark:border-[#10B981] space-y-6 flex flex-col justify-between shadow-lg relative hover:shadow-xl transition-shadow h-full card-hover-guided">
                 <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#059669] dark:bg-[#10B981] text-white offer-eyebrow font-bold px-3 py-1 shadow-sm">

@@ -80,7 +80,7 @@ const I18N_COPY: Record<Language, Record<string, string>> = {
     plans_sub_suffix: "Open any plan to see the full scope, what's excluded, and screenshots.",
     detail_btn: 'See full scope & screenshots →',
 
-    starter_name: 'Single Store',
+    starter_name: 'Online Store',
     starter_badge: '1 SHOP',
     starter_desc: 'For an independent game or retro shop starting to sell online.',
 
@@ -92,13 +92,13 @@ const I18N_COPY: Record<Language, Record<string, string>> = {
     starter_support_pkr: 'Optional Care Plan: {care_price} / month',
     starter_callout_label: 'BEST FOR',
     starter_callout_text: 'Getting online fast with platform filters, condition labels and WhatsApp orders.',
-    starter_f1: 'Online store — we load your first 100 items',
+    starter_f1: 'Online store — we load your first 50 items',
     starter_f2: 'Filters for PS5, Xbox, Switch and retro',
     starter_f3: 'Condition labels on discs and consoles',
     starter_f4: 'Orders sent to your WhatsApp',
 
-    growth_name: 'Multi-Branch',
-    growth_badge: 'MOST POPULAR',
+    growth_name: 'Retail Operations',
+    growth_badge: 'RECOMMENDED',
     growth_desc:
       'For established game shops that buy and sell used consoles at the counter and online.',
 
@@ -108,13 +108,13 @@ const I18N_COPY: Record<Language, Record<string, string>> = {
     growth_support_usd: 'Optional Care Plan: {care_price} / month',
     growth_support_gbp: 'Optional Care Plan: {care_price} / month',
     growth_support_pkr: 'Optional Care Plan: {care_price} / month',
-    growth_callout_label: 'EVERYTHING IN SINGLE STORE, PLUS',
+    growth_callout_label: 'EVERYTHING IN ONLINE STORE, PLUS',
     growth_callout_text:
       'The trade-in calculator, stock across 3 locations, serial & seal tracking and an AI game finder.',
     growth_f1: 'Trade-in calculator (cash or store credit)',
     growth_f2: 'Stock synced across 3 locations',
     growth_f3: 'Console serial & seal tracking',
-    growth_f4: 'Controller and accessory suggestions at checkout',
+    growth_f4: 'Owner and staff logins: costs, margins and settings stay owner-only',
     growth_f5_usd: 'Card & wallet payments — included ($400 value)',
     growth_f5_gbp: 'Card & wallet payments — included (£320 value)',
     growth_f5_pkr: 'Card & wallet payments — included (PKR 50,000 value)',
@@ -133,7 +133,7 @@ const I18N_COPY: Record<Language, Record<string, string>> = {
     enterprise_support_usd: 'Dedicated Care Plan: {care_price} / month',
     enterprise_support_gbp: 'Dedicated Care Plan: {care_price} / month',
     enterprise_support_pkr: 'Dedicated Care Plan: {care_price} / month',
-    enterprise_callout_label: 'EVERYTHING IN MULTI-BRANCH, PLUS',
+    enterprise_callout_label: 'EVERYTHING IN RETAIL OPERATIONS, PLUS',
     enterprise_callout_text:
       'Unlimited branches, an in-store trade-in kiosk, barcode labels, wholesale invoicing and staff roles.',
     enterprise_f1: 'Unlimited branches and testing counters',
@@ -236,7 +236,7 @@ const I18N_COPY: Record<Language, Record<string, string>> = {
     plans_sub_suffix: 'Poora scope, kya shamil nahi, aur screenshots dekhne ke liye plan kholein.',
     detail_btn: 'Poora scope aur screenshots dekhein →',
 
-    starter_name: 'Single Store',
+    starter_name: 'Online Store',
     starter_badge: '1 DUKAN',
     starter_desc: 'Ek game ya retro dukan ke liye jo online bechna shuru kar rahi hai.',
 
@@ -248,13 +248,13 @@ const I18N_COPY: Record<Language, Record<string, string>> = {
     starter_support_pkr: 'Ikhtiyari Care Plan: {care_price} / mahana',
     starter_callout_label: 'KIS KE LIYE BEHTAR',
     starter_callout_text: 'Jaldi online aana — platform filters, condition labels aur WhatsApp orders ke sath.',
-    starter_f1: 'Online store — pehle 100 items hum daalte hain',
+    starter_f1: 'Online store — pehle 50 items hum daalte hain',
     starter_f2: 'PS5, Xbox, Switch aur retro filters',
     starter_f3: 'Discs aur consoles par condition labels',
     starter_f4: 'Orders aapke WhatsApp par',
 
-    growth_name: 'Multi-Branch',
-    growth_badge: 'SAB SE MAQBOOL',
+    growth_name: 'Retail Operations',
+    growth_badge: 'RECOMMENDED',
     growth_desc:
       'Established game dukanon ke liye jo used consoles counter aur online dono par khareedti-bechti hain.',
 
@@ -264,13 +264,13 @@ const I18N_COPY: Record<Language, Record<string, string>> = {
     growth_support_usd: 'Ikhtiyari Care Plan: {care_price} / mahana',
     growth_support_gbp: 'Ikhtiyari Care Plan: {care_price} / mahana',
     growth_support_pkr: 'Ikhtiyari Care Plan: {care_price} / mahana',
-    growth_callout_label: 'SINGLE STORE KA SAB KUCH, AUR',
+    growth_callout_label: 'ONLINE STORE KA SAB KUCH, AUR',
     growth_callout_text:
       'Trade-in calculator, 3 locations ka stock, serial & seal tracking aur AI game finder.',
     growth_f1: 'Trade-in calculator (cash ya store credit)',
     growth_f2: '3 locations ka stock sync',
     growth_f3: 'Console serial aur seal tracking',
-    growth_f4: 'Checkout par controllers aur accessories suggestions',
+    growth_f4: 'Owner aur staff logins: cost, margin aur settings sirf owner ke paas',
     growth_f5_usd: 'Card aur wallet payments — shamil ($400 ki value)',
     growth_f5_gbp: 'Card aur wallet payments — shamil (£320 ki value)',
     growth_f5_pkr: 'Card aur wallet payments — shamil (PKR 50,000 ki value)',
@@ -289,7 +289,7 @@ const I18N_COPY: Record<Language, Record<string, string>> = {
     enterprise_support_usd: 'Dedicated Care Plan: {care_price} / mahana',
     enterprise_support_gbp: 'Dedicated Care Plan: {care_price} / mahana',
     enterprise_support_pkr: 'Dedicated Care Plan: {care_price} / mahana',
-    enterprise_callout_label: 'MULTI-BRANCH KA SAB KUCH, AUR',
+    enterprise_callout_label: 'RETAIL OPERATIONS KA SAB KUCH, AUR',
     enterprise_callout_text:
       'La-mehdood branches, dukan mein trade-in kiosk, barcode labels, wholesale invoicing aur staff roles.',
     enterprise_f1: 'La-mehdood branches aur testing counters',
@@ -320,15 +320,15 @@ export const I18N_DATA = pricedCopy('console', I18N_COPY)
 
 export const EXTRAS_DATA: Extra[] = [
   {
-    en: 'Trade-in module (Single Store)',
-    ur: 'Trade-in module (Single Store)',
+    en: 'Trade-in module (Online Store)',
+    ur: 'Trade-in module (Online Store)',
     priceUsd: '+ $650',
     priceGbp: '+ £520',
     pricePkr: '+ PKR 85,000',
     descEn:
-      'Customers value used consoles and discs online for cash or store credit, with a condition checklist and a printable trade-in slip. Included in Multi-Branch.',
+      'Customers value used consoles and discs online for cash or store credit, with a condition checklist and a printable trade-in slip. Included in Retail Operations.',
     descUr:
-      'Customer online purane consoles aur discs ki cash ya store credit value nikalta hai — condition checklist aur printable trade-in slip ke sath. Multi-Branch mein shamil.',
+      'Customer online purane consoles aur discs ki cash ya store credit value nikalta hai — condition checklist aur printable trade-in slip ke sath. Retail Operations mein shamil.',
   },
   {
     en: 'Digital code delivery',
@@ -399,7 +399,7 @@ const CONSOLE_ADMIN_URL = 'https://console-store-demo.vercel.app/admin'
 return {
     starter: {
       name: t.starter_name,
-      badge: 'SINGLE STORE',
+      badge: 'ONLINE STORE',
       price: priceFor(t.starter_price_usd, t.starter_price_gbp, t.starter_price_pkr),
       delivery: pick('10 days', '10 din'),
       storefrontDemoUrl: CONSOLE_DEMO_URL,
@@ -420,7 +420,7 @@ return {
             'Platform filters (PS5, Xbox, Switch, retro) ke sath tez store.'
           ),
           items: [
-            pick('Up to 100 consoles, discs and controllers loaded', '100 tak consoles, discs aur controllers'),
+            pick('Your first 50 consoles, discs and controllers loaded', 'Pehle 50 consoles, discs aur controllers hum daalte hain'),
             pick('Condition labels: Sealed, Mint disc', 'Condition labels: Sealed, Mint disc'),
             pick('Orders sent to your WhatsApp', 'Orders aapke WhatsApp par'),
           ],
@@ -438,13 +438,13 @@ return {
         },
       ],
       exclusions: [
-        pick('Trade-in calculator (add-on; included in Multi-Branch)', 'Trade-in calculator (add-on; Multi-Branch mein shamil)'),
-        pick('Stock across more than one location (Multi-Branch)', 'Ek se zyada location ka stock (Multi-Branch)'),
+        pick('Trade-in calculator (add-on; included in Retail Operations)', 'Trade-in calculator (add-on; Retail Operations mein shamil)'),
+        pick('Stock across more than one location (Retail Operations)', 'Ek se zyada location ka stock (Retail Operations)'),
       ],
     },
     growth: {
       name: t.growth_name,
-      badge: pick('MOST POPULAR', 'SAB SE MAQBOOL'),
+      badge: pick('RECOMMENDED', 'RECOMMENDED'),
       price: priceFor(t.growth_price_usd, t.growth_price_gbp, t.growth_price_pkr),
       delivery: pick('21 days', '21 din'),
       storefrontDemoUrl: CONSOLE_DEMO_URL,
@@ -484,6 +484,14 @@ return {
           items: [
             pick('Counter sales update online stock instantly', 'Counter sale par online stock foran update'),
             pick('Transfers between locations with sign-off', 'Locations ke darmiyan transfer, sign-off ke sath'),
+          ],
+        },
+        {
+          title: pick('Owner and staff access', 'Owner aur staff access'),
+          desc: pick('Staff see only what their job needs.', 'Staff ko sirf apne kaam ki cheezein nazar aati hain.'),
+          items: [
+            pick('Owner only by default: purchase costs, margins, settings and staff accounts', 'Default mein sirf owner: purchase cost, margin, settings aur staff accounts'),
+            pick('Staff logins limited to their own work: sales, trade-ins or stock', 'Staff login sirf apne kaam tak: sale, trade-in ya stock'),
           ],
         },
         {

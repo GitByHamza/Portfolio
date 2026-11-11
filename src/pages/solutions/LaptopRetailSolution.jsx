@@ -498,7 +498,7 @@ export default function LaptopRetailSolution() {
               </div>
             </StaggerItem>
 
-            {/* 2. Multi-Branch Laptop Growth (Featured) */}
+            {/* 2. Retail Operations Laptop Growth (Featured) */}
             <StaggerItem className="h-full">
               <div className="p-8 bg-white dark:bg-[#161619] border-2 border-[#059669] dark:border-[#10B981] space-y-6 flex flex-col justify-between shadow-lg relative hover:shadow-xl transition-shadow h-full card-hover-guided">
                 <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#059669] dark:bg-[#10B981] text-white offer-eyebrow font-bold px-3 py-1 shadow-sm">

@@ -17,6 +17,8 @@ export default [
   route('admin', 'routes/admin.tsx'),
   route('tech-retail/offer', 'routes/tech-offer.tsx', { id: 'en-tech-offer' }),
   route('ur/tech-retail/offer', 'routes/tech-offer.tsx', { id: 'ur-tech-offer' }),
+  route('tech-retail/offer/:shop', 'routes/tech-offer.tsx', { id: 'en-tech-offer-shop' }),
+  route('ur/tech-retail/offer/:shop', 'routes/tech-offer.tsx', { id: 'ur-tech-offer-shop' }),
   ...['context.md', 'llms.txt', 'llms-full.txt', 'robots.txt', 'sitemap.xml'].map((path) => route(path, 'routes/resource.tsx', { id: path })),
   layout('routes/layout.tsx', [
     ...publicRoutes(''), ...publicRoutes('/ur'),

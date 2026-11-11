@@ -17,7 +17,7 @@ export const FAQ_I18N = {
       },
       {
         q: 'How long does it take?',
-        a: 'Single Store: 10 days. Multi-Branch: 21 days. Chain & Wholesale: from 30 days. Counted from the day we receive your content and first payment.',
+        a: 'Online Store: 10 days. Retail Operations: 21 days. Chain & Wholesale: from 30 days. Counted from the day we receive your content and first payment.',
       },
       {
         q: 'Can my staff update products and prices?',
@@ -51,7 +51,7 @@ export const FAQ_I18N = {
       },
       {
         q: 'Kitna waqt lagta hai?',
-        a: 'Single Store: 10 din. Multi-Branch: 21 din. Chain & Wholesale: 30 din se. Din us waqt se gine jate hain jab content aur pehli payment mil jaye.',
+        a: 'Online Store: 10 din. Retail Operations: 21 din. Chain & Wholesale: 30 din se. Din us waqt se gine jate hain jab content aur pehli payment mil jaye.',
       },
       {
         q: 'Kya mera staff products aur prices khud update kar sakta hai?',

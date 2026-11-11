@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import { SHOP_TYPES } from '../content/tech-retail-funnel.ts'
-import { BRANCH_OPTIONS, leadRow, normalizePakistaniMobile, readAdSource, rememberAdSource, validateLead } from './funnel-lead.ts'
+import { BRANCH_OPTIONS, leadRow, normalizePakistaniMobile, readAdSource, rememberAdSource, saveLeadRow, validateLead } from './funnel-lead.ts'
 
 test('Pakistani mobile numbers are accepted in every common format and stored as +92', () => {
   for (const input of ['03091824000', '0309 1824000', '0309-182-4000', '+92 309 1824000', '923091824000', '00923091824000', '3091824000', ' (0309) 1824000 ']) {
@@ -17,8 +17,10 @@ test('landlines, short numbers and foreign numbers are rejected', () => {
 })
 
 test('a complete lead passes and is cleaned', () => {
-  const result = validateLead({ shop: 'camera', city: '  Lahore ', branches: '2-3', whatsapp: '0300 1234567', website: '' })
-  assert.deepEqual(result, { ok: true, spam: false, lead: { shop: 'camera', city: 'Lahore', branches: '2-3', whatsapp: '+923001234567' } })
+  const result = validateLead({ shop: 'console', city: '  Lahore ', branches: '2-3', whatsapp: '0300 1234567', website: '' })
+  assert.deepEqual(result, { ok: true, spam: false, lead: { shop: 'console', city: 'Lahore', branches: '2-3', whatsapp: '+923001234567' } })
+  // Mobile and camera are no longer offered, so the form does not accept them.
+  assert.equal(validateLead({ shop: 'camera', city: 'Lahore', branches: '1', whatsapp: '03001234567' }).ok, false)
 })
 
 test('each missing or wrong field is reported, and nothing else', () => {
@@ -79,9 +81,11 @@ test('blocked or broken storage never stops the form', () => {
   assert.deepEqual(rememberAdSource('', tampered), { utm_source: 'ig' })
 })
 
-test('the database migration accepts exactly what the form accepts', () => {
+test('the database migration accepts everything the form accepts', () => {
   const sql = readFileSync(new URL('../../supabase/migrations/20261111_funnel_leads.up.sql', import.meta.url), 'utf8')
-  assert.ok(sql.includes(`shop_type in (${SHOP_TYPES.map((shop) => `'${shop}'`).join(', ')})`))
+  // The table keeps accepting mobile and camera so leads already saved for them stay valid.
+  const allowed = sql.match(/shop_type in (([^)]*))/)?.[1] ?? ''
+  for (const shop of SHOP_TYPES) assert.ok(allowed.includes(`'${shop}'`), `the database must accept ${shop}`)
   assert.ok(sql.includes(`branches in (${BRANCH_OPTIONS.map((option) => `'${option}'`).join(', ')})`))
   assert.ok(sql.includes(String.raw`whatsapp ~ '^\+923[0-9]{9}$'`))
   for (const column of Object.keys(leadRow({ shop: 'pc', city: 'Lahore', branches: '1', whatsapp: '+923001234567' }, 'en', {}, '/'))) assert.match(sql, new RegExp(`\\n  ${column} `), `missing column ${column}`)
@@ -95,4 +99,21 @@ test('the saved row has the database column names and only known fields', () => 
     shop_type: 'laptop', city: 'Karachi', branches: '1', whatsapp: '+923001234567', language: 'ur-en', page_path: '/ur/tech-retail/offer',
     utm_source: null, utm_medium: null, utm_campaign: 'pk-cold', utm_content: null, utm_term: null, fbclid: 'abc',
   })
+})
+
+const row = leadRow({ shop: 'pc', city: 'Lahore', branches: '1', whatsapp: '+923001234567' }, 'en', {}, '/tech-retail/offer/pc')
+const quiet = async (run: () => Promise<boolean>) => { const warn = console.warn; console.warn = () => {}; try { return await run() } finally { console.warn = warn } }
+
+test('saving a lead reports success only when the database accepts it', async () => {
+  const saved: unknown[] = []
+  assert.equal(await saveLeadRow(async (lead) => { saved.push(lead); return { error: null } }, row), true)
+  assert.deepEqual(saved, [row])
+  assert.equal(await quiet(() => saveLeadRow(async () => ({ error: { message: 'new row violates row-level security policy' } }), row)), false)
+})
+
+test('a failed or slow save returns false instead of throwing, so the visitor can retry', async () => {
+  assert.equal(await quiet(() => saveLeadRow(async () => { throw new Error('network down') }, row)), false)
+  const started = Date.now()
+  assert.equal(await quiet(() => saveLeadRow(() => new Promise(() => {}), row, 50)), false)
+  assert.ok(Date.now() - started < 2000, 'the timeout ends the wait')
 })

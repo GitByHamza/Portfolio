@@ -191,7 +191,7 @@ export default function TechRetailSolution() {
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="font-bold text-[#059669] dark:text-[#10B981] offer-ui">{t.arch_07_title}</span>
                 <span className="offer-eyebrow bg-[#059669] dark:bg-[#10B981] text-white px-2 py-0.5 font-bold">
-                  {isUrdu ? 'MULTI-BRANCH AUR CHAIN PLANS' : 'MULTI-BRANCH & CHAIN PLANS'}
+                  {isUrdu ? 'RETAIL OPERATIONS AUR CHAIN PLANS' : 'RETAIL OPERATIONS & CHAIN PLANS'}
                 </span>
               </div>
               <p className="offer-ui text-[#0F0F0F] dark:text-[#EDECE6] font-medium">
@@ -434,7 +434,7 @@ export default function TechRetailSolution() {
           </FadeIn>
 
           <StaggerContainer staggerDelay={0.12} className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start offer-ui">
-            {/* 1. Single Store Launch */}
+            {/* 1. Online Store Launch */}
             <StaggerItem className="h-full">
               <div className="p-8 bg-white dark:bg-[#161619] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] space-y-6 flex flex-col justify-between hover:border-[#059669] dark:hover:border-[#10B981] transition-colors h-full card-hover-guided">
               <div className="space-y-4">
@@ -516,7 +516,7 @@ export default function TechRetailSolution() {
             </div>
           </StaggerItem>
 
-            {/* 2. Multi Branch Growth (Most Popular) */}
+            {/* 2. Retail Operations Growth (Recommended) */}
             <StaggerItem className="h-full">
               <div className="p-8 bg-white dark:bg-[#161619] border-2 border-[#059669] dark:border-[#10B981] space-y-6 flex flex-col justify-between shadow-lg relative hover:shadow-xl transition-shadow h-full card-hover-guided">
                 <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#059669] dark:bg-[#10B981] text-white offer-eyebrow font-bold px-3 py-1 shadow-sm">

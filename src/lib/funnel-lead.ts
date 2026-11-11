@@ -77,3 +77,21 @@ export function leadRow(lead: Lead, language: FunnelLanguage, source: AdSource, 
     ...Object.fromEntries(AD_PARAMS.map((key) => [key, source[key] ?? null])) as Record<AdParam, string | null>,
   }
 }
+export type LeadRow = ReturnType<typeof leadRow>
+export type LeadInsert = (row: LeadRow) => PromiseLike<{ error: unknown }>
+
+/** Saves one lead and says whether it worked. A failure or a slow database (over `timeoutMs`) returns false, never throws. */
+export async function saveLeadRow(insert: LeadInsert, row: LeadRow, timeoutMs = 8000): Promise<boolean> {
+  let timer: ReturnType<typeof setTimeout> | undefined
+  try {
+    const timeout = new Promise<{ error: string }>((resolve) => { timer = setTimeout(() => resolve({ error: 'timed out' }), timeoutMs) })
+    const { error } = await Promise.race([insert(row), timeout])
+    if (error) console.warn('Funnel lead was not saved:', error)
+    return !error
+  } catch (error) {
+    console.warn('Funnel lead was not saved:', error)
+    return false
+  } finally {
+    clearTimeout(timer)
+  }
+}

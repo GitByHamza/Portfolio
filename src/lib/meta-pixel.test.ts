@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { META_PIXEL_ID, clickEvent, installPixel, isFunnelPath, isWhatsAppLink, pixelAllowed, trackPixelCustom, trackPixelEvent } from './meta-pixel.ts'
+import { META_PIXEL_ID, clickEvent, funnelViewName, installPixel, isFunnelPath, isWhatsAppLink, pixelAllowed, trackPixelCustom, trackPixelEvent } from './meta-pixel.ts'
 
 type Call = unknown[]
 function fakeBrowser() {
@@ -61,13 +61,19 @@ test('custom events use trackCustom and never throw', () => {
 
 test('the funnel page is recognised in both languages', () => {
   for (const path of ['/tech-retail/offer', '/ur/tech-retail/offer', '/tech-retail/offer/']) assert.equal(isFunnelPath(path), true, path)
-  for (const path of ['/', '/offers/tech-retail', '/ur', '/tech-retail/offer-old']) assert.equal(isFunnelPath(path), false, path)
+  for (const path of ['/', '/offers/tech-retail', '/ur', '/tech-retail/offer-old', '/tech-retail/offer/mobile']) assert.equal(isFunnelPath(path), false, path)
+})
+
+test('every shop type funnel page counts as a funnel view and is named in it', () => {
+  for (const path of ['/tech-retail/offer/pc', '/ur/tech-retail/offer/laptop', '/tech-retail/offer/console/']) assert.equal(isFunnelPath(path), true, path)
+  assert.equal(funnelViewName('/ur/tech-retail/offer/pc'), 'Tech Retail OS funnel: pc')
+  assert.equal(funnelViewName('/tech-retail/offer'), 'Tech Retail OS funnel')
 })
 
 test('funnel clicks are labelled with where on the page they happened', () => {
   const wa = 'https://wa.me/923091824000?text=Hi'
   assert.deepEqual(clickEvent(wa, { funnelCta: 'hero' }), { custom: false, event: 'Contact', params: { method: 'whatsapp', content_name: 'hero' } })
-  assert.deepEqual(clickEvent(wa, { funnelPlan: 'Multi-Branch' }), { custom: false, event: 'Contact', params: { method: 'whatsapp', content_name: 'plan: Multi-Branch' } })
+  assert.deepEqual(clickEvent(wa, { funnelPlan: 'Retail Operations' }), { custom: false, event: 'Contact', params: { method: 'whatsapp', content_name: 'plan: Retail Operations' } })
   assert.deepEqual(clickEvent(wa, { funnelPartner: 'whatsapp' }), { custom: false, event: 'Contact', params: { method: 'whatsapp', content_name: 'founding partner' } })
   assert.deepEqual(clickEvent(wa, { funnelSticky: 'whatsapp' }), { custom: false, event: 'Contact', params: { method: 'whatsapp', content_name: 'sticky' } })
   assert.deepEqual(clickEvent(wa, { funnelForm: 'whatsapp' }), { custom: false, event: 'Contact', params: { method: 'whatsapp', content_name: 'form' } })

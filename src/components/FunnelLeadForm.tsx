@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { ArrowRight, MessageCircle } from 'lucide-react'
-import { FUNNEL_COPY, SHOP_TYPES, funnelFormWhatsAppUrl } from '../content/tech-retail-funnel.ts'
+import { FUNNEL_COPY, SHOP_TYPES, adRef, funnelFormWhatsAppUrl } from '../content/tech-retail-funnel.ts'
 import type { FunnelLanguage, ShopType } from '../content/tech-retail-funnel.ts'
-import { BRANCH_OPTIONS, leadRow, rememberAdSource, validateLead } from '../lib/funnel-lead.ts'
-import type { AdSource, LeadField } from '../lib/funnel-lead.ts'
+import { BRANCH_OPTIONS, leadRow, rememberAdSource, saveLeadRow, validateLead } from '../lib/funnel-lead.ts'
+import type { AdSource, LeadField, LeadRow } from '../lib/funnel-lead.ts'
 import { trackPixelEvent } from '../lib/meta-pixel.ts'
 
 const FIELDS: LeadField[] = ['shop', 'city', 'branches', 'whatsapp']
@@ -13,18 +13,18 @@ function sessionStore(): Storage | null {
   try { return window.sessionStorage } catch { return null }
 }
 
-// Saving is best effort: the visitor is already on their way to WhatsApp with the same answers.
-async function saveLead(row: ReturnType<typeof leadRow>) {
+async function saveLead(row: LeadRow): Promise<boolean> {
   try {
     const { supabase } = await import('../lib/supabase.js')
-    const timeout = new Promise<{ error: string }>((resolve) => setTimeout(() => resolve({ error: 'timed out' }), 8000))
-    const { error } = await Promise.race([supabase.from('funnel_leads').insert(row), timeout])
-    if (error) console.warn('Funnel lead was not saved:', error)
+    return await saveLeadRow((lead) => supabase.from('funnel_leads').insert(lead), row)
   } catch (error) {
     console.warn('Funnel lead was not saved:', error)
+    return false
   }
 }
 
+// idle: nothing to save (or a bot) · saving · saved · failed: the visitor can retry; the answers are also in the WhatsApp message.
+type SaveState = 'idle' | 'saving' | 'saved' | 'failed'
 type Props = { language: FunnelLanguage; shop: ShopType; onShopChange: (shop: ShopType) => void }
 
 export default function FunnelLeadForm({ language, shop, onShopChange }: Props) {
@@ -32,11 +32,20 @@ export default function FunnelLeadForm({ language, shop, onShopChange }: Props) 
   const form = copy.form
   const [errors, setErrors] = useState<Partial<Record<LeadField, true>>>({})
   const [whatsapp, setWhatsapp] = useState<string | null>(null)
+  const [save, setSave] = useState<SaveState>('idle')
+  const [retried, setRetried] = useState(false)
   const source = useRef<AdSource>({})
+  const row = useRef<LeadRow | null>(null)
   const done = useRef<HTMLDivElement>(null)
 
   useEffect(() => { source.current = rememberAdSource(window.location.search, sessionStore()) }, [])
   useEffect(() => { if (whatsapp) done.current?.focus() }, [whatsapp])
+
+  function store() {
+    if (!row.current) return
+    setSave('saving')
+    void saveLead(row.current).then((ok) => setSave(ok ? 'saved' : 'failed'))
+  }
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -50,10 +59,11 @@ export default function FunnelLeadForm({ language, shop, onShopChange }: Props) 
       return
     }
     setErrors({})
-    const href = funnelFormWhatsAppUrl(language, result.lead)
+    const href = funnelFormWhatsAppUrl(language, result.lead, adRef(source.current))
     if (!result.spam) {
       trackPixelEvent(window as unknown as Parameters<typeof trackPixelEvent>[0], 'Lead', { content_name: result.lead.shop })
-      void saveLead(leadRow(result.lead, language, source.current, window.location.pathname))
+      row.current = leadRow(result.lead, language, source.current, window.location.pathname)
+      store()
     }
     // Opened inside the submit handler so browsers treat it as the visitor's own tap.
     window.open(href, '_blank', 'noopener')
@@ -64,6 +74,11 @@ export default function FunnelLeadForm({ language, shop, onShopChange }: Props) 
     <h3>{form.doneHeading}</h3>
     <p>{form.doneCopy}</p>
     <a className="tr-cta" data-funnel-form="whatsapp" href={whatsapp} target="_blank" rel="noopener"><MessageCircle size={20} aria-hidden="true" />{form.doneCta}<ArrowRight size={18} aria-hidden="true" /></a>
+    {(save === 'failed' || (retried && save === 'saving')) && <div className="tr-save-note" data-funnel-save="failed">
+      <p>{form.saveFailed}</p>
+      <button type="button" disabled={save === 'saving'} onClick={() => { setRetried(true); store() }}>{save === 'saving' ? form.saveRetrying : form.saveRetry}</button>
+    </div>}
+    {retried && save === 'saved' && <p className="tr-save-note" data-funnel-save="saved">{form.saved}</p>}
   </div>
 
   const error = (field: LeadField) => errors[field] ? <p className="tr-field-error" id={`lead-${field}-error`}>{form.errors[field]}</p> : null

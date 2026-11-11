@@ -91,7 +91,7 @@ const I18N_COPY: Record<Language, Record<string, string>> = {
     plans_sub_suffix: "Open any plan to see the full scope, what's excluded, and screenshots.",
     detail_btn: 'See full scope & screenshots →',
 
-    starter_name: 'Single Store',
+    starter_name: 'Online Store',
     starter_badge: '1 SHOP',
     starter_desc:
       'For a single computer or CCTV shop starting to sell online, with orders coming to WhatsApp.',
@@ -107,21 +107,21 @@ const I18N_COPY: Record<Language, Record<string, string>> = {
     starter_f3: 'Admin panel for products, stock and orders',
     starter_f4: 'Google Search Console, sitemap and Analytics set up',
 
-    growth_name: 'Multi-Branch',
-    growth_badge: 'MOST POPULAR',
+    growth_name: 'Retail Operations',
+    growth_badge: 'RECOMMENDED',
     growth_desc: 'For established hardware and gaming PC shops selling at the counter and online.',
 
 
     growth_delivery: 'Live in 21 days*',
     growth_support_pkr: 'Optional Care Plan: {care_price} / month',
     growth_support_usd: 'Optional Care Plan: {care_price} / month',
-    growth_callout_label: 'EVERYTHING IN SINGLE STORE, PLUS',
+    growth_callout_label: 'EVERYTHING IN ONLINE STORE, PLUS',
     growth_callout_text:
       'PC builder, stock across 3 locations, serial warranty tracking, online payments and an AI sales assistant.',
     growth_f1: 'PC builder with compatibility checks',
     growth_f2: 'Stock synced across up to 3 locations',
     growth_f3: 'Serial-number warranty tracking',
-    growth_f4: 'Coupons, flash sales and banners',
+    growth_f4: 'Owner and staff logins: costs, margins and settings stay owner-only',
     growth_f5_pkr: 'Card & wallet payments — included (PKR 50,000 value)',
     growth_f5_usd: 'Card & wallet payments — included ($400 value)',
     growth_f6_pkr: 'AI sales assistant — included (PKR 65,000 value)',
@@ -135,7 +135,7 @@ const I18N_COPY: Record<Language, Record<string, string>> = {
     enterprise_delivery: 'From 30 days — fixed in your scope document',
     enterprise_support_pkr: 'Dedicated Care Plan: {care_price} / month',
     enterprise_support_usd: 'Dedicated Care Plan: {care_price} / month',
-    enterprise_callout_label: 'EVERYTHING IN MULTI-BRANCH, PLUS',
+    enterprise_callout_label: 'EVERYTHING IN RETAIL OPERATIONS, PLUS',
     enterprise_callout_text:
       'Unlimited branches, staff roles, a CMS, POS and courier integrations, and an AI assistant connected to live stock.',
     enterprise_f1: 'Unlimited branches and warehouses, with stock transfers',
@@ -237,7 +237,7 @@ const I18N_COPY: Record<Language, Record<string, string>> = {
     plans_sub_suffix: 'Poora scope, kya shamil nahi, aur screenshots dekhne ke liye plan kholein.',
     detail_btn: 'Poora scope aur screenshots dekhein →',
 
-    starter_name: 'Single Store',
+    starter_name: 'Online Store',
     starter_badge: '1 DUKAN',
     starter_desc:
       'Ek computer ya CCTV dukan ke liye jo online bechna shuru kar rahi hai — orders WhatsApp par.',
@@ -253,21 +253,21 @@ const I18N_COPY: Record<Language, Record<string, string>> = {
     starter_f3: 'Products, stock aur orders ke liye admin panel',
     starter_f4: 'Google Search Console, sitemap aur Analytics setup',
 
-    growth_name: 'Multi-Branch',
-    growth_badge: 'SAB SE MAQBOOL',
+    growth_name: 'Retail Operations',
+    growth_badge: 'RECOMMENDED',
     growth_desc: 'Established hardware aur gaming PC dukanon ke liye jo counter aur online dono par bechti hain.',
 
 
     growth_delivery: '21 din mein live*',
     growth_support_pkr: 'Ikhtiyari Care Plan: {care_price} / mahana',
     growth_support_usd: 'Ikhtiyari Care Plan: {care_price} / mahana',
-    growth_callout_label: 'SINGLE STORE KA SAB KUCH, AUR',
+    growth_callout_label: 'ONLINE STORE KA SAB KUCH, AUR',
     growth_callout_text:
       'PC builder, 3 locations ka stock, serial warranty tracking, online payments aur AI sales assistant.',
     growth_f1: 'Compatibility check wala PC builder',
     growth_f2: '3 locations tak stock sync',
     growth_f3: 'Serial number warranty tracking',
-    growth_f4: 'Coupons, flash sales aur banners',
+    growth_f4: 'Owner aur staff logins: cost, margin aur settings sirf owner ke paas',
     growth_f5_pkr: 'Card aur wallet payments — shamil (PKR 50,000 ki value)',
     growth_f5_usd: 'Card aur wallet payments — shamil ($400 ki value)',
     growth_f6_pkr: 'AI sales assistant — shamil (PKR 65,000 ki value)',
@@ -281,7 +281,7 @@ const I18N_COPY: Record<Language, Record<string, string>> = {
     enterprise_delivery: '30 din se — final date scope document mein',
     enterprise_support_pkr: 'Dedicated Care Plan: {care_price} / mahana',
     enterprise_support_usd: 'Dedicated Care Plan: {care_price} / mahana',
-    enterprise_callout_label: 'MULTI-BRANCH KA SAB KUCH, AUR',
+    enterprise_callout_label: 'RETAIL OPERATIONS KA SAB KUCH, AUR',
     enterprise_callout_text:
       'La-mehdood branches, staff roles, CMS, POS aur courier integrations, aur live stock se juda AI assistant.',
     enterprise_f1: 'La-mehdood branches aur godam, stock transfer ke sath',
@@ -301,9 +301,9 @@ export const I18N_DATA = pricedCopy('tech', I18N_COPY)
 const PLAN_COPY: Record<Language, Record<PlanKey, OfferPlan>> = {
   en: {
     starter: {
-      name: 'Single Store',
+      name: 'Online Store',
       code: '',
-      badge: 'SINGLE STORE',
+      badge: 'ONLINE STORE',
 
 
       delivery: '10 days',
@@ -350,18 +350,18 @@ const PLAN_COPY: Record<Language, Record<PlanKey, OfferPlan>> = {
         },
       ],
       exclusions: [
-        'PC builder (in Multi-Branch and Chain)',
+        'PC builder (in Retail Operations and Chain)',
         'Stock across more than one location',
         'Serial-number warranty tracking',
         'Product photos and descriptions — you provide them; data entry beyond 50 products is an add-on',
-        'Online card and wallet payments (add-on: +PKR 50,000 / $400; included in Multi-Branch & Chain)',
-        'AI sales assistant (add-on: +PKR 65,000 / $650; included in Multi-Branch & Chain)',
+        'Online card and wallet payments (add-on: +PKR 50,000 / $400; included in Retail Operations & Chain)',
+        'AI sales assistant (add-on: +PKR 65,000 / $650; included in Retail Operations & Chain)',
       ],
     },
     growth: {
-      name: 'Multi-Branch',
+      name: 'Retail Operations',
       code: '',
-      badge: 'MOST POPULAR',
+      badge: 'RECOMMENDED',
 
 
       delivery: '21 days',
@@ -412,6 +412,15 @@ const PLAN_COPY: Record<Language, Record<PlanKey, OfferPlan>> = {
           ],
         },
         {
+          title: 'Owner and staff access',
+          desc: 'Staff see only what their job needs.',
+          items: [
+            'Owner only by default: purchase costs, margins, settings and staff accounts',
+            'Staff logins limited to their own work: sales, stock or warranty',
+            'The owner decides what each staff login can do',
+          ],
+        },
+        {
           title: 'Online payments (included — PKR 50,000 value)',
           desc: 'Card and wallet checkout for prepaid orders.',
           items: [
@@ -435,7 +444,6 @@ const PLAN_COPY: Record<Language, Record<PlanKey, OfferPlan>> = {
       exclusions: [
         'More than 3 locations (Chain plan)',
         'FBR or accounting/ERP integration (add-on)',
-        'Separate staff permission levels (add-on or Chain plan)',
         'Product photos and descriptions beyond the included setup',
         'Unlimited revisions — 2 rounds per milestone are included, then hourly',
       ],
@@ -522,9 +530,9 @@ const PLAN_COPY: Record<Language, Record<PlanKey, OfferPlan>> = {
   },
   'ur-en': {
     starter: {
-      name: 'Single Store',
+      name: 'Online Store',
       code: '',
-      badge: 'SINGLE STORE',
+      badge: 'ONLINE STORE',
 
 
       delivery: '10 din',
@@ -571,18 +579,18 @@ const PLAN_COPY: Record<Language, Record<PlanKey, OfferPlan>> = {
         },
       ],
       exclusions: [
-        'PC builder (Multi-Branch aur Chain mein)',
+        'PC builder (Retail Operations aur Chain mein)',
         'Ek se zyada location ka stock',
         'Serial number warranty tracking',
         'Product photos aur descriptions aap dein ge; 50 se zyada products ki data entry add-on hai',
-        'Online card aur wallet payments (add-on: +PKR 50,000 / $400; Multi-Branch aur Chain mein shamil)',
-        'AI sales assistant (add-on: +PKR 65,000 / $650; Multi-Branch aur Chain mein shamil)',
+        'Online card aur wallet payments (add-on: +PKR 50,000 / $400; Retail Operations aur Chain mein shamil)',
+        'AI sales assistant (add-on: +PKR 65,000 / $650; Retail Operations aur Chain mein shamil)',
       ],
     },
     growth: {
-      name: 'Multi-Branch',
+      name: 'Retail Operations',
       code: '',
-      badge: 'SAB SE MAQBOOL',
+      badge: 'RECOMMENDED',
 
 
       delivery: '21 din',
@@ -633,6 +641,15 @@ const PLAN_COPY: Record<Language, Record<PlanKey, OfferPlan>> = {
           ],
         },
         {
+          title: 'Owner aur staff access',
+          desc: 'Staff ko sirf apne kaam ki cheezein nazar aati hain.',
+          items: [
+            'Default mein sirf owner: purchase cost, margin, settings aur staff accounts',
+            'Staff login sirf apne kaam tak: sale, stock ya warranty',
+            'Har staff login kya kar sakta hai, yeh owner tay karta hai',
+          ],
+        },
+        {
           title: 'Online payments (shamil — PKR 50,000 ki value)',
           desc: 'Prepaid orders ke liye card aur wallet checkout.',
           items: [
@@ -656,7 +673,6 @@ const PLAN_COPY: Record<Language, Record<PlanKey, OfferPlan>> = {
       exclusions: [
         '3 se zyada locations (Chain plan)',
         'FBR ya accounting/ERP integration (add-on)',
-        'Alag alag staff permissions (add-on ya Chain plan)',
         'Included setup se zyada product photos aur descriptions',
         'La-mehdood revisions nahi — har milestone par 2 rounds, phir hourly',
       ],
@@ -788,6 +804,7 @@ export const EXTRAS_DATA: Extra[] = [
   },
   {
     en: 'Staff roles & permissions',
+    starterOnly: true,
     ur: 'Staff roles aur permissions',
     pricePkr: '+ PKR 40,000',
     priceUsd: '+ $350',
@@ -823,9 +840,9 @@ export const EXTRAS_DATA: Extra[] = [
     priceUsd: '+ $400',
     starterOnly: true,
     descEn:
-      'Accept cards, JazzCash and EasyPaisa on your site. Included in Multi-Branch and Chain.',
+      'Accept cards, JazzCash and EasyPaisa on your site. Included in Retail Operations and Chain.',
     descUr:
-      'Website par cards, JazzCash aur EasyPaisa. Multi-Branch aur Chain mein shamil.',
+      'Website par cards, JazzCash aur EasyPaisa. Retail Operations aur Chain mein shamil.',
   },
   {
     en: 'AI sales assistant',
@@ -834,9 +851,9 @@ export const EXTRAS_DATA: Extra[] = [
     priceUsd: '+ $650',
     starterOnly: true,
     descEn:
-      'Suggests parts by budget, checks compatibility, and passes the chat to your WhatsApp. Included in Multi-Branch and Chain.',
+      'Suggests parts by budget, checks compatibility, and passes the chat to your WhatsApp. Included in Retail Operations and Chain.',
     descUr:
-      'Budget ke mutabiq parts suggest, compatibility check, aur chat aapke WhatsApp par. Multi-Branch aur Chain mein shamil.',
+      'Budget ke mutabiq parts suggest, compatibility check, aur chat aapke WhatsApp par. Retail Operations aur Chain mein shamil.',
   },
   {
     en: 'FBR or accounting integration',

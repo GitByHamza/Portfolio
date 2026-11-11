@@ -69,7 +69,7 @@ test('generated public resources are complete, match their source, and include p
 test('briefing page links stay on the current site and downloads use native resource URLs', { skip: !built }, () => {
   const html = htmlFor('/context')
   assert.ok(html.includes('href="/project/10"'))
-  assert.ok(html.includes('href="/offers/tech-retail/plans/single-store"'))
+  assert.ok(html.includes('href="/offers/tech-retail/plans/online-store"'))
   assert.ok(html.includes('href="/llms-full.txt"'))
   assert.doesNotMatch(html, /href="https:\/\/texcodes.com\/project\//)
 })

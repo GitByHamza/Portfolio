@@ -12,7 +12,7 @@ export function OfferExtra({ extra, currency = 'USD', isUrdu = false }) {
       <ChevronDown size={16} className="shrink-0 mt-1 group-open:rotate-180 transition-transform" />
     </summary>
     <p className="offer-body pt-4 mt-3 border-t border-black/10 dark:border-white/10 text-[#575652] dark:text-[#C5C4BE]">{isUrdu ? extra.descUr : extra.descEn}</p>
-    {extra.starterOnly && <p className="offer-ui mt-3 text-[#047857] dark:text-[#10B981]">{isUrdu ? 'Multi-Branch aur Chain mein shamil.' : 'Included in Multi-Branch and Chain.'}</p>}
+    {extra.starterOnly && <p className="offer-ui mt-3 text-[#047857] dark:text-[#10B981]">{isUrdu ? 'Retail Operations aur Chain mein shamil.' : 'Included in Retail Operations and Chain.'}</p>}
   </details>
 }
 

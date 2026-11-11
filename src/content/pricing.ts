@@ -2,7 +2,7 @@ export type Language = 'en' | 'ur-en'
 export type Currency = 'USD' | 'GBP' | 'PKR'
 export type OfferKey = 'tech' | 'laptop' | 'console'
 export type PlanKey = 'starter' | 'growth' | 'enterprise'
-export type PlanSlug = 'single-store' | 'multi-branch' | 'chain-wholesale'
+export type PlanSlug = 'online-store' | 'retail-operations' | 'chain-wholesale'
 export type Price = { amount: number; compare: number; startingAt?: boolean }
 export type RegionalPrices = { USD: Price; PKR: Price; GBP?: Price }
 export type PlanModule = { title: string; desc?: string; items?: string[] }
@@ -20,10 +20,14 @@ export type Extra = {
 
 export const PLAN_KEYS: PlanKey[] = ['starter', 'growth', 'enterprise']
 export const PLAN_SLUGS: Record<PlanKey, PlanSlug> = {
-  starter: 'single-store', growth: 'multi-branch', enterprise: 'chain-wholesale',
+  starter: 'online-store', growth: 'retail-operations', enterprise: 'chain-wholesale',
+}
+// Plan URLs used before the plans were renamed. Old links redirect to the new ones.
+export const OLD_PLAN_SLUGS: Record<string, PlanSlug> = {
+  'single-store': 'online-store', 'multi-branch': 'retail-operations',
 }
 export const PLAN_NAMES: Record<PlanKey, string> = {
-  starter: 'Single Store', growth: 'Multi-Branch', enterprise: 'Chain & Wholesale',
+  starter: 'Online Store', growth: 'Retail Operations', enterprise: 'Chain & Wholesale',
 }
 
 // Advertised regional prices, not live exchange-rate conversions.
@@ -97,7 +101,7 @@ export function comparePrices(key: OfferKey) {
 export const COMMERCIAL = {
   payment: '40 / 40 / 20: to start, at staging approval, and at launch.',
   ownership: 'On final payment, your GitHub repository, database and admin accounts are transferred to you. Your design, content and custom features are yours alone. The core engine is shared across clients; market exclusivity can be arranged.',
-  delivery: 'Single Store: 10 days. Multi-Branch: 21 days. Chain & Wholesale: from 30 days, with the final date fixed in the scope document. The clock starts when content and first payment are received and pauses while awaiting content, feedback or third-party approvals.',
+  delivery: 'Online Store: 10 days. Retail Operations: 21 days. Chain & Wholesale: from 30 days, with the final date fixed in the scope document. The clock starts when content and first payment are received and pauses while awaiting content, feedback or third-party approvals.',
   warranty: 'Bugs in the delivered work are fixed free for 30 days. New features are quoted upfront or covered by a Care Plan.',
   guarantee: 'Test the private staging deployment against the signed acceptance checklist. Unmet items are fixed within 10 working days. If the checklist still cannot be met, the deposit is refundable on request and the engagement ends.',
   costs: 'No monthly platform fee or sales commission. Hosting, domain renewal, payment gateway fees, SMS/WhatsApp API costs and AI usage are paid separately. Care Plans are optional monthly services and include hosting.',
