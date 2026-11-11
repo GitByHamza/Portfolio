@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
-import { ArrowRight, MessageCircle } from 'lucide-react'
-import { FUNNEL_COPY, SHOP_TYPES, adRef, funnelFormWhatsAppUrl } from '../content/tech-retail-funnel.ts'
+import { ArrowRight, CalendarCheck, MessageCircle } from 'lucide-react'
+import { FUNNEL_COPY, NEED_OPTIONS, PROCESS_OPTIONS, SHOP_TYPES, adRef, funnelFormWhatsAppUrl, needLabel } from '../content/tech-retail-funnel.ts'
 import type { FunnelLanguage, ShopType } from '../content/tech-retail-funnel.ts'
 import { BRANCH_OPTIONS, leadRow, rememberAdSource, saveLeadRow, validateLead } from '../lib/funnel-lead.ts'
 import type { AdSource, LeadField, LeadRow } from '../lib/funnel-lead.ts'
 import { trackPixelEvent } from '../lib/meta-pixel.ts'
 
-const FIELDS: LeadField[] = ['shop', 'city', 'branches', 'whatsapp']
+const FIELDS: LeadField[] = ['shop', 'city', 'branches', 'process', 'needs', 'whatsapp']
 
 function sessionStore(): Storage | null {
   try { return window.sessionStorage } catch { return null }
@@ -51,7 +51,7 @@ export default function FunnelLeadForm({ language, shop, onShopChange }: Props) 
     event.preventDefault()
     const data = new FormData(event.currentTarget)
     const value = (name: string) => String(data.get(name) ?? '')
-    const result = validateLead({ shop: value('shop'), city: value('city'), branches: value('branches'), whatsapp: value('whatsapp'), website: value('website') })
+    const result = validateLead({ shop: value('shop'), city: value('city'), branches: value('branches'), process: value('process'), needs: data.getAll('needs').map(String), whatsapp: value('whatsapp'), website: value('website') })
     if (!result.ok) {
       setErrors(result.errors)
       const first = FIELDS.find((field) => result.errors[field])
@@ -97,10 +97,20 @@ export default function FunnelLeadForm({ language, shop, onShopChange }: Props) 
       <input id="lead-city" name="city" type="text" autoComplete="address-level2" placeholder={form.cityPlaceholder} maxLength={60} {...described('city')} />
       {error('city')}
     </div>
-    <fieldset className="tr-field tr-branches" {...described('branches')}>
+    <fieldset className="tr-field tr-choices" {...described('branches')}>
       <legend>{form.branches}</legend>
       <div>{BRANCH_OPTIONS.map((option) => <label key={option}><input type="radio" name="branches" value={option} />{form.branchOptions[option]}</label>)}</div>
       {error('branches')}
+    </fieldset>
+    <fieldset className="tr-field tr-choices" {...described('process')}>
+      <legend>{form.process}</legend>
+      <div>{PROCESS_OPTIONS.map((option) => <label key={option}><input type="radio" name="process" value={option} />{form.processOptions[option]}</label>)}</div>
+      {error('process')}
+    </fieldset>
+    <fieldset className="tr-field tr-choices tr-needs" {...described('needs')}>
+      <legend>{form.needs} <span>{form.needsHint}</span></legend>
+      <div>{NEED_OPTIONS.map((option) => <label key={option}><input type="checkbox" name="needs" value={option} />{needLabel(language, shop, option)}</label>)}</div>
+      {error('needs')}
     </fieldset>
     <div className="tr-field">
       <label htmlFor="lead-whatsapp">{form.whatsapp}</label>
@@ -108,7 +118,7 @@ export default function FunnelLeadForm({ language, shop, onShopChange }: Props) 
       {error('whatsapp')}
     </div>
     <div className="tr-hp" aria-hidden="true"><label htmlFor="lead-website">Website</label><input id="lead-website" name="website" type="text" tabIndex={-1} autoComplete="off" /></div>
-    <button className="tr-cta" type="submit"><MessageCircle size={20} aria-hidden="true" />{form.submit}<ArrowRight size={18} aria-hidden="true" /></button>
+    <button className="tr-cta" type="submit"><CalendarCheck size={20} aria-hidden="true" />{form.submit}<ArrowRight size={18} aria-hidden="true" /></button>
     <p className="tr-action-note">{form.note}</p>
   </form>
 }

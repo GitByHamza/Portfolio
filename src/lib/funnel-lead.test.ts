@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
-import { SHOP_TYPES } from '../content/tech-retail-funnel.ts'
+import { NEED_OPTIONS, PROCESS_OPTIONS, SHOP_TYPES } from '../content/tech-retail-funnel.ts'
 import { BRANCH_OPTIONS, leadRow, normalizePakistaniMobile, readAdSource, rememberAdSource, saveLeadRow, validateLead } from './funnel-lead.ts'
 
 test('Pakistani mobile numbers are accepted in every common format and stored as +92', () => {
@@ -17,31 +17,44 @@ test('landlines, short numbers and foreign numbers are rejected', () => {
 })
 
 test('a complete lead passes and is cleaned', () => {
-  const result = validateLead({ shop: 'console', city: '  Lahore ', branches: '2-3', whatsapp: '0300 1234567', website: '' })
-  assert.deepEqual(result, { ok: true, spam: false, lead: { shop: 'console', city: 'Lahore', branches: '2-3', whatsapp: '+923001234567' } })
+  const result = validateLead({ shop: 'console', city: '  Lahore ', branches: '2-3', process: 'sheets', needs: ['stock'], whatsapp: '0300 1234567', website: '' })
+  assert.deepEqual(result, { ok: true, spam: false, lead: { shop: 'console', city: 'Lahore', branches: '2-3', process: 'sheets', needs: ['stock'], whatsapp: '+923001234567' } })
   // Mobile and camera are no longer offered, so the form does not accept them.
-  assert.equal(validateLead({ shop: 'camera', city: 'Lahore', branches: '1', whatsapp: '03001234567' }).ok, false)
+  assert.equal(validateLead({ shop: 'camera', city: 'Lahore', branches: '1', process: 'sheets', needs: ['stock'], whatsapp: '03001234567' }).ok, false)
 })
 
 test('each missing or wrong field is reported, and nothing else', () => {
-  const result = validateLead({ shop: 'bakery', city: 'L', branches: '9', whatsapp: '12345' })
+  const result = validateLead({ shop: 'bakery', city: 'L', branches: '9', process: 'abacus', needs: [], whatsapp: '12345' })
   assert.equal(result.ok, false)
-  if (!result.ok) assert.deepEqual(result.errors, { shop: true, city: true, branches: true, whatsapp: true })
-  const partial = validateLead({ shop: 'pc', city: 'Karachi', branches: '1', whatsapp: '' })
+  if (!result.ok) assert.deepEqual(result.errors, { shop: true, city: true, branches: true, process: true, needs: true, whatsapp: true })
+  const partial = validateLead({ shop: 'pc', city: 'Karachi', branches: '1', process: 'sheets', needs: ['stock'], whatsapp: '' })
   assert.equal(partial.ok, false)
   if (!partial.ok) assert.deepEqual(partial.errors, { whatsapp: true })
 })
 
+test('qualification answers: one record-keeping option and at least one known need, kept in form order', () => {
+  const lead = (process: string, needs: string[]) => validateLead({ shop: 'pc', city: 'Lahore', branches: '2-3', process, needs, whatsapp: '03001234567' })
+  const result = lead('register', ['staff', 'trade', 'staff'])
+  assert.equal(result.ok, true)
+  if (result.ok) { assert.equal(result.lead.process, 'register'); assert.deepEqual(result.lead.needs, ['trade', 'staff']) }
+  assert.deepEqual([...PROCESS_OPTIONS], ['register', 'sheets', 'software', 'whatsapp'])
+  assert.deepEqual([...NEED_OPTIONS], ['trade', 'stock', 'warranty', 'orders', 'staff'])
+  for (const process of PROCESS_OPTIONS) assert.equal(lead(process, ['stock']).ok, true, process)
+  const wrong = lead('', ['stock', 'pricing'])
+  assert.equal(wrong.ok, false)
+  if (!wrong.ok) assert.deepEqual(wrong.errors, { process: true, needs: true })
+})
+
 test('city names are limited in length and to plain text', () => {
-  assert.equal(validateLead({ shop: 'pc', city: 'x'.repeat(61), branches: '1', whatsapp: '03001234567' }).ok, false)
-  assert.equal(validateLead({ shop: 'pc', city: '<script>', branches: '1', whatsapp: '03001234567' }).ok, false)
+  assert.equal(validateLead({ shop: 'pc', city: 'x'.repeat(61), branches: '1', process: 'sheets', needs: ['stock'], whatsapp: '03001234567' }).ok, false)
+  assert.equal(validateLead({ shop: 'pc', city: '<script>', branches: '1', process: 'sheets', needs: ['stock'], whatsapp: '03001234567' }).ok, false)
   for (const city of ['Rawalpindi', 'Dera Ghazi Khan', "D.I. Khan", 'Mandi Bahauddin', 'لاہور']) {
-    assert.equal(validateLead({ shop: 'pc', city, branches: '1', whatsapp: '03001234567' }).ok, true, city)
+    assert.equal(validateLead({ shop: 'pc', city, branches: '1', process: 'sheets', needs: ['stock'], whatsapp: '03001234567' }).ok, true, city)
   }
 })
 
 test('a filled hidden field marks the submission as spam without telling the visitor', () => {
-  const result = validateLead({ shop: 'pc', city: 'Lahore', branches: '1', whatsapp: '03001234567', website: 'http://spam.example' })
+  const result = validateLead({ shop: 'pc', city: 'Lahore', branches: '1', process: 'sheets', needs: ['stock'], whatsapp: '03001234567', website: 'http://spam.example' })
   assert.equal(result.ok, true)
   if (result.ok) assert.equal(result.spam, true)
 })
@@ -82,26 +95,29 @@ test('blocked or broken storage never stops the form', () => {
 })
 
 test('the database migration accepts everything the form accepts', () => {
-  const sql = readFileSync(new URL('../../supabase/migrations/20261111_funnel_leads.up.sql', import.meta.url), 'utf8')
+  const migration = (name: string) => readFileSync(new URL(`../../supabase/migrations/${name}.up.sql`, import.meta.url), 'utf8')
+  const sql = migration('20261111_funnel_leads') + migration('20261112_funnel_leads_qualification')
   // The table keeps accepting mobile and camera so leads already saved for them stay valid.
   const allowed = sql.match(/shop_type in (([^)]*))/)?.[1] ?? ''
   for (const shop of SHOP_TYPES) assert.ok(allowed.includes(`'${shop}'`), `the database must accept ${shop}`)
   assert.ok(sql.includes(`branches in (${BRANCH_OPTIONS.map((option) => `'${option}'`).join(', ')})`))
   assert.ok(sql.includes(String.raw`whatsapp ~ '^\+923[0-9]{9}$'`))
-  for (const column of Object.keys(leadRow({ shop: 'pc', city: 'Lahore', branches: '1', whatsapp: '+923001234567' }, 'en', {}, '/'))) assert.match(sql, new RegExp(`\\n  ${column} `), `missing column ${column}`)
+  for (const column of Object.keys(leadRow({ shop: 'pc', city: 'Lahore', branches: '1', process: 'software', needs: ['stock', 'warranty'], whatsapp: '+923001234567' }, 'en', {}, '/'))) assert.match(sql, new RegExp(`(\\n  |add column if not exists )${column} `), `missing column ${column}`)
+  for (const process of PROCESS_OPTIONS) assert.ok(sql.includes(`'${process}'`), `the database must accept ${process}`)
+  assert.ok(sql.includes(`array[${NEED_OPTIONS.map((need) => `'${need}'`).join(', ')}]`), 'the database must accept every need, and only those')
   assert.match(sql, /enable row level security/)
   assert.doesNotMatch(sql, /for select to (anon|public)/, 'visitors must not be able to read leads')
 })
 
 test('the saved row has the database column names and only known fields', () => {
-  const row = leadRow({ shop: 'laptop', city: 'Karachi', branches: '1', whatsapp: '+923001234567' }, 'ur-en', { utm_campaign: 'pk-cold', fbclid: 'abc' }, '/ur/tech-retail/offer')
+  const row = leadRow({ shop: 'laptop', city: 'Karachi', branches: '1', process: 'software', needs: ['stock', 'warranty'], whatsapp: '+923001234567' }, 'ur-en', { utm_campaign: 'pk-cold', fbclid: 'abc' }, '/ur/tech-retail/offer')
   assert.deepEqual(row, {
-    shop_type: 'laptop', city: 'Karachi', branches: '1', whatsapp: '+923001234567', language: 'ur-en', page_path: '/ur/tech-retail/offer',
+    shop_type: 'laptop', city: 'Karachi', branches: '1', current_process: 'software', needs: ['stock', 'warranty'], whatsapp: '+923001234567', language: 'ur-en', page_path: '/ur/tech-retail/offer',
     utm_source: null, utm_medium: null, utm_campaign: 'pk-cold', utm_content: null, utm_term: null, fbclid: 'abc',
   })
 })
 
-const row = leadRow({ shop: 'pc', city: 'Lahore', branches: '1', whatsapp: '+923001234567' }, 'en', {}, '/tech-retail/offer/pc')
+const row = leadRow({ shop: 'pc', city: 'Lahore', branches: '1', process: 'software', needs: ['stock', 'warranty'], whatsapp: '+923001234567' }, 'en', {}, '/tech-retail/offer/pc')
 const quiet = async (run: () => Promise<boolean>) => { const warn = console.warn; console.warn = () => {}; try { return await run() } finally { console.warn = warn } }
 
 test('saving a lead reports success only when the database accepts it', async () => {

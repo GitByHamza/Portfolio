@@ -1,14 +1,15 @@
-// The short lead form on the Tech Retail funnel: validation, ad-source capture and the database row.
-// The same four questions as the Meta instant form: shop type, city, branches, WhatsApp number.
-import { SHOP_TYPES } from '../content/tech-retail-funnel.ts'
-import type { FunnelLanguage, ShopType } from '../content/tech-retail-funnel.ts'
+// The demo form on the Tech Retail funnel: validation, ad-source capture and the database row.
+// Six light qualification questions: shop type, city, branches, how records are kept today,
+// what the system should handle first, and a WhatsApp number.
+import { NEED_OPTIONS, PROCESS_OPTIONS, SHOP_TYPES } from '../content/tech-retail-funnel.ts'
+import type { CurrentProcess, FunnelLanguage, Need, ShopType } from '../content/tech-retail-funnel.ts'
 
 export const BRANCH_OPTIONS = ['1', '2-3', '4+'] as const
 export type Branches = (typeof BRANCH_OPTIONS)[number]
 
-export type Lead = { shop: ShopType; city: string; branches: Branches; whatsapp: string }
-export type LeadField = 'shop' | 'city' | 'branches' | 'whatsapp'
-export type LeadInput = { shop: string; city: string; branches: string; whatsapp: string; website?: string }
+export type Lead = { shop: ShopType; city: string; branches: Branches; process: CurrentProcess; needs: Need[]; whatsapp: string }
+export type LeadField = 'shop' | 'city' | 'branches' | 'process' | 'needs' | 'whatsapp'
+export type LeadInput = { shop: string; city: string; branches: string; process: string; needs: string[]; whatsapp: string; website?: string }
 export type LeadResult = { ok: true; spam: boolean; lead: Lead } | { ok: false; errors: Partial<Record<LeadField, true>> }
 
 const CITY = /^[\p{L}\p{M}][\p{L}\p{M} .'-]{1,59}$/u
@@ -29,9 +30,13 @@ export function validateLead(input: LeadInput): LeadResult {
   if (!(SHOP_TYPES as readonly string[]).includes(input.shop)) errors.shop = true
   if (!CITY.test(city)) errors.city = true
   if (!(BRANCH_OPTIONS as readonly string[]).includes(input.branches)) errors.branches = true
+  if (!(PROCESS_OPTIONS as readonly string[]).includes(input.process)) errors.process = true
+  // Known options only, in the form's order, each once.
+  const needs = NEED_OPTIONS.filter((need) => input.needs.includes(need))
+  if (!needs.length || input.needs.some((need) => !(NEED_OPTIONS as readonly string[]).includes(need))) errors.needs = true
   if (!whatsapp) errors.whatsapp = true
   if (Object.keys(errors).length || !whatsapp) return { ok: false, errors }
-  return { ok: true, spam: !!input.website?.trim(), lead: { shop: input.shop as ShopType, city, branches: input.branches as Branches, whatsapp } }
+  return { ok: true, spam: !!input.website?.trim(), lead: { shop: input.shop as ShopType, city, branches: input.branches as Branches, process: input.process as CurrentProcess, needs, whatsapp } }
 }
 
 // Which ad brought the visitor. Saved with each form lead so leads can be matched to hooks.
@@ -73,7 +78,8 @@ export function rememberAdSource(search: string, storage: SessionStore | null): 
 
 export function leadRow(lead: Lead, language: FunnelLanguage, source: AdSource, pagePath: string) {
   return {
-    shop_type: lead.shop, city: lead.city, branches: lead.branches, whatsapp: lead.whatsapp, language, page_path: pagePath.slice(0, 200),
+    shop_type: lead.shop, city: lead.city, branches: lead.branches, current_process: lead.process, needs: lead.needs,
+    whatsapp: lead.whatsapp, language, page_path: pagePath.slice(0, 200),
     ...Object.fromEntries(AD_PARAMS.map((key) => [key, source[key] ?? null])) as Record<AdParam, string | null>,
   }
 }
