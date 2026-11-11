@@ -5,7 +5,7 @@ import MetaPixel from './components/MetaPixel'
 import Error404 from './pages/Error404'
 import './index.css'
 
-const fonts = 'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,400;1,6..72,500&family=Oswald:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap'
+const fonts = 'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,400;1,6..72,500&family=Oswald:wght@500;600;700&family=Lexend:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap'
 const themeScript = "try{if(localStorage.getItem('Theme')==='Dark')document.documentElement.classList.add('dark')}catch{}"
 
 export const links = () => [
