@@ -165,7 +165,7 @@ test('after the form, WhatsApp opens on the business number with the answers and
 test('each shop type opens its own demo store', () => {
   assert.equal(funnelDemoUrl('pc'), 'https://store-demo-eight.vercel.app/?mode=pc')
   assert.equal(funnelDemoUrl('laptop'), 'https://store-demo-eight.vercel.app/?mode=laptop')
-  assert.equal(funnelDemoUrl('console'), 'https://console-store-demo.vercel.app/')
+  assert.equal(funnelDemoUrl('console'), 'https://console-store-demo.vercel.app/?currency=PKR')
 })
 
 test('the funnel and each shop type\'s page resolve in both languages, and search engines get no price', () => {

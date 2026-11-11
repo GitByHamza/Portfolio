@@ -16,7 +16,7 @@ export const FUNNEL_ASSETS = { video: '/video/tech-retail-overview.mp4', poster:
 const DEMOS: Record<ShopType, string> = {
   pc: 'https://store-demo-eight.vercel.app/?mode=pc',
   laptop: 'https://store-demo-eight.vercel.app/?mode=laptop',
-  console: 'https://console-store-demo.vercel.app/',
+  console: 'https://console-store-demo.vercel.app/?currency=PKR',
 }
 export const funnelDemoUrl = (shop: ShopType): string => DEMOS[shop]
 

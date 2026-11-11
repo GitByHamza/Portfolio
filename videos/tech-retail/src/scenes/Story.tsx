@@ -3,13 +3,13 @@ import { useCurrentFrame, useVideoConfig } from 'remotion';
 import { theme } from '../theme';
 import { move, ProductScreen, Reveal, Scene } from '../components/Motion';
 
-// The funnel's hero film. It shows no pricing: prices are discussed on WhatsApp after the demo.
+// The funnel's hero film. It shows no pricing; the page under it shows each plan's price.
 // Wording matches the funnel page and the ads: Roman Urdu mixed with everyday English.
 const WHATSAPP = '0309 1824000';
-const SHOPS = ['Computer', 'Laptop', 'Mobile', 'Camera', 'Console'];
+const SHOPS = ['Computer', 'Laptop', 'Console'];
 const PLANS = [
-  { name: 'Single Store', line: 'Ek shop, online store aur WhatsApp orders', live: '10 din mein live' },
-  { name: 'Multi-Branch', line: 'Counter aur online saath, 3 locations tak', live: '21 din mein live' },
+  { name: 'Online Store', line: 'Ek shop online, orders WhatsApp pe', live: '10 din mein live' },
+  { name: 'Retail Operations', line: 'Ek shop ya 3 locations: stock, warranty, khaas tools', live: '21 din mein live' },
   { name: 'Chain & Wholesale', line: 'Unlimited branches, staff roles, POS aur courier', live: '30 din se' },
 ];
 
@@ -70,12 +70,12 @@ export function Warranty() {
 }
 
 export function Package() {
-  return <Scene light duration={9.5} note="Delivery ka time aap ka content aur pehli payment milne se shuru hota hai. Exact quote WhatsApp pe.">
+  return <Scene light duration={9.5} note="Delivery ka time aap ka content aur pehli payment milne se shuru hota hai. Har plan ki price neeche page pe.">
     <div className="absolute" style={{ top: 262, left: 130, width: 700 }}>
       <Reveal delay={.1}><p style={{ fontSize: 29, color: theme.colors.lightMuted }}>Tech Retail OS</p></Reveal>
       <Reveal delay={.26}><h1 style={{ ...headline, fontSize: 150, letterSpacing: -5, lineHeight: 1, color: theme.colors.forest, marginTop: 34 }}>3 plans.</h1></Reveal>
       <Reveal delay={.65}><p style={{ fontFamily: theme.fonts.display, fontSize: 58, lineHeight: 1.15, letterSpacing: -1.2, marginTop: 26 }}>Aap ki shop ke<br />hisaab se.</p></Reveal>
-      <Reveal delay={2.6}><p style={{ fontSize: 28, marginTop: 44, color: theme.colors.lightMuted, lineHeight: 1.6 }}>Apni shop ke baare mein batayein, hum sahi plan ka exact quote bhej dete hain.</p></Reveal>
+      <Reveal delay={2.6}><p style={{ fontSize: 28, marginTop: 44, color: theme.colors.lightMuted, lineHeight: 1.6 }}>Har plan ki price aur poori detail neeche page pe.</p></Reveal>
     </div>
     <div className="absolute" style={{ top: 252, left: 930, width: 860 }}>
       {PLANS.map((plan, index) => <Reveal delay={.9 + index * .45} key={plan.name}><div className="flex items-center justify-between" style={{ gap: 28, paddingBlock: 38, borderBottom: `1px solid ${theme.colors.lightMuted}44` }}>
