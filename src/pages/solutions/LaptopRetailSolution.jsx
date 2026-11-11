@@ -1,4 +1,3 @@
-import { LanguageLink } from '../../components/SiteLink'
 import OfferReference, { OfferExtra } from '../../components/offers/OfferReference'
 import Link from '../../components/SiteLink'
 import { I18N_DATA, PLANS_DETAIL as LAPTOP_PLANS_DETAIL, EXTRAS_DATA as LAPTOP_EXTRAS_DATA, COMPARE_PRICES } from '../../content/offers/laptop.ts'
@@ -21,7 +20,6 @@ import {
   HelpCircle,
   Phone,
   Layers,
-  Globe,
   ArrowUpRight,
   CheckCircle2,
   Maximize2,
@@ -37,7 +35,6 @@ import PlanDetailModal from '../../components/PlanDetailModal'
 import OfferFAQ from '../../components/OfferFAQ'
 import ComparePrice from '../../components/ComparePrice'
 import { useCurrency } from '../../hooks/useCurrency'
-import ThemeToggle from '../../components/ThemeToggle'
 import { useLanguage } from '../../context/LanguageContext'
 
 // Geo / Timezone auto-selection for Language
@@ -73,54 +70,6 @@ export default function LaptopRetailSolution() {
         onClose={() => setActiveModalKey(null)}
         onOpenWhatsApp={(name, price) => openWhatsApp(name, price)}
       />
-
-      {/* ─── Top Bar: Language & Theme Controls ─── */}
-      <div className="border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-[#FAF9F5] dark:bg-[#161619] px-4 sm:px-8 py-2.5">
-        <div className="max-w-7xl mx-auto flex items-center justify-between offer-ui flex-wrap gap-2">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#059669] dark:bg-[#10B981] animate-pulse shadow-[0_0_8px_#10B981]" />
-            <span className="text-[#0F0F0F] dark:text-[#EDECE6] font-bold uppercase tracking-wider hidden sm:inline">
-              TEXCODES · LAPTOP RETAIL OS
-            </span>
-            <span className="text-[#0F0F0F] dark:text-[#EDECE6] font-bold uppercase tracking-wider sm:hidden">
-              LAPTOP OS
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-            {/* Language Selector */}
-            <div className="flex items-center gap-1">
-              <Globe size={13} className="text-[#575652] dark:text-[#9B9A95]" />
-              <div className="inline-flex items-center border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#1A1A1E] p-0.5">
-                <LanguageLink
-                  language="en"
-                  className={`px-2 py-0.5 offer-ui font-bold transition-colors cursor-pointer ${
-                    lang === 'en'
-                      ? 'bg-[#059669] text-white dark:bg-[#10B981]'
-                      : 'text-[#575652] dark:text-[#9B9A95] hover:text-[#0F0F0F] dark:hover:text-[#EDECE6]'
-                  }`}
-                >
-                  EN
-                </LanguageLink>
-                <LanguageLink
-                  language="ur-en"
-                  className={`px-2 py-0.5 offer-ui font-bold transition-colors cursor-pointer ${
-                    lang === 'ur-en'
-                      ? 'bg-[#059669] text-white dark:bg-[#10B981]'
-                      : 'text-[#575652] dark:text-[#9B9A95] hover:text-[#0F0F0F] dark:hover:text-[#EDECE6]'
-                  }`}
-                >
-                  UR
-                </LanguageLink>
-              </div>
-            </div>
-
-            <span className="text-[rgba(15,15,15,0.2)] dark:text-[rgba(255,255,255,0.2)] hidden sm:inline">|</span>
-            <ThemeToggle className="hidden sm:inline-flex" />
-            <ThemeToggle variant="icon" className="sm:hidden" />
-          </div>
-        </div>
-      </div>
 
       {/* ─── Hero Section ─── */}
       <section className="px-4 sm:px-8 py-16 sm:py-24 border-b border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] relative overflow-hidden">
