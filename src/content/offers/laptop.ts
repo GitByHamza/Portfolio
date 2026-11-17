@@ -307,6 +307,7 @@ export const I18N_DATA = pricedCopy('laptop', I18N_COPY)
 const PLAN_COPY: Record<Language, Record<PlanKey, OfferPlan>> = {
   en: {
     starter: {
+      adminDemoUrl: 'https://store-demo-eight.vercel.app/admin/dashboard?plan=single',
       name: 'Online Store',
       code: '',
       badge: 'ONLINE STORE',
@@ -367,6 +368,7 @@ const PLAN_COPY: Record<Language, Record<PlanKey, OfferPlan>> = {
       ],
     },
     growth: {
+      adminDemoUrl: 'https://store-demo-eight.vercel.app/admin/dashboard?plan=multi',
       name: 'Retail Operations',
       code: '',
       badge: 'RECOMMENDED',
@@ -443,6 +445,7 @@ const PLAN_COPY: Record<Language, Record<PlanKey, OfferPlan>> = {
       ],
     },
     enterprise: {
+      adminDemoUrl: 'https://store-demo-eight.vercel.app/admin/dashboard?plan=multi',
       name: 'Chain & Wholesale',
       code: '',
       badge: 'FOR CHAINS',
@@ -501,6 +504,7 @@ const PLAN_COPY: Record<Language, Record<PlanKey, OfferPlan>> = {
   },
   'ur-en': {
     starter: {
+      adminDemoUrl: 'https://store-demo-eight.vercel.app/admin/dashboard?plan=single',
       name: 'Online Store',
       code: '',
       badge: 'ONLINE STORE',
@@ -561,6 +565,7 @@ const PLAN_COPY: Record<Language, Record<PlanKey, OfferPlan>> = {
       ],
     },
     growth: {
+      adminDemoUrl: 'https://store-demo-eight.vercel.app/admin/dashboard?plan=multi',
       name: 'Retail Operations',
       code: '',
       badge: 'RECOMMENDED',
@@ -637,6 +642,7 @@ const PLAN_COPY: Record<Language, Record<PlanKey, OfferPlan>> = {
       ],
     },
     enterprise: {
+      adminDemoUrl: 'https://store-demo-eight.vercel.app/admin/dashboard?plan=multi',
       name: 'Chain & Wholesale',
       code: '',
       badge: 'CHAINS KE LIYE',
