@@ -13,7 +13,7 @@ const absolute = (path: string) => `${SITE_ORIGIN}${path}`
 export function briefingMarkdown(): string {
   const lines = [
     '# TeXCodes — business and portfolio briefing', '', `Reviewed: ${CONTENT_UPDATED}`, '',
-    `${BUSINESS.owner} (Hamza) runs ${BUSINESS.name}, an independent software engineering studio and product builder based in Pakistan (PKT / UTC+5), working remotely worldwide.`, '',
+    `${BUSINESS.owner} (Hamza) runs ${BUSINESS.legalName}, an independent software engineering studio and product builder registered in ${BUSINESS.registeredIn}, working remotely worldwide.`, '',
     '## Engineering services', '',
     'Custom SaaS and SaaS modernization; business operations systems, CRMs and ERPs; retail commerce platforms; AI and WhatsApp automation. Technologies include Next.js, React, Vue, Laravel, Node.js, PostgreSQL and Prisma.', '',
     '## Commercial offers', '',
@@ -64,7 +64,7 @@ export function sitemapXml(): string {
 }
 
 export function structuredData(page: PublicPage): Record<string, unknown> {
-  const organization = { '@type': 'Organization', '@id': `${SITE_ORIGIN}/#organization`, name: BUSINESS.name, url: SITE_ORIGIN, logo: absolute('/brand/texcodes-logo.png'), email: BUSINESS.email, telephone: BUSINESS.phoneE164, founder: { '@type': 'Person', name: BUSINESS.owner } }
+  const organization = { '@type': 'Organization', '@id': `${SITE_ORIGIN}/#organization`, name: BUSINESS.name, legalName: BUSINESS.legalName, url: SITE_ORIGIN, logo: absolute('/brand/texcodes-logo.png'), email: BUSINESS.email, telephone: BUSINESS.phoneE164, founder: { '@type': 'Person', name: BUSINESS.owner } }
   const graph: Record<string, unknown>[] = [organization, { '@type': 'WebSite', '@id': `${SITE_ORIGIN}/#website`, name: BUSINESS.name, url: SITE_ORIGIN, publisher: { '@id': organization['@id'] } }, { '@type': 'WebPage', '@id': absolute(page.path), url: absolute(page.path), name: page.title, description: page.description, inLanguage: page.lang === 'ur-en' ? 'ur-Latn' : 'en', isPartOf: { '@id': `${SITE_ORIGIN}/#website` } }]
   const offer = offers.find((offer) => offer.slug === page.offer)
   // The funnel shows no pricing, so it publishes the service without any price offers.

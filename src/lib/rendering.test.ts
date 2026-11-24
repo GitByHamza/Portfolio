@@ -62,7 +62,7 @@ test('generated public resources are complete, match their source, and include p
   for (const path of RESOURCE_PATHS) assert.ok(statSync(new URL(path.slice(1), output)).size > 30)
   assert.equal(readFileSync(new URL('context.md', output), 'utf8'), briefingMarkdown())
   const full = readFileSync(new URL('llms-full.txt', output), 'utf8')
-  for (const phrase of ['Information we collect', 'Data Deletion Request', 'laws of Pakistan', 'Cancellation and refunds', 'Care Plans']) assert.ok(full.includes(phrase), phrase)
+  for (const phrase of ['Information we collect', 'Data Deletion Request', 'laws of the State of New Mexico', 'Cancellation and refunds', 'Care Plans']) assert.ok(full.includes(phrase), phrase)
   assert.doesNotMatch(full, /admin_authed|VITE_ADMIN_PASSWORD|<script/)
 })
 

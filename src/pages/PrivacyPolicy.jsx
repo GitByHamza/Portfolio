@@ -12,8 +12,9 @@ const PrivacyPolicy = () => (
 
     <LegalSection number={1} title="Who we are">
       <p>
-        {BUSINESS.name} is a software business run by {BUSINESS.owner} in Pakistan. In this policy,
-        “{BUSINESS.name}”, “we”, “us” and “our” mean {BUSINESS.name}. Our full contact details are in section 11.
+        {BUSINESS.name} is the trading name of {BUSINESS.legalName}, a limited liability company registered in{' '}
+        {BUSINESS.registeredIn} and run by {BUSINESS.owner}. In this policy, “{BUSINESS.name}”, “we”, “us” and “our”
+        mean {BUSINESS.legalName}. Our full contact details are in section 11.
       </p>
     </LegalSection>
 
@@ -184,8 +185,8 @@ const PrivacyPolicy = () => (
 
     <LegalSection number={6} title="Storage and security">
       <p>
-        Your information is stored with the service providers listed above, and some of them store data outside
-        Pakistan. Information is sent over encrypted (HTTPS) connections and is protected by the security controls of
+        Your information is stored with the service providers listed above, and some of them store data in other
+        countries. Information is sent over encrypted (HTTPS) connections and is protected by the security controls of
         those providers. No online service can be completely secure, but we take reasonable steps to protect your
         information.
       </p>

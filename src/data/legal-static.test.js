@@ -25,7 +25,7 @@ const pageText = {
     'Zoho Mail',
     'Comment text is sent to OpenAI only to produce the analysis',
   ],
-  '/terms-of-service': ['Acceptable use', 'These terms are governed by the laws of Pakistan.'],
+  '/terms-of-service': ['Acceptable use', 'These terms are governed by the laws of the State of New Mexico, USA.'],
   '/data-deletion': ['Data Deletion Request', 'we will complete the deletion within 30 days'],
 }
 

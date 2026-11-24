@@ -16,7 +16,7 @@ export const CONTENT_UPDATED = '2026-11-05'
 export const RESOURCE_PATHS = ['/context.md', '/llms.txt', '/llms-full.txt', '/sitemap.xml', '/robots.txt']
 
 const basePages: Omit<PublicPage, 'lang'>[] = [
-  { path: '/', kind: 'home', title: 'TeXCodes — Independent Software Engineering Studio & Product Builder', description: 'TeXCodes (Hamza) builds production SaaS, custom business systems, retail platforms and AI automation. Based in Pakistan, working remotely worldwide.' },
+  { path: '/', kind: 'home', title: 'TeXCodes — Independent Software Engineering Studio & Product Builder', description: 'TeXCodes (Hamza) builds production SaaS, custom business systems, retail platforms and AI automation. TeXCodes LLC, New Mexico, USA, working remotely worldwide.' },
   { path: '/about', kind: 'about', title: 'About Hamza & TeXCodes', description: 'Muhammad Ameer Hamza’s software engineering background, production work, SaaS modernization and approach to building business systems.' },
   { path: '/work', kind: 'work', title: 'Software Projects & Case Studies', description: 'Explore 12 software projects: SaaS, enterprise systems, retail platforms, AI automation, business applications and mobile products.' },
   { path: '/contact', kind: 'contact', title: 'Contact TeXCodes', description: `Discuss a custom system, SaaS modernization or retail platform with Hamza. Email ${BUSINESS.email} or contact TeXCodes on WhatsApp.` },

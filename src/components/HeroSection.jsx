@@ -177,10 +177,10 @@ const HeroSection = () => {
           <div className="space-y-5">
             <div className="border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] pb-3">
               <div className="text-[10px] text-[#8E8D88] dark:text-[#6A6965] uppercase tracking-widest mb-1">
-                LOCATION / TIMEZONE
+                COMPANY
               </div>
-              <div className="font-semibold text-[#0F0F0F] dark:text-[#EDECE6]">PAKISTAN</div>
-              <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">PKT (UTC+5) · REMOTE READY</div>
+              <div className="font-semibold text-[#0F0F0F] dark:text-[#EDECE6]">TEXCODES LLC</div>
+              <div className="text-[11px] text-[#575652] dark:text-[#9B9A95]">NEW MEXICO, USA · REMOTE READY</div>
             </div>
 
             <div className="border-b border-[rgba(15,15,15,0.1)] dark:border-[rgba(255,255,255,0.1)] pb-3">

@@ -5,7 +5,8 @@ import { BUSINESS, LEGAL_EFFECTIVE_DATE, LEGAL_PATHS } from '../data/business'
 const TermsOfService = () => (
   <LegalPage title="Terms of Service">
     <p>
-      These Terms of Service are an agreement between you and {BUSINESS.name}, run by {BUSINESS.owner}. They apply to
+      These Terms of Service are an agreement between you and {BUSINESS.legalName} (“{BUSINESS.name}”), a limited
+      liability company registered in {BUSINESS.registeredIn} and run by {BUSINESS.owner}. They apply to
       texcodes.com and to our software products, including CommentIQ. By using our website or products, you agree to
       these terms. If you do not agree, please do not use them.
     </p>
@@ -128,8 +129,8 @@ const TermsOfService = () => (
 
     <LegalSection number={13} title="Governing law">
       <p>
-        These terms are governed by the laws of Pakistan. Any dispute about them will be handled by the courts of
-        Pakistan.
+        These terms are governed by the laws of the State of New Mexico, USA. Any dispute about them will be handled by
+        the state or federal courts located in New Mexico.
       </p>
     </LegalSection>
 

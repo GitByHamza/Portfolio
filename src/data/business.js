@@ -2,6 +2,8 @@
 // generated page JSON-LD must all match these (see business.test.js).
 export const BUSINESS = {
   name: 'TeXCodes',
+  legalName: 'TeXCodes LLC',
+  registeredIn: 'New Mexico, USA',
   owner: 'Muhammad Ameer Hamza',
   url: 'https://texcodes.com',
   email: 'admin@texcodes.com',
@@ -44,7 +46,7 @@ export const LEGACY_LEGAL_REDIRECTS = [
   { from: '/privacy', to: LEGAL_PATHS.privacy },
 ]
 
-export const LEGAL_EFFECTIVE_DATE = 'November 11, 2026'
+export const LEGAL_EFFECTIVE_DATE = 'November 25, 2026'
 
 // The AI service that analyses comment text for CommentIQ (OpenAI API, GPT models),
 // named in the Privacy Policy.

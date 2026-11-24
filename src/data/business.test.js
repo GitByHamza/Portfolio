@@ -14,6 +14,18 @@ test('business details keep the exact public spelling', () => {
   assert.equal(BUSINESS.phone, '+92 309 1824000')
   assert.equal(BUSINESS.phoneE164, '+923091824000')
   assert.equal(BUSINESS.bookingUrl, 'https://calendly.com/texcodes000/30min')
+  assert.equal(BUSINESS.legalName, 'TeXCodes LLC')
+  assert.equal(BUSINESS.registeredIn, 'New Mexico, USA')
+})
+
+test('public text presents the New Mexico LLC, not a Pakistan base', () => {
+  for (const dict of [en, ur]) {
+    assert.match(dict.hero.location, /TeXCodes LLC/)
+    assert.match(dict.aboutPage.base, /TeXCodes LLC/)
+    for (const text of [dict.hero.location, dict.closing.desc, dict.aboutPage.base]) assert.doesNotMatch(text, /Pakistan/)
+  }
+  assert.doesNotMatch(getPublicPages()[0].description, /Pakistan/)
+  assert.match(getPublicPages()[0].description, /New Mexico/)
 })
 
 test('legal pages live at clean URLs', () => {
@@ -26,6 +38,7 @@ test('server-rendered Organization JSON-LD matches the business details', () => 
     '@type': 'Organization',
     '@id': `${BUSINESS.url}/#organization`,
     name: BUSINESS.name,
+    legalName: BUSINESS.legalName,
     url: BUSINESS.url,
     logo: `${BUSINESS.url}/brand/texcodes-logo.png`,
     email: BUSINESS.email,
@@ -48,7 +61,7 @@ test('old legal URLs permanently redirect to canonical pages', () => {
 
 test('footer legal copy uses the TeXCodes spelling in both languages', () => {
   for (const dict of [en, ur]) {
-    assert.equal(dict.footer.copyright, '© 2026 TeXCodes · Independent Software Engineering & Product Building')
+    assert.equal(dict.footer.copyright, '© 2026 TeXCodes LLC · Independent Software Engineering & Product Building')
     assert.equal(dict.footer.terms, 'Terms of Service')
     assert.equal(dict.footer.privacy, 'Privacy Policy')
     assert.equal(dict.footer.data_deletion, 'Data Deletion')

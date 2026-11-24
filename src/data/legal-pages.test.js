@@ -33,14 +33,14 @@ test('privacy policy explains CommentIQ platform data and links to data deletion
   ])
 })
 
-test('terms of service cover the standard SaaS sections under Pakistani law', () => {
+test('terms of service cover the standard SaaS sections under New Mexico law', () => {
   assertMentions('TermsOfService', [
     'Acceptable use',
     'Accounts',
     'Payments and subscriptions',
     'Termination',
     'Limitation of liability',
-    'laws of Pakistan',
+    'laws of the State of New Mexico',
     'GitHub repository',
   ])
 })

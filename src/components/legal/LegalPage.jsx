@@ -31,7 +31,8 @@ export const LegalSection = ({ number, title, children }) => (
 // Business details block for the "Contact us" section of each legal page.
 export const LegalContact = () => (
   <address className="not-italic font-mono text-xs sm:text-sm text-[#0F0F0F] dark:text-[#EDECE6] border border-[rgba(15,15,15,0.14)] dark:border-[rgba(255,255,255,0.12)] p-4 sm:p-5 space-y-1.5 leading-relaxed">
-    <div className="font-semibold">{BUSINESS.name}</div>
+    <div className="font-semibold">{BUSINESS.legalName}</div>
+    <div>Registered in {BUSINESS.registeredIn}</div>
     <div>Owner: {BUSINESS.owner}</div>
     <div>
       Email: <LegalLink href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</LegalLink>
